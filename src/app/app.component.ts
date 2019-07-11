@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalComponent } from './shared/modal/modal.component';
 
 @Component({
   selector: 'app-root',
@@ -17,4 +18,8 @@ export class AppComponent {
     this.modalService.open(content);
   }
 
+  public openModal2(): void {
+    console.log('action: opening modal from component');
+    this.modalService.open(ModalComponent);
+  }
 }

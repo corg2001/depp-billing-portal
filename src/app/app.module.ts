@@ -6,6 +6,11 @@ import { AppComponent } from './app.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
+// Development artifacts
+import { CoreModule } from './core/core.module';
+import { SharedModule } from './shared/shared.module';
+import { ModalComponent } from './shared/modal/modal.component';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -13,9 +18,14 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule
+    NgbModule,
+    CoreModule,
+    SharedModule,
   ],
   providers: [],
+  entryComponents: [
+    ModalComponent,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
