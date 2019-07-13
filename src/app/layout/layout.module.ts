@@ -5,12 +5,14 @@ import { RouterModule } from '@angular/router';
 // Development Artifacts
 import { PublicLayoutComponent } from './public-layout/public-layout.component';
 import { PrivateLayoutComponent } from './private-layout/private-layout.component';
+import { BaseLayoutComponent } from './base-layout/base-layout.component';
 
 
 @NgModule({
   declarations: [
     PublicLayoutComponent,
-    PrivateLayoutComponent
+    PrivateLayoutComponent,
+    BaseLayoutComponent
   ],
   imports: [
     CommonModule,

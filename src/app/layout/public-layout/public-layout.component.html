@@ -1,11 +1,14 @@
-<div id="public-layout-container">
-  <div id="public-layout-header" class="">
-    Public Layout Header
+<app-base-layout>
+  <div class="public-container">
+    <div id="public-content" class="d-flex flex-column flex-md-row">
+      <div class="content-box">
+
+        <div class="text-center">
+          <img src="{{ appLogo}}" alt="{{ logoAltText }}" class="app-logo" />
+        </div>
+
+      </div>
+      <div class="content-box bg-warning">Two</div>
+    </div>
   </div>
-  <div id="public-layout-body" class="">
-    <router-outlet></router-outlet>
-  </div>
-  <div id="public-layout-footer" class="">
-    Public Layout Footer
-  </div>
-</div>
+</app-base-layout>
