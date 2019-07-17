@@ -1,14 +1,16 @@
 <app-base-layout>
-  <div class="public-container">
+  <div class="public-container p-3">
     <div id="public-content" class="d-flex flex-column flex-md-row">
-      <div class="content-box">
+      <div class="content-box my-auto">
 
         <div class="text-center">
           <img src="{{ appLogo}}" alt="{{ logoAltText }}" class="app-logo" />
         </div>
 
       </div>
-      <div class="content-box bg-warning">Two</div>
+      <div class="content-box">
+        <router-outlet></router-outlet>
+      </div>
     </div>
   </div>
 </app-base-layout>

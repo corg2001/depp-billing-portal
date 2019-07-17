@@ -4,12 +4,6 @@ html, body {
   height: 100% !important;
 }
 
-
-
-// Bootstrap overrides
-//$body-bg: #000;
-//$body-color: #111;
-
-// Bootstrap and its default variables
-@import '../node_modules/bootstrap/scss/bootstrap';
-@import '../node_modules/font-awesome/css/font-awesome.css';
+@import url('https://fonts.googleapis.com/css?family=Roboto:900,800,700,600,500,400,300,200,100');
+@import "../node_modules/font-awesome/css/font-awesome.min.css";
+@import './assets/styles/contractor-layout-styles';
