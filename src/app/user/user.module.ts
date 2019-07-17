@@ -9,16 +9,24 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { LayoutModule } from '../layout/layout.module';
 import { LeadComponent } from './lead/lead.component';
+import { UserService } from './user.service';
 
 
 @NgModule({
-  declarations: [LoginComponent, ForgotPasswordComponent, ResetPasswordComponent, LeadComponent],
+  declarations: [
+    LoginComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent,
+    LeadComponent
+  ],
   imports: [
     CommonModule,
     UserRoutingModule,
     LayoutModule,
     FormsModule,
     ReactiveFormsModule
-  ]
+  ],
+  exports: [],
+  providers: [UserService]
 })
 export class UserModule { }
