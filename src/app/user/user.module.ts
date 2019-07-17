@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule} from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 // Development artifacts
 import { UserRoutingModule } from './user-routing.module';
@@ -10,6 +11,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { LayoutModule } from '../layout/layout.module';
 import { LeadComponent } from './lead/lead.component';
 import { UserService } from './user.service';
+
 
 
 @NgModule({
@@ -24,7 +26,8 @@ import { UserService } from './user.service';
     UserRoutingModule,
     LayoutModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   exports: [],
   providers: [UserService]
