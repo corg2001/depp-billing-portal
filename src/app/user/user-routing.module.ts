@@ -6,6 +6,7 @@ import { LoginComponent } from './login/login.component';
 import { PublicLayoutComponent } from '../layout/public-layout/public-layout.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { LeadComponent } from './lead/lead.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,10 @@ const routes: Routes = [
       {
         path: 'reset-password',
         component: ResetPasswordComponent,
+      },
+      {
+        path: 'lead',
+        component: LeadComponent,
       },
       {
         path: '**',
