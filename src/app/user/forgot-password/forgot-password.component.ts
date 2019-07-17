@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, Validator } from '@angular/forms';
 
+// Development Artifacts
+import { UserService } from '../user.service';
+
 @Component({
   selector: 'app-forgot-password',
   templateUrl: './forgot-password.component.html',
@@ -10,7 +13,7 @@ export class ForgotPasswordComponent implements OnInit {
 
   public resetForm: FormGroup;
 
-  constructor() { }
+  constructor( private userService: UserService) { }
 
   ngOnInit() {
     this.buildForm();
