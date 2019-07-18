@@ -5,21 +5,26 @@ import { HttpClientModule } from '@angular/common/http';
 
 // Development artifacts
 import { UserRoutingModule } from './user-routing.module';
+import { LayoutModule } from '../layout/layout.module';
+import { SharedModule } from '../shared/shared.module';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+
 import { LoginComponent } from './login/login.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
-import { LayoutModule } from '../layout/layout.module';
 import { LeadComponent } from './lead/lead.component';
 import { UserService } from './user.service';
-
-
+import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
+import { TermsOfUseComponent } from './terms-of-use/terms-of-use.component';
 
 @NgModule({
   declarations: [
     LoginComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
-    LeadComponent
+    LeadComponent,
+    PrivacyPolicyComponent,
+    TermsOfUseComponent
   ],
   imports: [
     CommonModule,
@@ -27,9 +32,15 @@ import { UserService } from './user.service';
     LayoutModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModalModule,
+    SharedModule,
   ],
   exports: [],
-  providers: [UserService]
+  providers: [UserService],
+  entryComponents: [
+    PrivacyPolicyComponent,
+    TermsOfUseComponent
+  ]
 })
 export class UserModule { }
