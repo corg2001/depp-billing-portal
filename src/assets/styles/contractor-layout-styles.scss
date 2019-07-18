@@ -29,8 +29,9 @@ $body-color: $hwa-color-gray;
   font-size: 0.8rem;
 }
 
-
-
+a {
+  text-decoration: underline;
+}
 
 // High-Level Styles
 $primary-dark: $hwa-color-teal-dark;
