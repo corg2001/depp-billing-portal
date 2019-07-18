@@ -9,6 +9,9 @@ import { ModalComponent } from './modal/modal.component';
   ],
   exports: [
     ModalComponent,
-  ]
+  ],
+  entryComponents: [
+    ModalComponent
+  ],
 })
 export class SharedModule { }
