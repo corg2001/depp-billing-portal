@@ -12,6 +12,10 @@ import { UserService } from '../user.service';
 export class ForgotPasswordComponent implements OnInit {
 
   public resetForm: FormGroup;
+  // TODO: get the phone number value from the configuration
+  // TODO: fix tslint, add global configuration
+  // tslint:disable-next-line:no-inferrable-types
+  public contactPhoneNumber: string = '(888) 492-7359';
 
   constructor( private userService: UserService) { }
 
