@@ -1,0 +1,35 @@
+@import  "../../../assets/styles/contractor-layout-styles";
+
+
+.centered-container-lg {
+  margin: 0 auto;
+  width: 95%;
+}
+
+.centered-container-md {
+  width: 80%;
+  margin: 0 auto;
+}
+
+
+#app-header {
+  border-bottom: 0.1rem solid $secondary;
+  margin-bottom: 1rem;
+  padding-top: 0.5rem;
+}
+
+#app-content {
+  background-color: cornflowerblue;
+}
+
+.header-logo {
+  width: 40%;
+}
+
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .centered-container {
+    //background-color: darksalmon;
+  }
+}

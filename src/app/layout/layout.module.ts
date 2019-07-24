@@ -6,13 +6,15 @@ import { RouterModule } from '@angular/router';
 import { PublicLayoutComponent } from './public-layout/public-layout.component';
 import { PrivateLayoutComponent } from './private-layout/private-layout.component';
 import { BaseLayoutComponent } from './base-layout/base-layout.component';
+import { MenuComponent } from './menu/menu.component';
 
 
 @NgModule({
   declarations: [
     PublicLayoutComponent,
     PrivateLayoutComponent,
-    BaseLayoutComponent
+    BaseLayoutComponent,
+    MenuComponent
   ],
   imports: [
     CommonModule,

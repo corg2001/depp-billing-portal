@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 // Development artifacts
 import { NotificationService } from './notification.service';
-import { AuthtenticationService } from './authtentication.service';
+import { AuthenticationService } from './authentication.service';
 import { ModalService } from './modal.service';
 
 @NgModule({
@@ -13,7 +13,7 @@ import { ModalService } from './modal.service';
   ],
   exports: [],
   providers: [
-    AuthtenticationService,
+    AuthenticationService,
     ModalService,
     NotificationService,
   ]

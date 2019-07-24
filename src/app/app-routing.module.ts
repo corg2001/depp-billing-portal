@@ -15,6 +15,10 @@ const routes: Routes = [
     path: 'account',
     loadChildren: './account/account.module#AccountModule'
   },
+  {
+    path: 'enroll',
+    loadChildren: './lead-generation/lead-generation.module#LeadGenerationModule'
+  },
   { path: '', pathMatch: 'full', redirectTo: 'account' },
 ];
 
