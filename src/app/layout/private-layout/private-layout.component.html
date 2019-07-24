@@ -1,11 +1,16 @@
-<div id="private-layout-container">
-  <div id="private-layout-header" class="">
-    Public Layout Header
+<app-base-layout>
+  <div id="app-header">
+    <div class="d-flex flex-row justify-content-between centered-container-lg mb-1">
+      <div>
+        <img src="../../../assets/images/hwa-app-logo.png" alt="HWA: Home Warranty Of America" class="header-logo"/>
+      </div>
+      <div>extras</div>
+    </div>
+    <div id="app-menu" class="bg-light">
+      <app-menu></app-menu>
+    </div>
   </div>
-  <div id="private-layout-body" class="">
+  <div id="app-content" class="centered-container-md">
     <router-outlet></router-outlet>
   </div>
-  <div id="private-layout-footer" class="">
-    Public Layout Footer
-  </div>
-</div>
+</app-base-layout>

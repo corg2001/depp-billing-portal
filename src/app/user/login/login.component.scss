@@ -7,6 +7,27 @@
 
 .tab-menu {
   border-bottom: 0.1rem solid $primary;
+
+  a {
+    display: block;
+    text-decoration: none;
+  }
+
+  .item {
+    padding: 0.3rem;
+    text-align: center;
+  }
+
+  .current {
+    background-color: theme-color('primary');
+    a {
+      color: $white !important;
+    }
+  }
+}
+
+.loading-spinner {
+  color: theme-color('primary');
 }
 
 input[type="email"]::placeholder, input[type="password"] {
