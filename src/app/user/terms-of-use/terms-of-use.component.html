@@ -1,6 +1,3 @@
 <app-modal [windowTitle]="modalWindowTitle">
-  <div class="small">
-    This is the content of the terms of use. <br />
-    An API call needs to be implemented.
-  </div>
+  <div [innerHTML]="termsAndConditions?.message" class="small"></div>
 </app-modal>

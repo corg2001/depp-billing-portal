@@ -1,1 +1,210 @@
-<h1>jksdnfjisdnfjdsnfjsdn</h1>
+<div id="lead-generation-container">
+  <div id="header" class="text-center mb-4">
+    <div class="page-title">Become an HWA Contractor</div>
+  </div>
+  <div id="body" class="small" *ngIf="!showConfirmationMessage">
+    <form id="lead-form" [formGroup]="enrollForm">
+      <div id="first-group">
+        <div class="d-flex flex-column flex-md-row justify-content-between">
+          <div class="form-group name-field">
+            <input
+              type="text"
+              id="firstName"
+              name="firstName"
+              placeholder="First Name"
+              class="form-control"
+              formControlName="firstName"
+              required
+            />
+            <div class="error-container" *ngIf="enrollForm.get('firstName').dirty || enrollForm.get('firstName').touched">
+              <div class="text-danger py-1" *ngIf="enrollForm.get('firstName').invalid">Please provide your name.</div>
+            </div>
+          </div>
+          <div class="form-group name-field">
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              placeholder="Last Name"
+              class="form-control"
+              formControlName="lastName"
+              required
+            />
+            <div class="error-container" *ngIf="enrollForm.get('lastName').dirty || enrollForm.get('lastName').touched">
+              <div class="text-danger py-1" *ngIf="enrollForm.get('lastName').invalid">Please provide your last name.</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <input
+            type="text"
+            id="businessName"
+            name="businessName"
+            placeholder="Business Name"
+            class="form-control"
+            formControlName="businessName"
+            required
+          />
+          <div class="error-container" *ngIf="enrollForm.get('businessName').dirty || enrollForm.get('businessName').touched">
+            <div class="text-danger py-1" *ngIf="enrollForm.get('businessName').invalid">Please provide the name of your business.</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <input
+            type="text"
+            id="tradeType"
+            name="tradeType"
+            placeholder="Trade Type"
+            class="form-control"
+            formControlName="tradeType"
+            required
+          />
+          <div class="error-container" *ngIf="enrollForm.get('tradeType').dirty || enrollForm.get('tradeType').touched">
+            <div class="text-danger py-1" *ngIf="enrollForm.get('tradeType').invalid">Please let us know your trade type.</div>
+          </div>
+        </div>
+      </div>
+      <div id="second-group">
+        <div class="form-group">
+          <input
+            type="text"
+            id="address"
+            name="address"
+            placeholder="Business Address"
+            class="form-control"
+            formControlName="businessAddress"
+            required
+          />
+          <div class="error-container" *ngIf="enrollForm.get('businessAddress').dirty || enrollForm.get('businessAddress').touched">
+            <div class="text-danger py-1" *ngIf="enrollForm.get('businessAddress').invalid">Please provide your business address.</div>
+          </div>
+        </div>
+        <div class="d-flex flex-column flex-md-row justify-content-between">
+
+          <div class="form-group address-field">
+            <input
+              type="text"
+              id="city"
+              name="city"
+              placeholder="City"
+              class="form-control"
+              formControlName="businessCity"
+              required
+            />
+            <div class="error-container" *ngIf="enrollForm.get('businessCity').dirty || enrollForm.get('businessCity').touched">
+              <div class="text-danger py-1" *ngIf="enrollForm.get('businessCity').invalid">Please provide your city.</div>
+            </div>
+          </div>
+          <div class="form-group address-field">
+            <select
+              id="state"
+              name="state"
+              class="form-control select"
+              formControlName="businessState"
+              required
+            >
+              <option value="" class="select-option-default">State</option>
+              <option *ngFor="let state of listOfStates" value="{{state.value}}">{{ state.label}}</option>
+            </select>
+            <div class="error-container" *ngIf="enrollForm.get('businessState').dirty || enrollForm.get('businessState').touched">
+              <div class="text-danger py-1" *ngIf="enrollForm.get('businessState').invalid">Please provide your state.</div>
+            </div>
+          </div>
+          <div class="form-group address-field">
+            <input
+              type="text"
+              id="zipCode"
+              name="zipCode"
+              placeholder="Zip code"
+              class="form-control"
+              formControlName="zipCode"
+              required
+            />
+            <div class="error-container" *ngIf="enrollForm.get('zipCode').dirty || enrollForm.get('zipCode').touched">
+              <div class="text-danger  py-1" *ngIf="enrollForm.get('zipCode').invalid">Please provide your zip code.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="third-group">
+        <div class="form-group">
+          <input
+            type="text"
+            id="email"
+            name="email"
+            placeholder="Business Email"
+            class="form-control"
+            formControlName="businessEmail"
+            required
+          />
+          <div class="error-container" *ngIf="enrollForm.get('businessEmail').dirty || enrollForm.get('businessEmail').touched">
+            <div class="text-danger py-1" *ngIf="enrollForm.get('businessEmail').hasError('required')">Please provide your business email.</div>
+            <div class="text-danger py-1" *ngIf="enrollForm.get('businessEmail').hasError('email')">Please provide a valid email.</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <input
+            type="text"
+            id="phone"
+            name="email"
+            placeholder="Business Phone Number"
+            class="form-control"
+            formControlName="businessPhone"
+            required
+          />
+          <div class="error-container" *ngIf="enrollForm.get('businessPhone').dirty || enrollForm.get('businessPhone').touched">
+            <div class="text-danger py-1" *ngIf="enrollForm.get('businessPhone').invalid">Please provide your business phone.</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <input
+            type="text"
+            id="cities"
+            name="cities"
+            placeholder="Cities you serve"
+            class="form-control"
+            formControlName="serveCities"
+            required
+          />
+          <div class="py-1 text-muted">Please provide a comma separated list: Ex: Houston, Austin, San Antonio, etc ...</div>
+          <div class="error-container" *ngIf="enrollForm.get('serveCities').dirty || enrollForm.get('serveCities').touched">
+            <div class="text-danger py-1" *ngIf="enrollForm.get('serveCities').invalid">Please provide a list of cities.</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <select
+            id="timeToCall"
+            name="timeToCall"
+            class="form-control select"
+            formControlName="timeToCall"
+          >
+            <option value="" class="select-option-default">Best Time to call?</option>
+            <option *ngFor="let option of timeToCallOptions" value="{{ option.value }}">{{ option.label }}</option>
+          </select>
+          <div class="error-container" *ngIf="enrollForm.get('timeToCall').dirty || enrollForm.get('timeToCall').touched">
+            <div class="text-danger py-1" *ngIf="enrollForm.get('timeToCall').invalid">Please provide a best time to call.</div>
+          </div>
+        </div>
+      </div>
+      <div id="fourth-group">
+        <div class="form-group">
+          <span class="text-info">** All fields are required.</span>
+        </div>
+      </div>
+    </form>
+    <div class="text-center py-2">
+      <button type="button" class="btn btn-secondary w-50" (click)="submit()" [disabled]="!enrollForm.valid">
+        Get Started
+      </button>
+    </div>
+  </div>
+  <div id="footer">
+    <div id="response-message" *ngIf="showConfirmationMessage">
+      <div>Thank you for contacting us!</div>
+      <div>
+        Someone will contact you soon to provide next steps. If you have any questions or inquiries please contact Contractor Relations at 1-888-111-1111.
+      </div>
+      <div class="text-center small mt-2"><a routerLink="/user/login">Go back to login</a></div>
+    </div>
+  </div>
+</div>

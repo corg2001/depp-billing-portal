@@ -1,0 +1,64 @@
+@import '../../../assets/styles/contractor-layout-styles';
+
+
+.page-title {
+  font-size: 1.5rem;
+  color: $primary;
+}
+
+.name-field {
+  width: 100%;
+}
+
+.form-control::placeholder {
+  font-size: small !important;
+}
+
+.form-control::-ms-input-placeholder {
+  font-size: small !important;
+}
+
+.select-option-default {
+  color: red !important;
+  font-size: 6rem !important;
+}
+
+.address-field {
+  width: 100%;
+}
+
+.text-muted {
+  font-size: 0.7rem;
+}
+
+
+// Medium devices (landscape tablets, 768px and up)
+@media only screen and (min-width: 768px) {
+  .name-field {
+    width: 48%;
+  }
+
+  .address-field {
+    width: 32%;
+  }
+}
+
+/*
+
+
+.title {
+  font-size: 1.5rem;
+  color: green;
+}
+
+::placeholder, select {
+  font-size: x-small !important;
+}
+
+ Medium devices (landscape tablets, 768px and up)
+@media only screen and (min-width: 768px) {
+  .name-field {
+    width: 48%;
+  }
+}
+*/

@@ -30,7 +30,7 @@
   color: theme-color('primary');
 }
 
-input[type="email"]::placeholder, input[type="password"] {
+input[type="email"]::placeholder, input[type="password"]::placeholder {
   font-size: small;
 }
 
