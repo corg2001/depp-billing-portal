@@ -52,6 +52,31 @@ export class UserService {
     completionSubject.next(false);
   }
 
+
+  public getTermsAndConditions(completionSubject: Subject<boolean>, dataSubject: Subject<any>): void {
+    // TODO: this uri needs to come from configuration
+    const uri: string = 'https://unify-hwa-api-dev.engine.host/services/legal-terms/terms-of-use';
+    this.httpClient.get(uri).subscribe(
+      (response: Observable<HttpResponse<any>>) => { this.getTermsAndConditionsSuccessHandler(completionSubject, dataSubject, response); },
+      (response: Observable<HttpErrorResponse>) => { this.getTermsAndConditionsFailureHandler(completionSubject, response); }
+      );
+  }
+
+  private getTermsAndConditionsSuccessHandler(
+    completionSubject: Subject<boolean>,
+    dataSubject: Subject<any>,
+    response: Observable<HttpResponse<any>>
+  ): void {
+    dataSubject.next(response);
+    completionSubject.next(true);
+  }
+
+  private getTermsAndConditionsFailureHandler(completionSubject: Subject<any>, error: Observable<HttpErrorResponse>): void {
+    this.httpErrorHandler(error);
+    completionSubject.next(false);
+  }
+
+
   public resetPassword(): void {
     console.log('service: set new password requested!');
   }

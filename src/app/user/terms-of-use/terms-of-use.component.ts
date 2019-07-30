@@ -1,5 +1,7 @@
+// tslint:disable:no-inferrable-types
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-terms-of-use',
@@ -8,16 +10,33 @@ import { UserService } from '../user.service';
 })
 export class TermsOfUseComponent implements OnInit {
   // TODO: fix tslint, add global configuration
-  // tslint:disable-next-line:no-inferrable-types
   public modalWindowTitle: string = 'Terms Of Use';
+
+  public completionSubject: Subject<boolean> = new Subject<boolean>();
+  public dataSubject: Subject<any> = new Subject<any>();
+  public termsAndConditions: any;
+  public showLoadingSpinner: boolean = true;
+
   constructor( private userService: UserService) { }
 
   ngOnInit() {
+    this.completionSubject.subscribe((response: boolean) => {
+      this.showLoadingSpinner = false;
+      if (!response) {
+        console.log('Oops there was an error!!!');
+        return;
+      }
+    });
+
+    this.dataSubject.subscribe((data) => {
+      this.termsAndConditions = data;
+    });
     this.getTermsOfUse();
   }
 
   public getTermsOfUse(): void {
     console.log('Action: getting terms of use ...');
+    this.userService.getTermsAndConditions(this.completionSubject, this.dataSubject);
   }
 
 }
