@@ -29,7 +29,7 @@ export class TermsOfUseComponent implements OnInit {
     });
 
     this.dataSubject.subscribe((data) => {
-      this.termsAndConditions = data;
+      this.termsAndConditions = data.message;
     });
     this.getTermsOfUse();
   }

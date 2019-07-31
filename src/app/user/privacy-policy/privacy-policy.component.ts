@@ -1,5 +1,8 @@
+// tslint:disable:no-inferrable-types
+
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-privacy-policy',
@@ -8,17 +11,34 @@ import { UserService } from '../user.service';
 })
 export class PrivacyPolicyComponent implements OnInit {
   // TODO: fix tslint, add global configuration
-  // tslint:disable-next-line:no-inferrable-types
   public modalWindowTitle: string = 'Privacy Policy';
+  public completionSubject: Subject<boolean> = new Subject<boolean>();
+  public dataSubject: Subject<any> = new Subject<any>();
+  public privacyPolicy: any;
+  public showLoadingSpinner: boolean = true;
 
   constructor(private userService: UserService) { }
 
   ngOnInit() {
+    this.completionSubject.subscribe(this.completionSubscription.bind(this));
+    this.dataSubject.subscribe(this.dataSubscription.bind(this));
     this.getPrivacyPolicy();
   }
 
   public getPrivacyPolicy(): void {
-    console.log('Action: getting privacy policy ...');
+    this.userService.getPrivacyPolicy(this.completionSubject, this.dataSubject);
   }
 
+  private completionSubscription(response: boolean): void {
+    this.showLoadingSpinner = false;
+    if (!response) {
+      console.log('Oops there was an error!!!');
+      return;
+    }
+  }
+
+  private dataSubscription(data: any): any {
+    this.privacyPolicy = data.message;
+  }
 }
+

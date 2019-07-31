@@ -23,13 +23,47 @@ export class UserService {
 
   public requestPassword(completionSubject: Subject<boolean>, userEmail: string): void {
     console.log('service: new password requested!');
-    const URI: string = 'http://localhost:3000/forgot';
+    const URI: string = 'https://unify-hwa-api-dev.engine.host/authentication/passport/forgot-password';
     this.httpClient.post(URI, {
-      userEmail
+      username: userEmail
     }).subscribe(
-      (response: Observable<HttpResponse<any>>) => this.forgotPasswordSuccessHandler(completionSubject, response),
-      (response: Observable<HttpErrorResponse>) => this.forgotPasswordFailureHandler(completionSubject, response)
+      (response: Observable<HttpResponse<any>>) => this.genericSuccessHandler(completionSubject, response),
+      (response: Observable<HttpErrorResponse>) => this.genericFailureHandler(completionSubject, response)
     );
+  }
+
+  public getTermsAndConditions(completionSubject: Subject<boolean>, dataSubject: Subject<any>): void {
+    // TODO: this uri needs to come from configuration
+    const uri: string = 'https://unify-hwa-api-dev.engine.host/services/legal-terms/terms-of-use';
+    this.httpClient.get(uri).subscribe(
+      (response: Observable<HttpResponse<any>>) => { this.genericSuccessHandler(completionSubject, response, dataSubject); },
+      (response: Observable<HttpErrorResponse>) => { this.genericFailureHandler(completionSubject, response); }
+    );
+  }
+
+  public getPrivacyPolicy(completionSubject: Subject<boolean>, dataSubject: Subject<any>): void {
+    // TODO: this uri needs to come from configuration
+    const uri: string = 'https://unify-hwa-api-dev.engine.host/services/legal-terms/privacy-policy';
+    this.httpClient.get(uri).subscribe(
+      (response: Observable<HttpResponse<any>>) => { this.genericSuccessHandler(completionSubject, response, dataSubject); },
+      (response: Observable<HttpErrorResponse>) => { this.genericFailureHandler(completionSubject, response); }
+    );
+  }
+
+  private genericSuccessHandler(
+    completionSubject: Subject<boolean>,
+    response: Observable<HttpResponse<any>>,
+    dataSubject?: Subject<any>
+  ): void {
+    if ( dataSubject ) {
+      dataSubject.next(response);
+    }
+    completionSubject.next(true);
+  }
+
+  private genericFailureHandler(completionSubject: Subject<boolean>, error: Observable<HttpErrorResponse>): void {
+    this.httpErrorHandler(error);
+    completionSubject.next(false);
   }
 
   private loginSuccessHandler(completionSubject: Subject<boolean>, response: Observable<HttpResponse<any>>): void {
@@ -42,48 +76,13 @@ export class UserService {
     completionSubject.next(false);
   }
 
-  private forgotPasswordSuccessHandler(completionSubject: Subject<boolean>, response: Observable<HttpResponse<any>>): void {
-    completionSubject.next(true);
-    // TODO: handle response;
-  }
-
-  private forgotPasswordFailureHandler(completionSubject: Subject<boolean>, error: Observable<HttpErrorResponse>): void {
-    this.httpErrorHandler(error);
-    completionSubject.next(false);
-  }
-
-
-  public getTermsAndConditions(completionSubject: Subject<boolean>, dataSubject: Subject<any>): void {
-    // TODO: this uri needs to come from configuration
-    const uri: string = 'https://unify-hwa-api-dev.engine.host/services/legal-terms/terms-of-use';
-    this.httpClient.get(uri).subscribe(
-      (response: Observable<HttpResponse<any>>) => { this.getTermsAndConditionsSuccessHandler(completionSubject, dataSubject, response); },
-      (response: Observable<HttpErrorResponse>) => { this.getTermsAndConditionsFailureHandler(completionSubject, response); }
-      );
-  }
-
-  private getTermsAndConditionsSuccessHandler(
-    completionSubject: Subject<boolean>,
-    dataSubject: Subject<any>,
-    response: Observable<HttpResponse<any>>
-  ): void {
-    dataSubject.next(response);
-    completionSubject.next(true);
-  }
-
-  private getTermsAndConditionsFailureHandler(completionSubject: Subject<any>, error: Observable<HttpErrorResponse>): void {
-    this.httpErrorHandler(error);
-    completionSubject.next(false);
-  }
-
-
-  public resetPassword(): void {
-    console.log('service: set new password requested!');
-  }
-
   private httpErrorHandler(error: any): any {
     console.log('Action: Handling http error');
     console.log(error);
   }
 
+  public resetPassword(): void {
+    console.log('service: set new password requested!');
+  }
 }
+
