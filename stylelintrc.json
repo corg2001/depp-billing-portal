@@ -1,0 +1,12 @@
+{
+  "extends": [
+    "stylelint-config-sass-guidelines",
+    "stylelint-config-prettier"
+  ],
+  "defaultSeverity": "error",
+  "rules": {
+    "font-weight-notation": ["numeric"],
+    "selector-max-compound-selectors": 4,
+    "max-nesting-depth": 2
+  }
+}

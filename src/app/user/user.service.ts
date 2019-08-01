@@ -1,4 +1,3 @@
-// tslint:disable:no-inferrable-types
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';

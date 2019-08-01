@@ -21,7 +21,6 @@ export class LoginComponent implements OnInit {
 
   public loginForm: FormGroup;
   public responseSubject: Subject<boolean> = new Subject<boolean>();
-  // tslint:disable-next-line:no-inferrable-types
   public showLoadingSpinner: boolean = false;
 
   // TODO: Pull this information from teh config
