@@ -1,4 +1,3 @@
-// tslint:disable:no-inferrable-types
 import { Component, OnInit } from '@angular/core';
 import { States } from './us-states.enum';
 import { TimeToCall } from './time-to-call.enum';

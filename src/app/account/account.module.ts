@@ -1,10 +1,10 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 
-import { AccountRoutingModule } from './account-routing.module';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { RouterModule } from '@angular/router';
 import { LayoutModule } from '../layout/layout.module';
+import { AccountRoutingModule } from './account-routing.module';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   declarations: [DashboardComponent],
@@ -12,7 +12,7 @@ import { LayoutModule } from '../layout/layout.module';
     CommonModule,
     AccountRoutingModule,
     RouterModule,
-    LayoutModule
-  ]
+    LayoutModule,
+  ],
 })
 export class AccountModule { }

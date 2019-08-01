@@ -1,5 +1,3 @@
-// tslint:disable:no-inferrable-types
-
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
 import { Subject } from 'rxjs';
