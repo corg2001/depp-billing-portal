@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ClaimTestComponent } from './claim-test/claim-test.component';
+import { ClaimSummaryComponent } from './claim-summary/claim-summary.component';
+
 
 const routes: Routes = [
   {
     path: '',
-    component: ClaimTestComponent
+    component:  ClaimSummaryComponent
   }
 ];
 

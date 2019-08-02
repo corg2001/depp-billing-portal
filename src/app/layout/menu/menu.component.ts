@@ -10,29 +10,24 @@ export class MenuComponent implements OnInit {
 
   public mainMenu: any =  [
     {
-      label: 'Home',
+      label: 'Dashboard',
       path: '/',
-      desc: 'My Account Dashboard'
+      desc: 'Claim Dashboard'
     },
     {
       label: 'Payments',
-      path: '/user/login',
-      desc: 'Payment History'
-    },
-    {
-      label: 'Documents',
       path: '',
       desc: 'Review Documents'
     },
     {
-      label: 'Contractor Profile',
-      path: '',
-      desc: 'My Profile'
+      label: 'Invoices',
+      path: '/account/invoice',
+      desc: 'Invoice History'
     },
     {
-      label: 'Authorize/Invoices',
-      path: '',
-      desc: 'Authorize Invoices'
+      label: 'Contractor Profile',
+      path: '/account/profile',
+      desc: 'My Profile'
     },
     {
       label: 'Help',
