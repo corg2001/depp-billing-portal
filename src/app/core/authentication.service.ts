@@ -1,30 +1,44 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { LoginResponsePayload } from '../user/login-response-payload';
+import { Subject } from 'rxjs';
+
+// TODO: move it into it's own file
+enum SessionKeys {
+  token = 'token',
+  last_login = 'last_login'
+}
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-  private session: any;
 
-  constructor(private httpClient: HttpClient) {
+  constructor() {
+    const date: Date =  new Date();
+    console.log(`IMPORTANT: authentication service loaded ... ${date}`);
   }
 
-  public logout(): void {
-    console.log('Action: user loggin out');
+  public logout(completionSubject: Subject<boolean>): void {
+    localStorage.clear();
+    !localStorage.getItem(SessionKeys.token) ? completionSubject.next(true) : completionSubject.next(false);
+
   }
 
-  public createSession(data: any): void  {
-    console.log('Action: Creating a new session');
-    this.session = data;
+  public newSession(data: any): boolean  {
+    return this.createSession(data);
   }
 
   public isLoggedIn(): boolean {
-    return !!this.session;
+    return !!localStorage.getItem(SessionKeys.token);
   }
 
-
+  private createSession(data: any): boolean {
+    const token: string = data.token.trim();
+    const lastLogin: string = data.last_login.trim();
+    localStorage.setItem(SessionKeys.token, token);
+    localStorage.setItem(SessionKeys.last_login, lastLogin);
+    return localStorage.getItem(SessionKeys.token) ? true : false;
+  }
 
 }

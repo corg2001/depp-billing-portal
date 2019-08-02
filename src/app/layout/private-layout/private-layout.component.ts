@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LogoutService } from '../../core/logout.service';
 
 @Component({
   selector: 'app-private-layout',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PrivateLayoutComponent implements OnInit {
 
-  constructor() { }
+  constructor(private logoutService: LogoutService) { }
 
   ngOnInit() {
+  }
+
+  public logout(): void {
+    this.logoutService.logout();
   }
 
 }
