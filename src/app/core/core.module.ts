@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { NotificationService } from './notification.service';
 import { AuthenticationService } from './authentication.service';
 import { ModalService } from './modal.service';
+import { LogoutService } from './logout.service';
 
 @NgModule({
   declarations: [],
@@ -16,6 +17,7 @@ import { ModalService } from './modal.service';
     AuthenticationService,
     ModalService,
     NotificationService,
+    LogoutService
   ]
 })
 export class CoreModule {

@@ -71,7 +71,11 @@ export class UserService {
   }
 
   private loginSuccessHandler(completionSubject: Subject<boolean>, response: Observable<HttpResponse<LoginResponsePayload>>): void {
-    this.authService.createSession(response);
+    if ( !this.authService.newSession(response) ) {
+      // TODO: do a better management of errors
+      this.httpErrorHandler('InternalError: Unable to create session ...');
+      completionSubject.next(false);
+    }
     completionSubject.next(true);
   }
 
