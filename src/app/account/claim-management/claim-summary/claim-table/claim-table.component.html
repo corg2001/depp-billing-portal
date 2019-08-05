@@ -1,0 +1,25 @@
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col" class="text-info">Job ID</th>
+        <th scope="col" class="text-info">Date</th>
+        <th scope="col" class="text-info">Claim Order Type</th>
+        <th scope="col" class="text-info">Claim Disposition</th>
+        <th scope="col" class="text-info">Name</th>
+        <th scope="col" class="text-info">Job Status</th>
+        <th scope="col" class="text-info">Service Address</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor='let claim of claims'>
+        <td scope="row">{{claim.jobId}}</td>
+        <td scope="row">{{claim.date}}</td>
+        <td>{{claim.claimOrderType}}</td>
+        <td>{{claim.claimDeposition}}</td>
+        <td>{{claim.name}}</td>
+        <td>{{claim.jobStatus}}</td>
+        <td>{{claim.address}}</td>
+      </tr>
+    </tbody>
+  </table>
+  
