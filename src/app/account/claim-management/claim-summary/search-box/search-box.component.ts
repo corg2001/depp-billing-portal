@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, FormsModule, ReactiveFormsModule  } from '@angular/forms';
+import { ClaimService } from '../../claim.service';
 
 @Component({
   selector: 'app-search-box',
@@ -10,23 +11,22 @@ export class SearchBoxComponent implements OnInit {
 
   public searchForm: FormGroup;
 
-  constructor() { }
+  constructor(private _fb: FormBuilder, private _claimService: ClaimService) { }
 
   ngOnInit() {
-    this.buildForm();
-  }
-
-  public search(): void {
-    console.log('Action: search claims');
-
-  }
-
-  private buildForm(): void {
-    const byName: FormControl = new FormControl('');
-
-    this.searchForm = new FormGroup({
-      byName
+    this.searchForm = this._fb.group({
+      name: [''],
+      jobId: [''],
+      address: ['']
     });
   }
+
+  public search(form: FormGroup): void {
+    this._claimService.search(form.controls.name.value, form.controls.jobId.value, form.controls.address.value);
+  }
+
+get sf(): any {
+  return this.searchForm.controls;
+}
 
 }
