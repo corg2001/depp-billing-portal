@@ -41,8 +41,6 @@ export class LoginComponent implements OnInit {
   }
 
   public buildForm(): void {
-    console.log('action: starting form');
-
     const userName: FormControl = new FormControl('', [Validators.required, Validators.email]);
     const userPassword: FormControl = new FormControl('', Validators.required);
 
@@ -61,9 +59,8 @@ export class LoginComponent implements OnInit {
   }
 
   public login(): void {
-    // Todo: massage username and password
-    const username = this.loginForm.get('userName').value;
-    const password = this.loginForm.get('userPassword').value;
+    const username = this.loginForm.get('userName').value.trim();
+    const password = this.loginForm.get('userPassword').value.trim();
     this.userService.login(this.responseSubject, username, password);
     this.showLoadingSpinner = true;
   }

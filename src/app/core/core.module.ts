@@ -6,6 +6,8 @@ import { NotificationService } from './notification.service';
 import { AuthenticationService } from './authentication.service';
 import { ModalService } from './modal.service';
 import { LogoutService } from './logout.service';
+import { TokenHttpInterceptor } from './token.interceptor';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 @NgModule({
   declarations: [],
@@ -17,7 +19,8 @@ import { LogoutService } from './logout.service';
     AuthenticationService,
     ModalService,
     NotificationService,
-    LogoutService
+    LogoutService,
+    { provide: HTTP_INTERCEPTORS, useClass: TokenHttpInterceptor, multi: true }
   ]
 })
 export class CoreModule {
