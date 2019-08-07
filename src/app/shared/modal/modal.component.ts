@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { LoggerService } from '../../core/logger.service';
 
 @Component({
   selector: 'app-modal',
@@ -9,13 +10,13 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class ModalComponent implements OnInit {
   @Input() public windowTitle: string;
 
-  constructor(private activeModal: NgbActiveModal) { }
+  constructor(private activeModal: NgbActiveModal, private loggerService: LoggerService) { }
 
   ngOnInit() {
   }
 
   public close(): void {
-    console.log('action: close modal');
+    this.loggerService.action('Simple modal windows is closing ...');
     this.activeModal.close('Close Click');
   }
 

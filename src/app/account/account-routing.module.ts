@@ -3,12 +3,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { PrivateLayoutComponent } from '../layout/private-layout/private-layout.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthGuard } from './auth.guard';
+import { PartyResolverService } from './party-resolver.service';
 
 const routes: Routes = [
   {
     path: '',
     component: PrivateLayoutComponent,
     canActivate: [AuthGuard],
+    resolve: { data: PartyResolverService},
     children: [
       {
         path: 'claim',

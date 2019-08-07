@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AuthenticationService } from './authentication.service';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
+import { LoggerService } from './logger.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,11 @@ export class LogoutService {
 
   private completionSubject: Subject<boolean> = new Subject<boolean>();
 
-  constructor(private authService: AuthenticationService, private router: Router) {
+  constructor(
+    private authService: AuthenticationService,
+    private loggerService: LoggerService,
+    private router: Router
+  ) {
     this.completionSubject.subscribe(this.subscriptionHandler.bind(this));
   }
 
@@ -20,10 +25,10 @@ export class LogoutService {
 
   private subscriptionHandler(response: boolean): void {
     if (!response) {
-      console.log('ERROR: unable to logout ....');
+      this.loggerService.error('Unable to logout');
       return;
     }
-    console.log('you have been logout');
+    this.loggerService.log('You have been logged out, good bye.');
     this.router.navigate(['user/login']);
   }
 }
