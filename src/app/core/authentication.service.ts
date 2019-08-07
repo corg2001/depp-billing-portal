@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { LoggerService } from './logger.service';
 
 // TODO: move it into it's own file
 enum SessionKeys {
@@ -13,9 +14,8 @@ enum SessionKeys {
 })
 export class AuthenticationService {
 
-  constructor() {
-    const date: Date =  new Date();
-    console.log(`IMPORTANT: authentication service loaded ... ${date}`);
+  constructor(private loggerService: LoggerService) {
+    this.loggerService.log('authentication service loaded');
   }
 
   public logout(completionSubject: Subject<boolean>): void {
@@ -37,10 +37,6 @@ export class AuthenticationService {
   }
 
   public getToken(): string {
-    // if ( !this.isLoggedIn() ) {
-    //   console.log('Error: unable to get token');
-    //   return;
-    // }
     return localStorage.getItem(SessionKeys.token) ? localStorage.getItem(SessionKeys.token) : '';
   }
 

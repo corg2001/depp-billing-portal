@@ -51,11 +51,11 @@ export class LoginComponent implements OnInit {
   }
 
   public loginSubscriptionHandler(response: boolean): void {
-    this.showLoadingSpinner = false;
-    if (response) {
-      this.router.navigate(['/account']);
+    if (!response) {
+      this.showLoadingSpinner = false;
       return;
     }
+    this.router.navigate(['/account']);
   }
 
   public login(): void {

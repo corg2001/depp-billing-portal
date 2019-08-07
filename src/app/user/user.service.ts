@@ -3,6 +3,7 @@ import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/htt
 import { Observable, Subject } from 'rxjs';
 import { AuthenticationService } from '../core/authentication.service';
 import { LoginResponsePayload } from './login-response-payload';
+import { LoggerService } from '../core/logger.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +11,9 @@ import { LoginResponsePayload } from './login-response-payload';
 export class UserService {
 
   constructor(
+    private authService: AuthenticationService,
     private httpClient: HttpClient,
-    private authService: AuthenticationService
+    private loggerService: LoggerService
   ) { }
 
   public login(completionSubject: Subject<boolean>, username: string, password: string): void {
@@ -79,14 +81,16 @@ export class UserService {
     completionSubject.next(true);
   }
 
+
+
   private loginFailureHandler(completionSubject: Subject<boolean>, response: Observable<HttpErrorResponse>): void {
     this.httpErrorHandler(response);
     completionSubject.next(false);
   }
 
-  private httpErrorHandler(error: any): any {
-    console.log('Action: Handling http error');
-    console.log(error);
+  private httpErrorHandler(response: any): any {
+    this.loggerService.action('HTTP Error handler');
+    this.loggerService.error(response.error.message);
   }
 
   public resetPassword(): void {

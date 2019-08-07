@@ -1,13 +1,18 @@
 import { NgModule, SkipSelf, Optional } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 // Development artifacts
-import { NotificationService } from './notification.service';
 import { AuthenticationService } from './authentication.service';
-import { ModalService } from './modal.service';
+import { LoggerService } from './logger.service';
 import { LogoutService } from './logout.service';
+import { ModalService } from './modal.service';
+import { NotificationService } from './notification.service';
+import { PartyService } from './party.service';
+
+
 import { TokenHttpInterceptor } from './token.interceptor';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [],
@@ -17,9 +22,11 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
   exports: [],
   providers: [
     AuthenticationService,
+    LoggerService,
+    LogoutService,
     ModalService,
     NotificationService,
-    LogoutService,
+    PartyService,
     { provide: HTTP_INTERCEPTORS, useClass: TokenHttpInterceptor, multi: true }
   ]
 })

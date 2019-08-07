@@ -3,6 +3,7 @@ import { States } from './us-states.enum';
 import { TimeToCall } from './time-to-call.enum';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
+import { LoggerService } from '../../core/logger.service';
 
 @Component({
   selector: 'app-enroll',
@@ -16,7 +17,7 @@ import { Subject } from 'rxjs';
   public timeToCallOptions: any = [];
   public showConfirmationMessage: boolean = false;
 
-  constructor() { }
+  constructor(private loggerService: LoggerService) { }
 
   ngOnInit() {
     this.completionSubject.subscribe(this.responseHandler.bind(this));
@@ -71,11 +72,9 @@ import { Subject } from 'rxjs';
   private responseHandler(response: any): void {
     this.showConfirmationMessage = true;
     if (!response) {
-      console.log('Failure, There was a problem submitting your request, please try again.');
+      this.loggerService.error('There was a problem submitting your request, please try again.');
       return;
     }
-
-    console.log('Success, enrollment information has been sent!!!');
   }
 
   public submit(): void {
