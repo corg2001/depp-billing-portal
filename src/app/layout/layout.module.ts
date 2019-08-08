@@ -7,6 +7,8 @@ import { PublicLayoutComponent } from './public-layout/public-layout.component';
 import { PrivateLayoutComponent } from './private-layout/private-layout.component';
 import { BaseLayoutComponent } from './base-layout/base-layout.component';
 import { MenuComponent } from './menu/menu.component';
+import { FooterComponent } from './footer/footer.component';
+import { FooterLinksComponent } from './footer/footer-links/footer-links.component';
 
 
 @NgModule({
@@ -14,7 +16,9 @@ import { MenuComponent } from './menu/menu.component';
     PublicLayoutComponent,
     PrivateLayoutComponent,
     BaseLayoutComponent,
-    MenuComponent
+    MenuComponent,
+    FooterComponent,
+    FooterLinksComponent
   ],
   imports: [
     CommonModule,
