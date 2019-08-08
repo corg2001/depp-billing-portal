@@ -8,7 +8,7 @@ import { ClaimListComponent } from './claim-summary/claim-list/claim-list.compon
 import { ClaimService } from './claim.service';
 import { ClaimTableComponent } from './claim-summary/claim-table/claim-table.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import {  NgbModule } from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
   declarations: [
     ClaimSummaryComponent,
@@ -20,7 +20,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     ClaimManagementRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbModule
   ],
   exports: [
     ClaimSummaryComponent

@@ -10,16 +10,16 @@ export class Claim implements ClaimInterface {
   private _jobStatus: JobStatus;
   private _address: string;
   constructor(
-    jobId: string,
-    string: string,
-    claimOrderType: ClaimOrderType,
-    claimDisposition: ClaimDisposition,
-    name: string,
-    jobStatus: JobStatus,
-    address: string
+    jobId?: string,
+    date?: string,
+    claimOrderType?: ClaimOrderType,
+    claimDisposition?: ClaimDisposition,
+    name?: string,
+    jobStatus?: JobStatus,
+    address?: string
   ) {
     this._jobId = jobId;
-    this._date = string;
+    this._date = date;
     this._claimOrderType = claimOrderType;
     this._claimDisposition = claimDisposition;
     this._name = name;
@@ -38,7 +38,7 @@ export class Claim implements ClaimInterface {
     return this._claimOrderType;
   }
 
-  get claimDeposition(): ClaimDisposition {
+  get claimDisposition(): ClaimDisposition {
       return this._claimDisposition;
   }
 
