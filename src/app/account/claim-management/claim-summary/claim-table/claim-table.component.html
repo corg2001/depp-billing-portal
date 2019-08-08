@@ -11,15 +11,23 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor='let claim of claims'>
+      <tr *ngFor='let claim of modifiedClaims'>
         <td scope="row">{{claim.jobId}}</td>
         <td scope="row">{{claim.date}}</td>
         <td>{{claim.claimOrderType}}</td>
-        <td>{{claim.claimDeposition}}</td>
+        <td>{{claim.claimDisposition}}</td>
         <td>{{claim.name}}</td>
         <td>{{claim.jobStatus}}</td>
         <td>{{claim.address}}</td>
       </tr>
     </tbody>
   </table>
+<div class="d-flex justify-content-between">
+  <ngb-pagination [pageSize]="pageSize" [(page)]="page" [collectionSize]="collectionSize" ></ngb-pagination>
+  <select [(ngModel)]="pageSize">
+    <option *ngFor="let list of pageList" [ngValue]="list">{{list}} Items per page</option>
+  </select>
+</div>
+  
+
   

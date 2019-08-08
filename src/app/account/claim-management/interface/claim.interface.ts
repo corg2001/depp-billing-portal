@@ -4,7 +4,7 @@ export interface ClaimInterface {
   readonly jobId: string;
   readonly date: string;
   readonly claimOrderType: ClaimOrderType;
-  readonly claimDeposition: ClaimDisposition;
+  readonly claimDisposition: ClaimDisposition;
   readonly name: string;
   readonly jobStatus: JobStatus;
   readonly address: string;
