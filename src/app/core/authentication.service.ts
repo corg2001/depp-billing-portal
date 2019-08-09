@@ -5,7 +5,8 @@ import { LoggerService } from './logger.service';
 // TODO: move it into it's own file
 enum SessionKeys {
   token = 'token',
-  last_login = 'last_login'
+  last_login = 'last_login',
+  session = 'session'
 }
 
 
@@ -15,7 +16,7 @@ enum SessionKeys {
 export class AuthenticationService {
 
   constructor(private loggerService: LoggerService) {
-    this.loggerService.log('authentication service loaded');
+    this.loggerService.important('authentication service loaded');
   }
 
   public logout(completionSubject: Subject<boolean>): void {
@@ -42,6 +43,7 @@ export class AuthenticationService {
 
   private createSession(token: string, lastLogin: string): boolean {
     localStorage.setItem(SessionKeys.token, token);
+    localStorage.setItem(SessionKeys.session, 'true');
     localStorage.setItem(SessionKeys.last_login, lastLogin);
     return localStorage.getItem(SessionKeys.token) ? true : false;
   }

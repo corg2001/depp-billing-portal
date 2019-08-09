@@ -19,9 +19,12 @@ import { TermsOfUseComponent } from '../terms-of-use/terms-of-use.component';
 
 export class LoginComponent implements OnInit {
 
-  public loginForm: FormGroup;
   public responseSubject: Subject<boolean> = new Subject<boolean>();
+  public dataSubject: Subject<any> = new Subject<any>();
+  public loginForm: FormGroup;
   public showLoadingSpinner: boolean = false;
+  public showResponseError: boolean = false;
+  public responseErrorMessage: string;
 
   // TODO: Pull this information from teh config
   public siblingPortals: any  = {
@@ -37,6 +40,9 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.buildForm();
+    this.dataSubject.subscribe((data: any) => {
+      this.responseErrorMessage = data.error.message;
+    });
     this.responseSubject.subscribe(this.loginSubscriptionHandler.bind(this));
   }
 
@@ -53,6 +59,7 @@ export class LoginComponent implements OnInit {
   public loginSubscriptionHandler(response: boolean): void {
     if (!response) {
       this.showLoadingSpinner = false;
+      this.showResponseError = true;
       return;
     }
     this.router.navigate(['/account']);
@@ -61,7 +68,7 @@ export class LoginComponent implements OnInit {
   public login(): void {
     const username = this.loginForm.get('userName').value.trim();
     const password = this.loginForm.get('userPassword').value.trim();
-    this.userService.login(this.responseSubject, username, password);
+    this.userService.login(this.responseSubject, this.dataSubject, username, password);
     this.showLoadingSpinner = true;
   }
 
@@ -71,6 +78,11 @@ export class LoginComponent implements OnInit {
 
   public openTermsConditionsModal(): void {
     this.ngbModalService.open(TermsOfUseComponent);
+  }
+
+  public resetResponseError(): void {
+    this.responseErrorMessage = '';
+    this.showResponseError = false;
   }
 
 }

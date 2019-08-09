@@ -51,54 +51,32 @@ export class PartyService {
     responseData: Observable<HttpResponse<PartyDetailsPayload>>
   ): void {
     this.loggerService.action(' Party details successfully obtained ...');
-    // subscription.next(true);
+    this.partyDetailsHandler(subscription, responseData);
+    subscription.next(true);
     subscription.complete();
   }
 
-  private getPartyDetailsFailureHandler(subscription: Subscriber<boolean>, responseError: any): void {
+  private getPartyDetailsFailureHandler(subscription: Subscriber<boolean>, responseError?: any): void {
     this.loggerService.error('Unable to retrieve party details');
-    // subscription.next(false);
+    subscription.next(false);
     subscription.complete();
     this.logoutService.logout();
   }
 
-  public lackOfBetterName(partyPayload: any): boolean {
-    this.addressHandler(partyPayload.address);
-    this.companyInfoHandler();
-    return true;
-  }
 
-  private addressHandler(addressFromPayload: any[]): void {
-    const addressList: Address[] = [];
-    for (const address of addressFromPayload) {
-      addressList.push(this.addressFactory(
-        address.addres1,
-        address.addres2,
-        address.zip_code,
-        address.city,
-        address.state,
-        address.country
-      ));
+  public partyDetailsHandler(
+    subscription: Subscriber<boolean>, data: Observable<HttpResponse<PartyDetailsPayload>>
+  ): void {
+    const associations: any  = data['associations']['_association'][0];
+    localStorage.setItem('partyId', associations['account_information']['account_id']);
+    if (!this.validateLocalStorage()) {
+      this.loggerService.error('Unable to get partyId from payload');
     }
-    this.address = addressList;
+    subscription.next(true);
+    subscription.complete();
   }
 
-  private addressFactory(
-    address1: string,
-    address2: string,
-    zipCode: string,
-    city: string,
-    state: string,
-    country: string
-  ): Address {
-    return {
-      address1: address1.trim(),
-      address2: address2.trim(),
-      zipCode: zipCode.trim(),
-      city: city.trim(),
-      state: state.trim(),
-      country: country.trim(),
-    };
+  private validateLocalStorage(): boolean {
+    return localStorage.getItem('partyId') ? true : false;
   }
-  private companyInfoHandler(): void {}
 }
