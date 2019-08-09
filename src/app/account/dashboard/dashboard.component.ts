@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PartyService } from '../../core/party.service';
 import { Subject } from 'rxjs';
 import { LogoutService } from '../../core/logout.service';
+import { ConfigService } from '../../core/config.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,10 +16,13 @@ export class DashboardComponent implements OnInit {
   constructor(
     private partyService: PartyService,
     private logoutService: LogoutService,
+    private configService: ConfigService,
   ) { }
 
   ngOnInit() {
     this.partyDetailsReadySubject.subscribe(this.partyDetailsSubscriptionHandler.bind(this));
+    this.configService.init();
+    // console.log(this.configService.showConfig());
   }
 
   private partyDetailsSubscriptionHandler(response: boolean): void {

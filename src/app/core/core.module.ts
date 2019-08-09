@@ -9,6 +9,7 @@ import { LogoutService } from './logout.service';
 import { ModalService } from './modal.service';
 import { NotificationService } from './notification.service';
 import { PartyService } from './party.service';
+import { ConfigService } from './config.service';
 
 
 import { TokenHttpInterceptor } from './token.interceptor';
@@ -22,6 +23,7 @@ import { TokenHttpInterceptor } from './token.interceptor';
   exports: [],
   providers: [
     AuthenticationService,
+    ConfigService,
     LoggerService,
     LogoutService,
     ModalService,

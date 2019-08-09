@@ -4,6 +4,9 @@ import { Observable } from 'rxjs';
 
 // Development artifacts
 import { PartyService } from '../core/party.service';
+import { ConfigService } from '../core/config.service';
+import { LogoutService } from '../core/logout.service';
+import { LoggerService } from '../core/logger.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +14,12 @@ import { PartyService } from '../core/party.service';
 
 export class PartyResolverService implements Resolve<any> {
 
-  constructor(private partyService: PartyService) {}
+  constructor(
+    private configService: ConfigService,
+    private logoutService: LogoutService,
+    private loggerService: LoggerService,
+    private partyService: PartyService,
+  ) {}
 
   public resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     return this.partyService.init();

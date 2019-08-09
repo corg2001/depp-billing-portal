@@ -16,14 +16,14 @@ export class UserService {
     private loggerService: LoggerService
   ) { }
 
-  public login(completionSubject: Subject<boolean>, username: string, password: string): void {
+  public login(completionSubject: Subject<boolean>, dataSubject: Subject<any>, username: string, password: string): void {
     const URI: string = 'https://unify-hwa-contractor-api-dev.engine.host/authentication/passport/login';
     this.httpClient.post(URI, {
       username,
       password,
     }).subscribe(
-      (response: Observable<HttpResponse<LoginResponsePayload>>) => this.loginSuccessHandler(completionSubject, response),
-      (response: Observable<HttpErrorResponse>) => this.loginFailureHandler(completionSubject, response)
+      (response: Observable<HttpResponse<LoginResponsePayload>>) => this.loginSuccessHandler(completionSubject, dataSubject,  response),
+      (response: Observable<HttpErrorResponse>) => this.loginFailureHandler(completionSubject, dataSubject, response)
     );
   }
 
@@ -72,19 +72,26 @@ export class UserService {
     completionSubject.next(false);
   }
 
-  private loginSuccessHandler(completionSubject: Subject<boolean>, response: Observable<HttpResponse<LoginResponsePayload>>): void {
+  private loginSuccessHandler(
+    completionSubject: Subject<boolean>,
+    dataSubject: Subject<any>,
+    response: Observable<HttpResponse<LoginResponsePayload>>
+  ): void {
     if ( !this.authService.newSession(response) ) {
       // TODO: do a better management of errors
       this.httpErrorHandler('InternalError: Unable to create session ...');
+      dataSubject.next(response);
       completionSubject.next(false);
     }
     completionSubject.next(true);
   }
 
-
-
-  private loginFailureHandler(completionSubject: Subject<boolean>, response: Observable<HttpErrorResponse>): void {
+  private loginFailureHandler(
+    completionSubject: Subject<boolean>,
+    dataSubject: Subject<any>,
+    response: Observable<HttpErrorResponse>): void {
     this.httpErrorHandler(response);
+    dataSubject.next(response);
     completionSubject.next(false);
   }
 
@@ -97,4 +104,3 @@ export class UserService {
     console.log('service: set new password requested!');
   }
 }
-
