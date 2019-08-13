@@ -1,15 +1,16 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light p-0">
   <!--
-  <a class="navbar-brand" href="#">Navbar</a>
-  -->
-
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <a class="navbar-brand" href="#">Navbar</a>
+    -->
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+    aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
+    <ul class="nav nav-pills ml-4">
       <li class="nav-item" *ngFor="let item of mainMenu">
-        <a class="nav-link" routerLink="{{item.path}}" (click)="test(item)">{{ item.label }}</a>
+        <a class="nav-link" routerLink="{{item.path}}" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"
+          (click)="test(item)">{{ item.label }}</a>
       </li>
     </ul>
   </div>
