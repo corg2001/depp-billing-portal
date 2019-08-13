@@ -2,10 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { InvoiceManagementRoutingModule } from './invoice-management-routing.module';
-import { InvoiceTestComponent } from './invoice-test/invoice-test.component';
+import { InvoiceHistoryComponent } from './invoice/invoice-history.component';
 
 @NgModule({
-  declarations: [InvoiceTestComponent],
+  declarations: [InvoiceHistoryComponent],
   imports: [
     CommonModule,
     InvoiceManagementRoutingModule
