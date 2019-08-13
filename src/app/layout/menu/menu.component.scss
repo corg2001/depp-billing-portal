@@ -1,0 +1,23 @@
+#navbarNav {
+  background-color: #e9ecef;
+}
+.nav-pills {
+  .nav-link {
+    font-family: Roboto;
+    font-size: 1rem;
+    margin-right: 0.625rem;
+    text-decoration: none;
+    &:hover {
+      background-color: #f05d21;
+      border-radius: 0;
+      color: #fff;
+      font-weight: 600; 
+    }
+    &.active {
+      background-color: #f05d21;
+      border-radius: 0;
+      font-weight: 600;
+    }
+  }
+}
+    

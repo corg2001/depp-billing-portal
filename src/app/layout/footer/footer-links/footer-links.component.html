@@ -1,29 +1,19 @@
 <div class="row border-bottom border-top pt-4 pb-4 font-weight-light">
-  <div class="col-md-3">
+  <div class="col-md-2">
     <span class="d-block mb-3 footer-links">Company</span>
     <ul class="list-unstyled">
-      <li><a href="#">About</a></li>
-      <li><a href="#">Our Values</a></li>
-      <li><a href="#">Testimonials</a></li>
-      <li><a href="#">News</a></li>
-      <li><a href="#">Privacy Policy</a></li>
-      <li><a href="#">Terms of Use</a></li>
+      <li><a [href]="footerLinks.about" target="_blank">About</a></li>
+      <li><a [href]="footerLinks.values" target="_blank">Our Values</a></li>
+      <li><a [href]="footerLinks.news" target="_blank">News</a></li>
+      <li><a [href]="footerLinks.policy" target="_blank">Privacy Policy</a></li>
+      <li><a [href]="footerLinks.terms" target="_blank">Terms of Use</a></li>
     </ul>
   </div>
-  <div class="col-md-3">
+  <div class="col-md-2">
     <span class="d-block mb-3 footer-links">Support</span>
     <ul class="list-unstyled">
-      <li><a href="#">Account HWA</a></li>
-      <li><a href="#">Account Login</a></li>
-      <li><a href="#">File a Claim</a></li>
-      <li><a href="#">Homeowners FAQs</a></li>
-    </ul>
-  </div>
-  <div class="col-md-3">
-    <span class="d-block mb-3 footer-links">Shop</span>
-    <ul class="list-unstyled text-small">
-      <li><a href="#">View plans</a></li>
-      <li><a href="#">Get a Free Quote</a></li>
+      <li><a [href]="footerLinks.contact" target="_blank">Contact HWA</a></li>
+      <li><a [href]="footerLinks.faqs" target="_blank">Homeowners FAQs</a></li>
     </ul>
   </div>
 </div>
