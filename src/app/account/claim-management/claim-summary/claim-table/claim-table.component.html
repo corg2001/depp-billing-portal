@@ -8,6 +8,7 @@
         <th scope="col" class="text-info">Name</th>
         <th scope="col" class="text-info">Job Status</th>
         <th scope="col" class="text-info">Service Address</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -19,6 +20,7 @@
         <td>{{claim['customer_name']}}</td>
         <td>{{claim['job_status']}}</td>
         <td>{{claim['service_address']}}</td>
+        <td><a class='text-uppercase' (click)="authorizeInvoice()">{{ authorizeInvoiceLinkText }}</a></td>
       </tr>
     </tbody>
   </table>

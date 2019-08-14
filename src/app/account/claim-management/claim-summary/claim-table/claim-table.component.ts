@@ -19,6 +19,7 @@ export class ClaimTableComponent implements OnInit {
   public claimListSubject: Subject<any> = new Subject();
   public completionSubject: Subject<boolean> = new Subject();
   public loading: boolean = true;
+  public authorizeInvoiceLinkText = 'authorize / invoice';
 
   constructor(private _claimsService: ClaimService) { }
 
@@ -37,5 +38,9 @@ export class ClaimTableComponent implements OnInit {
 
   public modifiedClaims(): Claim[] {
     return this.claims.slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
+  }
+
+  public authorizeInvoice(): void {
+    console.log('authorize / invoice link clicked');
   }
 }
