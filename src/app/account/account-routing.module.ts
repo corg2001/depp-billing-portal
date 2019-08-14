@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
 import { PrivateLayoutComponent } from '../layout/private-layout/private-layout.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthGuard } from './auth.guard';
 import { PartyResolverService } from './party-resolver.service';
+import {HelpComponent} from './help/help.component';
 
 const routes: Routes = [
   {
@@ -23,6 +25,10 @@ const routes: Routes = [
       {
         path: 'profile',
         loadChildren: './profile-management/profile-management.module#ProfileManagementModule'
+      },
+      {
+        path: 'help', 
+        component: HelpComponent
       },
       {
         path: '',
