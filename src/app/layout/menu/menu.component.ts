@@ -31,9 +31,9 @@ export class MenuComponent implements OnInit {
     },
     {
       label: 'Help',
-      path: 'account/help',
+      path: '/account/help',
       desc: ''
-    },
+    }
   ];
 
   constructor() { }
