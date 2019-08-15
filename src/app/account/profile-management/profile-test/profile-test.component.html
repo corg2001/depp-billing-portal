@@ -1,0 +1,16 @@
+<div class="container profile-mgnt">
+  <div class="header-txt">Welcome, John</div>
+  <div class="d-flex">
+      <div class="left-nav-bar">
+        <div class="d-flex" [ngClass]="{'left-nav-bar-items': item==='business-info'}" (click)="gotoSections('business-info')">Business Info</div>
+        <div class="d-flex" [ngClass]="{'left-nav-bar-items': item==='documents'}" (click)="gotoSections('documents')">ACH/Documents</div>
+        <div class="d-flex" [ngClass]="{'left-nav-bar-items': item==='agreedrates'}" (click)="gotoSections('agreedrates')">Agreed Rates</div>
+        <div class="d-flex" [ngClass]="{'left-nav-bar-items': item==='serviceareas'}" (click)="gotoSections('serviceareas')">Service Areas</div>
+        <div class="d-flex" [ngClass]="{'left-nav-bar-items': item==='calender'}" (click)="gotoSections('calender')">Calendar</div>
+      </div>
+      <div>
+         <app-business-info *ngIf="item==='business-info'"></app-business-info>
+         <app-ach-documents *ngIf="item==='documents'"></app-ach-documents>
+      </div>
+  </div>
+</div>

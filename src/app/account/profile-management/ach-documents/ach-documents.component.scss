@@ -1,0 +1,39 @@
+
+.documents-container{
+    .info-section{
+        color: rgb(102, 102, 102);
+        font-size: 18px;
+        font-weight: normal;
+        font-style: normal;
+        text-decoration: none;
+        .txt-business{
+            font-weight: 300;
+            font-size: 1.5rem;
+            color: #00849b;
+            padding-top: 15px;
+        }
+        .edit-symbol{
+            text-decoration: underline;
+            color: #00849b !important;
+            cursor: pointer;
+            float: right;
+            margin-top:5px;
+        }
+        .info-items{
+            height:70px;
+            margin-left:40px;
+            border-bottom: 1px solid rgb(221, 221, 221);
+            align-items: center;
+            .item-values{
+                font-weight: 500;
+                a{
+                    text-decoration: underline;
+                    color: #00849b !important;
+                }
+            }
+            .items-part-one{
+                width:800px;
+            }
+        }
+    }
+  }
