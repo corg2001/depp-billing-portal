@@ -1,6 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormsModule, ReactiveFormsModule  } from '@angular/forms';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {
+  FormGroup,
+  FormBuilder,
+  FormsModule,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { ClaimService } from '../../claim.service';
+import { BehaviorSubject } from 'rxjs';
+import { Claim } from '../../model/claims.model';
 
 @Component({
   selector: 'app-search-box',
@@ -8,12 +15,17 @@ import { ClaimService } from '../../claim.service';
   styleUrls: ['./search-box.component.scss']
 })
 export class SearchBoxComponent implements OnInit {
-
+  @Input() public claimSubject$?: BehaviorSubject<
+    Claim[]
+  > = new BehaviorSubject([]);
+  @Output() public updatedClaimsEmitter: EventEmitter<Claim[]> = new EventEmitter<Claim[]>();
   public searchForm: FormGroup;
+  public originalClaimData: Claim[];
 
-  constructor(private _fb: FormBuilder, private _claimService: ClaimService) { }
+  constructor(private _fb: FormBuilder, private _claimService: ClaimService) {}
 
   ngOnInit() {
+    this.originalClaimData = this.claimSubject$.getValue();
     this.searchForm = this._fb.group({
       name: [''],
       jobId: [''],
@@ -22,11 +34,19 @@ export class SearchBoxComponent implements OnInit {
   }
 
   public search(form: FormGroup): void {
-    this._claimService.search(form.controls.name.value, form.controls.jobId.value, form.controls.address.value);
+    form.controls.name.value ||
+    form.controls.jobId.value ||
+    form.controls.address.value
+      ? this.updatedClaimsEmitter.emit(this._claimService.search(
+          this.claimSubject$.getValue(),
+          form.controls.name.value,
+          form.controls.jobId.value,
+          form.controls.address.value
+        ))
+      : this.updatedClaimsEmitter.emit(this.claimSubject$.getValue());
   }
 
-get sf(): any {
-  return this.searchForm.controls;
-}
-
+  get sf(): any {
+    return this.searchForm.controls;
+  }
 }
