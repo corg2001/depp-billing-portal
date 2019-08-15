@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ClaimService } from '../../claim.service';
 import { Claim } from '../../model/claims.model';
-import { Subject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
 
 
 @Component({
@@ -10,6 +10,8 @@ import { Subject } from 'rxjs';
   styleUrls: ['./claim-table.component.scss']
 })
 export class ClaimTableComponent implements OnInit {
+  @Input() public claimSubject$?: BehaviorSubject<Claim[]> = new BehaviorSubject([]);
+  @Input() public searchedClaimSubject$?: BehaviorSubject<Claim[]> = new BehaviorSubject([]);
   public claims: Claim[] = [];
   public page: number;
   public pageSize: number;
@@ -24,17 +26,23 @@ export class ClaimTableComponent implements OnInit {
   constructor(private _claimsService: ClaimService) { }
 
   ngOnInit() {
-    this.claimListSubject.subscribe((claimData: Claim[]) => {
+
+    this.claimSubject$.subscribe((claimData: Claim[]) => {
       this.claims = claimData.slice(0, 100); // TODO: remove the slice and fix the pagination bar
       this.collectionSize = this.claims.length;
       this.loading = false;
     });
+
+    this.searchedClaimSubject$.subscribe((claimData: Claim[]) => {
+      this.claims = claimData.slice(0, 100);
+      this.collectionSize = this.claims.length;
+    })
     this.loading = true;
-    this._claimsService.getClaims(this.completionSubject, this.claimListSubject);
     this.page = 1;
     this.pageSize = 15;
     this.collectionSize = 10;
   }
+
 
   public modifiedClaims(): Claim[] {
     return this.claims.slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);

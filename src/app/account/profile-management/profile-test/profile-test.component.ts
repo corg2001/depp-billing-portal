@@ -6,14 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./profile-test.component.scss']
 })
 export class ProfileTestComponent implements OnInit {
-  public item:string='business';
+  public item: string = 'business';
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
     this.item = 'business-info';
   }
-  gotoSections(item:string){
-    this.item=item;
+  gotoSections(item: string) {
+    this.item = item;
   }
 }
