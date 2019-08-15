@@ -1,0 +1,32 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col" class="text-info">Claim ID</th>
+      <th scope="col" class="text-info">Claim Date</th>
+      <th scope="col" class="text-info">Homeowner Name</th>
+      <th scope="col" class="text-info">Service Address</th>
+      <th scope="col" class="text-info">Invoice No.</th>
+      <th scope="col" class="text-info">Invoice Date</th>
+      <th scope="col" class="text-info">Amount</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor='let invoice of modifiedInvoice()' class="small">
+      <td scope="row">{{invoice['claimId']}}</td>
+      <td scope="row">{{invoice['claimDate'] | date }}</td>
+      <td>{{invoice['homeOwnerName']}}</td>
+      <td>{{invoice['serviceAddress']}}</td>
+      <td>{{invoice['invoiceNo']}}</td>
+      <td>{{invoice['invoiceDate']}}</td>
+      <td>{{invoice['amount']}}</td>
+    </tr>
+  </tbody>
+</table>
+<app-loading-spinner *ngIf="loading"></app-loading-spinner>
+<div class="d-flex justify-content-between">
+<ngb-pagination [pageSize]="pageSize" [(page)]="page" [collectionSize]="collectionSize" ></ngb-pagination>
+
+<!-- <select [(ngModel)]="pageSize">
+  <option *ngFor="let list of pageList" [ngValue]="list">{{list}} Items per page</option>
+</select> -->
+</div>
