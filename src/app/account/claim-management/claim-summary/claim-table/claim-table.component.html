@@ -13,13 +13,13 @@
     </thead>
     <tbody>
       <tr *ngFor='let claim of modifiedClaims()' class="small">
-        <td scope="row">{{claim['job_number']}}</td>
-        <td scope="row">{{claim['date_requested'] | date }}</td>
-        <td>{{claim['claim_type']}}</td>
-        <td>{{claim['claim_disposition']}}</td>
-        <td>{{claim['customer_name']}}</td>
-        <td>{{claim['job_status']}}</td>
-        <td>{{claim['service_address']}}</td>
+        <td scope="row">{{ claim.jobNumber }}</td>
+        <td scope="row">{{ claim.dateRequested | date }}</td>
+        <td>{{ claim.claimType }}</td>
+        <td>{{ claim.claimDisposition }}</td>
+        <td>{{ claim.customerName }}</td>
+        <td>{{ claim.jobStatus }}</td>
+        <td>{{ claim.serviceAddress }}</td>
         <td><a class='text-uppercase' (click)="authorizeInvoice()">{{ authorizeInvoiceLinkText }}</a></td>
       </tr>
     </tbody>

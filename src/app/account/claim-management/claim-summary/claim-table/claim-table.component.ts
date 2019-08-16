@@ -1,7 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ClaimService } from '../../claim.service';
+import { ClaimService } from '../../service/claim.service';
 import { Claim } from '../../model/claims.model';
 import { Subject, BehaviorSubject } from 'rxjs';
+import { ClaimFactoryService } from '../../service/factory/claim.factory.service';
 
 
 @Component({
@@ -23,7 +24,7 @@ export class ClaimTableComponent implements OnInit {
   public loading: boolean = true;
   public authorizeInvoiceLinkText = 'authorize / invoice';
 
-  constructor(private _claimsService: ClaimService) { }
+  constructor() { }
 
   ngOnInit() {
 

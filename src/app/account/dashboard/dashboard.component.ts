@@ -11,24 +11,24 @@ import { ConfigService } from '../../core/config.service';
 })
 export class DashboardComponent implements OnInit {
   public viewReady: boolean = false;
-  private partyDetailsReadySubject: Subject<boolean> = new Subject<boolean>();
+  private partyDetailsReadySubject$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
-    private partyService: PartyService,
-    private logoutService: LogoutService,
-    private configService: ConfigService,
+    private _partyService: PartyService,
+    private _logoutService: LogoutService,
+    private _configService: ConfigService,
   ) { }
 
   ngOnInit() {
-    this.partyDetailsReadySubject.subscribe(this.partyDetailsSubscriptionHandler.bind(this));
-    this.configService.init();
+    this.partyDetailsReadySubject$.subscribe(this.partyDetailsSubscriptionHandler.bind(this));
+    this._configService.init();
     // console.log(this.configService.showConfig());
   }
 
   private partyDetailsSubscriptionHandler(response: boolean): void {
     if ( !response ) {
       console.log('ERROR: unable to process party details');
-      this.logoutService.logout();
+      this._logoutService.logout();
       return;
     }
     this.viewReady = true;
