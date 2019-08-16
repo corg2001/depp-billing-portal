@@ -1,12 +1,12 @@
 import { JobStatus, ClaimOrderType, ClaimDisposition } from '../model/claims.enums';
 
 export interface ClaimInterface {
-  readonly jobId: string;
-  readonly date: string;
-  readonly claimOrderType: ClaimOrderType;
+  readonly jobNumber: string;
+  readonly dateRequested: string;
+  readonly claimType: ClaimOrderType;
   readonly claimDisposition: ClaimDisposition;
-  readonly name: string;
+  readonly customerName: string;
   readonly jobStatus: JobStatus;
-  readonly address: string;
+  readonly serviceAddress: string;
 }
 

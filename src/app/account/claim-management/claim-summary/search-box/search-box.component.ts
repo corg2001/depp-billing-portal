@@ -1,13 +1,12 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import {
   FormGroup,
-  FormBuilder,
-  FormsModule,
-  ReactiveFormsModule
+  FormBuilder
 } from '@angular/forms';
-import { ClaimService } from '../../claim.service';
+import { ClaimService } from '../../service/claim.service';
 import { BehaviorSubject } from 'rxjs';
 import { Claim } from '../../model/claims.model';
+import { ClaimServiceAbstract } from '../../service/claim.abstract.service';
 
 @Component({
   selector: 'app-search-box',
@@ -22,7 +21,7 @@ export class SearchBoxComponent implements OnInit {
   public searchForm: FormGroup;
   public originalClaimData: Claim[];
 
-  constructor(private _fb: FormBuilder, private _claimService: ClaimService) {}
+  constructor(private _fb: FormBuilder, private _claimService: ClaimServiceAbstract) {}
 
   ngOnInit() {
     this.originalClaimData = this.claimSubject$.getValue();
