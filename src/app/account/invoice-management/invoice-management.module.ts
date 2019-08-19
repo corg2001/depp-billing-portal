@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { InvoiceManagementRoutingModule } from './invoice-management-routing.module';
 import { InvoiceHistoryComponent } from './invoice/invoice-history.component';
 import { InvoiceTableComponent } from './invoice/invoice-table/invoice-table.component';
-import { InvoiceListComponent } from './invoice/invoice-list/invoice-list.component';
 import { InvoiceSearchComponent } from './invoice/invoice-search/invoice-search.component';
 import { InvoiceService } from './invoice.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -15,7 +14,6 @@ import { SharedModule } from '../../shared/shared.module';
   declarations: [
     InvoiceHistoryComponent, 
     InvoiceTableComponent,
-    InvoiceListComponent,
     InvoiceSearchComponent
   ],
   imports: [
