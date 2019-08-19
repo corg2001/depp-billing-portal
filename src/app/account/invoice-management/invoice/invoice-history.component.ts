@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-invoice-test',
+  selector: 'app-invoice-history',
   templateUrl: './invoice-history.component.html',
   styleUrls: ['./invoice-history.component.scss']
 })

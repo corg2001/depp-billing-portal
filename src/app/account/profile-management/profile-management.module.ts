@@ -8,10 +8,11 @@ import { AgreedRatesComponent } from './agreed-rates/agreed-rates.component';
 import { ServiceAreasComponent } from './service-areas/service-areas.component';
 import { CalendarComponent } from './calendar/calendar.component';
 
-import {ProfileTestComponent} from './profile-test/profile-test.component';
+import {ProfileComponent} from './profile/profile.component';
 
 @NgModule({
-  declarations: [ProfileTestComponent,BusinessInfoComponent, AchDocumentsComponent, AgreedRatesComponent, ServiceAreasComponent, CalendarComponent],
+  // tslint:disable-next-line: max-line-length
+  declarations: [ProfileComponent,BusinessInfoComponent, AchDocumentsComponent, AgreedRatesComponent, ServiceAreasComponent, CalendarComponent],
   imports: [
     CommonModule,
     ProfileManagementRoutingModule

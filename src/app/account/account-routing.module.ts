@@ -27,8 +27,12 @@ const routes: Routes = [
         loadChildren: './profile-management/profile-management.module#ProfileManagementModule'
       },
       {
-        path: 'help', 
+        path: 'help',
         component: HelpComponent
+      },
+      {
+        path: 'payments',
+        loadChildren: './payment-management/payment-management.module#PaymentManagementModule'
       },
       {
         path: '',
