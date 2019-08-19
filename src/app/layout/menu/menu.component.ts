@@ -16,7 +16,7 @@ export class MenuComponent implements OnInit {
     },
     {
       label: 'Payments',
-      path: '',
+      path: 'payments',
       desc: 'Review Documents'
     },
     {

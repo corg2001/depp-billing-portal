@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-profile-test',
-  templateUrl: './profile-test.component.html',
-  styleUrls: ['./profile-test.component.scss']
+  selector: 'app-profile',
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.scss']
 })
-export class ProfileTestComponent implements OnInit {
+export class ProfileComponent implements OnInit {
   public item: string = 'business';
 
   constructor() {}
