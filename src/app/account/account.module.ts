@@ -11,10 +11,11 @@ import { LayoutModule } from '../layout/layout.module';
 import { PartyResolverService } from './party-resolver.service';
 import {HelpComponent} from './help/help.component';
 
+
 @NgModule({
   declarations: [
     DashboardComponent,
-    HelpComponent
+    HelpComponent,
   ],
   imports: [
     CommonModule,

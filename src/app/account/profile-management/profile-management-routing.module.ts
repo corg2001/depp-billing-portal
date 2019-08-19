@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AchDocumentsComponent } from './ach-documents/ach-documents.component';
-import { ProfileTestComponent } from './profile-test/profile-test.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: ProfileTestComponent,
+    component: ProfileComponent,
   },
   {
     path: 'ach-documents',
