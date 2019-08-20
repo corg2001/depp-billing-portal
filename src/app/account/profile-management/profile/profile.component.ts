@@ -1,17 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 
+import {ProfileManagement} from './../interface/profile-management-enum';
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-  public item: string = 'business';
+  public item:any
+  public profileMgntEnum:any;
 
   constructor() {}
 
   ngOnInit() {
-    this.item = 'business-info';
+    this.profileMgntEnum=ProfileManagement;
+    this.item = this.profileMgntEnum.BusinessInfo;
   }
   gotoSections(item: string) {
     this.item = item;
