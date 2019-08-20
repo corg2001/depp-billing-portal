@@ -1,5 +1,5 @@
 export interface ServiceArea{
-    zipcode:String;
+    zipcode:string;
     hvac:string;
     service:string;
   }
