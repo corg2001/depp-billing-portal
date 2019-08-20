@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { States } from './us-states.enum';
 import { TimeToCall } from './time-to-call.enum';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { LoggerService } from '../../core/logger.service';
 
@@ -17,46 +17,38 @@ import { LoggerService } from '../../core/logger.service';
   public timeToCallOptions: any = [];
   public showConfirmationMessage: boolean = false;
 
-  constructor(private loggerService: LoggerService) { }
+  constructor(private _loggerService: LoggerService, private _formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.completionSubject.subscribe(this.responseHandler.bind(this));
-    this.buildForm();
+    this.enrollForm = this._formBuilder.group({
+      first_name: ['', Validators.required],
+      last_name: ['', Validators.required],
+      business_name: [''],
+      trade_type: [''],
+      address1: [''],
+      address2: [''],
+      city: [''],
+      state: [''],
+      country: [''],
+      postal_code: [''],
+      business_email: [''],
+      business_phone: ['', Validators.required],
+      cities_serve: [''],
+      best_time_to_reach: ['']
+    });
     this.listOfStates = this.enumToArray(States);
     this.timeToCallOptions = this.enumToArray(TimeToCall);
-
   }
 
-  private buildForm(): void {
-    const firstName: FormControl = new FormControl('', Validators.required);
-    const lastName: FormControl = new FormControl('', Validators.required);
-    const businessName: FormControl = new FormControl('', Validators.required);
-    const tradeType: FormControl = new FormControl('', Validators.required);
-    const businessAddress: FormControl = new FormControl('', Validators.required);
-    const businessCity: FormControl = new FormControl('', Validators.required);
-    const businessState: FormControl = new FormControl('', Validators.required);
-    const zipCode: FormControl = new FormControl('', Validators.required);
-    const businessEmail: FormControl = new FormControl('', [Validators.required, Validators.email]);
-    const businessPhone: FormControl = new FormControl('', Validators.required);
-    const serveCities: FormControl = new FormControl('', Validators.required);
-    const timeToCall: FormControl = new FormControl('', Validators.required);
-
-    this.enrollForm = new FormGroup({
-      firstName,
-      lastName,
-      businessName,
-      tradeType,
-      businessAddress,
-      businessCity,
-      businessState,
-      zipCode,
-      businessEmail,
-      businessPhone,
-      serveCities,
-      timeToCall
-    });
+  public get ef(): any {
+    return this.enrollForm.controls;
   }
-
+  public submit(): void {
+    this.showConfirmationMessage = true;
+    console.log('Action: submit enroll form');
+    console.log(this.enrollForm.getRawValue());
+  }
   private enumToArray(source: any): any[] {
     const tmpArray: any[] = [];
     Object.keys(source).forEach(key => {
@@ -72,13 +64,10 @@ import { LoggerService } from '../../core/logger.service';
   private responseHandler(response: any): void {
     this.showConfirmationMessage = true;
     if (!response) {
-      this.loggerService.error('There was a problem submitting your request, please try again.');
+      this._loggerService.error('There was a problem submitting your request, please try again.');
       return;
     }
   }
 
-  public submit(): void {
-    console.log('Action: submit enroll form');
-    console.log(this.enrollForm.getRawValue());
-  }
+ 
 }

@@ -20,7 +20,6 @@
 
 .select-option-default {
   color: red !important;
-  font-size: 6rem !important;
 }
 
 .address-field {
@@ -42,6 +41,23 @@
     width: 32%;
   }
 }
+
+.confrimation-message {
+  text-align: center;
+  margin: 10rem 0;
+  .title {
+    font-weight: 500;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .body {
+    font-size: 1.1rem;
+  }
+  .contact-number {
+    color: $hwa-color-teal;
+  }
+}
+
 
 /*
 

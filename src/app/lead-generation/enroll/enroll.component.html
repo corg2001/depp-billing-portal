@@ -3,84 +3,75 @@
     <div class="page-title">Become an HWA Contractor</div>
   </div>
   <div id="body" class="small" *ngIf="!showConfirmationMessage">
-    <form id="lead-form" [formGroup]="enrollForm">
+    <form id="lead-form" [formGroup]="enrollForm" (ngSubmit)="submit(enrollForm)">
       <div id="first-group">
         <div class="d-flex flex-column flex-md-row justify-content-between">
           <div class="form-group name-field">
             <input
               type="text"
               id="firstName"
-              name="firstName"
+              name="first_name"
               placeholder="First Name"
               class="form-control"
-              formControlName="firstName"
+              formControlName="first_name"
               required
             />
-            <div class="error-container" *ngIf="enrollForm.controls['firstName'].dirty || enrollForm.controls['firstName'].touched">
-              <div class="text-danger py-1" *ngIf="enrollForm.controls['firstName'].invalid">Please provide your name.</div>
-            </div>
           </div>
           <div class="form-group name-field">
             <input
               type="text"
               id="lastName"
-              name="lastName"
+              name="last_name"
               placeholder="Last Name"
               class="form-control"
-              formControlName="lastName"
+              formControlName="last_name"
               required
             />
-            <div class="error-container" *ngIf="enrollForm.controls['lastName'].dirty || enrollForm.controls['lastName'].touched">
-              <div class="text-danger py-1" *ngIf="enrollForm.controls['lastName'].invalid">Please provide your last name.</div>
-            </div>
           </div>
         </div>
         <div class="form-group">
           <input
             type="text"
             id="businessName"
-            name="businessName"
+            name="business_name"
             placeholder="Business Name"
             class="form-control"
-            formControlName="businessName"
-            required
+            formControlName="business_name"
           />
-          <div class="error-container" *ngIf="enrollForm.controls['businessName'].dirty || enrollForm.controls['businessName'].touched">
-            <div class="text-danger py-1" *ngIf="enrollForm.controls['businessName'].invalid">Please provide the name of your business.</div>
-          </div>
         </div>
         <div class="form-group">
           <input
             type="text"
             id="tradeType"
-            name="tradeType"
+            name="trade_type"
             placeholder="Trade Type"
             class="form-control"
-            formControlName="tradeType"
-            required
+            formControlName="trade_type"
           />
-          <div class="error-container" *ngIf="enrollForm.controls['tradeType'].dirty || enrollForm.controls['tradeType'].touched">
-            <div class="text-danger py-1" *ngIf="enrollForm.controls['tradeType'].invalid">Please let us know your trade type.</div>
-          </div>
         </div>
       </div>
       <div id="second-group">
         <div class="form-group">
           <input
             type="text"
-            id="address"
-            name="address"
+            id="address1"
+            name="address1"
             placeholder="Business Address"
             class="form-control"
-            formControlName="businessAddress"
-            required
+            formControlName="address1"
           />
-          <div class="error-container" *ngIf="enrollForm.controls['businessAddress'].dirty || enrollForm.controls['businessAddress'].touched">
-            <div class="text-danger py-1" *ngIf="enrollForm.controls['businessAddress'].invalid">Please provide your business address.</div>
-          </div>
+        </div>
+        <div class="form-group">
+          <input
+            type="text"
+            id="address2"
+            name="address2"
+            placeholder="Business Address"
+            class="form-control"
+            formControlName="address2"
+          />
         </div>
         <div class="d-flex flex-column flex-md-row justify-content-between">
-
           <div class="form-group address-field">
             <input
               type="text"
@@ -88,44 +79,32 @@
               name="city"
               placeholder="City"
               class="form-control"
-              formControlName="businessCity"
-              required
+              formControlName="city"
             />
-            <div class="error-container" *ngIf="enrollForm.controls['businessCity'].dirty || enrollForm.controls['businessCity'].touched">
-              <div class="text-danger py-1" *ngIf="enrollForm.controls['businessCity'].invalid">Please provide your city.</div>
-            </div>
           </div>
           <div class="form-group address-field">
             <select
               id="state"
               name="state"
               class="form-control select"
-              formControlName="businessState"
-              required
+              formControlName="state"
             >
               <option value="" class="select-option-default">State</option>
               <option *ngFor="let state of listOfStates" value="{{state.value}}">{{ state.label}}</option>
             </select>
-            <div class="error-container" *ngIf="enrollForm.controls['businessState'].dirty || enrollForm.controls['businessState'].touched">
-              <div class="text-danger py-1" *ngIf="enrollForm.controls['businessState'].invalid">Please provide your state.</div>
-            </div>
           </div>
           <div class="form-group address-field">
             <input
               type="text"
-              id="zipCode"
-              name="zipCode"
+              id="postalCode"
+              name="postal_code"
               placeholder="Zip code"
               class="form-control"
-              formControlName="zipCode"
-              required
+              formControlName="postal_code"
             />
-            <div class="error-container" *ngIf="enrollForm.controls['zipCode'].dirty || enrollForm.controls['zipCode'].touched">
-              <div class="text-danger  py-1" *ngIf="enrollForm.controls['zipCode'].invalid">Please provide your zip code.</div>
-            </div>
           </div>
         </div>
-      </div>
+      </div> 
       <div id="third-group">
         <div class="form-group">
           <input
@@ -134,26 +113,20 @@
             name="email"
             placeholder="Business Email"
             class="form-control"
-            formControlName="businessEmail"
-            required
+            formControlName="business_email"
           />
-          <div class="error-container" *ngIf="enrollForm.controls['businessEmail'].dirty || enrollForm.controls['businessEmail'].touched">
-            <div class="text-danger py-1" *ngIf="enrollForm.controls['businessEmail'].errors.required">Please provide your business email.</div>
-            <div class="text-danger py-1" *ngIf="enrollForm.controls['businessEmail'].errors.email">Please provide a valid email.</div>
-          </div>
         </div>
         <div class="form-group">
           <input
-            type="text"
+            type="tel"
             id="phone"
-            name="email"
             placeholder="Business Phone Number"
             class="form-control"
-            formControlName="businessPhone"
+            formControlName="business_phone"
             required
           />
-          <div class="error-container" *ngIf="enrollForm.controls['businessPhone'].dirty || enrollForm.controls['businessPhone'].touched">
-            <div class="text-danger py-1" *ngIf="enrollForm.controls['businessPhone'].invalid">Please provide your business phone.</div>
+          <div class="error-container" *ngIf="ef.business_phone.dirty || ef.business_phone.touched">
+            <div class="text-danger py-1" *ngIf="ef.business_phone.invalid">Please provide your business phone.</div>
           </div>
         </div>
         <div class="form-group">
@@ -163,46 +136,38 @@
             name="cities"
             placeholder="Cities you serve"
             class="form-control"
-            formControlName="serveCities"
-            required
+            formControlName="cities_serve"
           />
           <div class="py-1 text-muted">Please provide a comma separated list: Ex: Houston, Austin, San Antonio, etc ...</div>
-          <div class="error-container" *ngIf="enrollForm.controls['serveCities'].dirty || enrollForm.controls['serveCities'].touched">
-            <div class="text-danger py-1" *ngIf="enrollForm.controls['serveCities'].invalid">Please provide a list of cities.</div>
-          </div>
         </div>
         <div class="form-group">
           <select
-            id="timeToCall"
-            name="timeToCall"
+            id="bestTimeToReach"
+            name="bestTimeToReach"
             class="form-control select"
-            formControlName="timeToCall"
+            formControlName="best_time_to_reach"
           >
             <option value="" class="select-option-default">Best Time to call?</option>
             <option *ngFor="let option of timeToCallOptions" value="{{ option.value }}">{{ option.label }}</option>
           </select>
-          <div class="error-container" *ngIf="enrollForm.controls['timeToCall'].dirty || enrollForm.controls['timeToCall'].touched">
-            <div class="text-danger py-1" *ngIf="enrollForm.controls['timeToCall'].invalid">Please provide a best time to call.</div>
+          <div class="error-container" *ngIf="ef.best_time_to_reach.dirty || ef.best_time_to_reach.touched">
+            <div class="text-danger py-1" *ngIf="ef.best_time_to_reach.invalid">Please provide a best time to call.</div>
           </div>
         </div>
       </div>
-      <div id="fourth-group">
-        <div class="form-group">
-          <span class="text-info">** All fields are required.</span>
-        </div>
+      <div class="text-center py-2">
+        <button type="button" class="btn btn-secondary w-50" [disabled]="!enrollForm.valid" type="submit">
+          Get Started
+        </button>
       </div>
     </form>
-    <div class="text-center py-2">
-      <button type="button" class="btn btn-secondary w-50" (click)="submit()" [disabled]="!enrollForm.valid">
-        Get Started
-      </button>
-    </div>
+    
   </div>
-  <div id="footer">
-    <div id="response-message" *ngIf="showConfirmationMessage">
-      <div>Thank you for contacting us!</div>
-      <div>
-        Someone will contact you soon to provide next steps. If you have any questions or inquiries please contact Contractor Relations at 1-888-111-1111.
+  <div id="confirmationMessage">
+    <div id="response-message" *ngIf="showConfirmationMessage" class="confrimation-message">
+      <div class="title">Thank you for contacting us!</div>
+      <div class="body">
+        Someone will contact you soon to provide next steps. If you have any questions or inquiries please contact Contractor Relations at <span class="contact-number">1-888-111-1111.</span> 
       </div>
       <div class="text-center small mt-2"><a routerLink="/user/login">Go back to login</a></div>
     </div>
