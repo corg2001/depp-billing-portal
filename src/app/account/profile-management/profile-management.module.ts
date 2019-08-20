@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ProfileManagementRoutingModule } from './profile-management-routing.module';
 import { BusinessInfoComponent } from './business-info/business-info.component';
@@ -15,7 +16,9 @@ import {ProfileComponent} from './profile/profile.component';
   declarations: [ProfileComponent,BusinessInfoComponent, AchDocumentsComponent, AgreedRatesComponent, ServiceAreasComponent, CalendarComponent],
   imports: [
     CommonModule,
-    ProfileManagementRoutingModule
+    ProfileManagementRoutingModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class ProfileManagementModule { }
