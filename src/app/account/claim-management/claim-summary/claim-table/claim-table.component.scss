@@ -1,11 +1,17 @@
+@import "../../../../../assets/styles/contractor-layout-styles.scss";
+
 select {
   padding: 1rem;
-  border: solid #00849b 0.1rem;
+  border: solid $hwa-color-teal 0.1rem;
 }
 a {
-  color: #f05d21 !important;
+  color: $hwa-color-orange !important;
   &:hover {
     cursor: pointer;
     text-decoration: underline !important;
   }
+}
+
+th {
+  color: $hwa-color-teal;
 }

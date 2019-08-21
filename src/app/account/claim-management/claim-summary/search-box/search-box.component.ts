@@ -3,7 +3,6 @@ import {
   FormGroup,
   FormBuilder
 } from '@angular/forms';
-import { ClaimService } from '../../service/claim.service';
 import { BehaviorSubject } from 'rxjs';
 import { Claim } from '../../model/claims.model';
 import { ClaimServiceAbstract } from '../../service/claim.abstract.service';

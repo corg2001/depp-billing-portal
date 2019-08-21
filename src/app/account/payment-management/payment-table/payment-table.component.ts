@@ -6,10 +6,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./payment-table.component.scss']
 })
 export class PaymentTableComponent implements OnInit {
-
+  public expandRow: boolean = false;
   constructor() { }
 
   ngOnInit() {
   }
 
+  public viewInvoice(): void {
+    this.expandRow = !this.expandRow;
+  }
 }
