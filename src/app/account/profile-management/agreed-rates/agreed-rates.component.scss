@@ -1,0 +1,35 @@
+@import '../../../../assets/styles/contractor-layout-styles';
+
+.agreed-rates-container {
+  .profile-info-section {
+    .txt-agreed-rates {
+      border-bottom: 0.0625rem solid $hwa-color-dark-gray;
+      color: $hwa-color-pelorous;
+      font-weight: 300;
+      font-size: 1.4rem;
+      height: 4rem;
+    }
+    .info-rates {
+      width: 66.50rem;
+    }
+    .profile-info-details {
+      font-size: 1.125rem;
+      height: 4rem;
+    }
+    .profile-agreed-rates {
+      font-weight: bold;
+    }
+    .agreed-rates {
+      border-bottom: 0.0625rem solid $hwa-color-pelorous;
+      color: $hwa-color-pelorous;
+      font-size: 1.125rem;
+    }
+    .agreed-rates-info {
+      padding-top: 1rem;
+    }
+    .work-time {
+      width: 67.75rem;
+    }
+  }
+}
+  
