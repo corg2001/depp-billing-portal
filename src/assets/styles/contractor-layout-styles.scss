@@ -1,27 +1,28 @@
-
-$white: #FFF;
+$white: #fff;
 // Bootstrap overrides
 
 // Color Definitions
 $hwa-color-orange: #f05d21;
+$hwa-color-pelorous: #17A2B8;
 $hwa-color-teal: #00849b;
 $hwa-color-teal-dark: #005260;
 $hwa-color-gray: #666;
 $hwa-color-light-gray: #f7f7f7;
+$hwa-color-dark-gray:#dee2e6;
 
 $primary: $hwa-color-teal;
 $secondary: $hwa-color-orange;
 $bg-color: $white;
 $body-color: $hwa-color-gray;
 
-
-.btn, .btn-primary {
-  background-color: #f05d21!important;
-  border-color: #f05d21!important;
-  color: #fff!important;
+.btn,
+.btn-primary {
+  background-color: $hwa-color-orange !important;
+  border-color: $hwa-color-orange !important;
+  color: $white !important;
 }
 
-@import '../../../node_modules/bootstrap/scss/bootstrap';
+@import "../../../node_modules/bootstrap/scss/bootstrap";
 
 //Custom Styles
 .btn-submit-large {
@@ -36,18 +37,18 @@ a {
 // High-Level Styles
 $primary-dark: $hwa-color-teal-dark;
 $bg-color-accent: $hwa-color-light-gray;
-$brand-accent-color: theme-color('secondary');
+$brand-accent-color: theme-color("secondary");
 $brand-mute-accent-color: #e0eaec;
 $brand-mute-accent-text-color: $body-color;
 $brand-border-color: $gray-300;
 $brand-border-radius: 0.25rem;
 $brand-border: 1px solid $brand-border-color;
-$brand-box-shadow-color: darken(theme-color('secondary'), 20);
+$brand-box-shadow-color: darken(theme-color("secondary"), 20);
 $brand-light-gray: $gray-100;
-$brand-font-family: 'Roboto', sans-serif;
+$brand-font-family: "Roboto", sans-serif;
 
 // Button Styles
-$brand-button-color: theme-color('secondary');
+$brand-button-color: theme-color("secondary");
 $brand-button-text-color: $white;
 
 $brand-secondary-button-color: #056072;
@@ -62,17 +63,15 @@ $brand-accent-button-save-icon: $white;
 $brand-accent-button-cancel-icon: $white;
 
 $theme-colors: (
-        primary: $primary,
-        secondary: $secondary,
-        success: $green,
-        info: $cyan,
-        warning: $yellow,
-        danger: $red,
-        light: $hwa-color-light-gray,
-        dark: $hwa-color-gray
+  primary: $primary,
+  secondary: $secondary,
+  success: $green,
+  info: $cyan,
+  warning: $yellow,
+  danger: $red,
+  light: $hwa-color-light-gray,
+  dark: $hwa-color-gray
 );
-
-
 
 // TODO: FIND OUT HOW TO USE BOOTSTRAP BY IMPORTING THE NEXT FILES
 // Required
@@ -85,7 +84,3 @@ $theme-colors: (
 //@import "../../../node_modules/bootstrap/scss/images";
 //@import "../../../node_modules/bootstrap/scss/code";
 //@import "../../../node_modules/bootstrap/scss/grid";
-
-
-
-

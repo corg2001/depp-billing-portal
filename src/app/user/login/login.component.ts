@@ -25,6 +25,7 @@ export class LoginComponent implements OnInit {
   public showLoadingSpinner: boolean = false;
   public showResponseError: boolean = false;
   public responseErrorMessage: string;
+  private errorMessage:string="Sign in failed. Please re-enter your password to try again. If you need help, give Contractor Relations a call at 1-888-888-8888";
 
   // TODO: Pull this information from teh config
   public siblingPortals: any  = {
@@ -41,6 +42,9 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.buildForm();
     this.dataSubject.subscribe((data: any) => {
+      if(data.error.message==='user authentication failed'){
+        data.error.message=this.errorMessage;
+      }
       this.responseErrorMessage = data.error.message;
     });
     this.responseSubject.subscribe(this.loginSubscriptionHandler.bind(this));
