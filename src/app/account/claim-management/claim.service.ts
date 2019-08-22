@@ -1,11 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Claim } from './model/claims.model';
-import {
-  JobStatus,
-  ClaimOrderType,
-  ClaimDisposition
-} from './model/claims.enums';
 
 import { Observable, Subject } from 'rxjs';
 import {
