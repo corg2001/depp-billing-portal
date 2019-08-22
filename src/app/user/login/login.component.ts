@@ -9,26 +9,23 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PrivacyPolicyComponent } from '../privacy-policy/privacy-policy.component';
 import { TermsOfUseComponent } from '../terms-of-use/terms-of-use.component';
 
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-
-
 export class LoginComponent implements OnInit {
-
   public responseSubject: Subject<boolean> = new Subject<boolean>();
   public dataSubject: Subject<any> = new Subject<any>();
   public loginForm: FormGroup;
   public showLoadingSpinner: boolean = false;
   public showResponseError: boolean = false;
   public responseErrorMessage: string;
-  private errorMessage:string="Sign in failed. Please re-enter your password to try again. If you need help, give Contractor Relations a call at 1-888-888-8888";
+  private errorMessage: string =
+    'Sign in failed. Please re-enter your password to try again. If you need help, give Contractor Relations a call at 1-888-888-8888';
 
   // TODO: Pull this information from teh config
-  public siblingPortals: any  = {
+  public siblingPortals: any = {
     customer: 'https://unify-hwa-portal-qa10.engine.host',
     realtor: 'https://unify-hwa-realtor-portal-qa10.engine.host'
   };
@@ -36,14 +33,14 @@ export class LoginComponent implements OnInit {
   constructor(
     private userService: UserService,
     private ngbModalService: NgbModal,
-    private router: Router,
-  ) { }
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.buildForm();
     this.dataSubject.subscribe((data: any) => {
-      if(data.error.message==='user authentication failed'){
-        data.error.message=this.errorMessage;
+      if (data.error.message === 'user authentication failed') {
+        data.error.message = this.errorMessage;
       }
       this.responseErrorMessage = data.error.message;
     });
@@ -51,12 +48,15 @@ export class LoginComponent implements OnInit {
   }
 
   public buildForm(): void {
-    const userName: FormControl = new FormControl('', [Validators.required, Validators.email]);
+    const userName: FormControl = new FormControl('', [
+      Validators.required,
+      Validators.email
+    ]);
     const userPassword: FormControl = new FormControl('', Validators.required);
 
     this.loginForm = new FormGroup({
       userName,
-      userPassword,
+      userPassword
     });
   }
 
@@ -72,7 +72,12 @@ export class LoginComponent implements OnInit {
   public login(): void {
     const username = this.loginForm.get('userName').value.trim();
     const password = this.loginForm.get('userPassword').value.trim();
-    this.userService.login(this.responseSubject, this.dataSubject, username, password);
+    this.userService.login(
+      this.responseSubject,
+      this.dataSubject,
+      username,
+      password
+    );
     this.showLoadingSpinner = true;
   }
 
@@ -88,5 +93,4 @@ export class LoginComponent implements OnInit {
     this.responseErrorMessage = '';
     this.showResponseError = false;
   }
-
 }
