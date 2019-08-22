@@ -77,6 +77,7 @@ export class UserService {
     dataSubject: Subject<any>,
     response: Observable<HttpResponse<LoginResponsePayload>>
   ): void {
+ 
     if ( !this.authService.newSession(response) ) {
       // TODO: do a better management of errors
       this.httpErrorHandler('InternalError: Unable to create session ...');
