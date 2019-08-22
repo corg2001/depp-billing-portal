@@ -16,6 +16,8 @@ export class ClaimSummaryComponent implements OnInit {
   public completionSubject$: Subject<boolean> = new Subject();
   public searchedClaimSubject$?: BehaviorSubject<Claim[]> = new BehaviorSubject([]);
   public claims: Claim[] = [];
+  public subTitleText1: string = 'My Recent Activity';
+  public subTitleText2: string = 'View your claims below';
 
 
   constructor(private _claimsService: ClaimServiceAbstract, private _claimFactoryService: ClaimFactoryServiceAbstract) {}

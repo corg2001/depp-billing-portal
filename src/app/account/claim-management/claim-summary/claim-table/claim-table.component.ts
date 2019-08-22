@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ClaimService } from '../../service/claim.service';
 import { Claim } from '../../model/claims.model';
 import { Subject, BehaviorSubject } from 'rxjs';
-import { ClaimFactoryService } from '../../service/factory/claim.factory.service';
 
 
 @Component({

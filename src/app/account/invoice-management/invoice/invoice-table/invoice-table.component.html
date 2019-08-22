@@ -1,13 +1,13 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th scope="col" class="text-info">Claim ID</th>
-      <th scope="col" class="text-info">Claim Date</th>
-      <th scope="col" class="text-info">Homeowner Name</th>
-      <th scope="col" class="text-info">Service Address</th>
-      <th scope="col" class="text-info">Invoice No.</th>
-      <th scope="col" class="text-info">Invoice Date</th>
-      <th scope="col" class="text-info">Amount</th>
+      <th scope="col">Claim ID</th>
+      <th scope="col">Claim Date</th>
+      <th scope="col">Homeowner Name</th>
+      <th scope="col">Service Address</th>
+      <th scope="col">Invoice No.</th>
+      <th scope="col">Invoice Date</th>
+      <th scope="col">Amount</th>
     </tr>
   </thead>
   <tbody>
@@ -23,7 +23,7 @@
   </tbody>
 </table>
 <app-loading-spinner *ngIf="loading"></app-loading-spinner>
-<div class="d-flex justify-content-between">
+<div>
 <ngb-pagination [pageSize]="pageSize" [(page)]="page" [collectionSize]="collectionSize" ></ngb-pagination>
 
 <!-- <select [(ngModel)]="pageSize">
