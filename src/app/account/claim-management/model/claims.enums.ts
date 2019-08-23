@@ -1,6 +1,8 @@
 export enum JobStatus {
-  needsAuth = 'Needs Authorization',
-  inProgress = 'Work in Progress'
+  wip = 'WIP',
+  authorized = 'Authorized',
+  complete = 'Complete',
+  invoice = 'Invoice'
 }
 export enum ClaimOrderType {
   replace = 'Replace',
@@ -11,4 +13,10 @@ export enum ClaimDisposition {
   recall = 'Recall',
   cashout = 'Cashout',
   replacement = 'Replacement'
+}
+
+export enum LinkText {
+  authorize = 'Authorize',
+  complete = 'Complete Job',
+  invoice = 'Invoice'
 }

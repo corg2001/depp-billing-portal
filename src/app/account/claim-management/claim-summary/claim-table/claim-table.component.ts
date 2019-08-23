@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ClaimService } from '../../service/claim.service';
 import { Claim } from '../../model/claims.model';
 import { Subject, BehaviorSubject } from 'rxjs';
-import { ClaimFactoryService } from '../../service/factory/claim.factory.service';
+import { JobStatus, LinkText } from '../../model/claims.enums';
 
 
 @Component({
@@ -29,19 +29,18 @@ export class ClaimTableComponent implements OnInit {
   ngOnInit() {
 
     this.claimSubject$.subscribe((claimData: Claim[]) => {
-      this.claims = claimData.slice(0, 100); // TODO: remove the slice and fix the pagination bar
+      this.claims = claimData;
       this.collectionSize = this.claims.length;
       this.loading = false;
     });
 
     this.searchedClaimSubject$.subscribe((claimData: Claim[]) => {
-      this.claims = claimData.slice(0, 100);
+      this.claims = claimData;
       this.collectionSize = this.claims.length;
-    })
+    });
     this.loading = true;
     this.page = 1;
-    this.pageSize = 15;
-    this.collectionSize = 10;
+    this.pageSize = 10;
   }
 
 
@@ -51,5 +50,11 @@ export class ClaimTableComponent implements OnInit {
 
   public authorizeInvoice(): void {
     console.log('authorize / invoice link clicked');
+  }
+
+  public authorizeLinkText(jobStatus: JobStatus): string {
+    // tslint:disable-next-line: max-line-length
+    return jobStatus === JobStatus.authorized ? LinkText.complete : jobStatus === JobStatus.wip ? LinkText.authorize : jobStatus === JobStatus.complete ? LinkText.invoice : '';
+    
   }
 }

@@ -1,5 +1,27 @@
-.claim-summary-title { 
-    color: #f05d21;
-    font-size: 2rem;
-    margin-bottom: .5rem;
+@import "../../../../assets/styles/contractor-layout-styles";
+header { 
+  margin: 0 !important;
+}
+.login-info { 
+  color: $hwa-color-gray
+}
+.claim-summary {
+  border-top: 1rem solid $hwa-color-teal;
+
+  .activity {
+    padding: 1rem;
+    .sub-title {
+      color: $hwa-color-orange;
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+    }
+    .sub-title2 {
+      display: block;
+      font-size: 1rem;
+      font-weight: 400;
+    }
+  }
+  .search-box {
+    margin: 1rem;
+  }
 }

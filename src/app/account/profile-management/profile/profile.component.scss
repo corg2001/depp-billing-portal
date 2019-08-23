@@ -1,10 +1,5 @@
-.header-txt {
-  font-weight: 300;
-  font-size: 1.875rem;
-  color: #00849b;
-  margin-bottom: 1.5625rem;
-  margin-top: 0.9375rem;
-}
+@import '../../../../assets/styles/contractor-layout-styles';
+
 .profile-mgnt {
   display: flex;
   justify-content: space-between;
@@ -15,21 +10,21 @@
 
   .left-nav-bar {
     width: 11.25rem;
-    border-right: 0.0625rem solid rgb(221, 221, 221);
+    border-right: 0.0625rem solid $hwa-color-light-gray;
     div {
       height: 4.375rem;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      border-bottom: 0.0625rem solid rgb(221, 221, 221);
-      color: rgb(102, 102, 102);
+      border-bottom: 0.0625rem solid $hwa-color-light-gray;
+      color: $hwa-color-gray;
       font-size: 1rem;
       font-weight: normal;
       font-style: normal;
     }
     .left-nav-bar-items {
-      background-color: rgb(247, 247, 247);
-      color: rgb(0, 0, 0);
+      background-color: $hwa-color-light-gray;
+      color: black;
       font-size: 1rem;
     }
   }

@@ -1,17 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 
+
+
+
+import {ProfileManagementTypes} from './../interface/profile-management-enum';
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-  public item: string = 'business';
+  public item:any
+  public profileManagementTypes=ProfileManagementTypes;
 
-  constructor() {}
+  constructor() {
+  }
 
   ngOnInit() {
-    this.item = 'business-info';
+    this.item = this.profileManagementTypes.BusinessInfo;
   }
   gotoSections(item: string) {
     this.item = item;

@@ -1,8 +1,24 @@
 <div id="claim-summary-container" class="d-flex flex-column">
-  <div>
-    <app-search-box [claimSubject$]="claimListSubject$" (updatedClaimsEmitter)='search($event)'></app-search-box>
-  </div>
-  <div>
-    <app-claim-table [claimSubject$]="claimListSubject$" [searchedClaimSubject$]='searchedClaimSubject$'></app-claim-table>
+  <header class="header-txt">Welcome, John
+  </header>
+  <p class="login-info">Last Login: Monday, October 11, 2019 11:29 AM CST</p>
+  <app-claim-notification [claimSubject$]="claimListSubject$"></app-claim-notification>
+  <div class="claim-summary">
+    <div class="activity">
+      <span class="sub-title">{{ subTitleText1 }}</span>
+      <span class="sub-title2">{{ subTitleText2 }}</span>
+    </div>
+    <div class="search-box">
+      <app-search-box
+        [claimSubject$]="claimListSubject$"
+        (updatedClaimsEmitter)="search($event)"
+      ></app-search-box>
+    </div>
+    <div>
+      <app-claim-table
+        [claimSubject$]="claimListSubject$"
+        [searchedClaimSubject$]="searchedClaimSubject$"
+      ></app-claim-table>
+    </div>
   </div>
 </div>

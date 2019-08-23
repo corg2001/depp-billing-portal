@@ -2,15 +2,17 @@
   <div class="header-txt">Welcome, John</div>
   <div class="d-flex profile-mgnt">
       <div class="left-nav-bar">
-        <div class="d-flex" [ngClass]="{'left-nav-bar-items': item==='business-info'}" (click)="gotoSections('business-info')">Business Info</div>
-        <div class="d-flex" [ngClass]="{'left-nav-bar-items': item==='documents'}" (click)="gotoSections('documents')">ACH/Documents</div>
-        <div class="d-flex" [ngClass]="{'left-nav-bar-items': item==='agreedrates'}" (click)="gotoSections('agreedrates')">Agreed Rates</div>
-        <div class="d-flex" [ngClass]="{'left-nav-bar-items': item==='serviceareas'}" (click)="gotoSections('serviceareas')">Service Areas</div>
-        <div class="d-flex" [ngClass]="{'left-nav-bar-items': item==='calender'}" (click)="gotoSections('calender')">Calendar</div>
+        <div class="d-flex" [ngClass]="{'left-nav-bar-items': item === profileManagementTypes.BusinessInfo}" (click)="gotoSections(profileManagementTypes.BusinessInfo)">Business Info</div>
+        <div class="d-flex" [ngClass]="{'left-nav-bar-items': item === profileManagementTypes.Documents}" (click)="gotoSections(profileManagementTypes.Documents)">ACH/Documents</div>
+        <div class="d-flex" [ngClass]="{'left-nav-bar-items': item === profileManagementTypes.AgreedRates}" (click)="gotoSections(profileManagementTypes.AgreedRates)">Agreed Rates</div>
+        <div class="d-flex" [ngClass]="{'left-nav-bar-items': item === profileManagementTypes.ServiceArea}" (click)="gotoSections(profileManagementTypes.ServiceArea)">Service Areas</div>
+        <div class="d-flex" [ngClass]="{'left-nav-bar-items': item === profileManagementTypes.Calender}" (click)="gotoSections(profileManagementTypes.Calender)">Calendar</div>
       </div>
       <div class="profile-content">
-         <app-business-info *ngIf="item==='business-info'"></app-business-info>
-         <app-ach-documents *ngIf="item==='documents'"></app-ach-documents>
+         <app-business-info *ngIf="item === profileManagementTypes.BusinessInfo"></app-business-info>
+         <app-ach-documents *ngIf="item === profileManagementTypes.Documents"></app-ach-documents>
+         <app-agreed-rates *ngIf="item === profileManagementTypes.AgreedRates"></app-agreed-rates>
+         <app-service-areas *ngIf="item===profileManagementTypes.ServiceArea"></app-service-areas>
       </div>
   </div>
 

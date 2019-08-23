@@ -1,5 +1,6 @@
-@import '../../../../../assets/styles/contractor-layout-styles.scss';
+@import "./../../../../../assets/styles/contractor-layout-styles.scss";
 
-th {
-  color: $hwa-color-teal;
+select { 
+  padding: 1rem;
+  border: solid #00849b .1rem;
 }

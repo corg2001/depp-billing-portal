@@ -3,10 +3,12 @@ $white: #fff;
 
 // Color Definitions
 $hwa-color-orange: #f05d21;
+$hwa-color-pelorous: #17a2b8;
 $hwa-color-teal: #00849b;
 $hwa-color-teal-dark: #005260;
 $hwa-color-gray: #666;
 $hwa-color-light-gray: #f7f7f7;
+$hwa-color-dark-gray: #dee2e6;
 
 $primary: $hwa-color-teal;
 $secondary: $hwa-color-orange;
@@ -30,6 +32,25 @@ $body-color: $hwa-color-gray;
 
 a {
   text-decoration: underline;
+}
+
+.header-txt {
+  font-weight: 300;
+  font-size: 1.875rem;
+  color: $hwa-color-teal;
+  margin-bottom: 1.5625rem;
+  margin-top: 0.9375rem;
+}
+
+th {
+  color: $hwa-color-pelorous;
+}
+
+ngb-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
 }
 
 // High-Level Styles

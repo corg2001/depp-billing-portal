@@ -11,11 +11,13 @@ import { SharedModule } from '../../shared/shared.module';
 import { ClaimFactoryService } from './service/factory/claim.factory.service';
 import { ClaimServiceAbstract } from './service/claim.abstract.service';
 import { ClaimFactoryServiceAbstract } from './service/factory/claim.factory.abstract.service';
+import { ClaimNotificationComponent } from './claim-summary/claim-notification/claim-notification.component';
 @NgModule({
   declarations: [
     ClaimSummaryComponent,
     SearchBoxComponent,
-    ClaimTableComponent
+    ClaimTableComponent,
+    ClaimNotificationComponent
   ],
   imports: [
     CommonModule,
@@ -29,12 +31,12 @@ import { ClaimFactoryServiceAbstract } from './service/factory/claim.factory.abs
   providers: [
     {
       provide: ClaimServiceAbstract,
-      useClass: ClaimService,
+      useClass: ClaimService
     },
     {
       provide: ClaimFactoryServiceAbstract,
       useClass: ClaimFactoryService
     }
-    , ClaimFactoryService]
+  ]
 })
 export class ClaimManagementModule {}

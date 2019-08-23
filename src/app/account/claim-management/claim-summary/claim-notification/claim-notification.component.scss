@@ -1,0 +1,13 @@
+@import "../../../../../assets/styles/contractor-layout-styles.scss";
+
+.notification {
+    padding: 1rem;
+    border: .1rem solid $hwa-color-orange;
+    margin: 1rem 0;
+    font-size: 1.1rem;
+    color: $hwa-color-gray;
+    .notification-number {
+        color: $hwa-color-teal;
+        font-weight: 700;
+    }
+}
