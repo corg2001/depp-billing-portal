@@ -1,20 +1,22 @@
+@import "../../../assets/styles/contractor-layout-styles.scss";
 #navbarNav {
-  background-color: #e9ecef;
+  background-color: $hwa-color-dark-gray;
 }
 .nav-pills {
   .nav-link {
+    color: $hwa-color-teal;
     font-family: Roboto;
     font-size: 1rem;
     margin-right: 0.625rem;
     text-decoration: none;
     &:hover {
-      background-color: #f05d21;
+      background-color: $hwa-color-orange;
       border-radius: 0;
-      color: #fff;
+      color: $white;
       font-weight: 600; 
     }
     &.active {
-      background-color: #f05d21;
+      background-color: $hwa-color-orange;
       border-radius: 0;
       font-weight: 600;
     }

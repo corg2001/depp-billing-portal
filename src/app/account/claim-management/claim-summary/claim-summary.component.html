@@ -1,5 +1,8 @@
 <div id="claim-summary-container" class="d-flex flex-column">
-  <header class="header-txt">Welcome, John</header>
+  <header class="header-txt">Welcome, John
+  </header>
+  <p class="login-info">Last Login: Monday, October 11, 2019 11:29 AM CST</p>
+  <app-claim-notification [claimSubject$]="claimListSubject$"></app-claim-notification>
   <div class="claim-summary">
     <div class="activity">
       <span class="sub-title">{{ subTitleText1 }}</span>

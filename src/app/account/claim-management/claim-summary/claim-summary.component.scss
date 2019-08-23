@@ -1,6 +1,11 @@
 @import "../../../../assets/styles/contractor-layout-styles";
+header { 
+  margin: 0 !important;
+}
+.login-info { 
+  color: $hwa-color-gray
+}
 .claim-summary {
-  border: 0.1rem solid $hwa-color-gray;
   border-top: 1rem solid $hwa-color-teal;
 
   .activity {
