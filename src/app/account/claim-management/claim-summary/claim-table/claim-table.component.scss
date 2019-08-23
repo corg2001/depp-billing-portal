@@ -5,7 +5,7 @@ select {
   border: solid #00849b 0.1rem;
 }
 a {
-  color: #f05d21 !important;
+  color: $hwa-color-orange!important;
   &:hover {
     cursor: pointer;
     text-decoration: underline !important;

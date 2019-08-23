@@ -20,7 +20,7 @@
         <td>{{ claim.customerName }}</td>
         <td>{{ claim.jobStatus }}</td>
         <td>{{ claim.serviceAddress }}</td>
-        <td><a class='text-uppercase' (click)="authorizeInvoice()">{{ authorizeInvoiceLinkText }}</a></td>
+        <td><a class='text-uppercase' (click)="authorizeInvoice()">{{ authorizeLinkText(claim.jobStatus) }}</a></td>
       </tr>
     </tbody>
   </table>

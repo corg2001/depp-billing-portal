@@ -77,11 +77,11 @@ export class ClaimService {
       const jobIdInput = jobId.toLowerCase();
       const addressInput = address.toLowerCase();
       return name
-        ? claim['customer_name'].toLowerCase().includes(nameInput)
+        ? claim.customerName.toLowerCase().includes(nameInput)
         : jobId
-        ? claim['job_number'].toLowerCase().includes(jobIdInput)
+        ? claim.jobNumber.toLowerCase().includes(jobIdInput)
         : address
-        ? claim['service_address'].toLowerCase().includes(addressInput)
+        ? claim.serviceAddress.toLowerCase().includes(addressInput)
         : claim;
     });
   }
