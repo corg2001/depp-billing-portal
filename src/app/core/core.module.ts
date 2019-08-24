@@ -13,6 +13,8 @@ import { ConfigService } from './config.service';
 
 
 import { TokenHttpInterceptor } from './token.interceptor';
+import { WindowRefAbstract } from './window-ref.abstract.service';
+import { WindowRefService } from './window-ref.service';
 
 
 @NgModule({
@@ -29,7 +31,9 @@ import { TokenHttpInterceptor } from './token.interceptor';
     ModalService,
     NotificationService,
     PartyService,
-    { provide: HTTP_INTERCEPTORS, useClass: TokenHttpInterceptor, multi: true }
+
+    { provide: HTTP_INTERCEPTORS, useClass: TokenHttpInterceptor, multi: true },
+    { provide: WindowRefAbstract, useClass: WindowRefService}
   ]
 })
 export class CoreModule {

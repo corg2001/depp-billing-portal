@@ -1,4 +1,6 @@
-<table class="table table-striped">
+<app-loading-spinner *ngIf="loading"></app-loading-spinner>
+<ng-container *ngIf="claimsFound">
+  <table class="table table-striped">
     <thead>
       <tr>
         <th scope="col">Job ID</th>
@@ -12,7 +14,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor='let claim of modifiedClaims()' class="small">
+      <tr *ngFor="let claim of modifiedClaims()" class="small">
         <td scope="row">{{ claim.jobNumber }}</td>
         <td scope="row">{{ claim.dateRequested | date }}</td>
         <td>{{ claim.claimType }}</td>
@@ -20,18 +22,28 @@
         <td>{{ claim.customerName }}</td>
         <td>{{ claim.jobStatus }}</td>
         <td>{{ claim.serviceAddress }}</td>
-        <td><a class='text-uppercase' (click)="authorizeInvoice()">{{ authorizeLinkText(claim.jobStatus) }}</a></td>
+        <td>
+          <a
+            class="text-uppercase"
+            (click)="authorizeInvoice(claim.jobNumber)"
+            >{{ authorizeLinkText(claim.jobStatus) }}</a
+          >
+        </td>
       </tr>
     </tbody>
   </table>
-  <app-loading-spinner *ngIf="loading"></app-loading-spinner>
-<div>
-  <ngb-pagination [pageSize]="pageSize" [(page)]="page" [collectionSize]="collectionSize" ></ngb-pagination>
-  <!--
-  <select [(ngModel)]="pageSize">
-    <option *ngFor="let list of pageList" [ngValue]="list">{{list}} Items per page</option>
-  </select>
-  -->
-</div>
-  
-
+  <div>
+    <ngb-pagination
+      [pageSize]="pageSize"
+      [(page)]="page"
+      [collectionSize]="collectionSize"
+    ></ngb-pagination>
+  </div>
+</ng-container>
+<ng-container *ngIf="!claimsFound && !loading">
+  <div>
+    <p>
+      Please contact Contractor Relations at XXX-XXX-XXXX for assistance.
+    </p>
+  </div>
+</ng-container>
