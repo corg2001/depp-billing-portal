@@ -37,7 +37,7 @@ export class ClaimService implements ClaimServiceAbstract {
     claimData: BehaviorSubject<ClaimPayloadInterface[]>
   ): void {
     const uri: string =
-      'https://unify-hwa-contractor-api-dev.engine.host/services/vendor/purchase-orders';
+      'https://unify-hwa-contractor-api-qa11.engine.host/services/vendor/purchase-orders';
     const partyId: string = this._configService.getPartyId();
     const companyInfo: string = this._configService.getCompanyInfo();
     const params: HttpParams = this.getClaimParams(partyId, companyInfo);
