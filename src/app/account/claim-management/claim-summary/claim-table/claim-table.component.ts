@@ -69,6 +69,7 @@ export class ClaimTableComponent implements OnInit {
   }
 
   public authorizeInvoice(jobNumber: string): void {
+    this.loading = true;
     const dataSubject$: Subject<any> = new Subject<any>();
     const completedSubject$: Subject<boolean> = new Subject<boolean>();
     this._claimService.authInvoiceRedirect(
@@ -78,8 +79,8 @@ export class ClaimTableComponent implements OnInit {
     );
     completedSubject$.subscribe((success: boolean) => {
       success
-        ? this._authorizeInvoicSuccessHandler(dataSubject$)
-        : this._authorizeInvoicErrorHandler(dataSubject$);
+        ? (this._authorizeInvoicSuccessHandler(dataSubject$), this.loading = false)
+        : (this._authorizeInvoicErrorHandler(dataSubject$), this.loading = false);
     });
     console.log('authorize / invoice link clicked');
   }
@@ -97,7 +98,7 @@ export class ClaimTableComponent implements OnInit {
 
   private _authorizeInvoicSuccessHandler(dataSubject$: Subject<any>): void {
     dataSubject$.subscribe((data: any) => {
-      this._windowRefService.window.open(data, '_blank');
+      this._windowRefService.window.open(data.url, '_blank');
     });
   }
 
