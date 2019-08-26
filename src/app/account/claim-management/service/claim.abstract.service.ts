@@ -34,4 +34,19 @@ export abstract class ClaimServiceAbstract {
     jobId?: string,
     address?: string
   ): Claim[];
+
+  abstract  authInvoiceRedirect(
+    jobNumber: string,
+    dataSubject$: Subject<any>,
+    completedSubject$: Subject<boolean>
+  ): void;
+
+  abstract  getAuthInvoiceParams(
+    partyId: string,
+    jobNumber: string
+  ): HttpParams;
+
+abstract  authInvoiceSuccessHandler(dataSubject$: Subject<any>, completedSubject$: Subject<boolean>, response: any): void;
+
+abstract authInvoiceErroreHandler(dataSubject$: Subject<any>, completedSubject$: Subject<boolean>, response: any): void;
 }

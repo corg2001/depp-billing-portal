@@ -18,11 +18,12 @@ import { ConfigService } from '../../../core/config.service';
 import { LoggerService } from '../../../core/logger.service';
 import { ClaimPayloadInterface } from '../interface/claim.payload.interface';
 import { ClaimFactoryService } from './factory/claim.factory.service';
+import { ClaimServiceAbstract } from './claim.abstract.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ClaimService {
+export class ClaimService implements ClaimServiceAbstract {
   private _claims: Claim[] = [];
   public claims$: BehaviorSubject<Claim[]>;
   constructor(
@@ -36,7 +37,7 @@ export class ClaimService {
     claimData: BehaviorSubject<ClaimPayloadInterface[]>
   ): void {
     const uri: string =
-      'https://unify-hwa-contractor-api-dev.engine.host/services/vendor/purchase-orders';
+      'https://unify-hwa-contractor-api-qa11.engine.host/services/vendor/purchase-orders';
     const partyId: string = this._configService.getPartyId();
     const companyInfo: string = this._configService.getCompanyInfo();
     const params: HttpParams = this.getClaimParams(partyId, companyInfo);
@@ -50,7 +51,7 @@ export class ClaimService {
     );
   }
 
-  private getClaimParams(partyId: string, companyInfo: string): HttpParams {
+public getClaimParams(partyId: string, companyInfo: string): HttpParams {
     return new HttpParams()
       .set('vendor_id', partyId)
       .set('company_info', companyInfo);
@@ -91,5 +92,44 @@ export class ClaimService {
         ? claim.serviceAddress.toLowerCase().includes(addressInput)
         : claim;
     });
+  }
+
+  public authInvoiceRedirect(
+    jobNumber: string,
+    dataSubject$: Subject<any>,
+    completedSubject$: Subject<boolean>
+  ): void {
+    const uri: string =
+      'https://unify-hwa-contractor-api-qa11.engine.host/services/vendor/geturl';
+
+    const partyId: string = this._configService.getPartyId();
+    const params: HttpParams = this.getAuthInvoiceParams(partyId, jobNumber);
+    this._httpClient.get(uri, { params }).subscribe(
+      (data: any) => {
+        this.authInvoiceSuccessHandler(dataSubject$, completedSubject$, data);
+      },
+      (error: any) => {
+        this.authInvoiceErroreHandler(dataSubject$, completedSubject$, error);
+      }
+    );
+  }
+
+  public getAuthInvoiceParams(
+    partyId: string,
+    jobNumber: string
+  ): HttpParams {
+    return new HttpParams()
+      .set('vendor_id', partyId)
+      .set('job_number', jobNumber);
+  }
+
+  public authInvoiceSuccessHandler(dataSubject$: Subject<any>, completedSubject$: Subject<boolean>, response: any): void {
+    completedSubject$.next(true);
+    dataSubject$.next(response);
+  }
+
+  public authInvoiceErroreHandler(dataSubject$: Subject<any>, completedSubject$: Subject<boolean>, response: any): void {
+    completedSubject$.next(false);
+    dataSubject$.next(response);
   }
 }

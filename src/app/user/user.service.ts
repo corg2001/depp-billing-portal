@@ -10,14 +10,14 @@ import { LoggerService } from '../core/logger.service';
 })
 export class UserService {
 
-  constructor(
+constructor(
     private authService: AuthenticationService,
     private httpClient: HttpClient,
     private loggerService: LoggerService
   ) { }
 
   public login(completionSubject: Subject<boolean>, dataSubject: Subject<any>, username: string, password: string): void {
-    const URI: string = 'https://unify-hwa-contractor-api-dev.engine.host/authentication/passport/login';
+    const URI: string = 'https://unify-hwa-contractor-api-qa11.engine.host/authentication/passport/login';
     this.httpClient.post(URI, {
       username,
       password,
@@ -29,7 +29,7 @@ export class UserService {
 
   public requestPassword(completionSubject: Subject<boolean>, userEmail: string): void {
     console.log('service: new password requested!');
-    const URI: string = 'https://unify-hwa-contractor-api-dev.engine.host/authentication/passport/forgot-password';
+    const URI: string = 'https://unify-hwa-contractor-api-qa11.engine.host/authentication/passport/forgot-password';
     this.httpClient.post(URI, {
       username: userEmail
     }).subscribe(
@@ -40,7 +40,7 @@ export class UserService {
 
   public getTermsAndConditions(completionSubject: Subject<boolean>, dataSubject: Subject<any>): void {
     // TODO: this uri needs to come from configuration
-    const uri: string = 'https://unify-hwa-contractor-api-dev.engine.host/services/legal-terms/terms-of-use';
+    const uri: string = 'https://unify-hwa-contractor-api-qa11.engine.host/services/legal-terms/terms-of-use';
     this.httpClient.get(uri).subscribe(
       (response: Observable<HttpResponse<any>>) => { this.genericSuccessHandler(completionSubject, response, dataSubject); },
       (response: Observable<HttpErrorResponse>) => { this.genericFailureHandler(completionSubject, response); }
@@ -49,7 +49,7 @@ export class UserService {
 
   public getPrivacyPolicy(completionSubject: Subject<boolean>, dataSubject: Subject<any>): void {
     // TODO: this uri needs to come from configuration
-    const uri: string = 'https://unify-hwa-contractor-api-dev.engine.host/services/legal-terms/privacy-policy';
+    const uri: string = 'https://unify-hwa-contractor-api-qa11.engine.host/services/legal-terms/privacy-policy';
     this.httpClient.get(uri).subscribe(
       (response: Observable<HttpResponse<any>>) => { this.genericSuccessHandler(completionSubject, response, dataSubject); },
       (response: Observable<HttpErrorResponse>) => { this.genericFailureHandler(completionSubject, response); }

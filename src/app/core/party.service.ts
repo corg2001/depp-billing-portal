@@ -39,7 +39,7 @@ export class PartyService {
   }
 
   private getPartyDetails(subscription: Subscriber<boolean>): any {
-    const uri: string = 'https://unify-hwa-contractor-api-dev.engine.host/services/party';
+    const uri: string = 'https://unify-hwa-contractor-api-qa11.engine.host/services/party';
     this.httpClient.get(uri).subscribe(
       (responseData: Observable<HttpResponse<PartyDetailsPayload>>) => { this.getPartyDetailsSuccessHandler(subscription, responseData); },
       (responseError: Observable<HttpErrorResponse>) => { this.getPartyDetailsFailureHandler(subscription, responseError); }
