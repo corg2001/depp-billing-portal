@@ -29,6 +29,6 @@ export class LogoutService {
       return;
     }
     this.loggerService.log('You have been logged out, good bye.');
-    this.router.navigate(['user/login']);
+    this.router.navigate(['auth/login']);
   }
 }
