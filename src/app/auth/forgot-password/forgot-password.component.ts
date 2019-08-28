@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators, Validator } from '@angular/forms';
 import { Subject } from 'rxjs';
 
 // Development Artifacts
-import { UserService } from '../user.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -20,7 +20,7 @@ export class ForgotPasswordComponent implements OnInit {
   // TODO: fix tslint, add global configuration
   public contactPhoneNumber: string = '(888) 492-7359';
 
-  constructor( private userService: UserService) { }
+  constructor( private _authService: AuthService) { }
 
   ngOnInit() {
     this.buildForm();
@@ -36,7 +36,7 @@ export class ForgotPasswordComponent implements OnInit {
   public forgotPassword(): void {
     console.log('Action: request new password!');
     const userEmail: string = this.forgotPasswordForm.get('userEmail').value;
-    this.userService.requestPassword(this.completionSubject, userEmail);
+    this._authService.requestPassword(this.completionSubject, userEmail);
   }
 
   public buildForm(): void {

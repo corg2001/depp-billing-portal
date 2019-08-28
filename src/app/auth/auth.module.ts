@@ -4,7 +4,7 @@ import { ReactiveFormsModule, FormsModule} from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 // Development artifacts
-import { UserRoutingModule } from './user-routing.module';
+import { AuthRoutingModule } from './auth-routing.module';
 import { LayoutModule } from '../layout/layout.module';
 import { SharedModule } from '../shared/shared.module';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
@@ -12,7 +12,7 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { LoginComponent } from './login/login.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
-import { UserService } from './user.service';
+import { AuthService } from './auth.service';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { TermsOfUseComponent } from './terms-of-use/terms-of-use.component';
 
@@ -27,7 +27,7 @@ import { TermsOfUseComponent } from './terms-of-use/terms-of-use.component';
   ],
   imports: [
     CommonModule,
-    UserRoutingModule,
+    AuthRoutingModule,
     LayoutModule,
     FormsModule,
     ReactiveFormsModule,
@@ -36,10 +36,10 @@ import { TermsOfUseComponent } from './terms-of-use/terms-of-use.component';
     RouterModule
   ],
   exports: [],
-  providers: [UserService],
+  providers: [AuthService],
   entryComponents: [
     PrivacyPolicyComponent,
     TermsOfUseComponent
   ]
 })
-export class UserModule { }
+export class AuthModule { }
