@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../user.service';
+import { AuthService } from '../auth.service';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -16,7 +16,7 @@ export class TermsOfUseComponent implements OnInit {
   public termsAndConditions: any;
   public showLoadingSpinner: boolean = true;
 
-  constructor( private userService: UserService) { }
+  constructor( private _authService: AuthService) { }
 
   ngOnInit() {
     this.completionSubject.subscribe((response: boolean) => {
@@ -35,7 +35,7 @@ export class TermsOfUseComponent implements OnInit {
 
   public getTermsOfUse(): void {
     console.log('Action: getting terms of use ...');
-    this.userService.getTermsAndConditions(this.completionSubject, this.dataSubject);
+    this._authService.getTermsAndConditions(this.completionSubject, this.dataSubject);
   }
 
 }

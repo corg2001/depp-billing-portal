@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { LoggerService } from './logger.service';
-import { LoginResponsePayload } from '../user/login-response-payload';
+import { LoginResponsePayload } from '../auth/login-response-payload';
 
 @Injectable({
   providedIn: 'root'

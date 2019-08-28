@@ -8,8 +8,8 @@ const routes: Routes = [
     component: TestComponent,
   },
   {
-    path: 'user',
-    loadChildren: './user/user.module#UserModule'
+    path: 'auth',
+    loadChildren: './auth/auth.module#AuthModule'
   },
   {
     path: 'account',
