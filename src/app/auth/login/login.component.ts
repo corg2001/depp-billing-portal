@@ -4,7 +4,7 @@ import { Subject } from 'rxjs';
 import { Route, Router } from '@angular/router';
 
 // Development Artifacts
-import { UserService } from '../user.service';
+import { AuthService } from '../auth.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PrivacyPolicyComponent } from '../privacy-policy/privacy-policy.component';
 import { TermsOfUseComponent } from '../terms-of-use/terms-of-use.component';
@@ -28,14 +28,14 @@ export class LoginComponent implements OnInit {
 
   // TODO: Pull this information from teh config
   public siblingPortals: any = {
-    customer: 'https://unify-hwa-portal-qa10.engine.host',
-    realtor: 'https://unify-hwa-realtor-portal-qa10.engine.host'
+    customer: 'https://unify-hwa-portal-qa11.engine.host',
+    realtor: 'https://unify-hwa-realtor-portal-qa11.engine.host'
   };
 
   constructor(
-    private userService: UserService,
-    private ngbModalService: NgbModal,
-    private router: Router
+    private _authService: AuthService,
+    private _ngbModalService: NgbModal,
+    private _router: Router
   ) {}
 
   ngOnInit() {
@@ -68,13 +68,13 @@ export class LoginComponent implements OnInit {
       this.showResponseError = true;
       return;
     }
-    this.router.navigate(['/account']);
+    this._router.navigate(['/account']);
   }
 
   public login(): void {
     const username = this.loginForm.get('userName').value.trim();
     const password = this.loginForm.get('userPassword').value.trim();
-    this.userService.login(
+    this._authService.login(
       this.responseSubject,
       this.dataSubject,
       username,
@@ -84,11 +84,11 @@ export class LoginComponent implements OnInit {
   }
 
   public openPrivacyPolicyModal(): void {
-    this.ngbModalService.open(PrivacyPolicyComponent);
+    this._ngbModalService.open(PrivacyPolicyComponent);
   }
 
   public openTermsConditionsModal(): void {
-    this.ngbModalService.open(TermsOfUseComponent);
+    this._ngbModalService.open(TermsOfUseComponent);
   }
 
   public resetResponseError(): void {

@@ -21,12 +21,12 @@ const routes: Routes = [
         component: ForgotPasswordComponent,
       },
       {
-        path: 'reset-password',
+        path: 'reset-password/:restToken',
         component: ResetPasswordComponent,
       },
       {
         path: '**',
-        redirectTo: '/user',
+        redirectTo: '/auth',
         pathMatch: 'full'
       }
     ]
@@ -37,4 +37,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class UserRoutingModule { }
+export class AuthRoutingModule { }

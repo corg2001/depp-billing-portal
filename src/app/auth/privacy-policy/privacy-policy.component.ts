@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../user.service';
+import { AuthService } from '../auth.service';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -15,7 +15,7 @@ export class PrivacyPolicyComponent implements OnInit {
   public privacyPolicy: any;
   public showLoadingSpinner: boolean = true;
 
-  constructor(private userService: UserService) { }
+  constructor(private _authService: AuthService) { }
 
   ngOnInit() {
     this.completionSubject.subscribe(this.completionSubscription.bind(this));
@@ -24,7 +24,7 @@ export class PrivacyPolicyComponent implements OnInit {
   }
 
   public getPrivacyPolicy(): void {
-    this.userService.getPrivacyPolicy(this.completionSubject, this.dataSubject);
+    this._authService.getPrivacyPolicy(this.completionSubject, this.dataSubject);
   }
 
   private completionSubscription(response: boolean): void {
