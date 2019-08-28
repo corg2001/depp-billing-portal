@@ -1,13 +1,26 @@
 <div class="documents-container">
   <div class="info-section">
     <div class="info-items txt-business">ACH Information</div>
-    <div class="d-flex info-items">
-        <div class="items-part-one">Bank Routing Number: <span class="item-values">*******2345</span></div>
-        
+    <app-loading-spinner *ngIf="loading"></app-loading-spinner>
+    <ng-container *ngIf="!loading">
+      <div *ngFor="let info of achInfo">
+        <div class="d-flex info-items">
+          <div class="items-part-one">
+            Bank Routing Number:
+            <span class="item-values">{{ info?.routing_number }}</span>
+          </div>
+        </div>
+        <div class="d-flex info-items">
+          <div class="items-part-one">
+            Checking Account Number:
+            <span class="item-values">{{ info?.account_number }}</span>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    
+    <div class="edit-symbol items-part-one" style="margin-left:auto">
+      Download ACH Form
     </div>
-    <div class="d-flex info-items">
-        <div class="items-part-one">Checking Account Number: <span class="item-values">*******5566</span></div>
-    </div>
-    <div class="edit-symbol items-part-one" style="margin-left:auto">Download ACH Form</div>
-</div>
+  </div>
 </div>
