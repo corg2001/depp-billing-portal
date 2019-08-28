@@ -10,9 +10,9 @@
       </div>
       <div class="profile-content">
          <app-business-info *ngIf="item === profileManagementTypes.BusinessInfo"></app-business-info>
-         <app-ach-documents *ngIf="item === profileManagementTypes.Documents"></app-ach-documents>
+         <app-ach-documents [achInfo$]="achInfoData$" [achInfoDataSuccess$]="achInfoCallSucess$" *ngIf="item === profileManagementTypes.Documents"></app-ach-documents>
          <app-agreed-rates *ngIf="item === profileManagementTypes.AgreedRates"></app-agreed-rates>
-         <app-service-areas *ngIf="item===profileManagementTypes.ServiceArea"></app-service-areas>
+         <app-service-areas *ngIf="item === profileManagementTypes.ServiceArea"></app-service-areas>
       </div>
   </div>
 

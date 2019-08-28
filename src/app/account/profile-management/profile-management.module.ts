@@ -11,6 +11,8 @@ import { CalendarComponent } from './calendar/calendar.component';
 
 import {ProfileComponent} from './profile/profile.component';
 import { AgreedRatesTableComponent } from './agreed-rates/agreed-rates-table/agreed-rates-table.component';
+import { ProfileService } from './services/profile.service';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   // tslint:disable-next-line: max-line-length
@@ -19,7 +21,9 @@ import { AgreedRatesTableComponent } from './agreed-rates/agreed-rates-table/agr
     CommonModule,
     ProfileManagementRoutingModule,
     FormsModule,
-    ReactiveFormsModule
-  ]
+    ReactiveFormsModule,
+    SharedModule
+  ],
+  providers: [ProfileService]
 })
 export class ProfileManagementModule { }
