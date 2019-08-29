@@ -1,6 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { ProfileService } from '../services/profile.service';
-import { Subject } from 'rxjs';
+import { Component, OnInit, Input, DoCheck } from '@angular/core';
+import { ProfileService } from '../service/profile.service';
+import { Subject, BehaviorSubject } from 'rxjs';
+import { AchDocuments } from './model/ach-documents.model';
 
 @Component({
   selector: 'app-ach-documents',
@@ -8,37 +9,29 @@ import { Subject } from 'rxjs';
   styleUrls: ['./ach-documents.component.scss']
 })
 export class AchDocumentsComponent implements OnInit {
-  @Input() public achInfo$?: Subject<any>;
-  @Input() public achInfoDataSuccess$: Subject<boolean>;
-  public achInfo: any[];
-  public loading: boolean = false;
-  public isData: boolean = true;
+  @Input() public achInfo$: BehaviorSubject<AchDocuments[]>;
+  @Input() public achInfoDataSuccess: boolean;
+  @Input() public loaded: boolean;
+  public isData: boolean = false;
+  public loading: boolean = true;
+  public achInfo: AchDocuments[] = [];
 
-  constructor() { }
+  constructor(private _profileService: ProfileService) {}
 
   ngOnInit() {
-    this.loading = true;
-    this.getAchInfo();
+    this.init();
   }
-
-  public getAchInfo(): void {
-    this.achInfoDataSuccess$.subscribe((succeed: boolean) => {
-      console.log(succeed);
-      this.loading = false;
-      succeed ? this._achInfoSuccessHandler() : this._achInfoErrorHandler();
+  public init(): void {
+    this.achInfo$.subscribe((achinfo: AchDocuments[]) => {
+      this.achInfo = achinfo;
+      this.achInfo.length > 0 ? (this.isData = true) : (this.isData = false);
+      setTimeout(() => {
+        this.loading = false;
+      }, 2000);
     });
   }
 
-  private _achInfoSuccessHandler(): void  {
-
-    this.achInfo$.subscribe((data: any) => {
-      this.achInfo = data;
-    });
+  public showOnlyLastFour(value: string): string {
+    return value.replace(/.(?=.{4})/g, 'x');
   }
-
-  private _achInfoErrorHandler(): void  {
-    this.loading = false;
-   this.isData = false;
-  }
-
 }

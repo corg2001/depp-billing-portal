@@ -10,6 +10,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { LayoutModule } from '../layout/layout.module';
 import { PartyResolverService } from './party-resolver.service';
 import {HelpComponent} from './help/help.component';
+import { ProfileManagementModule } from './profile-management/profile-management.module';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import {HelpComponent} from './help/help.component';
     RouterModule,
     LayoutModule,
     ClaimManagementModule,
+    ProfileManagementModule,
     FormsModule,
     ReactiveFormsModule
   ],
