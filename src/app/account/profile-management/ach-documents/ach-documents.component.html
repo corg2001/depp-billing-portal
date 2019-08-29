@@ -2,23 +2,34 @@
   <div class="info-section">
     <div class="info-items txt-business">ACH Information</div>
     <app-loading-spinner *ngIf="loading"></app-loading-spinner>
-    <ng-container *ngIf="!loading">
+    <ng-container *ngIf="isData && !loading">
       <div *ngFor="let info of achInfo">
         <div class="d-flex info-items">
           <div class="items-part-one">
             Bank Routing Number:
-            <span class="item-values">{{ info?.routing_number }}</span>
+            <span class="item-values">{{
+              showOnlyLastFour(info?.routingNumber)
+            }}</span>
           </div>
         </div>
         <div class="d-flex info-items">
           <div class="items-part-one">
             Checking Account Number:
-            <span class="item-values">{{ info?.account_number }}</span>
+            <span class="item-values">{{
+              showOnlyLastFour(info?.accountNumber)
+            }}</span>
           </div>
         </div>
       </div>
     </ng-container>
-    
+    <ng-container *ngIf="!isData && !loading">
+      <div class="d-flex info-items">
+        <div class="items-part-one">
+          <p>Your ACH information is not set up. Please reach out to contractor relations at 1-888-888-8888.</p>
+        </div>
+      </div>
+    </ng-container>
+
     <div class="edit-symbol items-part-one" style="margin-left:auto">
       Download ACH Form
     </div>
