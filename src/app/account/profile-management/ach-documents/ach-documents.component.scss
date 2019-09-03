@@ -2,7 +2,7 @@
 .documents-container {
   .info-section {
     color: $hwa-color-gray;
-    font-size: 18px;
+    font-size: 1.2rem;
     font-weight: normal;
     font-style: normal;
     text-decoration: none;
@@ -23,7 +23,6 @@
       height: 70px;
       margin-left: 40px;
       border-bottom: 1px solid $hwa-color-light-gray;
-      align-items: center;
       .item-values {
         font-weight: 500;
         a {
@@ -32,7 +31,7 @@
         }
       }
       .items-part-one {
-        width: 800px;
+        width: 80rem;
       }
     }
   }

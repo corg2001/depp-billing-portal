@@ -1,17 +1,25 @@
+<ng-container *ngIf="isData else noData">
+  <table class="table table-striped mt-4">
+    <thead>
+      <tr>
+        <th scope="col" class="text-info">Item</th>
+        <th scope="col" class="text-info">Trade</th>
+        <th scope="col" class="text-info text-right">Agreed Rate</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let details of modifiedTradeAgreementDetails()" class="small">
+        <td scope="row">{{ details?.itemDescription }}</td>
+        <td scope="row">{{ details?.trade }}</td>
+        <td class="text-right" scope="row">{{ details?.rate }}</td>
+      </tr>
+    </tbody>
+  </table>
+</ng-container>
+<ng-template #noData>
+  <div class="noData">
+      <p>{{ noInfoText}}</p>
+  </div>
+</ng-template>
 
-<table class="table table-striped mt-4">
-  <thead>
-    <tr>
-      <th scope="col" class="text-info">Item</th>
-      <th scope="col" class="text-info">Trade</th>
-      <th scope="col" class="text-info text-right">Agreed Rate</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor='let rates of modifiedAgreedRates()' class="small">
-      <td scope="row">{{rates['_item']}}</td>
-      <td scope="row">{{rates['_trade']}}</td>
-      <td class="text-right" scope="row">{{rates['_agreedRate']}}</td>
-    </tr>
-  </tbody>
-</table>
+
