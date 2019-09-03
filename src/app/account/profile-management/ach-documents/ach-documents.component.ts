@@ -1,5 +1,4 @@
-import { Component, OnInit, Input, DoCheck } from '@angular/core';
-import { ProfileService } from '../service/profile.service';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { AchDocuments } from './model/ach-documents.model';
 
@@ -8,30 +7,34 @@ import { AchDocuments } from './model/ach-documents.model';
   templateUrl: './ach-documents.component.html',
   styleUrls: ['./ach-documents.component.scss']
 })
-export class AchDocumentsComponent implements OnInit {
-  @Input() public achInfo$: BehaviorSubject<AchDocuments[]>;
-  @Input() public achInfoDataSuccess: boolean;
-  @Input() public loaded: boolean;
+export class AchDocumentsComponent implements OnChanges {
+  @Input() public achDocs?: AchDocuments[];
+  @Input() public error?: boolean;
+  @Input() public completion?: boolean;
   public isData: boolean = false;
-  public loading: boolean = true;
-  public achInfo: AchDocuments[] = [];
+  public loading = true;
+  public noInfoText: string;
 
-  constructor(private _profileService: ProfileService) {}
+  constructor() {}
 
-  ngOnInit() {
+  ngOnChanges(): void {
     this.init();
   }
+
   public init(): void {
-    this.achInfo$.subscribe((achinfo: AchDocuments[]) => {
-      this.achInfo = achinfo;
-      this.achInfo.length > 0 ? (this.isData = true) : (this.isData = false);
-      setTimeout(() => {
-        this.loading = false;
-      }, 2000);
-    });
+    this.noInfoText =
+      'Your ACH information is not set up. Please reach out to contractor relations at 1-888-888-8888.';
+    if (this.achDocs) {
+      this.achDocs.length > 0 && this.completion === true ? (this.isData = true) : (this.isData = false);
+    }
+    this.isloading();
   }
 
   public showOnlyLastFour(value: string): string {
-    return value.replace(/.(?=.{4})/g, 'x');
+    return value.replace(/.(?=.{4})/g, '*');
+  }
+
+  public isloading(): void {
+    this.completion === true ? (this.loading = false) : (this.loading = true);
   }
 }

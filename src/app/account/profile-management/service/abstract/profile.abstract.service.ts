@@ -9,13 +9,21 @@ import { AchDocuments } from '../../ach-documents/model/ach-documents.model';
 export abstract class ProfileAbstractService {
   constructor() {}
 
-  abstract buildAchInfoParams(partyId: string, companyInfo: string): HttpParams;
+  abstract getAchDocs(
+    achInfoData$: BehaviorSubject<AchDocuments[]>,
+    error$: Subject<boolean>,
+    completion$: Subject<boolean>
+  ): void;
 
-  abstract achInfoSuccessHandler(
-    data$: BehaviorSubject<AchDocuments[]>,
-    sussesful$: Subject<boolean>,
+  abstract buildAchDocsParams(partyId: string, companyInfo: string): HttpParams;
+
+  abstract achDocsSuccessHandler(
+    achInfoData$: BehaviorSubject<AchDocuments[]>,
+    error$: Subject<boolean>,
+    completion$: Subject<boolean>,
     data: any
   ): void;
 
-  abstract achInfoErrorHandler(sussesful$: Subject<boolean>, error: any): void;
+  abstract achDocsErrorHandler(error$: Subject<boolean>, completion$: Subject<boolean>, error?: any): void;
+
 }
