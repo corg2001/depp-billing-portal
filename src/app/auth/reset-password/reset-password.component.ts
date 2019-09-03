@@ -32,8 +32,10 @@ function ValidateEmail(c: FormControl): any {
 export class ResetPasswordComponent implements OnInit, OnDestroy {
   public resetForm: FormGroup;
   public resetParms$: Subscription;
-  public resetPasswordError: string;
-  public showError: boolean = false;
+  public errorMsg: string;
+  public successMsg: string;
+  public showErrorMsg: boolean = false;
+  public showSuccessMsg: boolean = false;
 
   constructor(
     private _authService: AuthService,
@@ -99,17 +101,21 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
   }
 
   private _resetPasswordSuccessHandler(): void {
-    this.showError = false;
-    this._route.navigate(['auth/login']);
+    this.successMsg = 'Great! Your password has been updated!';
+    this.showErrorMsg = false;
+    this.showSuccessMsg = true;
+    // removed for validation if want to redirect user to login page
+    // this._route.navigate(['auth/login']);
   }
 
   private _resetPasswordErrorHandler(response$: Subject<any>): void {
     response$.subscribe((error: any) => {
-      this.showError = true;
-      this.resetPasswordError = error.error.message;
+      this.showErrorMsg = true;
+      this.showSuccessMsg = false;
+      this.errorMsg = error.error.message;
     });
   }
-  
+
 // will have to get the token from the link in email if broweser is refreshed
   ngOnDestroy(): void {
     this.resetParms$.unsubscribe();
