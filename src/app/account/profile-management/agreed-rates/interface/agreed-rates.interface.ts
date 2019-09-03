@@ -1,6 +1,7 @@
+import { RateDetailsInterface } from './rate-details.interface';
+import { TradeAgreementDetailsInterface } from './trade-agreement-deatils.interface';
+
 export interface AgreedRatesInterface {
-    readonly item: string;
-    readonly trade: string;
-    readonly agreedRate: string;
+    readonly rateDetails: RateDetailsInterface[];
+    readonly tradeAgreementDetails: TradeAgreementDetailsInterface[];
   }
-  

@@ -1,40 +1,32 @@
 import { AgreedRatesInterface } from '../interface/agreed-rates.interface';
+import { RateDetailsInterface } from '../interface/rate-details.interface';
+import { TradeAgreementDetailsInterface } from '../interface/trade-agreement-deatils.interface';
 
 
 export class AgreedRates implements AgreedRatesInterface {
-  private _item: string;
-  private _trade: string;
-  private _agreedRate: string;
+  private _rateDetails: RateDetailsInterface[];
+  private _tradeAgreementDetails: TradeAgreementDetailsInterface[];
   constructor(
-    item?: string,
-    trade?: string,
-    agreedRate?: string
+    rateDetails?: RateDetailsInterface[],
+    tradeAgreementDetails?: TradeAgreementDetailsInterface[]
   ) {
-    this._item = item;
-    this._trade = trade;
-    this._agreedRate = agreedRate;
+    this._rateDetails = rateDetails;
+    this._tradeAgreementDetails = tradeAgreementDetails;
   }
-  get item(): string {
-    return this._item;
-  }
-
-  get trade(): string {
-    return this._trade;
+  get rateDetails(): RateDetailsInterface[] {
+    return this._rateDetails;
   }
 
-  get agreedRate(): string {
-    return this._agreedRate;
+  get tradeAgreementDetails(): TradeAgreementDetailsInterface[] {
+    return this._tradeAgreementDetails;
   }
 
-  set item(item: string) {
-    this._item = item;
+  set rateDetails(rateDetails: RateDetailsInterface[]) {
+    this._rateDetails = rateDetails;
   }
 
-  set trade(trade: string) {
-    this._trade = trade;
+  set tradeAgreementDetails(tradeAgreementDetails: TradeAgreementDetailsInterface[]) {
+    this._tradeAgreementDetails = tradeAgreementDetails;
   }
 
-  set agreedRate(agreedRate: string) {
-    this._agreedRate = agreedRate;
-  }
 }

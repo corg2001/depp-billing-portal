@@ -3,7 +3,6 @@ import {
   ClaimPayloadInterface
 } from '../../interface/claim.payload.interface';
 import { Claim } from '../../model/claims.model';
-import { ClaimInterface } from '../../interface/claim.interface';
 
 @Injectable({
   providedIn: 'root'

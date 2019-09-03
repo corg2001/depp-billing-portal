@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Component, OnInit, Input } from '@angular/core';
+import { Subject, BehaviorSubject } from 'rxjs';
 import { AgreedRates } from '../model/agreed-rates.model';
-import { AgreedRatesService } from '../agreed-rates.service';
+import { TradeAgreementDetailsInterface } from '../interface/trade-agreement-deatils.interface';
 
 @Component({
   selector: 'app-agreed-rates-table',
@@ -10,33 +10,27 @@ import { AgreedRatesService } from '../agreed-rates.service';
 })
 
 export class AgreedRatesTableComponent implements OnInit {
-  public agreedRates: AgreedRates[] = [];
+  @Input() public tradeAgreementDetails: TradeAgreementDetailsInterface[];
+  @Input() public completion$?: Subject<boolean> = new Subject();
   public page: number;
   public pageSize: number;
   public collectionSize: number = 0;
   public pageList: number[] = [2, 4, 6, 8];
+  public isData?: boolean = false;
+  public noInfoText: string;
 
-  public agreedRatesListSubject: Subject<any> = new Subject();
-  public completionSubject: Subject<boolean> = new Subject();
-  public loading: boolean = true;
-
-  constructor(private _agreedRatesService: AgreedRatesService) { }
+  constructor() { }
 
   ngOnInit() {
-    this.agreedRatesListSubject.subscribe((agreedRatesData: AgreedRates[]) => {
-      this.agreedRates = agreedRatesData.slice(0, 100); // TODO: remove the slice and fix the pagination bar
-      this.collectionSize = this.agreedRates.length;
-      this.loading = false;
-    });
-    this._agreedRatesService.agreedRates$.subscribe(agreedRatesData => this.agreedRates = agreedRatesData);
-    this.loading = true;
-    this._agreedRatesService.getAgreedRates(this.completionSubject, this.agreedRatesListSubject);
+    this.noInfoText =
+      'Your Agreed Rates Trade Agreement Details is not set up. Please reach out to contractor relations at 1-888-888-8888.';
     this.page = 1;
     this.pageSize = 15;
-    this.collectionSize = 10;
+    this.collectionSize = this.tradeAgreementDetails.length;
+    this.tradeAgreementDetails.length > 0 ? this.isData = true : this.isData = false;
   }
 
-  public modifiedAgreedRates(): AgreedRates[] {
-    return this.agreedRates.slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
+  public modifiedTradeAgreementDetails(): TradeAgreementDetailsInterface[] {
+    return this.tradeAgreementDetails.slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
   }
 }

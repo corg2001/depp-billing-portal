@@ -36,14 +36,11 @@
     <ngb-pagination
       [pageSize]="pageSize"
       [(page)]="page"
-      [collectionSize]="collectionSize"
-    ></ngb-pagination>
+      [collectionSize]="collectionSize" [maxSize]="10"></ngb-pagination>
   </div>
 </ng-container>
 <ng-container *ngIf="!claimsFound && !loading">
   <div>
-    <p>
-      Please contact Contractor Relations at XXX-XXX-XXXX for assistance.
-    </p>
+    <p>{{ noInfoText }} </p>
   </div>
 </ng-container>

@@ -29,3 +29,65 @@
     }
   }
 }
+
+.info-section{
+  color: $hwa-color-gray;
+  font-size: 18px;
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: none;
+  .address{
+      height:100px !important;
+      border-bottom: none !important;
+      .item-values:first-child{
+          margin-top:6px;
+      }
+  }
+  .txt-business{
+      font-weight: 300;
+      font-size: 1.5rem;
+      color: $hwa-color-teal;
+      padding-top: 15px;
+  }
+  .user-psw-section{
+      margin-top:30px;
+  }
+  .info-items{
+      height:70px;
+      margin-left:40px;
+      border-bottom: 1px solid $hwa-color-light-gray;
+      align-items: center;
+      .item-values{
+          font-weight: 500;
+          a{
+              text-decoration: underline;
+              color: $hwa-color-teal !important;
+          }
+      }
+      .items {
+          width:500px;
+      }
+      
+  }
+  .name-password{
+      border-bottom: none !important;
+      .edit-symbol{
+          text-decoration: underline;
+          color: $hwa-color-teal !important;
+          cursor: pointer;
+      }
+  }
+  .hwa-items{
+      margin-left:15px !important;
+  }
+  .hwa-section{
+      background-color: $hwa-color-light-gray; 
+      margin-left:25px;
+      margin-top:30px;
+      .hwa-header{
+          font-size: 24px !important;
+          color:$hwa-color-teal;
+          font-weight: 100;
+      }
+  }
+}

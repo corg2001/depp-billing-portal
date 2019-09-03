@@ -31,6 +31,7 @@ export class ClaimTableComponent implements OnInit {
   public loading: boolean = true;
   public authorizeInvoiceLinkText = 'authorize / invoice';
   public claimsFound: boolean = true;
+  public noInfoText: string;
 
   constructor(
     private _claimService: ClaimService,
@@ -38,6 +39,7 @@ export class ClaimTableComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.noInfoText = 'Please contact Contractor Relations at 1-888-888-8888 for assistance.';
     this.claimSubject$.subscribe((claimData: Claim[]) => {
       this.claims = claimData;
       this.collectionSize = this.claims.length;

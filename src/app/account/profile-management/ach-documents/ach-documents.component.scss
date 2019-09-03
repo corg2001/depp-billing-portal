@@ -2,7 +2,7 @@
 .documents-container {
   .info-section {
     color: $hwa-color-gray;
-    font-size: 18px;
+    font-size: 1.2rem;
     font-weight: normal;
     font-style: normal;
     text-decoration: none;
@@ -10,20 +10,20 @@
       font-weight: 300;
       font-size: 1.5rem;
       color: $hwa-color-teal;
-      padding-top: 15px;
+      padding-top: 0.9375rem;
     }
     .edit-symbol {
       text-decoration: underline;
       color: $hwa-color-teal !important;
       cursor: pointer;
       float: right;
-      margin-top: 5px;
+      padding-top: 2rem;
     }
     .info-items {
-      height: 70px;
-      margin-left: 40px;
-      border-bottom: 1px solid $hwa-color-light-gray;
+      margin-left: 2.5rem;
+      border-bottom: 0.0625rem solid $hwa-color-light-gray;
       align-items: center;
+      padding: 1rem 0;
       .item-values {
         font-weight: 500;
         a {
@@ -32,8 +32,30 @@
         }
       }
       .items-part-one {
-        width: 800px;
+        padding-top: 1rem;
       }
     }
+    .docs-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+      
+      .txt-documents {
+        width: 70%;
+        margin-left: 2.5rem;
+        padding-top: 1rem;
+      }
+
+    }
+    
+    .info-documents {
+      margin-left: 2rem;
+    }
+  }
+  .btn {
+    background-color: $white !important;
+    color: $hwa-color-teal !important;
+    border-color: $hwa-color-teal !important;
   }
 }

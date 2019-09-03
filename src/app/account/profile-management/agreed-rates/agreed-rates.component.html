@@ -1,24 +1,16 @@
-<div class="agreed-rates-container ml-5 align-middle">
+<div class="agreed-rates-container align-middle">
   <div class="profile-info-section">
-    <div class="txt-agreed-rates pt-3 ml-2">Agreed Rates</div>
-    <div class="d-flex profile-info-details mt-4 ml-2">
-      <div class="info-rates"><span class="profile-agreed-rates">ABC Plumbing - TX</span></div>
-      <div class="pl-3 pr-3 ml-auto">Contractor ID: <span class="profile-agreed-rates">V0000000752</span></div>
-    </div>
-    <div class="profile-details ml-2">
-      <div class="d-flex agreed-rates pb-3 ml-2">
-        <div class="info-rates"><span class="profile-agreed-rates">Rate Code</span></div>
-        <div class="pl-3 pr-3 ml-auto"><span class="profile-agreed-rates">Agreed Rate</span></div>
-      </div>
-      <div class="d-flex agreed-rates-info">
-        <div class="work-time ml-2"><span>Regular Working Time</span></div>
-        <div class="pr-3 ml-auto"><span><i class="fa fa-usd" aria-hidden="true"></i>150.00 per hour</span></div>
-      </div>
-      <div class="d-flex agreed-rates-info">
-        <div class="work-time ml-2"><span>Overtime</span></div>
-        <div class="pr-3 ml-auto"><span><i class="fa fa-usd" aria-hidden="true"></i>50.00 per unit</span></div>
-      </div>
-      <app-agreed-rates-table></app-agreed-rates-table>
-    </div>
+    <div class="txt-agreed-rates pt-3">Agreed Rates</div>
+    <app-loading-spinner *ngIf="loading"></app-loading-spinner>
+    <ng-container *ngIf="!loading && isData">
+      <app-agreed-rate-detail  [rateDetails]="rateDetails"></app-agreed-rate-detail>
+      <app-agreed-rates-table [tradeAgreementDetails]="tradeAgreementDetaills"></app-agreed-rates-table>
+    </ng-container>
+    <ng-container *ngIf="!loading && !isData">
+       <div class="info">
+         <p>{{ noInfoText }}</p>
+        </div>
+      </ng-container>
   </div>
 </div>
+

@@ -1,13 +1,49 @@
 <div class="documents-container">
   <div class="info-section">
     <div class="info-items txt-business">ACH Information</div>
-    <div class="d-flex info-items">
-        <div class="items-part-one">Bank Routing Number: <span class="item-values">*******2345</span></div>
-        
-    </div>
-    <div class="d-flex info-items">
-        <div class="items-part-one">Checking Account Number: <span class="item-values">*******5566</span></div>
-    </div>
-    <div class="edit-symbol items-part-one" style="margin-left:auto">Download ACH Form</div>
-</div>
+    <app-loading-spinner *ngIf="loading"></app-loading-spinner>
+    <ng-container *ngIf="!loading && isData">
+      <div *ngFor="let info of achDocs">
+        <div class="d-flex info-items">
+          <div class="items-part-one">
+            Bank Routing Number:
+            <span class="item-values">{{
+              showOnlyLastFour(info?.routingNumber)
+            }}</span>
+          </div>
+        </div>
+        <div class="d-flex info-items">
+          <div class="items-part-one">
+            Checking Account Number:
+            <span class="item-values">{{
+              showOnlyLastFour(info?.accountNumber)
+            }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="docs-container">
+        <div class="info-txt txt-documents">
+          In order to update your bank information, please complete an ACH form
+          and upload it using it the Upload Documents button below. Your
+          Territory Manager will validate the information and update your
+          profile.
+        </div>
+        <div class="edit-symbol items-part-one">
+          Download ACH Form
+        </div>
+      </div>
+      <div class="d-flex mt-4">
+        <button type="button" class="btn btn-lg info-documents ml-auto">
+          <i class="fa fa-arrow-up"></i> Upload Documents
+        </button>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="!isData && !loading">
+      <div class="d-flex info-items">
+        <div class="items-part-one">
+          <p>{{ noInfoText }}</p>
+        </div>
+      </div>
+    </ng-container>
+  </div>
 </div>
