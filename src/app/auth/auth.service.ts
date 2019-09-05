@@ -8,6 +8,7 @@ import { Observable, Subject } from 'rxjs';
 import { AuthenticationService } from '../core/authentication.service';
 import { LoginResponsePayload } from './login-response-payload';
 import { LoggerService } from '../core/logger.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -25,10 +26,8 @@ export class AuthService {
     username: string,
     password: string
   ): void {
-    const URI: string =
-      'https://unify-hwa-contractor-api-qa11.engine.host/authentication/passport/login';
     this._httpClient
-      .post(URI, {
+      .post(environment.loginUrl, {
         username,
         password
       })
@@ -44,11 +43,8 @@ export class AuthService {
     completionSubject: Subject<boolean>,
     userEmail: string
   ): void {
-    console.log('service: new password requested!');
-    const URI: string =
-      'https://unify-hwa-contractor-api-qa11.engine.host/authentication/passport/forgot-password';
     this._httpClient
-      .post(URI, {
+      .post(environment.requestPasswordUrl, {
         username: userEmail
       })
       .subscribe(
@@ -64,9 +60,7 @@ export class AuthService {
     dataSubject: Subject<any>
   ): void {
     // TODO: this uri needs to come from configuration
-    const uri: string =
-      'https://unify-hwa-contractor-api-qa11.engine.host/services/legal-terms/terms-of-use';
-    this._httpClient.get(uri).subscribe(
+    this._httpClient.get(environment.termsAndConditionsUrl).subscribe(
       (response: Observable<HttpResponse<any>>) => {
         this.genericSuccessHandler(completionSubject, response, dataSubject);
       },
@@ -81,9 +75,7 @@ export class AuthService {
     dataSubject: Subject<any>
   ): void {
     // TODO: this uri needs to come from configuration
-    const uri: string =
-      'https://unify-hwa-contractor-api-qa11.engine.host/services/legal-terms/privacy-policy';
-    this._httpClient.get(uri).subscribe(
+    this._httpClient.get(environment.privacyPolicyUrl).subscribe(
       (response: Observable<HttpResponse<any>>) => {
         this.genericSuccessHandler(completionSubject, response, dataSubject);
       },
@@ -147,10 +139,8 @@ export class AuthService {
     success$: Subject<boolean>,
     response$?: Subject<any>
   ): void {
-    const uri: string =
-      'https://unify-hwa-contractor-api-qa11.engine.host/authentication/passport/reset-password';
     this._httpClient
-      .post(uri, { token, password })
+      .post(environment.resetPasswordUrl, { token, password })
       .subscribe(
         (response: Observable<HttpResponse<any>>) =>
           this._resetPasswordSuccessHandler(success$, response, response$),

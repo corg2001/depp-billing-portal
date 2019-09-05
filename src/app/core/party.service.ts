@@ -7,6 +7,7 @@ import { AuthenticationService } from './authentication.service';
 import { LoggerService } from './logger.service';
 import { LogoutService } from './logout.service';
 import { PartyDetailsPayload } from '../account/interface/party-details.payload';
+import { environment } from 'src/environments/environment';
 
 
 interface Address {
@@ -39,8 +40,7 @@ export class PartyService {
   }
 
   private getPartyDetails(subscription: Subscriber<boolean>): any {
-    const uri: string = 'https://unify-hwa-contractor-api-qa11.engine.host/services/party';
-    this.httpClient.get(uri).subscribe(
+    this.httpClient.get(environment.partyDetailsUrl).subscribe(
       (responseData: Observable<HttpResponse<PartyDetailsPayload>>) => { this.getPartyDetailsSuccessHandler(subscription, responseData); },
       (responseError: Observable<HttpErrorResponse>) => { this.getPartyDetailsFailureHandler(subscription, responseError); }
       );
