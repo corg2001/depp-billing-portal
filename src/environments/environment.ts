@@ -2,8 +2,38 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+const env: string = 'qa11';
+const baseUrl: string = `https://unify-hwa-contractor-api-${env}.engine.host/`;
 export const environment = {
-  production: false
+  production: false,
+  core: {
+    brandId: 'HWA',
+    brandFriendlyName: 'HWA',
+    copyrightNotice:
+      '&copy; 2017 HOME WARRANTY OF AMERICA. Inc. Home Warranty Information:',
+    pageTitle: 'HWA - Home Warranty of America'
+  },
+  // auth service
+  loginUrl: `${baseUrl}authentication/passport/login`,
+  requestPasswordUrl: `${baseUrl}authentication/passport/forgot-password`,
+  resetPasswordUrl: `${baseUrl}authentication/passport/reset-password`,
+  termsAndConditionsUrl: `${baseUrl}services/legal-terms/terms-of-use`,
+  privacyPolicyUrl: `${baseUrl}services/legal-terms/privacy-policy`,
+
+  // EnrollService
+  enrollUrl: `${baseUrl}lead-generation`,
+
+  // PartyService
+  partyDetailsUrl: `${baseUrl}services/party`,
+  // ClaimService
+  claimsUrl: `${baseUrl}services/vendor/purchase-orders`,
+  authInoviceUrl: `${baseUrl}services/vendor/geturl`,
+
+  // ProfileService
+  achDocsUrl: `${baseUrl}services/vendor/ach-info`,
+
+  // AgreedRatesService
+  agreedRatesUrl: `${baseUrl}services/vendor/agreed-rate`
 };
 
 /*

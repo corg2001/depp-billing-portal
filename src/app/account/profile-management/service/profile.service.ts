@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import {
   HttpClient,
   HttpParams,
-  HttpResponse,
-  HttpErrorResponse
 } from '@angular/common/http';
 import { Subject, Observable, BehaviorSubject } from 'rxjs';
 import { ConfigService } from 'src/app/core/config.service';
@@ -12,6 +10,7 @@ import { ProfileFactoryService } from './factory/profile.factory.service';
 import { AchDocuments } from '../ach-documents/model/ach-documents.model';
 import { ProfileAbstractService } from './abstract/profile.abstract.service';
 import { ProfileFactoryAbstractService } from './factory/abstract/profile.factory.abstract.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -29,13 +28,11 @@ export class ProfileService implements ProfileAbstractService {
     error$: Subject<boolean>,
     completion$: Subject<boolean>
   ): void {
-    const uri: string =
-      'https://unify-hwa-contractor-api-qa11.engine.host/services/vendor/ach-info';
     const partyId: string = this._configService.getPartyId();
     const companyInfo: string = this._configService.getCompanyInfo();
     const params: HttpParams = this.buildAchDocsParams(partyId, companyInfo);
     this._httpClient
-      .get(uri, { params })
+      .get(environment.achDocsUrl, { params })
       .subscribe(
         (data: any) => this.achDocsSuccessHandler(achInfoData$, error$, completion$, data),
         (error: any) => this.achDocsErrorHandler(error$, completion$, error)

@@ -13,6 +13,7 @@ import { ConfigService } from 'src/app/core/config.service';
 import { LoggerService } from 'src/app/core/logger.service';
 import { AgreedRatesAbstractService } from './abstract/agreed-rates.abstract.service';
 import { AgreedRatesFactoryAbstractService } from './factory/abstract/agreed-rates.factory.abstract.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -32,13 +33,11 @@ export class AgreedRatesService implements AgreedRatesAbstractService {
     error$: Subject<boolean>,
     completion$: Subject<boolean>
   ): void {
-    const uri: string =
-      'https://unify-hwa-contractor-api-qa11.engine.host/services/vendor/agreed-rate';
     const companyInfo: any  = this._configService.getCompanyInfo();
     const partyId: string = this._configService.getPartyId();
     const params: HttpParams = this.getAgreedRatesParams(partyId, companyInfo);
 
-    this._httpClient.get(uri, { params: params }).subscribe((response: any) => {
+    this._httpClient.get(environment.agreedRatesUrl, { params: params }).subscribe((response: any) => {
       this.getAgreedRatesSuccessHandler(agreedRatesData$, error$, completion$, response);
     },
     (error: any) => {
@@ -81,5 +80,4 @@ export class AgreedRatesService implements AgreedRatesAbstractService {
 export interface CompanyInfo {
   readonly company_id: string;
       readonly brands: string[];
-
 }
