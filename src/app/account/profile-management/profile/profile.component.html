@@ -13,6 +13,7 @@
          <app-ach-documents [achDocs]="achDocs" [completion]="achDocsCompletion" [error]="achDocsError" *ngIf="item === profileManagementTypes.Documents"></app-ach-documents>
          <app-agreed-rates [agreedRates]="agreedRates" [completion]="agreedRatesCompletion" [error]="agreedRatesError" *ngIf="item === profileManagementTypes.AgreedRates"></app-agreed-rates>
          <app-service-areas *ngIf="item === profileManagementTypes.ServiceArea"></app-service-areas>
+         <app-calendar *ngIf="item === profileManagementTypes.Calender"></app-calendar>
       </div>
   </div>
 

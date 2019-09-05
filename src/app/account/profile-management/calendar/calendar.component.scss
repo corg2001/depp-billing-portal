@@ -1,0 +1,28 @@
+#container {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  padding: 0 4rem;
+  @media (min-width: 1200px) {
+    flex-direction: row;
+    .calendar {
+        margin-right: 1rem;
+        width: 70%;
+    }
+    .service-info {
+        width: 30%;
+    }
+  }
+
+ 
+  .calendar {
+    border: 0.1rem solid lightgrey;
+    padding: 1rem;
+    border-radius: 2%;
+  }
+  .service-info {
+    border: 0.1rem solid lightgrey;
+    padding: 1rem;
+    border-radius: 2%;
+  }
+}
