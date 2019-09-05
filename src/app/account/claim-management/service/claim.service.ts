@@ -19,6 +19,7 @@ import { LoggerService } from '../../../core/logger.service';
 import { ClaimPayloadInterface } from '../interface/claim.payload.interface';
 import { ClaimFactoryService } from './factory/claim.factory.service';
 import { ClaimServiceAbstract } from './claim.abstract.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -36,12 +37,10 @@ export class ClaimService implements ClaimServiceAbstract {
     completion: Subject<boolean>,
     claimData: BehaviorSubject<ClaimPayloadInterface[]>
   ): void {
-    const uri: string =
-      'https://unify-hwa-contractor-api-qa11.engine.host/services/vendor/purchase-orders';
     const partyId: string = this._configService.getPartyId();
     const companyInfo: string = this._configService.getCompanyInfo();
     const params: HttpParams = this.getClaimParams(partyId, companyInfo);
-    this._httpClient.get(uri, { params }).subscribe(
+    this._httpClient.get(environment.claimsUrl, { params }).subscribe(
       (data: any) => {
         this.getClaimsSuccessHandler(completion, claimData, data);
       },
@@ -99,12 +98,9 @@ public getClaimParams(partyId: string, companyInfo: string): HttpParams {
     dataSubject$: Subject<any>,
     completedSubject$: Subject<boolean>
   ): void {
-    const uri: string =
-      'https://unify-hwa-contractor-api-qa11.engine.host/services/vendor/geturl';
-
     const partyId: string = this._configService.getPartyId();
     const params: HttpParams = this.getAuthInvoiceParams(partyId, jobNumber);
-    this._httpClient.get(uri, { params }).subscribe(
+    this._httpClient.get(environment.authInoviceUrl, { params }).subscribe(
       (data: any) => {
         this.authInvoiceSuccessHandler(dataSubject$, completedSubject$, data);
       },

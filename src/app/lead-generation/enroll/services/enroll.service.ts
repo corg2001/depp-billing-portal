@@ -7,6 +7,7 @@ import {
 } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { LeadGenerationPayloadInterface } from '../interface/enroll.payload.inteface';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,7 @@ export class EnrollService {
   ): void {
     const enrollUri: string =
       'https://unify-hwa-contractor-api-qa11.engine.host/lead-generation';
-    this._http.post(enrollUri, enrolled).subscribe(
+    this._http.post(environment.enrollUrl, enrolled).subscribe(
       (response: Observable<HttpResponse<any>>) => {
         dataSubject.next(response);
         enrolledSubject.next(true);
