@@ -21,6 +21,10 @@ import { ProfileFactoryService } from './service/factory/profile.factory.service
 import { AgreedRatesFactoryAbstractService } from './agreed-rates/service/factory/abstract/agreed-rates.factory.abstract.service';
 import { AgreedRatestFactoryService } from './agreed-rates/service/factory/agreed-ratest.factory.service';
 import { AgreedRateDetailComponent } from './agreed-rates/agreed-rate-detail/agreed-rate-detail.component';
+import { CalenderInfoComponent } from './calendar/calender-info/calender-info.component';
+import { ServiceInfoComponent } from './calendar/service-call/service-info.component';
+import { SearchBoxComponent } from './calendar/service-call/search-box/search-box.component';
+import { TableComponent } from './calendar/service-call/table/table.component';
 
 @NgModule({
   // tslint:disable-next-line: max-line-length
@@ -32,7 +36,11 @@ import { AgreedRateDetailComponent } from './agreed-rates/agreed-rate-detail/agr
     ServiceAreasComponent,
     CalendarComponent,
     AgreedRatesTableComponent,
-    AgreedRateDetailComponent
+    AgreedRateDetailComponent,
+    CalenderInfoComponent,
+    ServiceInfoComponent,
+    SearchBoxComponent,
+    TableComponent
   ],
   imports: [
     CommonModule,
