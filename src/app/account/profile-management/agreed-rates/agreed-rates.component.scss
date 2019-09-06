@@ -4,16 +4,16 @@
   margin-left: 2.5rem;
   .profile-info-section {
     .txt-agreed-rates {
+      align-items: center;
+      border-bottom: 0.0625rem solid $hwa-color-light-gray;
+      color: $hwa-color-teal;
       font-weight: 300;
       font-size: 1.5rem;
-      color: $hwa-color-teal;
-      padding-top: 0.9375rem;
       height:4.375rem;
-      border-bottom: 0.0625rem solid $hwa-color-light-gray;
-      align-items: center;
+      padding-top: 0.9375rem;
     }
     .info-rates {
-      width: 66.5rem;
+      width: 6rem;
     }
     .profile-info-details {
       font-size: 1.125rem;
