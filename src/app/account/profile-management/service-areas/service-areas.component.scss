@@ -25,7 +25,7 @@
 }
 .info-section{
     color:$hwa-color-gray;
-    font-size: 1.125rem;
+    font-size: 1.2rem;
     font-weight: normal;
     font-style: normal;
     text-decoration: none;
@@ -37,9 +37,9 @@
         padding-top: 0.9375rem;
     }
     .info-items{
-        height:4.375rem;
         margin-left:2.5rem;
         border-bottom: 0.0625rem solid $hwa-color-light-gray;
         align-items: center;
+        padding:1rem 0;
     }
 }
