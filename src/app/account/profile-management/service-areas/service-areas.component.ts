@@ -41,7 +41,7 @@ export class ServiceAreasComponent implements OnChanges {
     if (this.serviceAreas) {
       this.serviceAreas.length > 0 && this.completion === true ? this.isData = true : this.isData = false;
      this.counties = this.getCounties(this.serviceAreas);
-     this.completion === true ? this.getStateCode() : this.stateCode = '';
+     this.completion === true && this.isData === true ? this.getStateCode() : this.stateCode = '';
     //  this.getServiceAreaDetailsList(this.counties);
     }
     this.isLoading();

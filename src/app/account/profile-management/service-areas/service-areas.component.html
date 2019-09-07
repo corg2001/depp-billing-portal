@@ -1,6 +1,11 @@
 <div id="service-area" class="service-are-container aw-100">
   <div class="info-section">
     <div class="info-items txt-business">Service Areas</div>
+    <ng-container *ngIf="!isData && !loading">
+      <div class="info-items">
+          <p>{{ noInfoText }}</p>
+      </div>
+    </ng-container>
   </div>
   <app-loading-spinner *ngIf="loading"></app-loading-spinner>
   <div class="service-area-form" *ngIf="isData && !loading">
@@ -12,7 +17,4 @@
     <app-service-area-table [serviceAreasDeatils$]="serviceAreasDeatils$"></app-service-area-table>
   </div>
 
-  <div *ngIf="!isData && !loading">
-    {{ noInfoText }
-  </div>
-</div>
+  

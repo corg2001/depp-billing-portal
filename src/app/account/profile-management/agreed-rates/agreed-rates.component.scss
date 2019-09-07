@@ -36,7 +36,9 @@
   }
 }
 .info {
-  color: $hwa-color-gray;
+  border-bottom: 0.0625rem solid $hwa-color-light-gray;
+  align-items: center;
+  padding:1rem 0;
   font-size: 1.2rem;
-  width: 80%;
+  color: $hwa-color-gray
 }
