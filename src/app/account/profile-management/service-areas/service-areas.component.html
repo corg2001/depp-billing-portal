@@ -2,52 +2,17 @@
   <div class="info-section">
     <div class="info-items txt-business">Service Areas</div>
   </div>
-  <div class="service-area-form">
+  <app-loading-spinner *ngIf="loading"></app-loading-spinner>
+  <div class="service-area-form" *ngIf="isData && !loading">
     <div style="margin-bottom:20px">
-    <div class="company-name">ABC Plumbing - TX</div>
-    <div class="contractor-id">Contractor ID: <label>V0000000752</label></div>
+      <div class="company-name">ABC Plumbing - {{ stateCode }}</div>
+      <div class="contractor-id">Contractor ID: <label>{{ partyId }}</label></div>
     </div>
-    <form [formGroup]="searchForm" (ngSubmit)="search()">
-      <div class="d-flex flex-column flex-md-row w-70">
-        <div class="form-group">
-          <input type="text" id="county" name="county" class="form-control" placeholder="County"
-            formControlName="county" />
-        </div>
-        <div class="form-group">
-          <input type="text" id="zip-pcode" name="zip-pcode" class="form-control" placeholder="ZIP Code"
-            formControlName="zipcode" />
-        </div>
-        <div class="form-group">
-          <select id="hvac" formControlName="hvac" class="form-control">
-            <option value="">Select</option>
-            <option value="hvac">HVAC</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <button type="submit" class="btn btn-secondary">
-            <i class="fa fa-search" aria-hidden="true"></i>
-          </button>
-        </div>
-      </div>
-    </form>
-    <div class="grid-data">
-        <table class="table table-striped">
-            <thead>
-              <tr>
-                <th scope="col" class="text-info">ZIP Code</th>
-                <th scope="col" class="text-info">Trade</th>
-                <th scope="col" class="text-info"></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="small" *ngFor="let service of serviceAreaDetails">
-                <td scope="row">{{service.zipcode}}</td>
-                <td scope="row">{{service.hvac}}</td>
-                <td>{{service.service}}</td>
-              </tr>
-            </tbody>
-          </table>
-    </div>
+    <app-service-area-search [counties]="counties" [serviceAreasDeatils$]="serviceAreasDeatils$"></app-service-area-search>
+    <app-service-area-table [serviceAreasDeatils$]="serviceAreasDeatils$"></app-service-area-table>
+  </div>
+
+  <div *ngIf="!isData && !loading">
+    {{ noInfoText }
   </div>
 </div>
-

@@ -11,7 +11,8 @@ export const environment = {
     brandFriendlyName: 'HWA',
     copyrightNotice:
       '&copy; 2017 HOME WARRANTY OF AMERICA. Inc. Home Warranty Information:',
-    pageTitle: 'HWA - Home Warranty of America'
+    pageTitle: 'HWA - Home Warranty of America',
+    customerServiceNumber: '1-888-888-8888'
   },
   // auth service
   loginUrl: `${baseUrl}authentication/passport/login`,
@@ -33,7 +34,10 @@ export const environment = {
   achDocsUrl: `${baseUrl}services/vendor/ach-info`,
 
   // AgreedRatesService
-  agreedRatesUrl: `${baseUrl}services/vendor/agreed-rate`
+  agreedRatesUrl: `${baseUrl}services/vendor/agreed-rate`,
+
+  // ServiceAreasService
+  serviceAreasUrl: `${baseUrl}services/vendor/service-areas`
 };
 
 /*

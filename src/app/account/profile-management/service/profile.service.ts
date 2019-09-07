@@ -11,6 +11,7 @@ import { AchDocuments } from '../ach-documents/model/ach-documents.model';
 import { ProfileAbstractService } from './abstract/profile.abstract.service';
 import { ProfileFactoryAbstractService } from './factory/abstract/profile.factory.abstract.service';
 import { environment } from 'src/environments/environment';
+import { HttpParamEnum } from 'src/app/shared/enums/http-params.enums';
 
 @Injectable({
   providedIn: 'root'
@@ -41,8 +42,8 @@ export class ProfileService implements ProfileAbstractService {
 
   public buildAchDocsParams(partyId: string, companyInfo: string): HttpParams {
     return new HttpParams()
-      .set('vendor_id', partyId)
-      .set('company_info', companyInfo);
+      .set(HttpParamEnum.vendorId, partyId)
+      .set(HttpParamEnum.companyInfo, companyInfo);
   }
 
   public achDocsSuccessHandler(
