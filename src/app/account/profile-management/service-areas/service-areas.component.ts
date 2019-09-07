@@ -1,50 +1,82 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 
-import { FormGroup, FormBuilder} from '@angular/forms';
-import { ServiceArea } from '../interface/service-area';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { ServiceAreasInterface } from './interface/service-areas.interface';
+import { ServiceAreasAbstractService } from './service/abstract/service-areas-abstract.service';
+import { ServiceAreas } from './model/service-areas.model';
+import { ServiceAreaDetailsInterface } from './interface/service-area-details.interface';
+import { environment } from 'src/environments/environment';
+import { Subject, BehaviorSubject } from 'rxjs';
+import { CountiesInterface } from './interface/counties.interface';
+import * as _ from 'lodash';
+import { ConfigService } from 'src/app/core/config.service';
 
 @Component({
   selector: 'app-service-areas',
   templateUrl: './service-areas.component.html',
   styleUrls: ['./service-areas.component.scss']
 })
-export class ServiceAreasComponent implements OnInit {
-  
-  public searchForm: FormGroup;
-  //replace with service data
-  public serviceAreaDetails:ServiceArea[]=[
-    {
-      zipcode:'30002',
-      hvac:'HVAC',
-      service:'Serviced'
-    },
-    {
-      zipcode:'30025',
-      hvac:'HVAC',
-      service:'Serviced'
-    },
-    {
-      zipcode:'30028',
-      hvac:'HVAC',
-      service:'Serviced'
-    },
-    {
-      zipcode:'30029',
-      hvac:'HVAC',
-      service:'Serviced'
-    }
-  ];
-  constructor(private _fb: FormBuilder) { }
+export class ServiceAreasComponent implements OnChanges {
+  @Input() public serviceAreas?: ServiceAreasInterface[];
+  @Input() public error?: boolean;
+  @Input() public completion?: boolean;
+  @Input() public errorMessage?: string;
+  public counties: CountiesInterface[];
+  public serviceAreasDeatils$?: BehaviorSubject<ServiceAreaDetailsInterface[]> = new BehaviorSubject([]);
+  public isData: boolean;
+  public loading: boolean = true;
+  public noInfoText: string;
+  public partyId: string;
+  public stateCode: string;
+  constructor(private _conFigService: ConfigService) {}
 
-  ngOnInit() {
-    this.searchForm = this._fb.group({
-      county: [''],
-      zipcode: [''],
-      hvac: ['']
-    });
+  ngOnChanges(): void {
+   this.intit();
   }
-public search(searchForm:any){
-  //service call
-  console.log(this.searchForm.value);
-}
+
+  public intit(): void {
+    this.partyId = this._conFigService.getPartyId();
+    // tslint:disable-next-line: max-line-length
+    this.noInfoText = `Your Service Areas is not set up. Please reach out to contractor relastions at ${environment.core.customerServiceNumber}.`;
+    if (this.serviceAreas) {
+      this.serviceAreas.length > 0 && this.completion === true ? this.isData = true : this.isData = false;
+     this.counties = this.getCounties(this.serviceAreas);
+     this.completion === true ? this.getStateCode() : this.stateCode = '';
+    //  this.getServiceAreaDetailsList(this.counties);
+    }
+    this.isLoading();
+  }
+
+  public isLoading(): void {
+    this.completion === true ? this.loading = false : this.loading = true;
+  }
+
+  public getCounties(serviceAreas: ServiceAreasInterface[]): CountiesInterface[] {
+    let counties: CountiesInterface[] = [];
+    serviceAreas.forEach((serviceArea: ServiceAreasInterface) => {
+       counties = serviceArea.counties;
+     });
+     return counties;
+  }
+
+  public getServiceAreaDetailsList(counties: CountiesInterface[]): ServiceAreaDetailsInterface[] {
+    // this function flattens down the service area details of each county.
+    const serviceAreaDetails: ServiceAreaDetailsInterface[] = [];
+    counties.forEach((county: CountiesInterface) => {
+      const flattenDetails = _.flattenDeep(county.serviceAreaDetails);
+      const flattenAgain = _.flattenDeep(flattenDetails);
+      const thirdFlatten = _.flattenDeep(flattenAgain);
+      serviceAreaDetails.push(thirdFlatten);
+    });
+    return serviceAreaDetails;
+  }
+
+  public getCountyServiceAreaDetail(county: CountiesInterface): ServiceAreaDetailsInterface[] {
+    return county.serviceAreaDetails;
+  }
+
+  public getStateCode(): void {
+    const stateCodeObj = _.find(this.serviceAreas, ((serviceAreas: ServiceAreas) => serviceAreas.stateCode));
+    stateCodeObj.stateCode ? this.stateCode = stateCodeObj.stateCode : this.stateCode = '';
+  }
 }

@@ -1,9 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import {
-  FormGroup,
-  FormBuilder
-} from '@angular/forms';
-import { ClaimService } from '../../service/claim.service';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { Claim } from '../../model/claims.model';
 import { ClaimServiceAbstract } from '../../service/claim.abstract.service';

@@ -1,22 +1,7 @@
 @import '../../../../assets/styles/contractor-layout-styles.scss';
 
-@media (min-width: 76.8rem) {
-	.form-group {
-		margin-right: 1rem;
-	}
-	.form-control {
-        height: calc(1.5em + 2rem + .2rem);
-        width: 14.375rem;
-	}
-	.btn-secondary {
-		height: 3.6rem;
-		width: 3.6rem;
-	}
-}
 .service-are-container{
-    .grid-data{
-        margin-top:1.5625rem;
-    }
+    
     .company-name{
         display: inline;
         // color: rgb(102, 102, 102);

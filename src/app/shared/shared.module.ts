@@ -12,7 +12,7 @@ import { FormatMoney } from './pipe/price-format.pipe';
   exports: [
     ModalComponent,
     LoadingSpinnerComponent,
-    FormatMoney
+    FormatMoney,
   ],
   entryComponents: [
     ModalComponent

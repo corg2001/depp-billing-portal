@@ -14,6 +14,7 @@ import { LoggerService } from 'src/app/core/logger.service';
 import { AgreedRatesAbstractService } from './abstract/agreed-rates.abstract.service';
 import { AgreedRatesFactoryAbstractService } from './factory/abstract/agreed-rates.factory.abstract.service';
 import { environment } from 'src/environments/environment';
+import { HttpParamEnum } from 'src/app/shared/enums/http-params.enums';
 
 @Injectable({
   providedIn: 'root'
@@ -49,7 +50,7 @@ export class AgreedRatesService implements AgreedRatesAbstractService {
     partyId: string,
     companyInfo: any
   ): HttpParams {
-    return  new HttpParams().set('vendor_id', partyId).set('company_info', companyInfo)
+    return  new HttpParams().set(HttpParamEnum.vendorId, partyId).set(HttpParamEnum.companyInfo, companyInfo);
   }
 
   public getAgreedRatesSuccessHandler(

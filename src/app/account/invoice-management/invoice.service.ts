@@ -6,6 +6,7 @@ import { Observable, Subject } from 'rxjs';
 import { HttpClient, HttpErrorResponse, HttpParams, HttpResponse } from '@angular/common/http';
 import { ConfigService } from '../../core/config.service';
 import { LoggerService } from '../../core/logger.service';
+import { HttpParamEnum } from 'src/app/shared/enums/http-params.enums';
 
 @Injectable({
   providedIn: 'root'
@@ -209,7 +210,7 @@ export class InvoiceService {
   }
 
   private getInvoiceParams(partyId: string, companyInfo: string): HttpParams {
-    return new HttpParams().set('vendor_id', partyId).set('company_info', companyInfo);
+    return new HttpParams().set(HttpParamEnum.vendorId, partyId).set(HttpParamEnum.companyInfo, companyInfo);
   }
 
   public getInvoiceSuccessHandler(

@@ -25,6 +25,13 @@ import { CalenderInfoComponent } from './calendar/calender-info/calender-info.co
 import { ServiceInfoComponent } from './calendar/service-call/service-info.component';
 import { SearchBoxComponent } from './calendar/service-call/search-box/search-box.component';
 import { TableComponent } from './calendar/service-call/table/table.component';
+import { ServiceAreaSearchComponent } from './service-areas/service-area-search/service-area-search.component';
+import { ServiceAreaTableComponent } from './service-areas/service-area-table/service-area-table.component';
+import { ServiceAreasAbstractService } from './service-areas/service/abstract/service-areas-abstract.service';
+import { ServiceAreasService } from './service-areas/service/service-areas.service';
+import { ServiceAreasFactoryAbstractService } from './service-areas/service/factory/abstract/service-areas.factory.abstract.service';
+import { ServiceAreasFactoryService } from './service-areas/service/factory/service-areas.factory.service';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   // tslint:disable-next-line: max-line-length
@@ -40,12 +47,15 @@ import { TableComponent } from './calendar/service-call/table/table.component';
     CalenderInfoComponent,
     ServiceInfoComponent,
     SearchBoxComponent,
-    TableComponent
+    TableComponent,
+    ServiceAreaSearchComponent,
+    ServiceAreaTableComponent
   ],
   imports: [
     CommonModule,
     ProfileManagementRoutingModule,
     FormsModule,
+    NgbModule,
     ReactiveFormsModule,
     SharedModule
   ],
@@ -65,6 +75,13 @@ import { TableComponent } from './calendar/service-call/table/table.component';
     {
       provide: AgreedRatesAbstractService,
       useClass: AgreedRatesService
+    },
+    { provide: ServiceAreasAbstractService,
+      useClass: ServiceAreasService
+     },
+    {
+      provide: ServiceAreasFactoryAbstractService,
+      useClass: ServiceAreasFactoryService
     }
   ]
 })
