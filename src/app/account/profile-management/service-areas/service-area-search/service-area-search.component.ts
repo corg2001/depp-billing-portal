@@ -24,6 +24,7 @@ export class ServiceAreaSearchComponent implements OnInit, OnChanges {
   public countyNames: string[];
   public skillTypesList: string[];
   public selectedCounty: string;
+  private _selectedServiceAreasDetailsCopy: ServiceAreaDetailsInterface[];
   constructor(private _fb: FormBuilder, private _serviceAreaService: ServiceAreasAbstractService) {}
 
   ngOnInit() {
@@ -37,10 +38,8 @@ export class ServiceAreaSearchComponent implements OnInit, OnChanges {
     this.countyNames = this.getCountyNames(this.counties);
   }
 
-  public search(form: FormGroup) {
-    const _serviceAreaDetails = this.serviceAreasDeatils$.getValue();
-    // tslint:disable-next-line: max-line-length
-    form.controls.zipcode.value || form.controls.skillType.value ? this.serviceAreasDeatils$.next(this._serviceAreaService.search(this.serviceAreasDeatils$.getValue(), form.controls.zipcode.value, form.controls.skillType.value)) : this.serviceAreasDeatils$.next(_serviceAreaDetails);
+  public search(form: FormGroup) {    // tslint:disable-next-line: max-line-length
+    form.controls.zipcode.value || form.controls.skillType.value ? this.serviceAreasDeatils$.next(this._serviceAreaService.search(this._selectedServiceAreasDetailsCopy, form.controls.zipcode.value, form.controls.skillType.value)) : this.serviceAreasDeatils$.next(this._selectedServiceAreasDetailsCopy);
   }
 
   public getCountyNames(counties: CountiesInterface[]): string[] {
@@ -58,6 +57,7 @@ export class ServiceAreaSearchComponent implements OnInit, OnChanges {
     const county: CountiesInterface = _.find(this.counties, ((countie: CountiesInterface) => countie.countyName === _countyName));
     county.serviceAreaDetails.forEach((serviceAreaDetail: ServiceAreaDetailsInterface) => skillTypes.push(serviceAreaDetail.skillType));
     this.skillTypesList = _.uniq(skillTypes);
+    this._selectedServiceAreasDetailsCopy = _.clone(county.serviceAreaDetails);
     this.serviceAreasDeatils$.next(county.serviceAreaDetails);
   }
 }
