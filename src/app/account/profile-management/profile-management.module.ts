@@ -21,6 +21,17 @@ import { ProfileFactoryService } from './service/factory/profile.factory.service
 import { AgreedRatesFactoryAbstractService } from './agreed-rates/service/factory/abstract/agreed-rates.factory.abstract.service';
 import { AgreedRatestFactoryService } from './agreed-rates/service/factory/agreed-ratest.factory.service';
 import { AgreedRateDetailComponent } from './agreed-rates/agreed-rate-detail/agreed-rate-detail.component';
+import { CalenderInfoComponent } from './calendar/calender-info/calender-info.component';
+import { ServiceInfoComponent } from './calendar/service-call/service-info.component';
+import { SearchBoxComponent } from './calendar/service-call/search-box/search-box.component';
+import { TableComponent } from './calendar/service-call/table/table.component';
+import { ServiceAreaSearchComponent } from './service-areas/service-area-search/service-area-search.component';
+import { ServiceAreaTableComponent } from './service-areas/service-area-table/service-area-table.component';
+import { ServiceAreasAbstractService } from './service-areas/service/abstract/service-areas-abstract.service';
+import { ServiceAreasService } from './service-areas/service/service-areas.service';
+import { ServiceAreasFactoryAbstractService } from './service-areas/service/factory/abstract/service-areas.factory.abstract.service';
+import { ServiceAreasFactoryService } from './service-areas/service/factory/service-areas.factory.service';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   // tslint:disable-next-line: max-line-length
@@ -32,12 +43,19 @@ import { AgreedRateDetailComponent } from './agreed-rates/agreed-rate-detail/agr
     ServiceAreasComponent,
     CalendarComponent,
     AgreedRatesTableComponent,
-    AgreedRateDetailComponent
+    AgreedRateDetailComponent,
+    CalenderInfoComponent,
+    ServiceInfoComponent,
+    SearchBoxComponent,
+    TableComponent,
+    ServiceAreaSearchComponent,
+    ServiceAreaTableComponent
   ],
   imports: [
     CommonModule,
     ProfileManagementRoutingModule,
     FormsModule,
+    NgbModule,
     ReactiveFormsModule,
     SharedModule
   ],
@@ -57,6 +75,13 @@ import { AgreedRateDetailComponent } from './agreed-rates/agreed-rate-detail/agr
     {
       provide: AgreedRatesAbstractService,
       useClass: AgreedRatesService
+    },
+    { provide: ServiceAreasAbstractService,
+      useClass: ServiceAreasService
+     },
+    {
+      provide: ServiceAreasFactoryAbstractService,
+      useClass: ServiceAreasFactoryService
     }
   ]
 })

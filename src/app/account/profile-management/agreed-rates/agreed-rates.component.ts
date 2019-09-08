@@ -2,6 +2,7 @@ import { Component, Input, OnChanges } from '@angular/core';
 import { AgreedRates } from './model/agreed-rates.model';
 import { TradeAgreementDetailsInterface } from './interface/trade-agreement-deatils.interface';
 import { RateDetailsInterface } from './interface/rate-details.interface';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-agreed-rates',
@@ -25,7 +26,7 @@ export class AgreedRatesComponent implements OnChanges {
 
   public init(): void {
     this.noInfoText =
-      'Your Agreed Rates is not set up. Please reach out to contractor relations at 1-888-888-8888.';
+      `Your Agreed Rates is not set up. Please reach out to contractor relations at ${environment.core.customerServiceNumber}.`;
     if (this.agreedRates) {
       this.agreedRates.rateDetails.length > 0 && this.completion === true
         ? (this.isData = true)

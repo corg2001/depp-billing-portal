@@ -1,0 +1,15 @@
+@import "../../../../../assets/styles/contractor-layout-styles.scss";
+
+header {
+  text-align: center;
+  .header-text {
+    font-size: 1.4rem;
+  }
+  .calendar-info {
+      font-weight: 700;
+  }
+  .emergency-call {
+    color: $hwa-color-orange;
+    font-size: 0.8 rem;
+  }
+}

@@ -20,6 +20,7 @@ import { ClaimPayloadInterface } from '../interface/claim.payload.interface';
 import { ClaimFactoryService } from './factory/claim.factory.service';
 import { ClaimServiceAbstract } from './claim.abstract.service';
 import { environment } from 'src/environments/environment';
+import { HttpParamEnum } from 'src/app/shared/enums/http-params.enums';
 
 @Injectable({
   providedIn: 'root'
@@ -52,8 +53,8 @@ export class ClaimService implements ClaimServiceAbstract {
 
 public getClaimParams(partyId: string, companyInfo: string): HttpParams {
     return new HttpParams()
-      .set('vendor_id', partyId)
-      .set('company_info', companyInfo);
+      .set(HttpParamEnum.vendorId, partyId)
+      .set(HttpParamEnum.companyInfo, companyInfo);
   }
 
   public getClaimsSuccessHandler(
@@ -115,8 +116,8 @@ public getClaimParams(partyId: string, companyInfo: string): HttpParams {
     jobNumber: string
   ): HttpParams {
     return new HttpParams()
-      .set('vendor_id', partyId)
-      .set('job_number', jobNumber);
+      .set(HttpParamEnum.vendorId, partyId)
+      .set(HttpParamEnum.jobNumber, jobNumber);
   }
 
   public authInvoiceSuccessHandler(dataSubject$: Subject<any>, completedSubject$: Subject<boolean>, response: any): void {

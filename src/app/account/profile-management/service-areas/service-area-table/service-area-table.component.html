@@ -1,0 +1,25 @@
+<div class="grid-data" *ngIf="isData">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col" class="text-info">Zip Code</th>
+        <th scope="col" class="text-info">Trade</th>
+        <th scope="col" class="text-info"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="small" *ngFor="let service of modifiedDetails()">
+        <td scope="row">{{ service?.zip }}</td>
+        <td scope="row">{{ service?.skillType }}</td>
+        <td scope="row">{{ service?.serviceAreaType }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div>
+    <ngb-pagination
+      [pageSize]="pageSize"
+      [(page)]="page"
+      [collectionSize]="collectionSize" [maxSize]="10">
+    </ngb-pagination>
+  </div>
+</div>

@@ -52,6 +52,22 @@ ngb-pagination {
   justify-content: center;
   padding: 1rem;
 }
+.table {
+  text-align: center;
+}
+
+
+
+.page-item.active .page-link {
+  background-color: $hwa-color-orange !important;
+  border-color: $hwa-color-orange !important;
+  color: $white !important;
+}
+
+.page-link {
+  color: $hwa-color-orange !important;
+}
+
 
 // High-Level Styles
 $primary-dark: $hwa-color-teal-dark;

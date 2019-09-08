@@ -1,22 +1,7 @@
 @import '../../../../assets/styles/contractor-layout-styles.scss';
 
-@media (min-width: 76.8rem) {
-	.form-group {
-		margin-right: 1rem;
-	}
-	.form-control {
-        height: calc(1.5em + 2rem + .2rem);
-        width: 14.375rem;
-	}
-	.btn-secondary {
-		height: 3.6rem;
-		width: 3.6rem;
-	}
-}
 .service-are-container{
-    .grid-data{
-        margin-top:1.5625rem;
-    }
+    
     .company-name{
         display: inline;
         // color: rgb(102, 102, 102);
@@ -40,7 +25,7 @@
 }
 .info-section{
     color:$hwa-color-gray;
-    font-size: 1.125rem;
+    font-size: 1.2rem;
     font-weight: normal;
     font-style: normal;
     text-decoration: none;
@@ -52,9 +37,9 @@
         padding-top: 0.9375rem;
     }
     .info-items{
-        height:4.375rem;
         margin-left:2.5rem;
         border-bottom: 0.0625rem solid $hwa-color-light-gray;
         align-items: center;
+        padding:1rem 0;
     }
 }
