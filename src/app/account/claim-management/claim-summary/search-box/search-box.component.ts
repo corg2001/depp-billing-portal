@@ -1,12 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-<<<<<<< HEAD
-import {
-  FormGroup,
-  FormBuilder
-} from '@angular/forms';
-=======
 import { FormGroup, FormBuilder } from '@angular/forms';
->>>>>>> c023ed0ffe0675d399de7905c8d3de561f4183ba
 import { BehaviorSubject } from 'rxjs';
 import { Claim } from '../../model/claims.model';
 import { ClaimServiceAbstract } from '../../service/claim.abstract.service';
