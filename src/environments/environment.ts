@@ -37,7 +37,10 @@ export const environment = {
   agreedRatesUrl: `${baseUrl}services/vendor/agreed-rate`,
 
   // ServiceAreasService
-  serviceAreasUrl: `${baseUrl}services/vendor/service-areas`
+  serviceAreasUrl: `${baseUrl}services/vendor/service-areas`,
+
+  //InvoiceService
+  invoicesUrl: `${baseUrl}services/vendor/invoices`
 };
 
 /*
