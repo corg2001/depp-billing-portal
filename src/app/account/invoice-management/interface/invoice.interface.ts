@@ -1,9 +1,11 @@
+import * as Money from 'js-money';
+
 export interface InvoiceInterface {
-  readonly claimId: string;
-  readonly claimDate: string;
-  readonly homeOwnerName: string;
-  readonly serviceAddress: string;
-  readonly invoiceNo: string;
-  readonly invoiceDate: string;
-  readonly amount: string;
+  readonly claimDate?: string;
+  readonly claimId?: string;
+  readonly customerName?: string;
+  readonly invoiceAmount?: Money;
+  readonly invoiceDate?: string;
+  readonly invoiceId?: string;
+  readonly serviceAddress?: string;
 }

@@ -12,19 +12,19 @@
   </thead>
   <tbody>
     <tr *ngFor='let invoice of modifiedInvoice()' class="small">
-      <td scope="row">{{invoice['claimId']}}</td>
-      <td scope="row">{{invoice['claimDate'] | date }}</td>
-      <td>{{invoice['homeOwnerName']}}</td>
-      <td>{{invoice['serviceAddress']}}</td>
-      <td>{{invoice['invoiceNo']}}</td>
-      <td>{{invoice['invoiceDate']}}</td>
-      <td>{{invoice['amount']}}</td>
+      <td scope="row">{{ invoice?.claimId }}</td>
+      <td scope="row">{{ invoice?.claimDate | date }}</td>
+      <td scope="row">{{ invoice?.customerName }}</td>
+      <td scope="row">{{ invoice?.serviceAddress }}</td>
+      <td scope="row">{{ invoice?.invoiceId }}</td>
+      <td scope="row">{{ invoice?.invoiceDate | date }}</td>
+      <td scope="row">{{ invoice?.invoiceAmount.amount | formatmoney }}</td>
     </tr>
   </tbody>
 </table>
-<app-loading-spinner *ngIf="loading"></app-loading-spinner>
-<div>
 <ngb-pagination [pageSize]="pageSize" [(page)]="page" [collectionSize]="collectionSize" ></ngb-pagination>
+<div>
+
 
 <!-- <select [(ngModel)]="pageSize">
   <option *ngFor="let list of pageList" [ngValue]="list">{{list}} Items per page</option>
