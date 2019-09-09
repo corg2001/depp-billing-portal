@@ -10,11 +10,54 @@
   </thead>
   <tbody>
     <tr *ngFor="let payment of paymentHistory; let i = index">
-      <td scope="row">{{ payment.paymentDate | date }} </td>
-      <td scope="row">{{ payment.paymentReferenceNo}}</td>
-      <td scope="row">{{ payment.paymentMethod}}</td>
-      <td scope="row">{{ payment.paymentAmount.amount | formatmoney }} </td>
-      <td scope="row"><button class="btn">View Invoices</button></td>
+      <td scope="row">{{ payment.paymentDate | date }}</td>
+      <td scope="row">{{ payment.paymentReferenceNo }}</td>
+      <td scope="row">{{ payment.paymentMethod }}</td>
+      <td scope="row">{{ payment.paymentAmount.amount | formatmoney }}</td>
+      <td scope="row">
+        <button (click)="viewInvoice(payment)" class="btn">View Invoices</button>
+      </td>
+      <ng-template #invoiceModal let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title text-muted">Upload Documents</h4>
+          <button
+            type="button"
+            class="close"
+            aria-label="Close"
+            (click)="modal.dismiss()"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+         <table class="table">
+           <thead> 
+             <tr>
+               <th scope="col">Claim ID</th>
+               <th scope="col">Claim Date</th>
+               <th scope="col">Invoice Number</th>
+               <th scope="col">Homeowner Name</th>
+               <th scope="col">Service Address</th>
+               <th scope="col">Invoice Amount</th>
+             </tr>
+             <tbody>
+               <tr *ngFor="let invoice of payment.vendorInvoiceDetails">
+                 <td scope="row">{{ invoice.claimId }}</td>
+                 <td scope="row">{{ invoice.claimDate | date}}</td>
+                 <td scope="row">{{ invoice.invoiceId }}</td>
+                 <td scope="row">{{ invoice.customerName }}</td>
+                 <td scope="row">{{ invoice.serviceAddress }}</td>
+                 <td scope="row">{{ invoice.invoiceAmount.amount | formatmoney }}</td>
+               </tr>
+             </tbody>
+         </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-light" (click)="modal.close()">
+            Close
+          </button>
+        </div>
+      </ng-template>
     </tr>
     <table></table>
   </tbody>
