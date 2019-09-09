@@ -2,7 +2,7 @@
 
 select {
   padding: 1rem;
-  border: solid #00849b 0.1rem;
+  border: solid $hwa-color-teal 0.1rem;
 }
 a {
   color: $hwa-color-orange!important;
@@ -10,4 +10,8 @@ a {
     cursor: pointer;
     text-decoration: underline !important;
   }
+}
+
+th {
+  color: $hwa-color-teal;
 }

@@ -1,5 +1,12 @@
 <div>
   <header>{{ headerText }}</header>
   <app-search-box></app-search-box> 
-  <app-payment-table></app-payment-table> 
+  <app-loading-spinner *ngIf="loading"></app-loading-spinner>
+  <app-payment-table *ngIf="!loading && isData" [paymentHistory]="paymentHistory" [error]="error" [completion]="completion"></app-payment-table> 
+  <ng-container *ngIf="!isData && !loading">
+    <div>
+      <p>{{ noInfoText }}</p>
+    </div>
+  </ng-container>
+  
 </div>
