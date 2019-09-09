@@ -39,7 +39,9 @@ export const environment = {
   // ServiceAreasService
   serviceAreasUrl: `${baseUrl}services/vendor/service-areas`,
 
-  //InvoiceService
+  // PaymentServoce
+payementHistoryUrl: `${baseUrl}services/vendor/payments-history`,
+  // InvoiceService
   invoicesUrl: `${baseUrl}services/vendor/invoices`
 };
 

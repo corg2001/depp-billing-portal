@@ -8,7 +8,6 @@ export class FormatMoney implements PipeTransform {
     const convertToDollars: number = num / 100;
     const formatToDecimal: string = convertToDollars
       .toString()
-      .match(/^\d+(?:\.\d{0,2})?/)[0];
     const convertToNumber: number = parseFloat(formatToDecimal);
 
     return convertToNumber.toLocaleString('en-US', {
