@@ -37,7 +37,6 @@ export class ServiceAreasFactoryService
             countyName: countyName,
             serviceAreaDetails: serviceAreaDetaisList
           };
-          // county = new Counties(countyName, serviceAreaDetaisList);
           countiesList.push(county);
         }
       );
@@ -46,7 +45,6 @@ export class ServiceAreasFactoryService
         counties: countiesList,
         stateCode: stateCode
       };
-      // const serviceArea = new ServiceAreas(countiesList, stateCode);
       serviceAreasList.push(serviceArea);
     });
     return serviceAreasList;

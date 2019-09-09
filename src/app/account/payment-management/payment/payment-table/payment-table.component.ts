@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { PaymentHistoryInterface } from '../../interface/payment-history.interface';
 
 @Component({
   selector: 'app-payment-table',
@@ -6,6 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./payment-table.component.scss']
 })
 export class PaymentTableComponent implements OnInit {
+  @Input() public paymentHistory: PaymentHistoryInterface[];
+  @Input() public error: boolean;
+  @Input() public completion: boolean;
+
   public expandRow: boolean = false;
   constructor() { }
 

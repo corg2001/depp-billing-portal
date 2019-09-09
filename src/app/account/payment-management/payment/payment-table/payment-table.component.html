@@ -1,0 +1,21 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Payment Date</th>
+      <th scope="col">Reference ID</th>
+      <th scope="col">Payment Type</th>
+      <th scope="col">Payment Amount</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let payment of paymentHistory; let i = index">
+      <td scope="row">{{ payment.paymentDate | date }} </td>
+      <td scope="row">{{ payment.paymentReferenceNo}}</td>
+      <td scope="row">{{ payment.paymentMethod}}</td>
+      <td scope="row">{{ payment.paymentAmount.amount | formatmoney }} </td>
+      <td scope="row"><button class="btn">View Invoices</button></td>
+    </tr>
+    <table></table>
+  </tbody>
+</table>
