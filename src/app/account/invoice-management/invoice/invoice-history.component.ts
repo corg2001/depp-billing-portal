@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { InvoiceService } from '../service/invoice.service';
+import { Subject, BehaviorSubject } from 'rxjs';
+import { ConfigService } from 'src/app/core/config.service';
+import { InvoiceInterface } from '../interface/invoice.interface';
+import { ConstantPool } from '@angular/compiler';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-invoice-history',
@@ -6,10 +12,53 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./invoice-history.component.scss']
 })
 export class InvoiceHistoryComponent implements OnInit {
+  public invoices$: BehaviorSubject<InvoiceInterface[]> = new BehaviorSubject([]);
+  public error$: Subject<boolean> = new Subject();
+  public errorMessage$: Subject<string> = new Subject();
+  public completion$: Subject<boolean> = new Subject();
+  public invoices: InvoiceInterface[] = [];
+  public error: boolean = false;
+  public completion: boolean = false;
+  public loading: boolean = true;
+  public isData: boolean = false;
+  public noInfoText: string;
 
-  constructor() { }
+  constructor(private _invoiceService: InvoiceService, private _configService: ConfigService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
+    this.init();
   }
 
+  public init(): void {
+    this._configService.init();
+    this.noInfoText = `Please contact Contractor Relations at ${environment.core.customerServiceNumber}for assistance.`;
+    this.getInvoice(this.invoices$, this.completion$, this.error$, this.errorMessage$);
+  }
+
+  public getInvoice(
+    invoices$: BehaviorSubject<InvoiceInterface[]>,
+    completion$: Subject<boolean>,
+    error$: Subject<boolean>,
+    errormessage$: Subject<string>,
+  ): void {
+    this._invoiceService.getInvoice(invoices$, completion$, error$, errormessage$);
+
+    invoices$.subscribe((invoicesValue: InvoiceInterface[]) =>  {
+      this.invoices = invoicesValue;
+      this.isLoading();
+      this.checkForData();
+    });
+    completion$.subscribe((completed: boolean) => {
+      this.completion = completed;
+    });
+    error$.subscribe((errorValue: boolean) => this.error = errorValue);
+  }
+
+  public isLoading(): void {
+    this.completion === true ? this.loading = false : this.loading = true;
+  }
+
+  public checkForData(): void {
+    this.invoices !== null && this.completion === true ? this.isData = true : this.isData = false;
+  }
 }

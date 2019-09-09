@@ -40,7 +40,9 @@ export const environment = {
   serviceAreasUrl: `${baseUrl}services/vendor/service-areas`,
 
   // PaymentServoce
-payementHistoryUrl: `${baseUrl}services/vendor/payments-history`
+payementHistoryUrl: `${baseUrl}services/vendor/payments-history`,
+  // InvoiceService
+  invoicesUrl: `${baseUrl}services/vendor/invoices`
 };
 
 /*

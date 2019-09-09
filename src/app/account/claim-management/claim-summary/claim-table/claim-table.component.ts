@@ -4,6 +4,7 @@ import { Claim } from '../../model/claims.model';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { JobStatus, LinkText } from '../../model/claims.enums';
 import { WindowRefAbstract } from 'src/app/core/window-ref.abstract.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-claim-table',
@@ -39,7 +40,7 @@ export class ClaimTableComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.noInfoText = 'Please contact Contractor Relations at 1-888-888-8888 for assistance.';
+    this.noInfoText = `Please contact Contractor Relations at ${environment.core.customerServiceNumber}for assistance.`;
     this.claimSubject$.subscribe((claimData: Claim[]) => {
       this.claims = claimData;
       this.collectionSize = this.claims.length;
