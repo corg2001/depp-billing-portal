@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfigService } from 'src/app/core/config.service';
 import { PaymentService } from '../service/payment.service';
-import { Subject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
 import { PaymentHistoryInterface } from '../interface/payment-history.interface';
 import { environment } from 'src/environments/environment';
 
@@ -11,16 +11,17 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./payment.component.scss']
 })
 export class PaymentComponent implements OnInit{
-  public headerText: string = 'Payment History';
-  public paymentHistory$: Subject<PaymentHistoryInterface[]> = new Subject();
+  public headerText: string;
+  public paymentHistory$: BehaviorSubject<PaymentHistoryInterface[]> = new BehaviorSubject([]);
+  public updatedPaymentHistory$: BehaviorSubject<PaymentHistoryInterface[]> = new BehaviorSubject([]);
   public completion$: Subject<boolean> = new Subject();
   public error$: Subject<boolean> = new Subject();
   public errorMessages$: Subject<string> = new Subject();
 
   public paymentHistory: PaymentHistoryInterface[];
-  public completion: boolean;
-  public error: boolean;
-  public isData: boolean;
+  public completion: boolean = false;
+  public error: boolean = false;
+  public isData: boolean = false;
   public loading: boolean = true;
   public noInfoText: string;
   constructor(
@@ -33,31 +34,36 @@ export class PaymentComponent implements OnInit{
   }
 
   public init(): void {
+    this.headerText = 'Payment History';
     this._configService.init();
     // tslint:disable-next-line: max-line-length
     this.noInfoText = `Your Payment History is not set up. Please reach out to contractor relastions at ${environment.core.customerServiceNumber}.`;
-    this.getPaymentHistory();
+    this.getPaymentHistory(this.paymentHistory$, this.completion$, this.error$, this.errorMessages$);
   }
 
-  public getPaymentHistory(): void {
+  public getPaymentHistory(paymentHistory$: BehaviorSubject<PaymentHistoryInterface[]>,
+     completion$: Subject<boolean>, error$: Subject<boolean>, errorMessage$?: Subject<string>): void {
     this._paymentService.getPaymentHistory(
-      this.paymentHistory$,
-      this.completion$,
-      this.error$,
-      this.errorMessages$
+      paymentHistory$,
+      completion$,
+      error$,
+      errorMessage$
     );
 
-    this.paymentHistory$.subscribe(
+    paymentHistory$.subscribe(
       (paymentHistory: PaymentHistoryInterface[]) => {
+        console.log(paymentHistory)
         this.paymentHistory = paymentHistory;
+        this.isLoading();
         this.checkIsData();
       }
     );
-    this.completion$.subscribe((completion: boolean) => {
+
+    completion$.subscribe((completion: boolean) => {
       this.completion = completion;
-      this.isLoading();
     });
-    this.error$.subscribe((error: boolean) => {
+    
+    error$.subscribe((error: boolean) => {
       this.error = error;
     });
   }
@@ -72,5 +78,9 @@ export class PaymentComponent implements OnInit{
         ? (this.isData = true)
         : (this.isData = false);
     }
+  }
+
+  updateFromSearch(paymentHistory: PaymentHistoryInterface[]): void {
+    this.updatedPaymentHistory$.next(paymentHistory);
   }
 }

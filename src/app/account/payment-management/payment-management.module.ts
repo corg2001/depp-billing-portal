@@ -6,6 +6,7 @@ import { SearchBoxComponent } from './payment/search-box/search-box.component';
 import { PaymentTableComponent } from './payment/payment-table/payment-table.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [PaymentComponent, SearchBoxComponent, PaymentTableComponent],
@@ -14,7 +15,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     PaymentManagementRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    NgbModule
   ]
 })
 export class PaymentManagementModule { }

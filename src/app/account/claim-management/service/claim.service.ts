@@ -38,7 +38,7 @@ export class ClaimService implements ClaimServiceAbstract {
     completion: Subject<boolean>,
     claimData: BehaviorSubject<ClaimPayloadInterface[]>
   ): void {
-    const partyId: string = this._configService.getPartyId();
+    const partyId: string = this._configService.getVendorId();
     const companyInfo: string = this._configService.getCompanyInfo();
     const params: HttpParams = this.getClaimParams(partyId, companyInfo);
     this._httpClient.get(environment.claimsUrl, { params }).subscribe(
@@ -99,7 +99,7 @@ public getClaimParams(partyId: string, companyInfo: string): HttpParams {
     dataSubject$: Subject<any>,
     completedSubject$: Subject<boolean>
   ): void {
-    const partyId: string = this._configService.getPartyId();
+    const partyId: string = this._configService.getVendorId();
     const params: HttpParams = this.getAuthInvoiceParams(partyId, jobNumber);
     this._httpClient.get(environment.authInoviceUrl, { params }).subscribe(
       (data: any) => {

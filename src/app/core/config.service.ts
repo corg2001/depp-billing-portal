@@ -15,7 +15,7 @@ export class ConfigService {
   public init(): void {
     this.config = {
       token: this.getTokenFromSession(),
-      partyId: this.getPartyIdFromSession(),
+      partyId: this.getVendorIdFromSession(),
       companyInfo: this.getCompanyInfoFromSession()
     };
   }
@@ -28,8 +28,8 @@ export class ConfigService {
   public getToken(): string {
     return this.config.token;
   }
-
-  public getPartyId(): string {
+// chnaged this to vendorId from partyId
+  public getVendorId(): string {
     return this.config.partyId;
   }
 
@@ -41,7 +41,7 @@ export class ConfigService {
     return localStorage.getItem('token');
   }
 
-  private getPartyIdFromSession(): string {
+  private getVendorIdFromSession(): string {
     return localStorage.getItem('partyId');
   }
 

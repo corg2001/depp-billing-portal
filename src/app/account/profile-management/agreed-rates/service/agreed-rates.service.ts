@@ -35,7 +35,7 @@ export class AgreedRatesService implements AgreedRatesAbstractService {
     completion$: Subject<boolean>
   ): void {
     const companyInfo: any  = this._configService.getCompanyInfo();
-    const partyId: string = this._configService.getPartyId();
+    const partyId: string = this._configService.getVendorId();
     const params: HttpParams = this.getAgreedRatesParams(partyId, companyInfo);
 
     this._httpClient.get(environment.agreedRatesUrl, { params: params }).subscribe((response: any) => {

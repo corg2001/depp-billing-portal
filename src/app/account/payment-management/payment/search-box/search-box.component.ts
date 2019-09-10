@@ -1,29 +1,54 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
+import * as _ from 'lodash';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
+import { PaymentService } from '../../service/payment.service';
+import { PaymentHistoryInterface } from '../../interface/payment-history.interface';
 
 @Component({
   selector: 'app-search-box',
   templateUrl: './search-box.component.html',
   styleUrls: ['./search-box.component.scss']
 })
-export class SearchBoxComponent implements OnInit {
-  @Input() public paymentHistorySubject$?: BehaviorSubject<any> = new BehaviorSubject([]);
-  @Output() updatedSearchEmitter: EventEmitter<[]> = new EventEmitter<[]>();
+export class SearchBoxComponent implements OnInit, OnChanges {
+  @Input() public paymentHistory$: BehaviorSubject<PaymentHistoryInterface[]> = new BehaviorSubject([]);
+  @Output() public updatePaymentHistoryEmitter: EventEmitter<PaymentHistoryInterface[]> = new EventEmitter<PaymentHistoryInterface[]>();
   public searchForm: FormGroup;
-  public originalPaymentHistory: [];
+  private _paymentHistoryCopy: PaymentHistoryInterface[];
 
-  constructor(private _formBuilder: FormBuilder) {}
+  constructor(private _formBuilder: FormBuilder, private _paymentService: PaymentService) {}
 
-  ngOnInit() {
+  ngOnChanges(): void {
+    this._paymentHistoryCopy = _.clone(this.paymentHistory$.getValue());
+  }
+
+  ngOnInit(): void {
+    this.paymentHistory$.subscribe((paymentHistory: PaymentHistoryInterface[]) => {
+      this._paymentHistoryCopy = paymentHistory;
+    });
     this.searchForm = this._formBuilder.group({
-      startDate: [''],
-      endtDate: [''],
+      address: [''],
+      customerName: [''],
       referenceId: ['']
     });
   }
 
   public search(form: FormGroup): void {
-    // form.controls.startDate.value || form.controls.endtDate.value || form.controls.referenceId.value ? this.updatedSearchEmitter.emit()
+  
+    form.controls.address.value ||
+    form.controls.customerName.value ||
+     form.controls.referenceId.value ?
+    this.updatePaymentHistoryEmitter.emit(this._paymentService.search(this._paymentHistoryCopy,
+      form.controls.address.value,
+      form.controls.customerName.value,
+      form.controls.referenceId.value)) : console.log(this.paymentHistory$.getValue());
+      
+      // this.updatePaymentHistoryEmitter.emit(this.paymentHistory$.getValue());
+      // ;
+  }
+  
+
+  get sf(): any {
+    return this.searchForm.controls;
   }
 }
