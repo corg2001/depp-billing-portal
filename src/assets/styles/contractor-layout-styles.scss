@@ -22,8 +22,6 @@ $body-color: $hwa-color-gray;
   color: $white !important;
 }
 
-
-
 @import "../../../node_modules/bootstrap/scss/bootstrap";
 
 //Custom Styles
@@ -58,7 +56,11 @@ ngb-pagination {
   text-align: center;
 }
 
-
+@media (min-width: 576px) {
+  .modal-dialog {
+    max-width: 60rem !important;
+  }
+}
 
 .page-item.active .page-link {
   background-color: $hwa-color-orange !important;
@@ -69,7 +71,6 @@ ngb-pagination {
 .page-link {
   color: $hwa-color-orange !important;
 }
-
 
 // High-Level Styles
 $primary-dark: $hwa-color-teal-dark;

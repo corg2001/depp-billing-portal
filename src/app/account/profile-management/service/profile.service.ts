@@ -29,7 +29,7 @@ export class ProfileService implements ProfileAbstractService {
     error$: Subject<boolean>,
     completion$: Subject<boolean>
   ): void {
-    const partyId: string = this._configService.getPartyId();
+    const partyId: string = this._configService.getVendorId();
     const companyInfo: string = this._configService.getCompanyInfo();
     const params: HttpParams = this.buildAchDocsParams(partyId, companyInfo);
     this._httpClient

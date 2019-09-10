@@ -29,7 +29,7 @@ export class InvoiceTableComponent implements OnInit {
   ngOnInit() {
     this.invoices$.subscribe((invoices: InvoiceInterface[]) => {
       this.invoices = invoices;
-      this.collectionSize = this.invoices.length;
+      this.collectionSize = invoices.length;
     });
     this.page = 1;
     this.pageSize = 15;

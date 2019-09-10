@@ -27,7 +27,7 @@ export class ServiceAreasService implements ServiceAreasAbstractService {
     error$: Subject<boolean>,
     errorMessage$?: Subject<string>
   ): void {
-    const partyId: string = this._configService.getPartyId();
+    const partyId: string = this._configService.getVendorId();
     const companyInfo: string = this._configService.getCompanyInfo();
     const params: HttpParams = this.buildSerbiceAreasParams(
       partyId,

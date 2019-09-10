@@ -14,7 +14,7 @@ export class AgreedRateDetailComponent implements OnInit {
   constructor(private _configService: ConfigService) { }
 
   ngOnInit() {
-    this.partyId = this._configService.getPartyId();
+    this.partyId = this._configService.getVendorId();
   }
 
 }

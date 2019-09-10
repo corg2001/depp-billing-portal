@@ -1,5 +1,5 @@
 <div id="invoices-history-container" class="d-flex flex-column">
-    <div class="py-2"></div>
+    <header>{{ headerText }}</header>
     <app-invoice-search [invoices$]="invoices$" *ngIf="!loading"></app-invoice-search>
     <app-loading-spinner *ngIf="loading"></app-loading-spinner>
     <app-invoice-table [invoices$]="invoices$" [error]="error" [completion]="completion" *ngIf="!loading && isData"></app-invoice-table>

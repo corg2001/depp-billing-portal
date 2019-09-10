@@ -41,7 +41,7 @@ export class InvoiceService implements  InvoiceAsbstractService{
   ): void {
     // const date: string = moment(moment(), 'YY-MM-DD').toString();
     const date: string = '2018-10-10';
-    const vendorId: string = this._configService.getPartyId();
+    const vendorId: string = this._configService.getVendorId();
     const companyInfo: string = this._configService.getCompanyInfo();
     const params: HttpParams = this.getInvoiceParams(vendorId, companyInfo, date);
     this._http
@@ -98,7 +98,7 @@ export class InvoiceService implements  InvoiceAsbstractService{
           : endDate
           ? invoice.invoiceDate.includes(endDateInput)
           : serviceAddress
-          ? invoice.serviceAddress.toLowerCase().includes(addressInput)
+          ? invoice.serviceAddress.includes(addressInput)
           : invoice;
       }
     );
