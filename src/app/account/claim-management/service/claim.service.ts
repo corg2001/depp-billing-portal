@@ -96,37 +96,43 @@ public getClaimParams(partyId: string, companyInfo: string): HttpParams {
 
   public authInvoiceRedirect(
     jobNumber: string,
-    dataSubject$: Subject<any>,
-    completedSubject$: Subject<boolean>
+    data$: BehaviorSubject<any>,
+    completion$: Subject<boolean>,
+    error$: Subject<boolean>,
+    errorMessage$: Subject<string>
   ): void {
-    const partyId: string = this._configService.getVendorId();
-    const params: HttpParams = this.getAuthInvoiceParams(partyId, jobNumber);
+    const vendorId: string = this._configService.getVendorId();
+    const params: HttpParams = this.getAuthInvoiceParams(vendorId, jobNumber);
     this._httpClient.get(environment.authInoviceUrl, { params }).subscribe(
       (data: any) => {
-        this.authInvoiceSuccessHandler(dataSubject$, completedSubject$, data);
+        this.authInvoiceSuccessHandler(data$, completion$, error$, data);
       },
       (error: any) => {
-        this.authInvoiceErroreHandler(dataSubject$, completedSubject$, error);
+        this.authInvoiceErroreHandler(error$, errorMessage$, error);
       }
     );
   }
 
   public getAuthInvoiceParams(
-    partyId: string,
+    vendorId: string,
     jobNumber: string
   ): HttpParams {
     return new HttpParams()
-      .set(HttpParamEnum.vendorId, partyId)
+      .set(HttpParamEnum.vendorId, vendorId)
       .set(HttpParamEnum.jobNumber, jobNumber);
   }
 
-  public authInvoiceSuccessHandler(dataSubject$: Subject<any>, completedSubject$: Subject<boolean>, response: any): void {
-    completedSubject$.next(true);
-    dataSubject$.next(response);
+  public authInvoiceSuccessHandler(data$: BehaviorSubject<any>, completion$: Subject<boolean>,
+    error$: Subject<boolean>, response: any): void {
+    completion$.next(true);
+    error$.next(false);
+    data$.next(response.url);
+    this._loggerService.action('Successfully obtain auth Invoice data');
   }
 
-  public authInvoiceErroreHandler(dataSubject$: Subject<any>, completedSubject$: Subject<boolean>, response: any): void {
-    completedSubject$.next(false);
-    dataSubject$.next(response);
+  public authInvoiceErroreHandler(error$: Subject<boolean>, errorMessage$: Subject<string>,  error: any): void {
+    error$.next(true);
+    errorMessage$.next(error.error.message);
+    this._loggerService.error(` unable to get auth portal url <br/> ${error.error.message}`);
   }
 }

@@ -3,7 +3,7 @@
     <app-invoice-search [invoices$]="invoices$" *ngIf="!loading"></app-invoice-search>
     <app-loading-spinner *ngIf="loading"></app-loading-spinner>
     <app-invoice-table [invoices$]="invoices$" [error]="error" [completion]="completion" *ngIf="!loading && isData"></app-invoice-table>
-    <ng-container *ngIf="!loading && !isData">
+    <ng-container *ngIf="!loading && !isData || error">
         <div>
             <p>{{ noInfoText }}</p>
         </div>

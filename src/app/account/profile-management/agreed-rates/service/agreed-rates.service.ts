@@ -35,8 +35,8 @@ export class AgreedRatesService implements AgreedRatesAbstractService {
     completion$: Subject<boolean>
   ): void {
     const companyInfo: any  = this._configService.getCompanyInfo();
-    const partyId: string = this._configService.getVendorId();
-    const params: HttpParams = this.getAgreedRatesParams(partyId, companyInfo);
+    const vendorId: string = this._configService.getVendorId();
+    const params: HttpParams = this.getAgreedRatesParams(vendorId, companyInfo);
 
     this._httpClient.get(environment.agreedRatesUrl, { params: params }).subscribe((response: any) => {
       this.getAgreedRatesSuccessHandler(agreedRatesData$, error$, completion$, response);
@@ -47,10 +47,10 @@ export class AgreedRatesService implements AgreedRatesAbstractService {
   }
 
   public getAgreedRatesParams(
-    partyId: string,
+    vendorId: string,
     companyInfo: any
   ): HttpParams {
-    return  new HttpParams().set(HttpParamEnum.vendorId, partyId).set(HttpParamEnum.companyInfo, companyInfo);
+    return  new HttpParams().set(HttpParamEnum.vendorId, vendorId).set(HttpParamEnum.companyInfo, companyInfo);
   }
 
   public getAgreedRatesSuccessHandler(
