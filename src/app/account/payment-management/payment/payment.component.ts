@@ -52,7 +52,6 @@ export class PaymentComponent implements OnInit{
 
     paymentHistory$.subscribe(
       (paymentHistory: PaymentHistoryInterface[]) => {
-        console.log(paymentHistory)
         this.paymentHistory = paymentHistory;
         this.isLoading();
         this.checkIsData();
@@ -62,7 +61,7 @@ export class PaymentComponent implements OnInit{
     completion$.subscribe((completion: boolean) => {
       this.completion = completion;
     });
-    
+
     error$.subscribe((error: boolean) => {
       this.error = error;
     });

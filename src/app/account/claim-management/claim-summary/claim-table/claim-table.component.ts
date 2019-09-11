@@ -33,6 +33,7 @@ export class ClaimTableComponent implements OnInit {
   public authorizeInvoiceLinkText = 'authorize / invoice';
   public claimsFound: boolean = true;
   public noInfoText: string;
+  public authorizeUrl$: BehaviorSubject<string> = new BehaviorSubject(null);
 
   constructor(
     private _claimService: ClaimService,
@@ -72,24 +73,32 @@ export class ClaimTableComponent implements OnInit {
   }
 
   public authorizeInvoice(jobNumber: string): void {
+    const authPortal = this._windowRefService.window.open('', '_blank');
+    authPortal.document.write('Loading Page Auth portal ......');
+
     this.loading = true;
-    const dataSubject$: Subject<any> = new Subject<any>();
-    const completedSubject$: Subject<boolean> = new Subject<boolean>();
+    const completion$: Subject<boolean> = new Subject<boolean>();
+    const error$: Subject<boolean> = new Subject();
+    const errorMessage$: Subject<string> = new Subject();
     this._claimService.authInvoiceRedirect(
       jobNumber,
-      dataSubject$,
-      completedSubject$
+      this.authorizeUrl$,
+      completion$,
+      error$,
+      errorMessage$
     );
-    completedSubject$.subscribe((success: boolean) => {
-      success
-        ? (this._authorizeInvoicSuccessHandler(dataSubject$), this.loading = false)
-        : (this._authorizeInvoicErrorHandler(dataSubject$), this.loading = false);
+
+    completion$.subscribe((completed: boolean) => {
+      completed ? this.loading = false : this.loading = true;
+      if (!this.loading) {
+        this.authorizeUrl$.subscribe((url: string) => {
+          this._sendToPortal(authPortal, url);
+        });
+      }
     });
-    console.log('authorize / invoice link clicked');
   }
 
   public authorizeLinkText(jobStatus: JobStatus): string {
-    // tslint:disable-next-line: max-line-length
     return jobStatus === JobStatus.authorized
       ? LinkText.complete
       : jobStatus === JobStatus.wip
@@ -99,19 +108,11 @@ export class ClaimTableComponent implements OnInit {
       : '';
   }
 
-  private _authorizeInvoicSuccessHandler(dataSubject$: Subject<any>): void {
-    dataSubject$.subscribe((data: any) => {
-      this._windowRefService.window.open(data.url, '_blank');
-    });
+  private _sendToPortal(authPortal: any, url: string): void {
+    authPortal.location.href = url;
+
   }
 
-  private _authorizeInvoicErrorHandler(dataSubject: Subject<any>): void {
-    dataSubject.subscribe((error: any) => {
-      // implement a toaster service to show the error
-      console.log(`ERROR: ${error.error.message}`);
-      console.log(error);
-    });
-  }
 
   private _getPageSize(claimsAmount: number): number {
     return claimsAmount > 150 ? 20 : 10;
