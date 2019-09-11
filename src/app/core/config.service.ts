@@ -14,9 +14,10 @@ export class ConfigService {
 
   public init(): void {
     this.config = {
-      token: this.getTokenFromSession(),
-      partyId: this.getVendorIdFromSession(),
-      companyInfo: this.getCompanyInfoFromSession()
+      token: this._getTokenFromSession(),
+      partyId: this._getVendorIdFromSession(),
+      companyInfo: this._getCompanyInfoFromSession(),
+      partyName: this._getPartyNameFromSession()
     };
   }
 
@@ -37,15 +38,23 @@ export class ConfigService {
     return this.config.companyInfo;
   }
 
-  private getTokenFromSession(): string {
+  public getPartyName(): string {
+    return this.config.partyName;
+  }
+
+  private _getTokenFromSession(): string {
     return localStorage.getItem('token');
   }
 
-  private getVendorIdFromSession(): string {
+  private _getVendorIdFromSession(): string {
     return localStorage.getItem('partyId');
   }
 
-  private getCompanyInfoFromSession(): string {
+  private _getPartyNameFromSession(): string  {
+    return localStorage.getItem('partyName');
+  }
+
+  private _getCompanyInfoFromSession(): string {
     // TODO: fix this and get it from proper factory
     return 'eyJjb21wYW55X2lkIjoiSUwwMyIsImJyYW5kcyI6eyJicmFuZF9pZHMiOlsiSFdBIl19fQ==';
   }
