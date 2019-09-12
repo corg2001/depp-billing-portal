@@ -88,6 +88,12 @@ export class PartyService {
       ${data['party_name_details']['person_name']['first_name']}`
       );
     }
+    if (data['party_organization_name_details']['organization_name'] !== null) {
+      localStorage.setItem(
+        'partyOrganizationName',
+        data['party_organization_name_details']['organization_name']
+      );
+    }
     if (!this.validateLocalStorage()) {
       this.loggerService.error('Unable to get partyId from payload');
     }

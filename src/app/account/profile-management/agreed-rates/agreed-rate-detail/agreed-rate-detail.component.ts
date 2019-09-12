@@ -10,11 +10,13 @@ import { ConfigService } from 'src/app/core/config.service';
 export class AgreedRateDetailComponent implements OnInit {
   @Input() public rateDetails?: RateDetailsInterface[];
   public partyId: string;
+  public partyOrganizationName: string;
 
   constructor(private _configService: ConfigService) { }
 
   ngOnInit() {
     this.partyId = this._configService.getVendorId();
+    this.partyOrganizationName = this._configService.getPartyOrganizationName();
   }
 
 }
