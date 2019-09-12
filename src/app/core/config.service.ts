@@ -17,7 +17,8 @@ export class ConfigService {
       token: this._getTokenFromSession(),
       partyId: this._getVendorIdFromSession(),
       companyInfo: this._getCompanyInfoFromSession(),
-      partyName: this._getPartyNameFromSession()
+      partyName: this._getPartyNameFromSession(),
+      partyOrganizationName: this._getPartyOrganizationNameFromSession(),
     };
   }
 
@@ -42,6 +43,10 @@ export class ConfigService {
     return this.config.partyName;
   }
 
+  public getPartyOrganizationName(): string {
+    return this.config.partyOrganizationName;
+  }
+
   private _getTokenFromSession(): string {
     return localStorage.getItem('token');
   }
@@ -52,6 +57,10 @@ export class ConfigService {
 
   private _getPartyNameFromSession(): string  {
     return localStorage.getItem('partyName');
+  }
+
+  private _getPartyOrganizationNameFromSession(): string  {
+    return localStorage.getItem('partyOrganizationName');
   }
 
   private _getCompanyInfoFromSession(): string {
