@@ -6,10 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./calendar.component.scss']
 })
 export class CalendarComponent implements OnInit {
+  public calendarDate: string; 
 
   constructor() { }
 
   ngOnInit() {
   }
 
+  handleDateChange(date:string){
+    this.calendarDate = date;
+  }
 }

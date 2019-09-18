@@ -60,7 +60,7 @@ ngb-pagination {
   text-align: center;
 }
 
-@media (min-width: 576px) {
+@media (min-width: 36rem) {
   .modal-dialog {
     max-width: 60rem !important;
   }
@@ -74,6 +74,11 @@ ngb-pagination {
 
 .page-link {
   color: $hwa-color-orange !important;
+}
+
+.fc-event-container .fc-day-grid-event {
+  display: block;
+  height: 4.6875rem;
 }
 
 // High-Level Styles

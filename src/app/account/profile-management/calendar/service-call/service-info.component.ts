@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-service-info',
@@ -8,12 +8,11 @@ import { Component, OnInit } from '@angular/core';
 export class ServiceInfoComponent implements OnInit {
   public headertext: string;
   public emergencyCalltext: string;
-
+  @Input() calendarDate: string;
   constructor() { }
 
   ngOnInit() {
     this.headertext = 'service call information for ';
     this.emergencyCalltext = 'You are accepting emergency calls. If you want to change this, please reach out to your Territoy Manager';
   }
-
 }

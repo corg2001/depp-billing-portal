@@ -1,8 +1,8 @@
 <div id="container">
   <div class="calendar">
-    <app-calender-info></app-calender-info>
+    <app-calender-info (onDateChange)="handleDateChange($event)"></app-calender-info>
   </div>
   <div class="service-info">
-    <app-service-info></app-service-info>
+    <app-service-info [calendarDate]="calendarDate"></app-service-info>
   </div>
 </div>
