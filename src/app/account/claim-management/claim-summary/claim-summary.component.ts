@@ -6,13 +6,8 @@ import { ClaimServiceAbstract } from '../service/claim.abstract.service';
 import { ClaimFactoryServiceAbstract } from '../service/factory/claim.factory.abstract.service';
 import * as moment from 'moment-timezone';
 import { ConfigService } from 'src/app/core/config.service';
+import { SessionKeys } from 'src/app/shared/enums/session-keys.emums';
 
-// TODO: move it into it's own file
-enum SessionKeys {
-  token = 'token',
-  last_login = 'last_login',
-  session = 'session'
-}
 
 @Component({
   selector: 'app-claim-summary',
@@ -31,7 +26,7 @@ export class ClaimSummaryComponent implements OnInit {
   public claims: Claim[] = [];
   public subTitleText1: string = 'My Recent Activity';
   public subTitleText2: string = 'View your claims below';
-  public lastLoginDate: string = '';
+  public lastLoginDate: string;
   public partyName: string;
 
   constructor(
@@ -54,15 +49,13 @@ export class ClaimSummaryComponent implements OnInit {
         this.claimListSubject$.next(this.claims);
       }
     );
-    if (
-      localStorage.getItem(SessionKeys.last_login) !== undefined &&
-      localStorage.getItem(SessionKeys.last_login) !== ''
-    ) {
-      this.lastLoginDate = `Last Login: ${moment(localStorage.getItem(SessionKeys.last_login))
+
+    localStorage.getItem(SessionKeys.last_login) !== undefined
+     && localStorage.getItem(SessionKeys.last_login) !== '' ?
+    this.lastLoginDate = `Last Login: ${moment(localStorage.getItem(SessionKeys.last_login))
         .tz('America/Chicago')
-        .format('LLLL')} CST`;
+        .format('LLLL')} CST` : this.lastLoginDate = '';
     }
-  }
 
   public search(claims: Claim[]): void {
     this.searchedClaimSubject$.next(claims);

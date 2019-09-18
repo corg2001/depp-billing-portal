@@ -1,8 +1,9 @@
 export enum JobStatus {
   wip = 'WIP',
   authorized = 'Authorized',
-  complete = 'Complete',
-  invoice = 'Invoice'
+  completed = 'Completed',
+  invoiced = 'Invoice',
+  pendingAuthorization = 'PendingAuthorization'
 }
 export enum ClaimOrderType {
   replace = 'Replace',
@@ -18,5 +19,5 @@ export enum ClaimDisposition {
 export enum LinkText {
   authorize = 'Authorize',
   complete = 'Complete Job',
-  invoice = 'Invoice'
+  invoiced = 'Invoiced'
 }

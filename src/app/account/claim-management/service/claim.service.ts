@@ -17,7 +17,6 @@ import {
 import { ConfigService } from '../../../core/config.service';
 import { LoggerService } from '../../../core/logger.service';
 import { ClaimPayloadInterface } from '../interface/claim.payload.interface';
-import { ClaimFactoryService } from './factory/claim.factory.service';
 import { ClaimServiceAbstract } from './claim.abstract.service';
 import { environment } from 'src/environments/environment';
 import { HttpParamEnum } from 'src/app/shared/enums/http-params.enums';

@@ -33,15 +33,36 @@
         </div>
       </div>
       <div class="d-flex mt-4">
-        <button type="button" class="btn btn-lg info-documents ml-auto">
+        <button
+          type="button"
+          class="btn btn-lg info-documents ml-auto"
+          (click)="openModal()"
+        >
           <i class="fa fa-arrow-up"></i> Upload Documents
         </button>
       </div>
     </ng-container>
     <ng-container *ngIf="!isData && !loading">
       <div class="d-flex info-items">
-          <p>{{ noInfoText }}</p>
+        <p>{{ noInfoText }}</p>
       </div>
     </ng-container>
   </div>
+  
+
+
+  <ng-template #modalHtml let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title text-muted">Upload Documents</h4>
+    </div>
+    <div class="modal-body">
+      <input type="file"  #file (change)="onFilesAdded()" multiple />
+      <button [disabled]="loading || uploadSuccessful" (click)="addFiles()">Add Files</button>
+    </div>
+    <div class="modal-footer">
+      <button [disabled]="disableCloseButton" type="button" class="btn btn-light" (click)="modal.close()">
+        {{ primaryButtonText}}
+      </button>
+    </div>
+  </ng-template>
 </div>

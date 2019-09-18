@@ -20,8 +20,6 @@ export class EnrollService {
     enrolledSubject: Subject<boolean>,
     dataSubject: Subject<any>
   ): void {
-    const enrollUri: string =
-      'https://unify-hwa-contractor-api-qa11.engine.host/lead-generation';
     this._http.post(environment.enrollUrl, enrolled).subscribe(
       (response: Observable<HttpResponse<any>>) => {
         dataSubject.next(response);
