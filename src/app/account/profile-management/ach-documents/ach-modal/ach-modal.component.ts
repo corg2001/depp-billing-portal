@@ -1,8 +1,9 @@
 import { Component, OnInit, ElementRef, ViewChildren, ViewChild } from '@angular/core';
-import { forkJoin } from 'rxjs';
+import { forkJoin, BehaviorSubject } from 'rxjs';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AchDocumetsService } from '../service/ach-documents.service';
 import { ConfigService } from 'src/app/core/config.service';
+import { async } from 'q';
 
 @Component({
   selector: 'app-ach-modal',
@@ -13,7 +14,6 @@ export class AchModalComponent implements OnInit {
   @ViewChild('file') public file: ElementRef;
   public loading: boolean;
   public modalSize: 'xl';
-
   public modalTitle: string = 'upload documents';
   public files: Set<File> = new Set();
   public progress$: any;
@@ -96,7 +96,4 @@ export class AchModalComponent implements OnInit {
       this.loading = false;
     });
   }
-
-  
-
 }

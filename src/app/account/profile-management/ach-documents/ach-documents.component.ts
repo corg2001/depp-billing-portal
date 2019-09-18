@@ -14,6 +14,7 @@ import * as dateFormat from 'dateformat';
 import { AchDocumetsService } from './service/ach-documents.service';
 import { forkJoin } from 'rxjs';
 import { AchModalComponent } from './ach-modal/ach-modal.component';
+import { AchDocumentsAbstractService } from './service/abstract/ach-documents-abstract.service';
 
 @Component({
   selector: 'app-ach-documents',
@@ -42,7 +43,7 @@ export class AchDocumentsComponent implements OnChanges {
   constructor(
     private _modalService: NgbModal,
     private _modalConfig: NgbModalConfig,
-    private _achDocsService: AchDocumetsService,
+    private _achDocsService: AchDocumentsAbstractService,
     private _configService: ConfigService
   ) {}
 
@@ -104,8 +105,6 @@ export class AchDocumentsComponent implements OnChanges {
     this.disableCloseButton = true;
     this.uploading = true;
 
-    this.progress$ = this._achDocsService.upload(this.files, vendorId, companyInfo);
-    console.log(this.progress$);
 
     // convert the progress map into an array
     const allProgressObservables: any[] = [];
