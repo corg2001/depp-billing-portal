@@ -34,6 +34,8 @@ import { ServiceAreasFactoryService } from './service-areas/service/factory/serv
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { NgbModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AchModalComponent } from './ach-documents/ach-modal/ach-modal.component';
+import { AchDocumentsAbstractService } from './ach-documents/service/abstract/ach-documents-abstract.service';
+import { AchDocumetsService } from './ach-documents/service/ach-documents.service';
 
 
 @NgModule({
@@ -87,6 +89,10 @@ import { AchModalComponent } from './ach-documents/ach-modal/ach-modal.component
     {
       provide: ServiceAreasFactoryAbstractService,
       useClass: ServiceAreasFactoryService
+    },
+    {
+      provide: AchDocumentsAbstractService,
+      useClass: AchDocumetsService
     }
   ],
   entryComponents: [AchModalComponent]

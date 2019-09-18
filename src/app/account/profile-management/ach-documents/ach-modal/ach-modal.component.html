@@ -12,10 +12,15 @@
       {{ browseButtonText }}
     </button>
     <div>
-      <div class="files" *ngFor="let file of files">
-        <div class="file-text">{{ file.name }}</div>
-        <app-progress-bar class="progress" [value]="progress$[file.name].progress | async">
-        </app-progress-bar>
+      <div *ngFor="let file of files">
+        <div class="files">
+            <div class="file-text">{{ file.name }}</div>
+            <app-progress-bar class="progress" [value]="progress$[file.name]?.progress | async">
+            </app-progress-bar>
+        </div>
+        <div *ngIf="progress$[file.name]?.error | async" class=" error alert alert-danger" role="alert">
+            {{ progress$[file.name]?.error | async }}
+        </div>
       </div>
     </div>
   </div>
