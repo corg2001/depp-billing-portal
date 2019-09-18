@@ -55,7 +55,7 @@ import { AchDocumetsService } from './ach-documents/service/ach-documents.servic
     TableComponent,
     ServiceAreaSearchComponent,
     ServiceAreaTableComponent,
-    AchModalComponent
+    AchModalComponent,
   ],
   imports: [
     CommonModule,

@@ -11,10 +11,15 @@
       <tr *ngFor="let details of modifiedTradeAgreementDetails()" class="small">
         <td scope="row">{{ details?.itemDescription }}</td>
         <td scope="row">{{ details?.trade }}</td>
-        <td class="text-right" scope="row">{{ details?.rate }} | formatmoney</td>
+        <td class="text-right" scope="row">{{ details?.rate.amount | formatmoney }} per hour</td>
       </tr>
     </tbody>
   </table>
+  <ngb-pagination
+      [pageSize]="pageSize"
+      [(page)]="page"
+      [collectionSize]="collectionSize" [maxSize]="10">
+    </ngb-pagination>
 </ng-container>
 <ng-template #noData>
   <div class="noData">

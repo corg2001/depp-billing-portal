@@ -31,6 +31,7 @@ export class AgreedRatesTableComponent implements OnInit {
   }
 
   public modifiedTradeAgreementDetails(): TradeAgreementDetailsInterface[] {
+    console.log(this.tradeAgreementDetails);
     return this.tradeAgreementDetails.slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
   }
 }
