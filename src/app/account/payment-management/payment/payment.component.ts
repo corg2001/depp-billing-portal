@@ -37,7 +37,7 @@ export class PaymentComponent implements OnInit{
     this.headerText = 'Payment History';
     this._configService.init();
     // tslint:disable-next-line: max-line-length
-    this.noInfoText = `Your Payment History is not set up. Please reach out to contractor relastions at ${environment.core.customerServiceNumber}.`;
+    this.noInfoText = `No payment found, check information and try again`;
     this.getPaymentHistory(this.paymentHistory$, this.completion$, this.error$, this.errorMessages$);
   }
 
