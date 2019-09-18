@@ -1,3 +1,16 @@
-<p>
-  calender-info works!
-</p>
+<div class="app">
+  <div class="app-calendar">
+    <full-calendar
+      #calendar
+      defaultView="dayGridMonth"
+      [header]="{
+        left: 'prev',
+        center: 'title',
+        right: 'next'
+      }"
+      [plugins]="calendarPlugins"
+      [events]="calendarEvents"
+      (dateClick)="handleDateClick($event)"
+    ></full-calendar>
+  </div>
+</div>

@@ -31,6 +31,7 @@ import { ServiceAreasAbstractService } from './service-areas/service/abstract/se
 import { ServiceAreasService } from './service-areas/service/service-areas.service';
 import { ServiceAreasFactoryAbstractService } from './service-areas/service/factory/abstract/service-areas.factory.abstract.service';
 import { ServiceAreasFactoryService } from './service-areas/service/factory/service-areas.factory.service';
+import { FullCalendarModule } from '@fullcalendar/angular';
 import { NgbModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AchModalComponent } from './ach-documents/ach-modal/ach-modal.component';
 
@@ -60,7 +61,8 @@ import { AchModalComponent } from './ach-documents/ach-modal/ach-modal.component
     FormsModule,
     NgbModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    FullCalendarModule
   ],
   providers: [
     {
