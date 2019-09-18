@@ -16,7 +16,7 @@ import { ProfileManagementModule } from './profile-management/profile-management
 @NgModule({
   declarations: [
     DashboardComponent,
-    HelpComponent,
+    HelpComponent
   ],
   imports: [
     CommonModule,

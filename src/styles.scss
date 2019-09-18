@@ -7,3 +7,9 @@ html, body {
 @import url('https://fonts.googleapis.com/css?family=Roboto:900,800,700,600,500,400,300,200,100');
 @import "../node_modules/font-awesome/css/font-awesome.min.css";
 @import './assets/styles/contractor-layout-styles';
+
+
+  .myCustomModalClass .modal-dialog {
+     width: 70rem !important;
+   }
+ 

@@ -31,7 +31,9 @@ import { ServiceAreasAbstractService } from './service-areas/service/abstract/se
 import { ServiceAreasService } from './service-areas/service/service-areas.service';
 import { ServiceAreasFactoryAbstractService } from './service-areas/service/factory/abstract/service-areas.factory.abstract.service';
 import { ServiceAreasFactoryService } from './service-areas/service/factory/service-areas.factory.service';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { AchModalComponent } from './ach-documents/ach-modal/ach-modal.component';
+
 
 @NgModule({
   // tslint:disable-next-line: max-line-length
@@ -49,7 +51,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     SearchBoxComponent,
     TableComponent,
     ServiceAreaSearchComponent,
-    ServiceAreaTableComponent
+    ServiceAreaTableComponent,
+    AchModalComponent
   ],
   imports: [
     CommonModule,
@@ -83,6 +86,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
       provide: ServiceAreasFactoryAbstractService,
       useClass: ServiceAreasFactoryService
     }
-  ]
+  ],
+  entryComponents: [AchModalComponent]
 })
 export class ProfileManagementModule {}

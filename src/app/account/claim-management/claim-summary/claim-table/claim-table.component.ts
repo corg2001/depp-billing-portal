@@ -103,9 +103,10 @@ export class ClaimTableComponent implements OnInit {
       ? LinkText.complete
       : jobStatus === JobStatus.wip
       ? LinkText.authorize
-      : jobStatus === JobStatus.complete
-      ? LinkText.invoice
-      : '';
+      : jobStatus === JobStatus.completed
+      ? LinkText.invoiced
+      : jobStatus === JobStatus.pendingAuthorization ?
+      LinkText.authorize : '';
   }
 
   private _sendToPortal(authPortal: any, url: string): void {
