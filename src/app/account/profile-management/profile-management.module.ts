@@ -21,7 +21,7 @@ import { ProfileFactoryService } from './service/factory/profile.factory.service
 import { AgreedRatesFactoryAbstractService } from './agreed-rates/service/factory/abstract/agreed-rates.factory.abstract.service';
 import { AgreedRatestFactoryService } from './agreed-rates/service/factory/agreed-ratest.factory.service';
 import { AgreedRateDetailComponent } from './agreed-rates/agreed-rate-detail/agreed-rate-detail.component';
-import { CalenderInfoComponent } from './calendar/calender-info/calender-info.component';
+import { CalendarInfoComponent } from './calendar/calendar-info/calendar-info.component';
 import { ServiceInfoComponent } from './calendar/service-call/service-info.component';
 import { SearchBoxComponent } from './calendar/service-call/search-box/search-box.component';
 import { TableComponent } from './calendar/service-call/table/table.component';
@@ -34,9 +34,10 @@ import { ServiceAreasFactoryService } from './service-areas/service/factory/serv
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { NgbModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AchModalComponent } from './ach-documents/ach-modal/ach-modal.component';
-import { AchDocumentsAbstractService } from './ach-documents/service/abstract/ach-documents-abstract.service';
+import { AchDocumentsAbstractService } from './ach-documents/service/abstract/ach-documents.abstract.service';
 import { AchDocumetsService } from './ach-documents/service/ach-documents.service';
-
+import { CalendarAbstractService } from './calendar/service/abstract/calendar.abstract.service';
+import { CalendarService } from './calendar/service/calendar.service';
 
 @NgModule({
   // tslint:disable-next-line: max-line-length
@@ -49,13 +50,13 @@ import { AchDocumetsService } from './ach-documents/service/ach-documents.servic
     CalendarComponent,
     AgreedRatesTableComponent,
     AgreedRateDetailComponent,
-    CalenderInfoComponent,
+    CalendarInfoComponent,
     ServiceInfoComponent,
     SearchBoxComponent,
     TableComponent,
     ServiceAreaSearchComponent,
     ServiceAreaTableComponent,
-    AchModalComponent,
+    AchModalComponent
   ],
   imports: [
     CommonModule,
@@ -83,9 +84,7 @@ import { AchDocumetsService } from './ach-documents/service/ach-documents.servic
       provide: AgreedRatesAbstractService,
       useClass: AgreedRatesService
     },
-    { provide: ServiceAreasAbstractService,
-      useClass: ServiceAreasService
-     },
+    { provide: ServiceAreasAbstractService, useClass: ServiceAreasService },
     {
       provide: ServiceAreasFactoryAbstractService,
       useClass: ServiceAreasFactoryService
@@ -93,7 +92,10 @@ import { AchDocumetsService } from './ach-documents/service/ach-documents.servic
     {
       provide: AchDocumentsAbstractService,
       useClass: AchDocumetsService
-    }
+    },
+    { provide: CalendarAbstractService, 
+      useClass: CalendarService
+     }
   ],
   entryComponents: [AchModalComponent]
 })

@@ -1,16 +1,27 @@
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>State</th>
-      <th>Trade</th>
-      <th>Max # of Calls</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>AL</td>
-      <td>Electricity</td>
-      <td>4</td>
-    </tr>
-  </tbody>
-</table>
+<ng-container *ngIf="showTable">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>State</th>
+        <th>Trade</th>
+        <th>Max # of Calls</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let tradeDetail of modifiedDetails()">
+        <td>{{ getStateCode(tradeDetail.service_call_details) }}</td>
+        <td>{{ tradeDetail.trade }}</td>
+        <td>{{ getCallCount(tradeDetail.service_call_details) }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div>
+    <ngb-pagination
+      [pageSize]="pageSize"
+      [(page)]="page"
+      [collectionSize]="collectionSize"
+      [maxSize]="5"
+    >
+    </ngb-pagination>
+  </div>
+</ng-container>

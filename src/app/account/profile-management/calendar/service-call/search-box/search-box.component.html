@@ -1,13 +1,14 @@
 <div id="container">
   <select id="state">
-    <option value="volvo">Texax</option>
-    <option value="saab">California</option>
-    <option value="mercedes">Colorado</option>
-    <option value="audi">New York</option>
+    <option value="" disabled selected>Select state</option>
+    <option *ngFor="let state of stateCodes" value="{{ state }}">{{
+      state
+    }}</option>
   </select>
   <select id="trade">
-    <option value="volvo">HVAC</option>
-    <option value="saab">Electric</option>
-    <option value="mercedes">Plumbing</option>
+    <option value="" disabled selected>Select trade</option>
+    <option *ngFor="let trade of trades" value="{{ trade }}">{{
+      trade
+    }}</option>
   </select>
 </div>

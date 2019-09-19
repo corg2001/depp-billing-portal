@@ -3,7 +3,7 @@ import { HttpRequest, HttpParams, HttpClient, HttpEventType, HttpResponse, HttpE
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { HttpParamEnum } from 'src/app/shared/enums/http-params.enums';
-import { AchDocumentsAbstractService } from './abstract/ach-documents-abstract.service';
+import { AchDocumentsAbstractService } from './abstract/ach-documents.abstract.service';
 
 
 @Injectable({
