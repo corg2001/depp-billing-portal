@@ -122,7 +122,6 @@ export class AchDocumentsComponent implements OnChanges {
     this.showCancelButton = false;
 
     forkJoin(allProgressObservables).subscribe((end: any) => {
-      console.log('done');
       this.disableCloseButton = false;
       this._keepModalOpen(false);
       this.uploadSuccessful = true;
