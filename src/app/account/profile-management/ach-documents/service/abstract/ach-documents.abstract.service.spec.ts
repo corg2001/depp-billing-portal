@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { AchDocumentsAbstractService } from './ach-documents-abstract.service';
+import { AchDocumentsAbstractService } from './ach-documents.abstract.service';
 
 describe('AchDocumentsAbstractService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));

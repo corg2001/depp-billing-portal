@@ -9,12 +9,10 @@ import { AchDocuments } from './model/ach-documents.model';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfigService } from 'src/app/core/config.service';
-import * as moment from 'moment';
-import * as dateFormat from 'dateformat';
 import { AchDocumetsService } from './service/ach-documents.service';
 import { forkJoin } from 'rxjs';
 import { AchModalComponent } from './ach-modal/ach-modal.component';
-import { AchDocumentsAbstractService } from './service/abstract/ach-documents-abstract.service';
+import { AchDocumentsAbstractService } from './service/abstract/ach-documents.abstract.service';
 
 @Component({
   selector: 'app-ach-documents',

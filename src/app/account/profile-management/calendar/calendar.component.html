@@ -1,8 +1,11 @@
 <div id="container">
   <div class="calendar">
-    <app-calender-info (onDateChange)="handleDateChange($event)"></app-calender-info>
+    <app-calendar-info (dateChange)="handleDateChange($event)"></app-calendar-info>
   </div>
-  <div class="service-info">
-    <app-service-info [calendarDate]="calendarDate"></app-service-info>
-  </div>
+
+  <ng-container>
+    <div class="service-info" >
+      <app-service-info [calendarDate]="calendarDate" [tradeDetails$]="tradeDetails$" [loading]="loading"></app-service-info>
+    </div>
+  </ng-container>
 </div>

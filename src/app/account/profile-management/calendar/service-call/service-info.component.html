@@ -1,9 +1,12 @@
 <div>
   <header>
     <p class="text-capitalize header-text">{{ headertext }}</p>
-    <p class="calendar-info"> {{calendarDate}} </p>
+    <p class="calendar-info"> {{ formatDate(calendarDate)}} </p>
     <p class="emergency-call"> {{ emergencyCalltext }}</p>
   </header>
-  <app-search-box></app-search-box>
-  <app-table></app-table>
+  <app-loading-spinner *ngIf="loading"></app-loading-spinner>
+  <ng-container *ngIf="!loading">
+      <app-search-box [trades]="trades" [stateCodes]="stateCodes"></app-search-box>
+      <app-table [tradeDetails]="tradeDetails"></app-table>
+  </ng-container>
 </div>
