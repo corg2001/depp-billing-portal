@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { Subject, BehaviorSubject } from 'rxjs';
+import { Subject, BehaviorSubject, zip } from 'rxjs';
 import { ConfigService } from 'src/app/core/config.service';
 import { LoggerService } from 'src/app/core/logger.service';
 import { ServiceAreasAbstractService } from './abstract/service-areas-abstract.service';
@@ -93,15 +93,32 @@ export class ServiceAreasService implements ServiceAreasAbstractService {
     zipcode?: string,
     skillType?: string
   ): ServiceAreaDetailsInterface[] {
-    return serviceAreaDetails.filter(
-      (serviceAreaDetail: ServiceAreaDetailsInterface) => {
-        const zipCodeInput = zipcode.toLowerCase();
-        const skillTypeInput = skillType.toLowerCase();
-        return zipcode
-          ? serviceAreaDetail.zip.toLowerCase().includes(zipCodeInput)
-          : skillType
-          ? serviceAreaDetail.skillType.toLowerCase().includes(skillTypeInput)
-          : serviceAreaDetail;
-      });
+    return zipcode ? this.searchZipCodes(serviceAreaDetails, zipcode)
+     : skillType ? this.searchSkillType(serviceAreaDetails, skillType) : serviceAreaDetails;
   }
+
+  public searchZipCodes(serviceAreaDetails: ServiceAreaDetailsInterface[],
+    zipcode?: string): ServiceAreaDetailsInterface[] {
+      const _serviceAreas: ServiceAreaDetailsInterface[] = [];
+      const zipcodeInput = zipcode.toLowerCase();
+      serviceAreaDetails.forEach((serviceAreaDetail: ServiceAreaDetailsInterface) => {
+        if (serviceAreaDetail.zip.toLowerCase().includes(zipcodeInput) || serviceAreaDetail.zip.toLowerCase() === zipcode) {
+          _serviceAreas.push(serviceAreaDetail);
+        }
+      });
+      return _serviceAreas;
+    }
+
+    public searchSkillType(serviceAreaDetails: ServiceAreaDetailsInterface[],
+      skillType?: string) {
+        const _ServicesAreas: ServiceAreaDetailsInterface[] = [];
+        const skillTypeInput = skillType.toLowerCase();
+        serviceAreaDetails.forEach((serviceAreaDetail: ServiceAreaDetailsInterface) => {
+          if (serviceAreaDetail.skillType.toLowerCase().includes(skillTypeInput)
+          || serviceAreaDetail.skillType.toLowerCase() === skillTypeInput) {
+            _ServicesAreas.push(serviceAreaDetail);
+          }
+        });
+        return _ServicesAreas;
+      }
 }

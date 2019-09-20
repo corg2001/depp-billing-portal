@@ -65,7 +65,6 @@ export class CalendarComponent implements OnInit {
       stateCodes = this._getStateCodes(_serviceCalls);
       serviceCalls = _.flatten(_serviceCalls);
       this.tradeDetails$.next(_tradeDeatails);
-      console.log(_tradeDeatails);
     });
     this.isLoading(completion$);
   }
