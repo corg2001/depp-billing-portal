@@ -18,7 +18,7 @@ export class CalendarComponent implements OnInit {
   public completion$: Subject<boolean> = new Subject();
   public loading: boolean;
   public calendarData: any[] = [];
-  public tradeDetails$: Subject<any[]> = new Subject();
+  public tradeDetails$: BehaviorSubject<any[]> = new BehaviorSubject([]);
 
   constructor(private _calendarService: CalendarAbstractService) {}
 
@@ -65,6 +65,7 @@ export class CalendarComponent implements OnInit {
       stateCodes = this._getStateCodes(_serviceCalls);
       serviceCalls = _.flatten(_serviceCalls);
       this.tradeDetails$.next(_tradeDeatails);
+      console.log(_tradeDeatails);
     });
     this.isLoading(completion$);
   }

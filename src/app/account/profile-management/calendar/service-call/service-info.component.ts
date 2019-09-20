@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import * as dateFormat from 'dateformat';
 import { CalendarEnums } from 'src/app/shared/enums/calendar.enums';
-import { Subject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
 import * as _ from 'lodash';
 @Component({
   selector: 'app-service-info',
@@ -10,7 +10,7 @@ import * as _ from 'lodash';
 })
 export class ServiceInfoComponent implements OnInit, OnChanges {
   @Input() calendarDate: string;
-  @Input() tradeDetails$: Subject<any[]> = new Subject();
+  @Input() tradeDetails$: BehaviorSubject<any[]> = new BehaviorSubject([]);
   @Input() loading: boolean;
   public tradeDetails: any[];
   public headertext: string;
@@ -40,6 +40,10 @@ export class ServiceInfoComponent implements OnInit, OnChanges {
     return dateFormat(date, CalendarEnums.monthDayYear);
   }
 
+  public upateTradDetails(tradeDetails: any[]): void {
+    this.tradeDetails = tradeDetails;
+  }
+
   private _getTrades(tradeDetailsList: any[]): string[] {
     const _trades: string[] = [];
     tradeDetailsList.forEach((tradeDetails: any[]) => {
@@ -58,7 +62,6 @@ export class ServiceInfoComponent implements OnInit, OnChanges {
       });
     });
     const flattenServiceCalls: any[] = _.flatten(serviceCalls);
- 
     const stateCodes: string[] = [];
     flattenServiceCalls.forEach((serviceCall: any) => {
       stateCodes.push(serviceCall.state_code);
