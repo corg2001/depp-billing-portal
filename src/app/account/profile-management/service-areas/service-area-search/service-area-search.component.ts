@@ -5,7 +5,7 @@ import {
   ViewEncapsulation,
   Input
 } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, AbstractControl, FormControl } from '@angular/forms';
 import { CountiesInterface } from '../interface/counties.interface';
 import { ServiceAreaDetailsInterface } from '../interface/service-area-details.interface';
 import { Subject, BehaviorSubject } from 'rxjs';
@@ -33,6 +33,8 @@ export class ServiceAreaSearchComponent implements OnInit, OnChanges {
       zipcode: [''],
       skillType: ['']
     });
+
+    
   }
   ngOnChanges(): void {
     this.countyNames = this.getCountyNames(this.counties);
@@ -53,6 +55,7 @@ export class ServiceAreaSearchComponent implements OnInit, OnChanges {
 
   public updateServiceDetails(countyName: any): void {
     const _countyName: string = countyName.target.value;
+    console.log(countyName.target.value);
     const skillTypes: string[] = [];
     const county: CountiesInterface = _.find(this.counties, ((countie: CountiesInterface) => countie.countyName === _countyName));
     county.serviceAreaDetails.forEach((serviceAreaDetail: ServiceAreaDetailsInterface) => skillTypes.push(serviceAreaDetail.skillType));

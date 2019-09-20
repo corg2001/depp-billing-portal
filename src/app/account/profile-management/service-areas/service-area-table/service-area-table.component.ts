@@ -33,7 +33,7 @@ ngOnInit(): void {
         this.serviceAreaDeatils = serviceAreaDetails;
         this.collectionSize = this.serviceAreaDeatils.length;
         this.pageSize = this._getPageSize(this.collectionSize);
-        this.serviceAreaDeatils.length > 1 ? this.isData = true : this.isData = false;
+        this.serviceAreaDeatils.length > 0 ? this.isData = true : this.isData = false;
       }
     );
   }
