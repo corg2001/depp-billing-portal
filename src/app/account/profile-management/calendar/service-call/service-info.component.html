@@ -6,7 +6,7 @@
   </header>
   <app-loading-spinner *ngIf="loading"></app-loading-spinner>
   <ng-container *ngIf="!loading">
-      <app-search-box [trades]="trades" [stateCodes]="stateCodes"></app-search-box>
+      <app-search-box [trades]="trades" [stateCodes]="stateCodes" [tradeDetails$]="tradeDetails$" (updateCalendarInfo)="upateTradDetails($event)"></app-search-box>
       <app-table [tradeDetails]="tradeDetails"></app-table>
   </ng-container>
 </div>

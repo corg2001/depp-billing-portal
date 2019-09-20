@@ -65,6 +65,21 @@ th {
   margin: .7rem 1.9rem !important;
 }
 
+ /// pagination \
+ .fc-event {
+  background-color: $hwa-color-orange!important;
+  border-radius: 50% !important;
+  border: 1px solid $hwa-color-orange !important;
+}
+
+.fc-event-container .fc-day-grid-event {
+  height: 3.1rem !important;
+}
+
+.fc-day-grid-event {
+  margin: .7rem 1.9rem !important;
+}
+
 ngb-pagination {
   display: flex;
   align-items: center;

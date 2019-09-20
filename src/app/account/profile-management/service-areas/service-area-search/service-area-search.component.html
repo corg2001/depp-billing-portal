@@ -3,7 +3,7 @@
     <div class="form-group" (change)="updateServiceDetails($event)">
       <select id="county" formControlName="county" class="form-control">
         <option value="" disabled selected>Select your county</option>
-         <option *ngFor="let name of countyNames" value="{{name}}">{{ name }}</option>
+         <option *ngFor="let name of countyNames" value="{ {name }}">{{ name }}</option>
         </select>
         <!-- <input type="text" id="county" name="county" class="form-control" placeholder="County"
         formControlName="county" /> -->
