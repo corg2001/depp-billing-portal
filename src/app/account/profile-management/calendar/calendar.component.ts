@@ -36,7 +36,7 @@ export class CalendarComponent implements OnInit {
     error$: Subject<boolean>): void {
     this.loading = true;
     const endDate: string = dateFormat(
-      moment(startDate).add(60, 'd'),
+      moment(startDate).add(1, 'd'),
       CalendarEnums.yearMonthDay
     );
     this._calendarService.getCalendarInfo(
