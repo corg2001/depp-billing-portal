@@ -24,7 +24,7 @@ export class CalendarComponent implements OnInit {
 
   ngOnInit() {
     this.loading = false;
-    this.getCalenderInfo(dateFormat(new Date(), CalendarEnums.yearMonthDay), this.calendar$, this.completion$, this.error$);
+    this.getCalenderInfo(moment().toString(), this.calendar$, this.completion$, this.error$);
   }
 
   public handleDateChange(date: string) {
@@ -36,7 +36,7 @@ export class CalendarComponent implements OnInit {
     error$: Subject<boolean>): void {
     this.loading = true;
     const endDate: string = dateFormat(
-      moment(startDate).add(1, 'd'),
+      startDate,
       CalendarEnums.yearMonthDay
     );
     this._calendarService.getCalendarInfo(

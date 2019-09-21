@@ -1,0 +1,18 @@
+<div>
+  <header>
+    <p class="text-capitalize header-text">{{ headertext }}</p>
+    <p class="calendar-info"> {{ formatDate(calendarDate)}} </p>
+    <p class="emergency-call"> {{ emergencyCalltext }}</p>
+  </header>
+  <app-loading-spinner *ngIf="loading"></app-loading-spinner>
+  <ng-container *ngIf="!loading">
+      <app-service-info-search-box [trades]="trades" [stateCodes]="stateCodes" [tradeDetails$]="tradeDetails$" (updateCalendarInfo)="upateTradDetails($event)"></app-service-info-search-box>
+      <app-service-info-table [tradeDetails]="tradeDetails" *ngIf="infoFound"></app-service-info-table>
+      <ng-container *ngIf="!infoFound">
+        <div>
+          <p>{{noInfoText}}</p>
+        </div>
+      </ng-container>
+      
+  </ng-container>
+</div>

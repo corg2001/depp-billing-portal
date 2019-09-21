@@ -3,6 +3,7 @@ import * as dateFormat from 'dateformat';
 import { CalendarEnums } from 'src/app/shared/enums/calendar.enums';
 import { Subject, BehaviorSubject } from 'rxjs';
 import * as _ from 'lodash';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-service-info',
   templateUrl: './service-info.component.html',
@@ -17,6 +18,8 @@ export class ServiceInfoComponent implements OnInit, OnChanges {
   public emergencyCalltext: string;
   public trades: string[];
   public stateCodes: string[];
+  public noInfoText: string;
+  public infoFound: boolean;
 
 
 
@@ -27,11 +30,13 @@ export class ServiceInfoComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
+    this.noInfoText = `Please contact Contractor Relations at ${environment.core.customerServiceNumber} for assistance.`;
     this.calendarDate = this.formatDate((new Date()).toString());
     this.headertext = 'service call information for ';
     this.emergencyCalltext = 'You are accepting emergency calls. If you want to change this, please reach out to your Territoy Manager';
     this.tradeDetails$.subscribe((tradeDetails: any[]) => {
       this.tradeDetails = tradeDetails;
+      this.infoFound = this._infoFound(this.tradeDetails);
       this.trades = this._getTrades(this.tradeDetails);
       this.stateCodes = this._getStateCodes(this.tradeDetails);
     });
@@ -67,5 +72,10 @@ export class ServiceInfoComponent implements OnInit, OnChanges {
       stateCodes.push(serviceCall.state_code);
     });
     return _.uniq(stateCodes);
+  }
+
+  private _infoFound(tradeDeatils: any[]): boolean {
+    return tradeDeatils.length > 0 ? true : false;
+
   }
 }

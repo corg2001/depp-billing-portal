@@ -4,11 +4,11 @@ import { CalendarAbstractService } from '../../service/abstract/calendar.abstrac
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
-  selector: 'app-search-box',
-  templateUrl: './search-box.component.html',
-  styleUrls: ['./search-box.component.scss']
+  selector: 'app-service-info-search-box',
+  templateUrl: './service-info-search-box.component.html',
+  styleUrls: ['./service-info-search-box.component.scss']
 })
-export class SearchBoxComponent implements OnInit {
+export class ServiceInfoSearchBoxComponent implements OnInit {
   @Input() public tradeDetails$: BehaviorSubject<any[]> = new BehaviorSubject([]);
   @Input() public trades?: any[] = [];
   @Input() public stateCodes?: any[] = [];
