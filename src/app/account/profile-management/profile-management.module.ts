@@ -22,9 +22,9 @@ import { AgreedRatesFactoryAbstractService } from './agreed-rates/service/factor
 import { AgreedRatestFactoryService } from './agreed-rates/service/factory/agreed-ratest.factory.service';
 import { AgreedRateDetailComponent } from './agreed-rates/agreed-rate-detail/agreed-rate-detail.component';
 import { CalendarInfoComponent } from './calendar/calendar-info/calendar-info.component';
-import { ServiceInfoComponent } from './calendar/service-call/service-info.component';
-import { SearchBoxComponent } from './calendar/service-call/search-box/search-box.component';
-import { TableComponent } from './calendar/service-call/table/table.component';
+import { ServiceInfoComponent } from './calendar/service-info/service-info.component';
+import { ServiceInfoSearchBoxComponent } from './calendar/service-info/service-info-search-box/service-info-search-box.component';
+import { ServiceInfoTableComponent } from './calendar/service-info/service-info-table/service-info-table.component';
 import { ServiceAreaSearchComponent } from './service-areas/service-area-search/service-area-search.component';
 import { ServiceAreaTableComponent } from './service-areas/service-area-table/service-area-table.component';
 import { ServiceAreasAbstractService } from './service-areas/service/abstract/service-areas-abstract.service';
@@ -52,8 +52,8 @@ import { CalendarService } from './calendar/service/calendar.service';
     AgreedRateDetailComponent,
     CalendarInfoComponent,
     ServiceInfoComponent,
-    SearchBoxComponent,
-    TableComponent,
+    ServiceInfoSearchBoxComponent,
+    ServiceInfoTableComponent,
     ServiceAreaSearchComponent,
     ServiceAreaTableComponent,
     AchModalComponent

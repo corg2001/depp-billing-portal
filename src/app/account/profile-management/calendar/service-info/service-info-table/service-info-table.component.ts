@@ -2,11 +2,11 @@ import { Component, OnInit, Input } from '@angular/core';
 import * as _ from 'lodash';
 
 @Component({
-  selector: 'app-table',
-  templateUrl: './table.component.html',
-  styleUrls: ['./table.component.scss']
+  selector: 'app-service-info-table',
+  templateUrl: './service-info-table.component.html',
+  styleUrls: ['./service-info-table.component.scss']
 })
-export class TableComponent implements OnInit {
+export class ServiceInfoTableComponent implements OnInit {
   @Input() set tradeDetails(tradeDetails: any[]) {
     this.tableData = _.flattenDeep(tradeDetails);
   }
