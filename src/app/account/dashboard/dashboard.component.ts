@@ -22,7 +22,6 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.partyDetailsReadySubject$.subscribe(this.partyDetailsSubscriptionHandler.bind(this));
     this._configService.init();
-    // console.log(this.configService.showConfig());
   }
 
   private partyDetailsSubscriptionHandler(response: boolean): void {

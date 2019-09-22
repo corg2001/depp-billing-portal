@@ -34,7 +34,6 @@ export class SearchBoxComponent implements OnInit, OnChanges {
   }
 
   public search(form: FormGroup): void {
-  
     form.controls.address.value ||
     form.controls.customerName.value ||
      form.controls.referenceId.value ?
@@ -42,9 +41,6 @@ export class SearchBoxComponent implements OnInit, OnChanges {
       form.controls.address.value,
       form.controls.customerName.value,
       form.controls.referenceId.value)) : console.log(this.paymentHistory$.getValue());
-      
-      // this.updatePaymentHistoryEmitter.emit(this.paymentHistory$.getValue());
-      // ;
   }
   
 
