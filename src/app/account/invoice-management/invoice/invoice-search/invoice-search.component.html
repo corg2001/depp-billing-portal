@@ -2,12 +2,18 @@
   <form [formGroup]="searchForm" (ngSubmit)="search(searchForm)">
     <div class="d-flex flex-column flex-md-row w-70">
       <div class="form-group">
-        <input type="text" id="by-start-date" name="by-start-date" class="form-control" placeholder="By Start Date"
-          formControlName="startDate" />
+        <div class="input-group">
+            <input type="text" id="by-start-date" ngbDatepicker #startDate="ngbDatepicker" name="by-start-date" class="form-control" placeholder="By Start Date"
+          formControlName="startDate" (click)="startDate.toggle()"/>
+          <button class="btn datepicker" (click)="startDate.toggle()" type="button"><i class="fa fa-calendar" aria-hidden="true"></i></button>
       </div>
-      <div class="form-group">
-        <input type="text" id="by-end-date" name="by-end-date" class="form-control" placeholder="By End Date"
-          formControlName="endDate" />
+    </div>
+    <div class="form-group">
+      <div class="input-group">
+        <input type="text" id="by-end-date"  ngbDatepicker #endDate="ngbDatepicker" name="by-end-date" class="form-control" placeholder="By End Date"
+            formControlName="endDate" (click)="endDate.toggle()" />
+            <button class="btn datepicker"  (click)="endDate.toggle()" type="button"><i class="fa fa-calendar" aria-hidden="true"></i></button>
+        </div>
       </div>
       <div class="form-group">
         <input type="text" id="by-invoice-address" name="by-invoice-address" class="form-control"

@@ -1,15 +1,15 @@
-import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
-import { InvoiceManagementRoutingModule } from "./invoice-management-routing.module";
-import { InvoiceHistoryComponent } from "./invoice/invoice-history.component";
-import { InvoiceTableComponent } from "./invoice/invoice-table/invoice-table.component";
-import { InvoiceSearchComponent } from "./invoice/invoice-search/invoice-search.component";
-import { InvoiceService } from "./service/invoice.service";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
-import { SharedModule } from "../../shared/shared.module";
-import { InvoiceAsbstractService } from "./service/abstract/invoice.asbstract.service";
+import { InvoiceManagementRoutingModule } from './invoice-management-routing.module';
+import { InvoiceHistoryComponent } from './invoice/invoice-history.component';
+import { InvoiceTableComponent } from './invoice/invoice-table/invoice-table.component';
+import { InvoiceSearchComponent } from './invoice/invoice-search/invoice-search.component';
+import { InvoiceService } from './service/invoice.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgbModule, NgbDatepicker, NgbDateAdapter, NgbDateNativeAdapter } from '@ng-bootstrap/ng-bootstrap';
+import { SharedModule } from '../../shared/shared.module';
+import { InvoiceAsbstractService } from './service/abstract/invoice.asbstract.service';
 import { InvoiceFactoryService } from './service/factory/invoice.factory.service';
 import { InvoiceFactoryAbstractService } from './service/factory/abstract/invoice.factory.abstract.service';
 
@@ -36,6 +36,10 @@ import { InvoiceFactoryAbstractService } from './service/factory/abstract/invoic
     {
       provide: InvoiceFactoryAbstractService,
       useClass: InvoiceFactoryService
+    },
+    {
+      provide: NgbDateAdapter,
+      useClass: NgbDateNativeAdapter
     }
   ]
 })

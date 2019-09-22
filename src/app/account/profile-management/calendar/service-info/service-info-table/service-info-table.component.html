@@ -9,9 +9,9 @@
     </thead>
     <tbody>
       <tr *ngFor="let tradeDetail of modifiedDetails()">
-        <td>{{ getStateCode(tradeDetail.service_call_details) }}</td>
-        <td>{{ tradeDetail.trade }}</td>
-        <td>{{ getCallCount(tradeDetail.service_call_details) }}</td>
+        <td>{{ getStateCode(tradeDetail?.service_call_details) }}</td>
+        <td>{{ tradeDetail?.trade }}</td>
+        <td>{{ getCallCount(tradeDetail?.service_call_details) }}</td>
       </tr>
     </tbody>
   </table>

@@ -1,10 +1,12 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, ViewChild } from '@angular/core';
 
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { InvoiceService } from '../../service/invoice.service';
 import { BehaviorSubject } from 'rxjs';
 import * as _ from 'lodash';
 import { InvoiceInterface } from '../../interface/invoice.interface';
+import { DatepickerViewModel } from '@ng-bootstrap/ng-bootstrap/datepicker/datepicker-view-model';
+import { NgbDatepicker, NgbDate } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-invoice-search',
   templateUrl: './invoice-search.component.html',
@@ -15,8 +17,9 @@ export class InvoiceSearchComponent implements OnInit, OnChanges {
     InvoiceInterface[]
   > = new BehaviorSubject([]);
   public invoices: InvoiceInterface[] = [];
-
+  public  model: any;
   public searchForm: FormGroup;
+  public datepicker: NgbDatepicker;
   private invoicesCopy: any;
 
   constructor(
@@ -36,6 +39,7 @@ export class InvoiceSearchComponent implements OnInit, OnChanges {
   }
 
   public search(form: FormGroup): void {
+    console.log(form.controls.endDate.value)
     form.controls.startDate.value ||
     form.controls.endDate.value ||
     form.controls.address.value

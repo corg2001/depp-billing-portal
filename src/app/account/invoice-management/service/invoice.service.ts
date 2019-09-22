@@ -21,7 +21,7 @@ import { InvoiceAsbstractService } from './abstract/invoice.asbstract.service';
 @Injectable({
   providedIn: 'root'
 })
-export class InvoiceService implements  InvoiceAsbstractService{
+export class InvoiceService implements InvoiceAsbstractService {
   private _invoice: Invoice[] = [];
   public invoice$: BehaviorSubject<Invoice[]>;
   constructor(
@@ -43,16 +43,31 @@ export class InvoiceService implements  InvoiceAsbstractService{
     const date: string = '2018-10-10';
     const vendorId: string = this._configService.getVendorId();
     const companyInfo: string = this._configService.getCompanyInfo();
-    const params: HttpParams = this.getInvoiceParams(vendorId, companyInfo, date);
+    const params: HttpParams = this.getInvoiceParams(
+      vendorId,
+      companyInfo,
+      date
+    );
     this._http
       .get(environment.invoicesUrl, { params })
-      .subscribe((response: any) =>
-          this.getInvoiceSuccessHandler(invoices$, completion$, error$, response),
+      .subscribe(
+        (response: any) =>
+          this.getInvoiceSuccessHandler(
+            invoices$,
+            completion$,
+            error$,
+            response
+          ),
         (error: Observable<HttpErrorResponse>) =>
-          this.getInvoiceErrorHandler(completion$, error$, error, errorMessage$));
+          this.getInvoiceErrorHandler(completion$, error$, error, errorMessage$)
+      );
   }
 
-  public getInvoiceParams(vendorId: string, companyInfo: string, date: string): HttpParams {
+  public getInvoiceParams(
+    vendorId: string,
+    companyInfo: string,
+    date: string
+  ): HttpParams {
     return new HttpParams()
       .set(HttpParamEnum.vendorId, vendorId)
       .set(HttpParamEnum.starDate, date)
@@ -68,7 +83,9 @@ export class InvoiceService implements  InvoiceAsbstractService{
     this.loggerService.action('Successfully obtain invoice data');
     completion$.next(true);
     error$.next(false);
-    invoices$.next(this._invoiceFactoryService.getInvoicesFromPayload(response));
+    invoices$.next(
+      this._invoiceFactoryService.getInvoicesFromPayload(response)
+    );
   }
   public getInvoiceErrorHandler(
     completion$: Subject<boolean>,
@@ -89,18 +106,21 @@ export class InvoiceService implements  InvoiceAsbstractService{
     serviceAddress?: string
   ): InvoiceInterface[] {
     return invoices.filter((invoice: InvoiceInterface) => {
-        const addressInput = serviceAddress.toLowerCase();
-        const startDateInput = startDate.toLowerCase();
-        const endDateInput = endDate.toLowerCase();
-
-        return startDate
-          ? invoice.claimDate.includes(startDateInput)
-          : endDate
-          ? invoice.invoiceDate.includes(endDateInput)
-          : serviceAddress
-          ? invoice.serviceAddress.includes(addressInput)
-          : invoice;
-      }
-    );
+      const _startDate: number = Date.parse(startDate);
+      const _endDate: number = Date.parse(endDate);
+      const _invoiceDate: number = Date.parse(invoice.claimDate);
+      const addressInput = serviceAddress.toLowerCase();
+      return startDate && endDate && serviceAddress 
+      ? _invoiceDate >= _startDate &&  _invoiceDate <= _endDate && invoice.serviceAddress.includes(addressInput) :
+       startDate && endDate
+        ? _invoiceDate >= _startDate &&  _invoiceDate <= _endDate
+        : startDate
+        ? _invoiceDate >= _startDate
+        : endDate
+        ? _invoiceDate <= _endDate
+        : serviceAddress
+        ? invoice.serviceAddress.includes(addressInput)
+        : invoice;
+    });
   }
 }

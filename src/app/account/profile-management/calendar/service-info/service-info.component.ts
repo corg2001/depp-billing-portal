@@ -14,6 +14,7 @@ export class ServiceInfoComponent implements OnInit, OnChanges {
   @Input() tradeDetails$: BehaviorSubject<any[]> = new BehaviorSubject([]);
   @Input() loading: boolean;
   public tradeDetails: any[];
+  public updatedTradeDetails: any[] = [];
   public headertext: string;
   public emergencyCalltext: string;
   public trades: string[];
