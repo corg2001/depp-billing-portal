@@ -30,6 +30,7 @@ $body-color: $hwa-color-gray;
   font-size: 0.8rem;
 }
 
+
 .modal-title {
   text-align: center !important;
 }
@@ -80,6 +81,13 @@ th {
   margin: .7rem 1.9rem !important;
 }
 
+// datepicker 
+.datepicker {
+  background-color: $white !important;
+    border-color: $white !important;
+    color: $hwa-color-orange !important;
+
+}
 ngb-pagination {
   display: flex;
   align-items: center;

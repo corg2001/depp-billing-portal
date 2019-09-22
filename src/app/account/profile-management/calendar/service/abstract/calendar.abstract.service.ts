@@ -37,4 +37,5 @@ export abstract class CalendarAbstractService {
   ): void;
   abstract tradeSearch(tradeDetails: any[], trade: string): any[];
   abstract stateSearch(tradeDetails: any[], state: string): any[];
+  abstract search(tradeDetails: any[], state: string, trade: string): any[];
 }

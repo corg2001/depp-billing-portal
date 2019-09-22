@@ -35,4 +35,19 @@ export class ServiceInfoSearchBoxComponent implements OnInit {
     : this.updateCalendarInfo.emit(this.tradeDetails$.getValue()); 
   }
 
+  public search(form: FormGroup): void {
+    const trade: string = form.controls.trade.value;
+    const state: string = form.controls.state.value;
+    console.log(trade)
+    console.log(state)
+    trade && state
+    ? this.updateCalendarInfo.emit(this._calenderService.search(this.tradeDetails$.getValue(), state, trade))
+    : state
+    ? this.updateCalendarInfo.emit(this._calenderService.stateSearch(this.tradeDetails$.getValue(), state))
+    : trade
+    ?  this.updateCalendarInfo.emit(this._calenderService.tradeSearch(this.tradeDetails$.getValue(), trade))
+    : this.updateCalendarInfo.emit(this.tradeDetails$.getValue());
+
+  }
+
 }
