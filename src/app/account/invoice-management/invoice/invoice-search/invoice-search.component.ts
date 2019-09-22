@@ -39,7 +39,6 @@ export class InvoiceSearchComponent implements OnInit, OnChanges {
   }
 
   public search(form: FormGroup): void {
-    console.log(form.controls.endDate.value)
     form.controls.startDate.value ||
     form.controls.endDate.value ||
     form.controls.address.value

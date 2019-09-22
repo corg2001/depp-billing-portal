@@ -37,7 +37,6 @@ export class PaymentTableComponent implements OnInit {
   }
 
   public viewInvoice(data): void {
-    console.log(data);
     this._modalService.open(this.modalHtml, { centered: true});
   }
 

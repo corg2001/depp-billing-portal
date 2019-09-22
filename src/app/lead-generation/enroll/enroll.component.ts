@@ -65,7 +65,6 @@ export class EnrollComponent implements OnInit {
       this.dataSubject$
     );
     this.dataSubject$.subscribe((response: any) => {
-      console.log('this is the data from the Lead Generation call');
       console.log(response);
     });
     this.enrolledSubject$.subscribe((response: boolean) => {

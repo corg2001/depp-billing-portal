@@ -55,7 +55,6 @@ export class ServiceAreaSearchComponent implements OnInit, OnChanges {
 
   public updateServiceDetails(countyName: any): void {
     const _countyName: string = countyName.target.value;
-    console.log(countyName.target.value);
     const skillTypes: string[] = [];
     const county: CountiesInterface = _.find(this.counties, ((countie: CountiesInterface) => countie.countyName === _countyName));
     county.serviceAreaDetails.forEach((serviceAreaDetail: ServiceAreaDetailsInterface) => skillTypes.push(serviceAreaDetail.skillType));
