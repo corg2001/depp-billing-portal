@@ -113,7 +113,7 @@ export class InvoiceService implements InvoiceAsbstractService {
       const _invoiceDate: string = this._formatDate(invoice.claimDate);
       const addressInput = serviceAddress.toLowerCase();
       return startDate && endDate && serviceAddress
-        ? _startDate  <= _invoiceDate && _endDate >= _invoiceDate && invoice.serviceAddress.includes(addressInput)
+        ? _startDate  <= _invoiceDate && _endDate >= _invoiceDate && invoice.serviceAddress.toLowerCase().includes(addressInput)
         : startDate && endDate
         ? (_startDate <= _invoiceDate &&  _endDate >= _invoiceDate) || _startDate === _invoiceDate && _endDate === _invoiceDate
         : startDate
@@ -121,7 +121,7 @@ export class InvoiceService implements InvoiceAsbstractService {
         : endDate
         ? _endDate >= _invoiceDate
         : serviceAddress
-        ? invoice.serviceAddress.includes(addressInput)
+        ? invoice.serviceAddress.toLowerCase().includes(addressInput)
         : invoice;
     });
   }
