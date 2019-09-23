@@ -110,7 +110,7 @@ export class InvoiceService implements InvoiceAsbstractService {
     return invoices.filter((invoice: InvoiceInterface) => {
       const _startDate: string = this._formatDate(startDate);
       const _endDate: string = this._formatDate(endDate);
-      const _invoiceDate: string = this._formatDate(invoice.claimDate);
+      const _invoiceDate: string = this._formatDateMoment(invoice.claimDate);
       const addressInput = serviceAddress.toLowerCase();
       return startDate && endDate && serviceAddress
         ? _startDate  <= _invoiceDate && _endDate >= _invoiceDate && invoice.serviceAddress.toLowerCase().includes(addressInput)
@@ -128,5 +128,9 @@ export class InvoiceService implements InvoiceAsbstractService {
 
   private _formatDate(date: string): string {
     return dateformat(date, CalendarEnums.dayMonthYear);
+  }
+
+  private _formatDateMoment(date: string): string {
+    return moment(date).format('MM/DD/YYYY');
   }
 }
