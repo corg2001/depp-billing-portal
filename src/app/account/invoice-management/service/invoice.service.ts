@@ -17,6 +17,8 @@ import { environment } from 'src/environments/environment';
 import { InvoiceFactoryService } from './factory/invoice.factory.service';
 import { InvoiceInterface } from '../interface/invoice.interface';
 import { InvoiceAsbstractService } from './abstract/invoice.asbstract.service';
+import * as dateformat from 'dateformat';
+import { CalendarEnums } from 'src/app/shared/enums/calendar.enums';
 
 @Injectable({
   providedIn: 'root'
@@ -106,21 +108,25 @@ export class InvoiceService implements InvoiceAsbstractService {
     serviceAddress?: string
   ): InvoiceInterface[] {
     return invoices.filter((invoice: InvoiceInterface) => {
-      const _startDate: number = Date.parse(startDate);
-      const _endDate: number = Date.parse(endDate);
-      const _invoiceDate: number = Date.parse(invoice.claimDate);
+      const _startDate: string = this._formatDate(startDate);
+      const _endDate: string = this._formatDate(endDate);
+      const _invoiceDate: string = this._formatDate(invoice.claimDate);
       const addressInput = serviceAddress.toLowerCase();
-      return startDate && endDate && serviceAddress 
-      ? _invoiceDate >= _startDate &&  _invoiceDate <= _endDate && invoice.serviceAddress.includes(addressInput) :
-       startDate && endDate
-        ? _invoiceDate >= _startDate &&  _invoiceDate <= _endDate
+      return startDate && endDate && serviceAddress
+        ? _startDate  <= _invoiceDate && _endDate >= _invoiceDate && invoice.serviceAddress.includes(addressInput)
+        : startDate && endDate
+        ? (_startDate <= _invoiceDate &&  _endDate >= _invoiceDate) || _startDate === _endDate
         : startDate
-        ? _invoiceDate >= _startDate
+        ?  _startDate <= _invoiceDate
         : endDate
-        ? _invoiceDate <= _endDate
+        ? _endDate >= _invoiceDate
         : serviceAddress
         ? invoice.serviceAddress.includes(addressInput)
         : invoice;
     });
+  }
+
+  private _formatDate(date: string): string {
+    return dateformat(date, CalendarEnums.dayMonthYear);
   }
 }
