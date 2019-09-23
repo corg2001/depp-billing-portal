@@ -115,7 +115,7 @@ export class InvoiceService implements InvoiceAsbstractService {
       return startDate && endDate && serviceAddress
         ? _startDate  <= _invoiceDate && _endDate >= _invoiceDate && invoice.serviceAddress.includes(addressInput)
         : startDate && endDate
-        ? (_startDate <= _invoiceDate &&  _endDate >= _invoiceDate) || _startDate === _endDate
+        ? (_startDate <= _invoiceDate &&  _endDate >= _invoiceDate) || _startDate === _invoiceDate && _endDate === _invoiceDate
         : startDate
         ?  _startDate <= _invoiceDate
         : endDate
