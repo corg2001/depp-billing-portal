@@ -1,6 +1,5 @@
 <div>
   <header>{{ headerText }}</header>
-  <app-search-box [paymentHistory$]="paymentHistory$" (updatedClaimsEmitter)="updateFromSearch($event)" *ngIf="!loading"></app-search-box> 
   <app-loading-spinner *ngIf="loading"></app-loading-spinner>
   <app-payment-table *ngIf="!loading && isData" [paymentHistory$]="paymentHistory$"></app-payment-table> 
   <ng-container *ngIf="!isData && !loading">
