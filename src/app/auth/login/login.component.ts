@@ -9,6 +9,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PrivacyPolicyComponent } from '../privacy-policy/privacy-policy.component';
 import { TermsOfUseComponent } from '../terms-of-use/terms-of-use.component';
 import { LoginError } from './model/enums/login-error.enums';
+import { LocalStorageEnum } from 'src/app/core/enums/local-storage.enums';
 
 @Component({
   selector: 'app-login',
@@ -80,6 +81,8 @@ export class LoginComponent implements OnInit {
       username,
       password
     );
+    localStorage.setItem(LocalStorageEnum.UserName, username)
+    localStorage.setItem(LocalStorageEnum.Password, password);
     this.showLoadingSpinner = true;
   }
 

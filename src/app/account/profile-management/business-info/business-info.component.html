@@ -3,29 +3,30 @@
   <div class="info-section">
     <div class="info-items txt-business">Business Info</div>
       <div class="d-flex info-items">
-          <div class="items-part-one">Account Number: <span class="item-values">12345</span></div>
-          <div>Tax ID Number (EIN): <span class="item-values">XX-XXX4534</span></div>
+          <div class="items-part-one">Account Number: <span class="item-values">{{ accountNumber }}</span></div>
+          <div>Tax ID Number (EIN): <span class="item-values">{{showOnlyLastFour(taxId)}}</span></div>
       </div>
       <div class="d-flex info-items">
-          <div class="items-part-one">Owner: <span class="item-values">John Smith</span></div>
-          <div>Company Name: <span class="item-values">ABC Plumbing</span></div>
+          <div class="items-part-one">Owner: <span *ngIf="owner"class="item-values">{{owner}}</span></div>
+          <div>Company Name: <span class="item-values">{{ companyname}}</span></div>
       </div>
       <div class="d-flex info-items">
-          <div class="items-part-one">Email Address: <span class="item-values">johnsmith@abcplumbing.com</span></div>
-          <div>Phone Number: <span class="item-values">888-888-8888</span></div>
+          <div class="items-part-one">Email Address: <span *ngIf="email" class="item-values">{{ email }}</span></div>
+          <div>Phone Number: <span class="item-values">{{phoneNumber}}</span></div>
       </div>
       <div class="d-flex info-items">
-          <div class="items-part-one">Additional Contact: <span class="item-values">Rose Jolee</span></div>
-          <div>Additional Contact Phone: <span class="item-values">888-888-8888</span></div>
+          <div class="items-part-one">Additional Contact: <span *ngIf="additionalContactName" class="item-values">{{additionalContactName}}</span></div>
+          <div>Additional Contact Phone: <span *ngIf="additionalContactPhoneNumber" class="item-values">{{additionalContactPhoneNumber}}</span></div>
       </div>
       <div class="d-flex info-items address">
           <div class="items-part-one">Business Address: 
-            <div class="item-values">123 ABC Street</div>
-            <div class="item-values">Towny Town, City, State, 12345</div>
+            <div class="item-values">{{address1}}</div>
+            <div *ngIf="address2" class="item-values">{{address2}}</div>
+            <div class="item-values">{{city}}, {{state}}, {{postalCode}}</div>
           </div>
-          <div>Mailling Address:
-              <div class="item-values">123 ABC Street</div>
-              <div class="item-values">Towny Town, City, State, 12345</div>  
+          <div>Mailing Address:
+              <div class="item-values">{{mailingAddress1}}</div>
+              <div class="item-values">{{mailingCity}}, {{mailingState}}, {{mailingPostalCode}}</div>  
           </div>
       </div>
       <div class="hwa-section">
@@ -33,20 +34,20 @@
               <div class="items-part-one hwa-header">HWA Contact Information</div> 
           </div>
           <div class="d-flex info-items hwa-items">
-              <div class="items-part-one">Territory Manager: <span class="item-values">Mary Moore</span></div>
-              <div>Contact Phone: <span class="item-values">888-333-4444</span></div>
+              <div class="items-part-one">Territory Manager: <span class="item-values">{{ hwaContactName }}</span></div>
+              <div>Contact Phone: <span class="item-values">{{hwaContactPhoneNumber}}</span></div>
           </div>
           <div class="d-flex info-items hwa-items">
-              <div class="items-part-one">Email Address: <span class="item-values"><a src="#">mary.moore@hwahomewarranty.com</a></span></div>
+              <div class="items-part-one">Email Address: <span class="item-values"><a src="#">{{hwaContactEmail}}</a></span></div>
           </div>
       </div>
       <div class="d-flex info-items user-psw-section">
           <div class="items-part-one">Username/Password</div> 
       </div>
       <div class="d-flex info-items name-password">
-          <div class="items-part-one">Username: <span class="item-values">abcplumber1</span></div>
-          <div>Password: <span class="item-values">**********</span></div>
-          <div class="edit-symbol" style="margin-left:auto">Edit</div>
+          <div class="items-part-one">Username: <span class="item-values">{{userName}}</span></div>
+          <div>Password: <span class="item-values">{{hidePassword(password)}}</span></div>
+          <!-- <div class="edit-symbol" style="margin-left:auto">Edit</div> -->
       </div>
     </div>
 </div>
