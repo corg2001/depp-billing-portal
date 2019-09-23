@@ -118,7 +118,6 @@ export class CalendarService implements CalendarAbstractService {
         });
       });
     });
-    console.log(states);
     states.forEach((_tradeDetail: any) => {
       const _all = [];
       if (_tradeDetail.trade === trade) {
