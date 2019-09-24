@@ -1,5 +1,5 @@
 
-  <div class="header-txt">Welcome, John</div>
+  <div class="header-txt">Welcome <label *ngIf="name" for="name">, {{name}}</label></div>
   <div class="d-flex profile-mgnt">
       <div class="left-nav-bar">
         <div class="d-flex" [ngClass]="{'left-nav-bar-items': item === profileManagementTypes.BusinessInfo}" (click)="gotoSections(profileManagementTypes.BusinessInfo)">Bussiness Info</div>
