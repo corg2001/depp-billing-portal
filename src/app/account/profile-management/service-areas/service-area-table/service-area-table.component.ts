@@ -1,4 +1,10 @@
-import { Component, OnChanges, ViewEncapsulation, OnInit, Input } from '@angular/core';
+import {
+  Component,
+  OnChanges,
+  ViewEncapsulation,
+  OnInit,
+  Input
+} from '@angular/core';
 import { ServiceAreasInterface } from '../interface/service-areas.interface';
 import { ServiceAreaDetailsInterface } from '../interface/service-area-details.interface';
 import { CountiesInterface } from '../interface/counties.interface';
@@ -9,11 +15,12 @@ import { environment } from 'src/environments/environment';
   selector: 'app-service-area-table',
   templateUrl: './service-area-table.component.html',
   styleUrls: ['./service-area-table.component.scss'],
-  encapsulation: ViewEncapsulation.None
 })
 export class ServiceAreaTableComponent implements OnInit, OnChanges {
-
-  @Input() public serviceAreasDeatils$?: Subject<ServiceAreaDetailsInterface[]> = new Subject();
+  @Input() public serviceAreasDeatils$?: Subject<
+    ServiceAreaDetailsInterface[]
+  > = new Subject();
+  @Input() searchExecuted: boolean;
   public isData: boolean = false;
   public page: number;
   public pageSize: number;
@@ -23,17 +30,22 @@ export class ServiceAreaTableComponent implements OnInit, OnChanges {
   public noInfoText: string;
 
   constructor() {}
-ngOnInit(): void {
-  
-  this.page = 1;
-}
+  ngOnInit(): void {
+    this.noInfoText =
+      `Service area is not part of your coverage. 
+      Please reach out to your Territory Manager if you would like to expand your coverage`;
+
+    this.page = 1;
+  }
   ngOnChanges(): void {
     this.serviceAreasDeatils$.subscribe(
       (serviceAreaDetails: ServiceAreaDetailsInterface[]) => {
         this.serviceAreaDeatils = serviceAreaDetails;
         this.collectionSize = this.serviceAreaDeatils.length;
         this.pageSize = this._getPageSize(this.collectionSize);
-        this.serviceAreaDeatils.length > 0 ? this.isData = true : this.isData = false;
+        this.serviceAreaDeatils.length > 0
+          ? (this.isData = true)
+          : (this.isData = false);
       }
     );
   }

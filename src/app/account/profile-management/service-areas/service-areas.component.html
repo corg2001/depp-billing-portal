@@ -13,8 +13,8 @@
       <div class="company-name">ABC Plumbing - {{ stateCode }}</div>
       <div class="contractor-id">Contractor ID: <label>{{ partyId }}</label></div>
     </div>
-    <app-service-area-search [counties]="counties" [serviceAreasDeatils$]="serviceAreasDeatils$"></app-service-area-search>
-    <app-service-area-table [serviceAreasDeatils$]="serviceAreasDeatils$"></app-service-area-table>
+    <app-service-area-search [counties]="counties" [serviceAreasDeatils$]="serviceAreasDeatils$" (emitSearchExecuted)="searchExecuted = $event"></app-service-area-search>
+    <app-service-area-table [serviceAreasDeatils$]="serviceAreasDeatils$" [searchExecuted]="searchExecuted"></app-service-area-table>
   </div>
 
   

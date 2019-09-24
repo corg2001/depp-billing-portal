@@ -3,7 +3,9 @@ import {
   OnInit,
   OnChanges,
   ViewEncapsulation,
-  Input
+  Input,
+  Output,
+  EventEmitter
 } from '@angular/core';
 import { FormGroup, FormBuilder, AbstractControl, FormControl } from '@angular/forms';
 import { CountiesInterface } from '../interface/counties.interface';
@@ -20,6 +22,7 @@ import { ServiceAreasAbstractService } from '../service/abstract/service-areas-a
 export class ServiceAreaSearchComponent implements OnInit, OnChanges {
   @Input() public counties?: CountiesInterface[];
   @Input() public serviceAreasDeatils$?: BehaviorSubject<ServiceAreaDetailsInterface[]> = new BehaviorSubject([]);
+  @Output() public emitSearchExecuted: EventEmitter<boolean> = new EventEmitter<boolean>();
   public searchForm: FormGroup;
   public countyNames: string[];
   public skillTypesList: string[];
@@ -33,8 +36,6 @@ export class ServiceAreaSearchComponent implements OnInit, OnChanges {
       zipcode: [''],
       skillType: ['']
     });
-
-    
   }
   ngOnChanges(): void {
     this.countyNames = this.getCountyNames(this.counties);
@@ -61,5 +62,6 @@ export class ServiceAreaSearchComponent implements OnInit, OnChanges {
     this.skillTypesList = _.uniq(skillTypes);
     this._selectedServiceAreasDetailsCopy = _.clone(county.serviceAreaDetails);
     this.serviceAreasDeatils$.next(county.serviceAreaDetails);
+    this.emitSearchExecuted.emit(true);
   }
 }
