@@ -98,7 +98,7 @@ export class PartyService {
     if (data.emails[0]) {
       this._setLocalStorageEmail(data);
     }
-    if (data.phones) {
+    if (data.phones[0]) {
       this._setLocalPhoneNumber(data);
     }
 
