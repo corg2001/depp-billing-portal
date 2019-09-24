@@ -123,8 +123,11 @@
             formControlName="business_phone"
             required
           />
-          <div class="error-container" *ngIf="ef.business_phone.dirty || ef.business_phone.touched">
-            <div class="text-danger py-1" *ngIf="ef.business_phone.invalid">Please provide your business phone.</div>
+          <div class="error-container" *ngIf="ef.business_phone.touched && ef.business_phone.errors?.required">
+            <div class="text-danger py-1">Please provide your business phone.</div>
+          </div>
+          <div class="error-container" *ngIf="ef.business_phone.dirty && ef.business_phone.errors?.invalidPhone">
+            <div class="text-danger py-1">Please provide valid business phone.</div>
           </div>
         </div>
         <div class="form-group">

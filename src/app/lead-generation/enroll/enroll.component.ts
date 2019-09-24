@@ -30,10 +30,10 @@ export class EnrollComponent implements OnInit {
     private _loggerService: LoggerService,
     private _formBuilder: FormBuilder,
     private _enrollService: EnrollAbstractService
-  ) {}
+  ) { }
 
   ngOnInit() {
-    this.completionSubject.subscribe(this.responseHandler.bind(this));
+    this.completionSubject.subscribe(this._responseHandler.bind(this));
     this.enrollForm = this._formBuilder.group({
       first_name: ['', Validators.required],
       last_name: ['', Validators.required],
@@ -44,12 +44,12 @@ export class EnrollComponent implements OnInit {
       business_state: [''],
       business_postal_code: [''],
       business_email: ['', Validators.email],
-      business_phone: ['', Validators.required],
+      business_phone: ['', [Validators.required,this._phoneValidator]],
       cities_serve: [''],
       best_time_to_reach: ['']
     });
-    this.listOfStates = this.enumToArray(States);
-    this.timeToCallOptions = this.enumToArray(TimeToCall);
+    this.listOfStates = this._enumToArray(States);
+    this.timeToCallOptions = this._enumToArray(TimeToCall);
   }
 
   public get ef(): any {
@@ -74,7 +74,7 @@ export class EnrollComponent implements OnInit {
         : (this.showConfirmationMessage = false);
     });
   }
-  private enumToArray(source: any): any[] {
+  private _enumToArray(source: any): any[] {
     const tmpArray: any[] = [];
     Object.keys(source).forEach(key => {
       tmpArray.push({
@@ -86,7 +86,7 @@ export class EnrollComponent implements OnInit {
     return tmpArray;
   }
 
-  private responseHandler(response: any): void {
+  private _responseHandler(response: any): void {
     this.showConfirmationMessage = true;
     if (!response) {
       this._loggerService.error(
@@ -94,5 +94,19 @@ export class EnrollComponent implements OnInit {
       );
       return;
     }
+  }
+  // Validates US phone numbers
+  private _phoneValidator(number): any {
+    if (number.pristine || number.value==='') {
+      return null;
+    }
+    const PHONE_REGEXP = /^[0-9]{10}$/;
+    number.markAsTouched();
+    if (PHONE_REGEXP.test(number.value)) {
+      return null;
+    }
+    return {
+      invalidPhone: true
+    };
   }
 }
