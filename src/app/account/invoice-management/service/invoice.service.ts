@@ -41,8 +41,8 @@ export class InvoiceService implements InvoiceAsbstractService {
     error$: Subject<boolean>,
     errorMessage$?: Subject<string>
   ): void {
-    // const date: string = moment(moment(), 'YY-MM-DD').toString();
-    const date: string = '2018-10-10';
+    // get invoice starting from a year ago
+    const date: string = dateformat(moment().subtract(1, 'y'), HttpParamEnum.yearMonthDayFormat);
     const vendorId: string = this._configService.getVendorId();
     const companyInfo: string = this._configService.getCompanyInfo();
     const params: HttpParams = this.getInvoiceParams(
@@ -108,29 +108,29 @@ export class InvoiceService implements InvoiceAsbstractService {
     serviceAddress?: string
   ): InvoiceInterface[] {
     return invoices.filter((invoice: InvoiceInterface) => {
-      const _startDate: string = this._formatDate(startDate);
-      const _endDate: string = this._formatDate(endDate);
-      const _invoiceDate: string = this._formatDateMoment(invoice.claimDate);
-      const addressInput = serviceAddress.toLowerCase();
+      const _startDate: string = this._formatDateMoment(startDate);
+      const _endDate: string = this._formatDateMoment(endDate);
+      const _invoiceDate: string = this._formatDateMoment(invoice.invoiceDate);
+      const _serviceAddress = serviceAddress.toLowerCase();
       return startDate && endDate && serviceAddress
-        ? _startDate  <= _invoiceDate && _endDate >= _invoiceDate && invoice.serviceAddress.toLowerCase().includes(addressInput)
+        ? _startDate  <= _invoiceDate && _endDate >= _invoiceDate && invoice.serviceAddress.toLowerCase().includes(_serviceAddress)
         : startDate && endDate
         ? (_startDate <= _invoiceDate &&  _endDate >= _invoiceDate) || _startDate === _invoiceDate && _endDate === _invoiceDate
+        : startDate && _serviceAddress
+        ?  _startDate <= _invoiceDate  && invoice.serviceAddress.toLowerCase().includes(_serviceAddress)
+        : endDate && _serviceAddress
+        ?  _endDate >= _invoiceDate  && invoice.serviceAddress.toLowerCase().includes(_serviceAddress)
         : startDate
         ?  _startDate <= _invoiceDate
         : endDate
         ? _endDate >= _invoiceDate
         : serviceAddress
-        ? invoice.serviceAddress.toLowerCase().includes(addressInput)
+        ? invoice.serviceAddress.toLowerCase().includes(_serviceAddress)
         : invoice;
     });
   }
 
-  private _formatDate(date: string): string {
-    return dateformat(date, CalendarEnums.dayMonthYear);
-  }
-
   private _formatDateMoment(date: string): string {
-    return moment(date).format('MM/DD/YYYY');
+    return moment(date).format(CalendarEnums.monthDayYearCaps);
   }
 }
