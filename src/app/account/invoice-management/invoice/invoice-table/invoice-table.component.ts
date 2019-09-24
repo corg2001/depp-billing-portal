@@ -30,7 +30,7 @@ export class InvoiceTableComponent implements OnInit{
   constructor() { }
  
   ngOnInit(): void {
-    this.noInfoText = `Please contact Contractor Relations at ${environment.core.customerServiceNumber}for assistance.`;
+    this.noInfoText = `Invoice information is not available. Please reach out to your Territory Manager for assistance.`;
     this.invoices$.subscribe((invoices: InvoiceInterface[]) => {
       this.invoices = invoices;
       this.collectionSize = invoices.length;
