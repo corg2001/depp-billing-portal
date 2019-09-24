@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfigService } from 'src/app/core/config.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-business-info',
@@ -32,6 +33,7 @@ export class BusinessInfoComponent implements OnInit {
   public hwaContactEmail: string;
   public userName: string;
   public password: string;
+  public showUserDetails: boolean  = false;
 
   constructor(private _config: ConfigService) { }
 
@@ -56,14 +58,14 @@ export class BusinessInfoComponent implements OnInit {
     this.mailingState = this._config.getState();
     this.mailingPostalCode = this._config.getPostalCode();
     this.hwaContactName = '';
-    this.hwaContactName = '';
-    this.hwaContactPhoneNumber = '';
+    this.hwaContactEmail = `${environment.core.email}`;
+    this.hwaContactPhoneNumber = `${environment.core.customerServiceNumber}`;
     this.userName = this._config.getUserName();
     this.password = this._config.getPassword();
   }
 
   public showOnlyLastFour(value: string): string {
-    if (value) { 
+    if (value) {
       return value.replace(/.(?=.{4})/g, '*');
     }
     return '';

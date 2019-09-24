@@ -9,10 +9,11 @@ export const environment = {
   core: {
     brandId: 'HWA',
     brandFriendlyName: 'HWA',
-    copyrightNotice:
-      '&copy; 2017 HOME WARRANTY OF AMERICA. Inc. Home Warranty Information:',
+    copyrightNotice: '&copy; 2017 HOME WARRANTY OF AMERICA. Inc. Home Warranty Information:',
     pageTitle: 'HWA - Home Warranty of America',
-    customerServiceNumber: '1-888-888-8888'
+    customerServiceNumber: '1-888-888-8888',
+    email: 'Contractorrelations@mailinator.com',
+    achEmail: 'VendorMaster@mailinator.com'
   },
   // auth service
   loginUrl: `${baseUrl}authentication/passport/login`,
