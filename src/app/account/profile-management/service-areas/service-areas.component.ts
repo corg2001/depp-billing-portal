@@ -21,6 +21,7 @@ export class ServiceAreasComponent implements OnChanges {
   @Input() public error?: boolean;
   @Input() public completion?: boolean;
   @Input() public errorMessage?: string;
+  public searchExecuted: boolean;
   public counties: CountiesInterface[];
   public serviceAreasDeatils$?: BehaviorSubject<ServiceAreaDetailsInterface[]> = new BehaviorSubject([]);
   public isData: boolean;
@@ -35,6 +36,7 @@ export class ServiceAreasComponent implements OnChanges {
   }
 
   public intit(): void {
+    this.searchExecuted = false;
     this.partyId = this._conFigService.getVendorId();
     // tslint:disable-next-line: max-line-length
     this.noInfoText = `Your Service Areas is not set up. Please reach out to contractor relastions at ${environment.core.customerServiceNumber}.`;
