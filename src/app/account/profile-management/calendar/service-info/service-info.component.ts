@@ -31,7 +31,7 @@ export class ServiceInfoComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.noInfoText = `Please contact Contractor Relations at ${environment.core.customerServiceNumber} for assistance.`;
+    this.noInfoText = `Oh no! Your call volume is not setup. Please reach out to your Territory Manager to get started.`;
     this.calendarDate = this.formatDate((new Date()).toString());
     this.headertext = 'service call information for ';
     this.emergencyCalltext = 'You are accepting emergency calls. If you want to change this, please reach out to your Territoy Manager';

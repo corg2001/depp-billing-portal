@@ -20,6 +20,7 @@ import { ServiceAreasInterface } from '../service-areas/interface/service-areas.
 })
 export class ProfileComponent implements OnInit {
   public item: string;
+  public name: string;
   public achDocsData$: BehaviorSubject<AchDocuments[]> = new BehaviorSubject(
     []
   );
@@ -55,6 +56,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     this._configService.init();
+    this.name = this._configService.getPartyName();
     this.item = this.profileManagementTypes.BusinessInfo;
     this.getachDocs();
     this.getAgreedRatesInfo();
