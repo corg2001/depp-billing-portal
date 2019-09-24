@@ -41,7 +41,7 @@ export class ClaimTableComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.noInfoText = `Please contact Contractor Relations at ${environment.core.customerServiceNumber}for assistance.`;
+    this.noInfoText = `Please contact Contractor Relations at ${environment.core.customerServiceNumber} for assistance.`;
     this.claimSubject$.subscribe((claimData: Claim[]) => {
       this.claims = claimData;
       this.collectionSize = this.claims.length;
