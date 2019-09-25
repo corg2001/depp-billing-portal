@@ -41,7 +41,7 @@ export class PaymentService {
           error$,
           response
         );
-      });
+      }, (error: any) => this.paymentHistoryErrorHandler(error$, errorMessage$, completion$, error));
   }
 
   public buildPaymentHistoryParams(
