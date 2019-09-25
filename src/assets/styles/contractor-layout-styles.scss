@@ -97,12 +97,11 @@ ngb-pagination {
 .table {
   text-align: center;
 }
-// Calender 
 
-
+// Modal
 @media (min-width: 36rem) {
   .modal-dialog {
-    max-width: 60rem !important;
+    max-width: 70rem !important;
   }
 }
 

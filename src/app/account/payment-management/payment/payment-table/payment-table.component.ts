@@ -26,6 +26,7 @@ export class PaymentTableComponent implements OnInit {
     });
     this.paymentHistory$.subscribe((paymenHistory: PaymentHistoryInterface[]) => {
       this.paymentHistory = paymenHistory;
+      console.log(paymenHistory);
       this.collectionSize = paymenHistory.length;
       paymenHistory.length > 0 ? this.historiesFound = true : this.historiesFound = false;
     });
