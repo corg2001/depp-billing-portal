@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 import { ConfigService } from 'src/app/core/config.service';
 import { PaymentService } from '../service/payment.service';
 import { Subject, BehaviorSubject } from 'rxjs';
@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
   templateUrl: './payment.component.html',
   styleUrls: ['./payment.component.scss']
 })
-export class PaymentComponent implements OnInit{
+export class PaymentComponent implements OnInit, OnChanges{
   public headerText: string;
   public paymentHistory$: BehaviorSubject<PaymentHistoryInterface[]> = new BehaviorSubject([]);
   public updatedPaymentHistory$: BehaviorSubject<PaymentHistoryInterface[]> = new BehaviorSubject([]);
@@ -33,6 +33,9 @@ export class PaymentComponent implements OnInit{
     this.init();
   }
 
+  ngOnChanges(): void {
+    this.isLoading();
+  }
   public init(): void {
     this.headerText = 'Payment History';
     this._configService.init();
