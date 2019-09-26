@@ -13,7 +13,7 @@
       <td scope="row">{{ payment.paymentDate | date }}</td>
       <td scope="row">{{ payment.paymentReferenceNo }}</td>
       <td scope="row">{{ payment.paymentMethod }}</td>
-      <td scope="row">{{ payment.paymentAmount.amount | currency }}</td> 
+      <td scope="row">{{ payment.paymentAmount.amount | formatmoney }}</td> 
       <td scope="row">
         <button (click)="viewInvoice(payment)" class="btn">
           View Invoices
@@ -52,7 +52,7 @@
                 <td scope="row">{{ invoice.customerName }}</td>
                 <td scope="row">{{ invoice.serviceAddress }}</td>
                 <td scope="row">
-                  {{ invoice.invoiceAmount.amount | currency }}
+                  {{ invoice.invoiceAmount.amount | formatmoney }}
                 </td>
               </tr>
             </tbody>
