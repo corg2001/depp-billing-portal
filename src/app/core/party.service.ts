@@ -15,21 +15,12 @@ import { PartyDetailsPayloadInterface } from './interface/party-details.payload.
 import { AssociationPayloadInterface } from './interface/association.payload.interface';
 import { LocalStorageEnum } from './enums/local-storage.enums';
 
-interface Address {
-  address1: string;
-  address2: string;
-  zipCode: string;
-  city: string;
-  state: string;
-  country: string;
-}
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class PartyService {
-  public address: Address[];
-
   constructor(
     private authService: AuthenticationService,
     private httpClient: HttpClient,
@@ -79,7 +70,6 @@ export class PartyService {
     subscription: Subscriber<boolean>,
     data: PartyDetailsPayloadInterface
   ): void {
-    // const associations: any = data['associations']['_association'][0];
     const associations: AssociationPayloadInterface =
       data.associations._association[0];
     this._setLocalVendorId(associations);
@@ -107,15 +97,30 @@ export class PartyService {
     }
 
     if (data.addresses[0]) {
-      this._setLocalAddress1(data);
-      this._setLocalAddress2(data);
-      this._setLocalAddressUnit(data);
-      this._setLocalAddressCity(data);
-      this._setLocalAddressCity(data);
-      this._setLocalAddressCountry(data);
-      this._setLocalAddressPostalCode(data);
-      this._setLocalAddressState(data);
-      this._setLocalAddressFsaLocationId(data);
+      this._setLocalBusinessAddress1(data);
+      this._setLocalBusinessAddress2(data);
+      this._setLocalBusinessAddressUnit(data);
+      this._setLocalBusinessAddressCity(data);
+      this._setLocalBusinessAddressCity(data);
+      this._setLocalBusinessAddressCountry(data);
+      this._setLocalBusinessAddressPostalCode(data);
+      this._setLocalBusinessAddressState(data);
+      this._setLocalBusinessAddressFsaLocationId(data);
+      this._setLocalBusinessAxLocationId(data);
+      this._setLocalBusinessAxRecordId(data);
+    }
+    if (data.addresses[1]) {
+      this._setLocalMailingAddress1(data);
+      this._setLocalMailingAddress2(data);
+      this._setLocalMailingAddressUnit(data);
+      this._setLocalMailingAddressCity(data);
+      this._setLocalMailingAddressCity(data);
+      this._setLocalMailingAddressCountry(data);
+      this._setLocalMailingAddressPostalCode(data);
+      this._setLocalMailingAddressState(data);
+      this._setLocalMailingAddressFsaLocationId(data);
+      this._setLocalMailingAxLocationId(data);
+      this._setLocalMailingAxRecordId(data);
     }
     subscription.next(true);
     subscription.complete();
@@ -163,66 +168,173 @@ export class PartyService {
       partyDetails.phones[0].value
     );
   }
-  private _setLocalAddress1(partyDetails: PartyDetailsPayloadInterface): void {
+  private _setLocalBusinessAddress1(
+    partyDetails: PartyDetailsPayloadInterface
+  ): void {
     localStorage.setItem(
-      LocalStorageEnum.Address1,
+      LocalStorageEnum.BusinessAddress1,
       partyDetails.addresses[0].address1
     );
   }
 
-  private _setLocalAddress2(partyDetails: PartyDetailsPayloadInterface): void {
+  private _setLocalBusinessAddress2(
+    partyDetails: PartyDetailsPayloadInterface
+  ): void {
     localStorage.setItem(
-      LocalStorageEnum.Address2,
+      LocalStorageEnum.BusinessAddress2,
       partyDetails.addresses[0].address2
     );
   }
 
-  private _setLocalAddressUnit(
-    partyDetails: PartyDetailsPayloadInterface
-  ): void {
-    localStorage.setItem(LocalStorageEnum.Unit, partyDetails.addresses[0].unit);
-  }
-
-  private _setLocalAddressPostalCode(
+  private _setLocalBusinessPurpose(
     partyDetails: PartyDetailsPayloadInterface
   ): void {
     localStorage.setItem(
-      LocalStorageEnum.PostalCode,
+      LocalStorageEnum.BuisnessAddressPurpose,
+      partyDetails.addresses[0].purpose
+    );
+  }
+
+  private _setLocalBusinessAddressUnit(
+    partyDetails: PartyDetailsPayloadInterface
+  ): void {
+    localStorage.setItem(
+      LocalStorageEnum.BusinessUnit,
+      partyDetails.addresses[0].unit
+    );
+  }
+
+  private _setLocalBusinessAddressPostalCode(
+    partyDetails: PartyDetailsPayloadInterface
+  ): void {
+    localStorage.setItem(
+      LocalStorageEnum.BusinessPostalCode,
       partyDetails.addresses[0].postal_code
     );
   }
 
-  private _setLocalAddressCity(
-    partyDetails: PartyDetailsPayloadInterface
-  ): void {
-    localStorage.setItem(LocalStorageEnum.City, partyDetails.addresses[0].city);
-  }
-
-  private _setLocalAddressState(
+  private _setLocalBusinessAddressCity(
     partyDetails: PartyDetailsPayloadInterface
   ): void {
     localStorage.setItem(
-      LocalStorageEnum.State,
+      LocalStorageEnum.BusinessCity,
+      partyDetails.addresses[0].city
+    );
+  }
+
+  private _setLocalBusinessAddressState(
+    partyDetails: PartyDetailsPayloadInterface
+  ): void {
+    localStorage.setItem(
+      LocalStorageEnum.BusinessState,
       partyDetails.addresses[0].state
     );
   }
 
-  private _setLocalAddressCountry(
+  private _setLocalBusinessAddressCountry(
     partyDetails: PartyDetailsPayloadInterface
   ): void {
     localStorage.setItem(
-      LocalStorageEnum.Country,
+      LocalStorageEnum.BusinessCountry,
       partyDetails.addresses[0].country
     );
   }
 
-  private _setLocalAddressFsaLocationId(
+  private _setLocalBusinessAddressFsaLocationId(
     partyDetails: PartyDetailsPayloadInterface
   ): void {
     localStorage.setItem(
-      LocalStorageEnum.FasLocationId,
+      LocalStorageEnum.BusinessFasLocationId,
       partyDetails.addresses[0].fsa_location_id
     );
+  }
+
+  private _setLocalBusinessAxLocationId(partyDetails: PartyDetailsPayloadInterface): void {
+    localStorage.setItem(LocalStorageEnum.BusinessAxLocationId, partyDetails.addresses[0].ax_location_id);
+  }
+
+  private _setLocalBusinessAxRecordId(partyDetails: PartyDetailsPayloadInterface): void {
+    localStorage.setItem(LocalStorageEnum.BusinessAxRecordId, partyDetails.addresses[0].ax_record_id);
+  }
+
+  private _setLocalMailingAddressFsaLocationId(
+    partyDetails: PartyDetailsPayloadInterface
+  ): void {
+    localStorage.setItem(
+      LocalStorageEnum.MailingFasLocationId,
+      partyDetails.addresses[1].fsa_location_id
+    );
+  }
+
+  private _setLocalMailingAddress1(partyDetails: PartyDetailsPayloadInterface): void {
+    localStorage.setItem(
+      LocalStorageEnum.MailingAddress1,
+      partyDetails.addresses[1].address1
+    );
+  }
+
+  private _setLocalMailingAddress2(partyDetails: PartyDetailsPayloadInterface): void {
+    localStorage.setItem(
+      LocalStorageEnum.MailingAddress2,
+      partyDetails.addresses[1].address2
+    );
+  }
+
+  private _setLocalMailingAddressUnit(
+    partyDetails: PartyDetailsPayloadInterface
+  ): void {
+    localStorage.setItem(LocalStorageEnum.MailingUnit, partyDetails.addresses[1].unit);
+  }
+
+  private _setLocalMailingAddressPostalCode(
+    partyDetails: PartyDetailsPayloadInterface
+  ): void {
+    localStorage.setItem(
+      LocalStorageEnum.MailingPostalCode,
+      partyDetails.addresses[1].postal_code
+    );
+  }
+
+  private _setLocalMailingAddressCity(
+    partyDetails: PartyDetailsPayloadInterface
+  ): void {
+    localStorage.setItem(LocalStorageEnum.MailingCity, partyDetails.addresses[1].city);
+  }
+
+  private _setLocalMailingAddressState(
+    partyDetails: PartyDetailsPayloadInterface
+  ): void {
+    localStorage.setItem(
+      LocalStorageEnum.MailingState,
+      partyDetails.addresses[1].state
+    );
+  }
+
+
+  private _setLocalMailingAddressCountry(
+    partyDetails: PartyDetailsPayloadInterface
+  ): void {
+    localStorage.setItem(
+      LocalStorageEnum.MailingCountry,
+      partyDetails.addresses[1].country
+    );
+  }
+
+  private _setLocalMailingAddressPurpose(
+    partyDetails: PartyDetailsPayloadInterface
+  ): void {
+    localStorage.setItem(
+      LocalStorageEnum.MailingAddressPurpose,
+      partyDetails.addresses[1].purpose
+    );
+  }
+
+  private _setLocalMailingAxLocationId(partyDetails: PartyDetailsPayloadInterface): void {
+    localStorage.setItem(LocalStorageEnum.MailingAxLocationId, partyDetails.addresses[1].ax_location_id);
+  }
+
+  private _setLocalMailingAxRecordId(partyDetails: PartyDetailsPayloadInterface): void {
+    localStorage.setItem(LocalStorageEnum.MailingAxRecordId, partyDetails.addresses[1].ax_record_id);
   }
 
   private _setLocalVendorId(association: AssociationPayloadInterface): void {
