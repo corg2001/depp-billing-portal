@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfigService } from 'src/app/core/config.service';
 import { environment } from 'src/environments/environment';
+import { AddressBaseInterface } from 'src/app/core/interface/address.base.interface';
+import { AddressInterface } from 'src/app/core/interface/address.interface';
 
 @Component({
   selector: 'app-business-info',
@@ -16,18 +18,8 @@ export class BusinessInfoComponent implements OnInit {
   public phoneNumber: string;
   public additionalContactName: string;
   public additionalContactPhoneNumber: string;
-  public address1: string;
-  public address2: string;
-  public unit: string;
-  public city: string;
-  public state: string;
-  public postalCode: string;
-  public mailingAddress1: string;
-  public mailingAddress2: string;
-  public mailingUnit: string;
-  public mailingCity: string;
-  public mailingState: string;
-  public mailingPostalCode: string;
+  public businessAddress: AddressInterface;
+  public mailingAddress: AddressInterface;
   public hwaContactName: string;
   public hwaContactPhoneNumber: string;
   public hwaContactEmail: string;
@@ -44,19 +36,9 @@ export class BusinessInfoComponent implements OnInit {
     this.taxId = this._config.getTaxId();
     this.companyname = this._config.getcompanyName();
     this.phoneNumber = this._config.getPhoneNumber();
-    this.address1 = this._config.getAddress1();
-    this.address2 = this._config.getAddress2();
-    this.unit = this._config.getUnit();
-    this.city = this._config.getCity();
-    this.state = this._config.getState();
-    this.postalCode = this._config.getPostalCode();
     this.owner = this._config.getPartyName();
-    this.mailingAddress1 = this._config.getAddress1();
-    this.mailingAddress2 = this._config.getAddress2();
-    this.mailingUnit = this._config.getUnit();
-    this.mailingCity = this._config.getCity();
-    this.mailingState = this._config.getState();
-    this.mailingPostalCode = this._config.getPostalCode();
+    this.businessAddress = this._config.getBusinessAddress();
+    this.mailingAddress = this._config.getMailingAddress();
     this.hwaContactName = '';
     this.hwaContactEmail = `${environment.core.email}`;
     this.hwaContactPhoneNumber = `${environment.core.customerServiceNumber}`;

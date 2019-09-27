@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { LoggerService } from './logger.service';
 import { LocalStorageEnum } from './enums/local-storage.enums';
 import { ConfigInterface } from './interface/config.interface';
+import { AddressInterface } from './interface/address.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -23,14 +24,8 @@ export class ConfigService {
       email: this._getEmailFromSession(),
       taxId: this._getTaxIdFromSession(),
       phoneNumber: this._getPhoneNumberFromSession(),
-      fsaLocationId: this._getFasLocationFromSession(),
-      address1: this._getAddress1FromSession(),
-      address2: this._getAddress2FromSession(),
-      unit: this._getUnitFromSession(),
-      city: this._getCityFromSession(),
-      state: this._getStateFromSession(),
-      postalCode: this._getPostalCodeFromSession(),
-      country: this._getCountryFromSession(),
+      businessAddress: this._getBusinessAddress(),
+      mailingAddress: this._getMailingAddress(),
       accountNumber: this._getAccountNumberFromSession(),
       username: this._getUserNameFromSession(),
       password: this._getPasswordFromSession()
@@ -77,33 +72,12 @@ export class ConfigService {
   public getPhoneNumber(): string {
     return this._config.phoneNumber;
   }
-
-  public getAddress1(): string {
-    return this._config.address1;
+  public getBusinessAddress(): AddressInterface {
+    return this._config.businessAddress;
   }
 
-  public getAddress2(): string {
-    return this._config.address2;
-  }
-
-  public getUnit(): string {
-    return this._config.unit;
-  }
-
-  public getCity(): string {
-    return this._config.city;
-  }
-
-  public getState(): string {
-    return this._config.state;
-  }
-
-  public getPostalCode(): string {
-    return this._config.postalCode;
-  }
-
-  public getCountry(): string {
-    return this._config.country;
+  public getMailingAddress(): AddressInterface {
+    return this._config.mailingAddress;
   }
 
   public getPassword(): string {
@@ -151,42 +125,129 @@ export class ConfigService {
     return localStorage.getItem(LocalStorageEnum.PhoneNumber);
   }
 
-  private _getAddress1FromSession(): string {
-    return localStorage.getItem(LocalStorageEnum.Address1);
+  private _getBusinessAddress1FromSession(): string {
+    return localStorage.getItem(LocalStorageEnum.BusinessAddress1);
   }
 
-  private _getAddress2FromSession(): string {
-    return localStorage.getItem(LocalStorageEnum.Address2);
+  private _getBusinessAddress2FromSession(): string {
+    return localStorage.getItem(LocalStorageEnum.BusinessAddress2);
   }
 
-  private _getUnitFromSession(): string {
-    return localStorage.getItem(LocalStorageEnum.Unit);
+  private _getBusinessUnitFromSession(): string {
+    return localStorage.getItem(LocalStorageEnum.BusinessUnit);
   }
 
-  private _getStateFromSession(): string {
-    return localStorage.getItem(LocalStorageEnum.State);
+  private _getBusinessStateFromSession(): string {
+    return localStorage.getItem(LocalStorageEnum.BusinessState);
   }
 
-  private _getCityFromSession(): string {
-    return localStorage.getItem(LocalStorageEnum.City);
+  private _getBusinessCityFromSession(): string {
+    return localStorage.getItem(LocalStorageEnum.BusinessCity);
   }
 
-  private _getPostalCodeFromSession(): string {
-    return localStorage.getItem(LocalStorageEnum.PostalCode);
+  private _getBusinessPostalCodeFromSession(): string {
+    return localStorage.getItem(LocalStorageEnum.BusinessPostalCode);
   }
 
-  private _getCountryFromSession(): string {
-    return localStorage.getItem(LocalStorageEnum.Country);
+  private _getBusinessCountryFromSession(): string {
+    return localStorage.getItem(LocalStorageEnum.BusinessCountry);
   }
 
-  private _getFasLocationFromSession(): string {
-    return localStorage.getItem(LocalStorageEnum.FasLocationId);
+  private _getBusinessFasLocationFromSession(): string {
+    return localStorage.getItem(LocalStorageEnum.BusinessFasLocationId);
   }
+
+  private _getBusinessPurposeFromSession(): string {
+    return localStorage.getItem(LocalStorageEnum.BuisnessAddressPurpose);
+  }
+  private _getBusinessAxLocationIdFromSession(): string {
+    return localStorage.getItem(LocalStorageEnum.BusinessAxLocationId);
+  }
+
+  private _getBusinessAxRecordIdFromSession(): string {
+    return localStorage.getItem(LocalStorageEnum.BusinessAxRecordId);
+  }
+
+  private _getMailingAddress1FromSession(): string {
+    return localStorage.getItem(LocalStorageEnum.MailingAddress1);
+  }
+
+  private _getMailingAddress2FromSession(): string {
+    return localStorage.getItem(LocalStorageEnum.MailingAddress2);
+  }
+
+  private _getMailingUnitFromSession(): string {
+    return localStorage.getItem(LocalStorageEnum.MailingUnit);
+  }
+
+  private _getMailingStateFromSession(): string {
+    return localStorage.getItem(LocalStorageEnum.MailingState);
+  }
+
+  private _getMailingCityFromSession(): string {
+    return localStorage.getItem(LocalStorageEnum.BusinessCity);
+  }
+
+  private _getMailingPostalCodeFromSession(): string {
+    return localStorage.getItem(LocalStorageEnum.MailingPostalCode);
+  }
+
+  private _getMailingCountryFromSession(): string {
+    return localStorage.getItem(LocalStorageEnum.MailingCountry);
+  }
+
+  private _getMailingFasLocationFromSession(): string {
+    return localStorage.getItem(LocalStorageEnum.MailingFasLocationId);
+  }
+
+  private _getMailingPurposeFromSession(): string {
+    return localStorage.getItem(LocalStorageEnum.MailingAddressPurpose);
+  }
+  private _getMailingAxLocationIdFromSession(): string {
+    return localStorage.getItem(LocalStorageEnum.MailingAxLocationId);
+  }
+
+  private _getMailingAxRecordIdFromSession(): string {
+    return localStorage.getItem(LocalStorageEnum.MailingAxRecordId);
+  }
+
   private _getUserNameFromSession(): string {
     return localStorage.getItem(LocalStorageEnum.UserName);
   }
 
   private _getPasswordFromSession(): string {
     return localStorage.getItem(LocalStorageEnum.Password);
+  }
+
+  private _getBusinessAddress(): AddressInterface {
+    return {
+      address1: this._getBusinessAddress1FromSession(),
+      address2: this._getBusinessAddress2FromSession(),
+      unit: this._getBusinessUnitFromSession(),
+      city: this._getBusinessCityFromSession(),
+      state: this._getBusinessStateFromSession(),
+      country: this._getBusinessCountryFromSession(),
+      purpose: this._getBusinessPurposeFromSession(),
+      axLocationId: this._getBusinessAxLocationIdFromSession(),
+      axRecordId: this._getBusinessAxRecordIdFromSession(),
+      fsaLocationId: this._getBusinessFasLocationFromSession(),
+      postalCode: this._getBusinessPostalCodeFromSession()
+    };
+  }
+
+  private _getMailingAddress(): AddressInterface {
+    return {
+      address1: this._getMailingAddress1FromSession(),
+      address2: this._getMailingAddress2FromSession(),
+      unit: this._getMailingUnitFromSession(),
+      city: this._getMailingCityFromSession(),
+      state: this._getMailingStateFromSession(),
+      country: this._getMailingCountryFromSession(),
+      purpose: this._getMailingPurposeFromSession(),
+      axLocationId: this._getMailingAxLocationIdFromSession(),
+      axRecordId: this._getMailingAxRecordIdFromSession(),
+      fsaLocationId: this._getMailingFasLocationFromSession(),
+      postalCode: this._getMailingPostalCodeFromSession()
+    };
   }
 }

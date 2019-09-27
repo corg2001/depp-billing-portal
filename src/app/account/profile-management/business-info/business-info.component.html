@@ -44,15 +44,15 @@
     <div class="d-flex info-items address">
       <div class="items-part-one">
         Business Address:
-        <div class="item-values">{{ address1 }}</div>
-        <div *ngIf="address2" class="item-values">{{ address2 }}</div>
-        <div class="item-values">{{ city }}, {{ state }}, {{ postalCode }}</div>
+        <div class="item-values">{{ businessAddress?.address1 }}</div>
+        <div *ngIf="businessAddress?.address2" class="item-values">{{ businessAddress?.address2 }}</div>
+        <div class="item-values">{{ businessAddress?.city }}, {{ businessAddress?.state }}, {{ businessAddress?.postalCode }}</div>
       </div>
       <div>
         Mailing Address:
-        <div class="item-values">{{ mailingAddress1 }}</div>
+        <div class="item-values">{{ mailingAddress?.address1 }}</div>
         <div class="item-values">
-          {{ mailingCity }}, {{ mailingState }}, {{ mailingPostalCode }}
+          {{ mailingAddress?.city }}, {{ mailingAddress?.state }}, {{mailingAddress?.postalCode }}
         </div>
       </div>
     </div>

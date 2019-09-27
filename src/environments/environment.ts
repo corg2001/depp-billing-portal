@@ -2,7 +2,7 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-const env: string = 'qa11';
+const env: string = 'qa10';
 const baseUrl: string = `https://unify-hwa-contractor-api-${env}.engine.host/`;
 export const environment = {
   production: false,
@@ -13,7 +13,7 @@ export const environment = {
     pageTitle: 'HWA - Home Warranty of America',
     customerServiceNumber: '1-888-888-8888',
     email: 'Contractorrelations@mailinator.com',
-    achEmail: 'VendorMaster@mailinator.com'
+    achEmail: 'VendorMaster@mailinator.com',
   },
   // auth service
   loginUrl: `${baseUrl}authentication/passport/login`,
