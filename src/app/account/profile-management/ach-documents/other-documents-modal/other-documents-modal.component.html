@@ -1,0 +1,27 @@
+
+<div class="modal-header">
+  <button type="button" class="close" aria-label="Close" (click)="close()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+<input #file type="file" (change)="onFilesAdded($event)" />
+<div class="browse">
+  <div class="title">{{ title }}</div>
+  <button [disabled]="uploading || uploadSuccessful" (click)="addFiles()">
+    {{ browseButtonText }}
+  </button>
+  <div>
+    <div *ngFor="let file of files">
+      <div class="files">
+          <div class="file-text">{{ file.name }}</div>
+          <app-progress-bar class="progress" [value]="progress$[file.name]?.progress | async">
+          </app-progress-bar>
+      </div>
+      <div *ngIf="progress$[file.name]?.error | async" class=" error alert alert-danger" role="alert">
+          {{ progress$[file.name]?.error | async }}
+      </div>
+    </div>
+  </div>
+</div>
+</div>

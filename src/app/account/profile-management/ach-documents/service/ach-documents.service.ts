@@ -14,13 +14,13 @@ export class AchDocumetsService implements AchDocumentsAbstractService {
 
   constructor(private _http: HttpClient) { }
 
-  public upload(files: Set<File>, vendorId: string, companyInfo: string):
+  public upload(files: Set<File>, vendorId: string, companyInfo: string, docType?: string):
    { [key: string]: {progress: Observable<number>, error: Observable<string>} } {
     const status: { [key: string]: {progress: Observable<number>, error: Observable<string>} } = {};
 
     files.forEach((file: File) => {
       const formData: FormData = new FormData();
-      const  params: HttpParams = this.buildUploadParams(vendorId, companyInfo);
+      const  params: HttpParams = this.buildUploadParams(vendorId, companyInfo, docType);
       formData.append('file', file, file.name);
       // http-post request to pass the form to get the upload progress
       const req = new HttpRequest('POST', `${environment.uploadUrl}`, formData, { reportProgress: true, params: params});
@@ -38,7 +38,6 @@ export class AchDocumetsService implements AchDocumentsAbstractService {
           // The upload is compolete
           progress$.complete();
         }
-
       }, (error: any) => {
         error$.next(error.error.errors.file);
       });
@@ -51,8 +50,9 @@ export class AchDocumetsService implements AchDocumentsAbstractService {
     return status;
   }
 
-  public buildUploadParams(vendorId: string, companyInfo: string): HttpParams {
+  public buildUploadParams(vendorId: string, companyInfo: string, docType?: string): HttpParams {
     return new HttpParams().set(HttpParamEnum.vendorId, vendorId)
-    .set(HttpParamEnum.companyInfo, companyInfo);
+    .set(HttpParamEnum.companyInfo, companyInfo)
+    .set(HttpParamEnum.docType, docType);
   }
 }

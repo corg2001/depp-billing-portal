@@ -5,5 +5,6 @@ export enum HttpParamEnum {
     starDate = 'start_date',
     transactionStartDate = 'transaction_start_date',
     transactionEndDate = 'transaction_end_date',
-    yearMonthDayFormat = 'yyyy-mm-dd'
+    yearMonthDayFormat = 'yyyy-mm-dd',
+    docType = 'type'
 }

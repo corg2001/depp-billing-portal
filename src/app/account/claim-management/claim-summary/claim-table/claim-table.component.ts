@@ -111,9 +111,7 @@ export class ClaimTableComponent implements OnInit {
 
   private _sendToPortal(authPortal: any, url: string): void {
     authPortal.location.href = url;
-
   }
-
 
   private _getPageSize(claimsAmount: number): number {
     return claimsAmount > 150 ? 20 : 10;
