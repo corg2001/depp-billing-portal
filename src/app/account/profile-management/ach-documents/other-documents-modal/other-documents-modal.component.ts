@@ -1,17 +1,15 @@
-import { Component, OnInit, ElementRef, ViewChildren, ViewChild, Input } from '@angular/core';
-import { forkJoin, BehaviorSubject } from 'rxjs';
-import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { AchDocumetsService } from '../service/ach-documents.service';
 import { ConfigService } from 'src/app/core/config.service';
-import { async } from 'q';
+import { forkJoin } from 'rxjs';
 
 @Component({
-  selector: 'app-ach-modal',
-  templateUrl: './ach-modal.component.html',
-  styleUrls: ['./ach-modal.component.scss']
+  selector: 'app-other-documents-modal',
+  templateUrl: './other-documents-modal.component.html',
+  styleUrls: ['./other-documents-modal.component.scss']
 })
-export class AchModalComponent implements OnInit {
-  @Input() public type: string;
+export class OtherDocumentsModalComponent implements OnInit {
   @ViewChild('file') public file: ElementRef;
   public loading: boolean;
   public modalSize: 'xl';
@@ -25,22 +23,17 @@ export class AchModalComponent implements OnInit {
   public primaryButtonText: string;
   public value: string;
   public browseButtonText: string;
-  public title: string;
+  public title: string = 'Upload Documents';
 
-  constructor(
-    private _modalService: NgbModal,
+  constructor(private _modalService: NgbModal,
     private _modalConfig: NgbModalConfig,
     private _achDocsService: AchDocumetsService,
-    private _configService: ConfigService) { }
+    private _configService: ConfigService
+  ) { }
 
   ngOnInit() {
-    this.title = 'Upload Payment Info';
+
     this.browseButtonText = 'Browse for files';
-  }
-
-
-  public openModal(): void {
-   this._modalService.open(this);
   }
 
   public close(): void {
@@ -62,14 +55,13 @@ export class AchModalComponent implements OnInit {
 
   public addFiles() {
     this.file.nativeElement.click();
-
   }
 
   public closeModal(): void {
     this._keepModalOpen(true);
     const vendorId: string = this._configService.getVendorId();
     const companyInfo: string = this._configService.getCompanyInfo();
-    const docType: string = 'ach';
+    const docType: string = 'other';
     this._modalConfig.backdrop = 'static';
     this.disableCloseButton = true;
     this._modalConfig.keyboard = false;
@@ -85,13 +77,6 @@ export class AchModalComponent implements OnInit {
       allProgressObservables.push(this.progress$[key].progress);
     }
 
-
-    this.primaryButtonText = 'Finish';
-
-    // Adjust the state variable
-
-    // The Ok-button show have the text 'Finish'
-
     // The dialog should not be close while loadin
     this.showCancelButton = false;
 
@@ -100,10 +85,9 @@ export class AchModalComponent implements OnInit {
       this.disableCloseButton = false;
       this.uploadSuccessful = true;
       this.loading = false;
-    }, (error: any) => {
-      this.disableCloseButton = false;
     });
   }
+
   private _keepModalOpen(value: boolean): void {
     value ? this._modalConfig.backdrop = 'static' : this._modalConfig.backdrop = true;
     value ? this._modalConfig.keyboard = false : this._modalConfig.keyboard = true;

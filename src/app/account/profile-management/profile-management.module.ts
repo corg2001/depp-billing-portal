@@ -38,6 +38,7 @@ import { AchDocumentsAbstractService } from './ach-documents/service/abstract/ac
 import { AchDocumetsService } from './ach-documents/service/ach-documents.service';
 import { CalendarAbstractService } from './calendar/service/abstract/calendar.abstract.service';
 import { CalendarService } from './calendar/service/calendar.service';
+import { OtherDocumentsModalComponent } from './ach-documents/other-documents-modal/other-documents-modal.component';
 
 @NgModule({
   // tslint:disable-next-line: max-line-length
@@ -56,7 +57,8 @@ import { CalendarService } from './calendar/service/calendar.service';
     ServiceInfoTableComponent,
     ServiceAreaSearchComponent,
     ServiceAreaTableComponent,
-    AchModalComponent
+    AchModalComponent,
+    OtherDocumentsModalComponent
   ],
   imports: [
     CommonModule,
@@ -97,6 +99,6 @@ import { CalendarService } from './calendar/service/calendar.service';
       useClass: CalendarService
      }
   ],
-  entryComponents: [AchModalComponent]
+  entryComponents: [AchModalComponent, OtherDocumentsModalComponent ]
 })
 export class ProfileManagementModule {}

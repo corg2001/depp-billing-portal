@@ -5,6 +5,7 @@ import { ConfigService } from 'src/app/core/config.service';
 import { InvoiceInterface } from '../interface/invoice.interface';
 import { ConstantPool } from '@angular/compiler';
 import { environment } from 'src/environments/environment';
+import { InvoiceAsbstractService } from '../service/abstract/invoice.asbstract.service';
 
 @Component({
   selector: 'app-invoice-history',
@@ -24,7 +25,7 @@ export class InvoiceHistoryComponent implements OnInit {
   public noInfoText: string;
   public headerText: string;
 
-  constructor(private _invoiceService: InvoiceService, private _configService: ConfigService) {}
+  constructor(private _invoiceService: InvoiceAsbstractService, private _configService: ConfigService) {}
 
   ngOnInit(): void {
     this.init();

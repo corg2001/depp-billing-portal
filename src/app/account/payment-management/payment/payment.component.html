@@ -2,7 +2,7 @@
   <header>{{ headerText }}</header>
   <app-loading-spinner *ngIf="loading && !error"></app-loading-spinner>
   <app-payment-table *ngIf="!loading && isData" [paymentHistory$]="paymentHistory$"></app-payment-table> 
-  <ng-container *ngIf="error">
+  <ng-container *ngIf="!isData && !loading || error">
     <div>
       <p>{{ noInfoText }}</p>
     </div>

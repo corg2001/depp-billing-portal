@@ -1,6 +1,17 @@
 <div class="documents-container">
   <div class="info-section">
-    <div class="info-items txt-business">ACH Information</div>
+    <div class="header">
+      <div class="info-items txt-business">ACH Information</div>
+      <button 
+        *ngIf="!loading"
+        type="button"
+        class="btn btn-lg info-documents ml-auto mt-2"
+        (click)="openAchModal()"
+      >
+        <i class="fa fa-arrow-up"></i> Upload Payment Info
+      </button>
+    </div>
+
     <app-loading-spinner *ngIf="loading"></app-loading-spinner>
     <ng-container *ngIf="!loading && isData">
       <div *ngFor="let info of achDocs">
@@ -32,11 +43,15 @@
           Download ACH Form
         </div>
       </div>
-      <div class="d-flex mt-4">
+      <div class="docs-container">
+        <div class="info-txt txt-documents">
+          <p class="txt-business">Other Documents</p>
+          Please select Upload Documents to include the required documentation (Trade License, W9, Workers Comp, General Liability Insurance).
+        </div>
         <button
           type="button"
-          class="btn btn-lg info-documents ml-auto"
-          (click)="openModal()"
+          class="btn btn-lg info-documents ml-auto mt-5"
+          (click)="openOtherDocsModal()"
         >
           <i class="fa fa-arrow-up"></i> Upload Documents
         </button>
@@ -48,10 +63,7 @@
       </div>
     </ng-container>
   </div>
-  
-
-
-  <ng-template #modalHtml let-modal>
+  <!-- <ng-template #modalHtml let-modal>
     <div class="modal-header">
       <h4 class="modal-title text-muted">Upload Documents</h4>
     </div>
@@ -64,5 +76,6 @@
         {{ primaryButtonText}}
       </button>
     </div>
-  </ng-template>
+  </ng-template> -->
+
 </div>

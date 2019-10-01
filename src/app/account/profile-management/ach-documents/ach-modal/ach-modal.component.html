@@ -7,7 +7,7 @@
 <div class="modal-body">
   <input #file type="file" (change)="onFilesAdded($event)" />
   <div class="browse">
-    <div class="title">Upload Documents</div>
+    <div class="title">{{ title }}</div>
     <button [disabled]="uploading || uploadSuccessful" (click)="addFiles()">
       {{ browseButtonText }}
     </button>

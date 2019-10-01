@@ -1,6 +1,11 @@
 @import '../../../../assets/styles/contractor-layout-styles.scss';
 .documents-container {
   .info-section {
+    .header {
+      display: flex;
+      justify-content: space-between;
+      padding: 1rem 0;
+    }
     color: $hwa-color-gray;
     font-size: 1.2rem;
     font-weight: normal;
@@ -57,5 +62,6 @@
     background-color: $white !important;
     color: $hwa-color-teal !important;
     border-color: $hwa-color-teal !important;
+    height: 80%;
   }
 }
