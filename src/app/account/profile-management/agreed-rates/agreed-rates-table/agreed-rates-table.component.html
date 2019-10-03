@@ -11,7 +11,7 @@
       <tr *ngFor="let details of modifiedTradeAgreementDetails()" class="small">
         <td scope="row">{{ details?.itemDescription }}</td>
         <td scope="row">{{ details?.trade }}</td>
-        <td class="text-right" scope="row">{{ details?.rate.amount | formatmoney }} per hour</td>
+        <td class="text-right" scope="row">{{ details?.rate.amount | formatmoney }}</td>
       </tr>
     </tbody>
   </table>
