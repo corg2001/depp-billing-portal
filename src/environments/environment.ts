@@ -46,7 +46,7 @@ export const environment = {
   invoicesUrl: `${baseUrl}services/vendor/invoices`,
 
   // uploadService
-  uploadUrl: `${baseUrl}services/vendor/document/ach`,
+  uploadUrl: `${baseUrl}services/vendor/document-upload`,
 
   // CalenderService 
   calenderUrl: `${baseUrl}services/vendor/work-calendar`
