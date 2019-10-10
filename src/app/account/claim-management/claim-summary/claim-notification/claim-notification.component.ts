@@ -23,4 +23,8 @@ public wipClaims: number = 0;
     });
   }
 
+public showNotifcation(): boolean {
+  return this.wipClaims > 0 ? true : false;
+}
+
 }
