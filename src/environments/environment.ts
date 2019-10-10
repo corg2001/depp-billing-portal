@@ -2,7 +2,7 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-const env: string = 'qa10';
+const env: string = 'qa11';
 const baseUrl: string = `https://unify-hwa-contractor-api-${env}.engine.host/`;
 export const environment = {
   production: false,
