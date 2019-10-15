@@ -3,11 +3,12 @@
 // The list of file replacements can be found in `angular.json`.
 
 const env: string = 'qa7';
-const baseUrl: string = `https://unify-hwa-contractor-api-${env}.engine.host/`;
-const custumerPortalUrl: string = `https://unify-hwa-portal-${env}.engine.host`;
-const realtorPortalUrl: string = `https://unify-hwa-realtor-portal-${env}.engine.host`;
+const baseUrl: string = `https://hwa-realtor-api-${env}.nahdigitalitdev.cloud.centricaplc.com/`;
+const custumerPortalUrl: string = `https://hwa-customer-${env}.nahdigitalitdev.cloud.centricaplc.com`;
+const realtorPortalUrl: string = `https://hwa-realtor-${env}.nahdigitalitdev.cloud.centricaplc.com/`;
 export const environment = {
   production: false,
+  name: 'aws',
   core: {
     brandId: 'HWA',
     brandFriendlyName: 'HWA',

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
-import { Route, Router } from '@angular/router';
+import { Router } from '@angular/router';
+
 
 // Development Artifacts
 import { AuthService } from '../auth.service';
@@ -10,6 +11,7 @@ import { PrivacyPolicyComponent } from '../privacy-policy/privacy-policy.compone
 import { TermsOfUseComponent } from '../terms-of-use/terms-of-use.component';
 import { LoginError } from './model/enums/login-error.enums';
 import { LocalStorageEnum } from 'src/app/core/enums/local-storage.enums';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -29,8 +31,8 @@ export class LoginComponent implements OnInit {
 
   // TODO: Pull this information from teh config
   public siblingPortals: any = {
-    customer: 'https://unify-hwa-portal-qa11.engine.host',
-    realtor: 'https://unify-hwa-realtor-portal-qa11.engine.host'
+    customer: environment.siblingPortals.customer,
+    realtor: environment.siblingPortals.realtor
   };
 
   constructor(
