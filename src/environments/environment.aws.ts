@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 const env: string = 'qa7';
-const baseUrl: string = `https://hwa-realtor-api-${env}.nahdigitalitdev.cloud.centricaplc.com/`;
+const baseUrl: string = `https://hwa-realtor-api-${env}.nahdigitalitdev.cloud.centricaplc.com/api/`;
 const custumerPortalUrl: string = `https://hwa-customer-${env}.nahdigitalitdev.cloud.centricaplc.com`;
 const realtorPortalUrl: string = `https://hwa-realtor-${env}.nahdigitalitdev.cloud.centricaplc.com/`;
 export const environment = {
