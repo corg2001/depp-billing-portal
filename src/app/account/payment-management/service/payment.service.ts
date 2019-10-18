@@ -11,11 +11,13 @@ import { HttpParamEnum } from 'src/app/shared/enums/http-params.enums';
 import { PaymentFactoryService } from './factory/payment.factory.service';
 import { PaymentHistoryInterface } from '../interface/payment-history.interface';
 import { VendorInvoiceDetailsInterface } from '../interface/vendor-invoice-details.interface';
+import { PaymentAbstractService } from './abstract/payment.abstract.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PaymentService {
+export class PaymentService implements PaymentAbstractService {
+  public paymentHistory: PaymentHistoryInterface;
   constructor(
     private _http: HttpClient,
     private _configService: ConfigService,
@@ -58,7 +60,7 @@ export class PaymentService {
     completion$: Subject<boolean>,
     error$: Subject<boolean>,
     data: any
-  ) {
+  ): void {
     completion$.next(true);
     error$.next(false);
     paymentHistory$.next(
@@ -75,6 +77,10 @@ export class PaymentService {
     completion$.next(true);
     error$.next(true);
     errorMessage$.next(response);
+  }
+
+  public setInvoicDetails(paymentHistory: PaymentHistoryInterface): void {
+    this.paymentHistory = paymentHistory;
   }
 
   public search(

@@ -7,9 +7,12 @@ import { PaymentTableComponent } from './payment/payment-table/payment-table.com
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { PaymentAbstractService } from './service/abstract/payment.abstract.service';
+import { PaymentService } from './service/payment.service';
+import { InvoiceModalComponent } from './payment/invoice-modal/invoice-modal.component';
 
 @NgModule({
-  declarations: [PaymentComponent, SearchBoxComponent, PaymentTableComponent],
+  declarations: [PaymentComponent, SearchBoxComponent, PaymentTableComponent, InvoiceModalComponent],
   imports: [
     CommonModule,
     PaymentManagementRoutingModule,
@@ -17,6 +20,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ReactiveFormsModule,
     SharedModule,
     NgbModule
-  ]
+  ],
+  providers: [{ provide: PaymentAbstractService, useClass: PaymentService }],
+  entryComponents: [InvoiceModalComponent]
 })
-export class PaymentManagementModule { }
+export class PaymentManagementModule {}

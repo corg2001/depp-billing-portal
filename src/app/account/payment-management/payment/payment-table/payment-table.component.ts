@@ -3,6 +3,10 @@ import { PaymentHistoryInterface } from '../../interface/payment-history.interfa
 import { ModalService } from 'src/app/core/modal.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BehaviorSubject } from 'rxjs';
+import { PaymentService } from '../../service/payment.service';
+import { PaymentAbstractService } from '../../service/abstract/payment.abstract.service';
+import { InvoiceModalComponent } from '../invoice-modal/invoice-modal.component';
+import { VendorInvoiceDetailsInterface } from '../../interface/vendor-invoice-details.interface';
 
 @Component({
   selector: 'app-payment-table',
@@ -18,7 +22,7 @@ export class PaymentTableComponent implements OnInit {
   public pageSize: number;
   public collectionSize: number = 0;
   public historiesFound: boolean;
-  constructor(private _modalService: NgbModal) { }
+  constructor(private _modalService: NgbModal, private _paymentService: PaymentAbstractService) { }
 
   ngOnInit() {
     this.updatedPaymentHistory$.subscribe((updatedPaymentHistory) => {
@@ -26,7 +30,6 @@ export class PaymentTableComponent implements OnInit {
     });
     this.paymentHistory$.subscribe((paymenHistory: PaymentHistoryInterface[]) => {
       this.paymentHistory = paymenHistory;
-      console.log(paymenHistory);
       this.collectionSize = paymenHistory.length;
       paymenHistory.length > 0 ? this.historiesFound = true : this.historiesFound = false;
     });
@@ -37,8 +40,9 @@ export class PaymentTableComponent implements OnInit {
 
   }
 
-  public viewInvoice(data): void {
-    this._modalService.open(this.modalHtml, { centered: true});
+  public viewInvoice(data: PaymentHistoryInterface): void {
+    this._paymentService.setInvoicDetails(data);
+    this._modalService.open(InvoiceModalComponent);
   }
 
   public modifiedPaymentHistory(): PaymentHistoryInterface[] {
