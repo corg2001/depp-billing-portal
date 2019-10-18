@@ -13,10 +13,11 @@ export class PaymentFactoryService {
 
   public getPaymentHistoryFromPayload(payload: PaymentHistoryPayloadInterface[]): PaymentHistoryInterface[] {
     const paymenHistoryList: PaymentHistoryInterface[] = [];
-    const venderInvoiceDetailsList: VendorInvoiceDetailsInterface[] = [];
+    let venderInvoiceDetailsList: VendorInvoiceDetailsInterface[] = [];
     let paymentHistory: PaymentHistoryInterface;
     let vendorInvoiceDetails: VendorInvoiceDetailsInterface;
     payload.forEach((paymentHistoryPayload: PaymentHistoryPayloadInterface) => {
+      venderInvoiceDetailsList = [];
       paymentHistory = {
         paymentAmount: paymentHistoryPayload.payment_amount,
         paymentDate: paymentHistoryPayload.payment_date,
