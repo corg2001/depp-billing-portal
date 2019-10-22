@@ -14,7 +14,7 @@ export abstract class AgreedRatesAbstractService {
     error$: Subject<boolean>,
     completion$: Subject<boolean>
   ): void;
- abstract  getAgreedRatesParams(partyId: string,
+ abstract  getAgreedRatesParams(vendorId: string,
     companyInfo: string
   ): HttpParams;
 

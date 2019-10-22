@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { Claim } from '../../model/claims.model';
-import { ClaimServiceAbstract } from '../../service/claim.abstract.service';
+import { ClaimServiceAbstract } from '../../service/abstract/claim.abstract.service';
 
 @Component({
   selector: 'app-search-box',

@@ -54,8 +54,10 @@ export const environment = {
   // uploadService
   uploadUrl: `${baseUrl}services/vendor/document-upload`,
 
-  // CalenderService 
-  calenderUrl: `${baseUrl}services/vendor/work-calendar`
+  // CalenderService
+  calenderUrl: `${baseUrl}services/vendor/work-calendar`,
+  // HelpService
+  helpUrl: `${baseUrl}contact-us`
 };
 
 /*

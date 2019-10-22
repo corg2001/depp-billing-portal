@@ -3,6 +3,7 @@ export enum LocalStorageEnum {
   Email = 'email',
   TaxId = 'taxId',
   CompanyName = 'companyName',
+  CompanyInfo = 'companyInfo',
   PhoneNumber = 'phoneNumber',
   VendorID = 'vendorId',
   PartyName = 'partyName',

@@ -27,7 +27,7 @@ export class ServiceAreasComponent implements OnChanges {
   public isData: boolean;
   public loading: boolean = true;
   public noInfoText: string;
-  public partyId: string;
+  public vendorId: string;
   public stateCode: string;
   constructor(private _conFigService: ConfigService) {}
 
@@ -37,7 +37,7 @@ export class ServiceAreasComponent implements OnChanges {
 
   public intit(): void {
     this.searchExecuted = false;
-    this.partyId = this._conFigService.getVendorId();
+    this.vendorId = this._conFigService.getVendorId();
     // tslint:disable-next-line: max-line-length
     this.noInfoText = `Your Service Areas is not set up. Please reach out to contractor relations at ${environment.core.customerServiceNumber}.`;
     if (this.serviceAreas) {

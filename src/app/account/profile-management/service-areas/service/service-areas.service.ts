@@ -27,10 +27,10 @@ export class ServiceAreasService implements ServiceAreasAbstractService {
     error$: Subject<boolean>,
     errorMessage$?: Subject<string>
   ): void {
-    const partyId: string = this._configService.getVendorId();
+    const vendorId: string = this._configService.getVendorId();
     const companyInfo: string = this._configService.getCompanyInfo();
     const params: HttpParams = this.buildSerbiceAreasParams(
-      partyId,
+      vendorId,
       companyInfo
     );
     this._http.get(environment.serviceAreasUrl, { params }).subscribe(
@@ -40,7 +40,7 @@ export class ServiceAreasService implements ServiceAreasAbstractService {
           completion$,
           error$,
           data
-        );
+        ); 
       },
       (error: any) => {
         this.serviceAreasErrorHandler(
@@ -54,11 +54,11 @@ export class ServiceAreasService implements ServiceAreasAbstractService {
   }
 
   public buildSerbiceAreasParams(
-    partyId: string,
+    vendorId: string,
     companyInfo: string
   ): HttpParams {
     return new HttpParams()
-      .set(HttpParamEnum.vendorId, partyId)
+      .set(HttpParamEnum.vendorId, vendorId)
       .set(HttpParamEnum.companyInfo, companyInfo);
   }
 

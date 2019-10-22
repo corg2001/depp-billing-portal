@@ -15,7 +15,7 @@ export abstract class ProfileAbstractService {
     completion$: Subject<boolean>
   ): void;
 
-  abstract buildAchDocsParams(partyId: string, companyInfo: string): HttpParams;
+  abstract buildAchDocsParams(vendorId: string, companyInfo: string): HttpParams;
 
   abstract achDocsSuccessHandler(
     achInfoData$: BehaviorSubject<AchDocuments[]>,

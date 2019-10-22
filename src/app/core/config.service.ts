@@ -3,6 +3,7 @@ import { LoggerService } from './logger.service';
 import { LocalStorageEnum } from './enums/local-storage.enums';
 import { ConfigInterface } from './interface/config.interface';
 import { AddressInterface } from './interface/address.interface';
+import { CompanyInfoPayloadInterface } from './interface/payload/company-info.payload.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +18,9 @@ export class ConfigService {
   public init(): void {
     this._config = {
       token: this._getTokenFromSession(),
-      partyId: this._getVendorIdFromSession(),
+      vendorId: this._getVendorIdFromSession(),
       companyInfo: this._getCompanyInfoFromSession(),
+      companyInfoObj: this._getCompanyInfoFromLocalStorge(),
       partyName: this._getPartyNameFromSession(),
       companyName: this._getCompanyNameFromSession(),
       email: this._getEmailFromSession(),
@@ -42,11 +44,15 @@ export class ConfigService {
   }
   // chnaged this to vendorId from partyId
   public getVendorId(): string {
-    return this._config.partyId;
+    return this._config.vendorId;
   }
 
   public getCompanyInfo(): string {
     return this._config.companyInfo;
+  }
+
+  public getCompanyInfoObj(): CompanyInfoPayloadInterface {
+    return JSON.parse(this._config.companyInfoObj);
   }
 
   public getPartyName(): string {
@@ -107,6 +113,10 @@ export class ConfigService {
   private _getCompanyInfoFromSession(): string {
     // TODO: fix this and get it from proper factory
     return 'eyJjb21wYW55X2lkIjoiSUwwMyIsImJyYW5kcyI6eyJicmFuZF9pZHMiOlsiSFdBIl19fQ==';
+  }
+
+  private _getCompanyInfoFromLocalStorge(): string {
+    return localStorage.getItem(LocalStorageEnum.CompanyInfo);
   }
 
   private _getEmailFromSession(): string {

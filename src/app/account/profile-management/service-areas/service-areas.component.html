@@ -11,7 +11,7 @@
   <div class="service-area-form" *ngIf="isData && !loading">
     <div style="margin-bottom:20px">
       <div class="company-name">ABC Plumbing - {{ stateCode }}</div>
-      <div class="contractor-id">Contractor ID: <label>{{ partyId }}</label></div>
+      <div class="contractor-id">Contractor ID: <label>{{ vendorId }}</label></div>
     </div>
     <app-service-area-search [counties]="counties" [serviceAreasDeatils$]="serviceAreasDeatils$" (emitSearchExecuted)="searchExecuted = $event"></app-service-area-search>
     <app-service-area-table [serviceAreasDeatils$]="serviceAreasDeatils$" [searchExecuted]="searchExecuted"></app-service-area-table>

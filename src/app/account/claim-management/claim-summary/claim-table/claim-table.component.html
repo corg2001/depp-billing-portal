@@ -1,5 +1,5 @@
-<app-loading-spinner *ngIf="loading"></app-loading-spinner>
-<ng-container *ngIf="claimsFound">
+<app-loading-spinner *ngIf="!isCompleted"></app-loading-spinner>
+<ng-container *ngIf="isCompleted && claimsFound">
   <table class="table table-striped">
     <thead>
       <tr>
@@ -40,7 +40,7 @@
     </ngb-pagination>
   </div>
 </ng-container>
-<ng-container *ngIf="!claimsFound && !loading">
+<ng-container *ngIf="isCompleted && !claimsFound || isError">
   <div>
     <p>{{ noInfoText }} </p>
   </div>

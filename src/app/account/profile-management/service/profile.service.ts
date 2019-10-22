@@ -29,9 +29,9 @@ export class ProfileService implements ProfileAbstractService {
     error$: Subject<boolean>,
     completion$: Subject<boolean>
   ): void {
-    const partyId: string = this._configService.getVendorId();
+    const vendorId: string = this._configService.getVendorId();
     const companyInfo: string = this._configService.getCompanyInfo();
-    const params: HttpParams = this.buildAchDocsParams(partyId, companyInfo);
+    const params: HttpParams = this.buildAchDocsParams(vendorId, companyInfo);
     this._httpClient
       .get(environment.achDocsUrl, { params })
       .subscribe(
@@ -40,9 +40,9 @@ export class ProfileService implements ProfileAbstractService {
       );
   }
 
-  public buildAchDocsParams(partyId: string, companyInfo: string): HttpParams {
+  public buildAchDocsParams(vendorId: string, companyInfo: string): HttpParams {
     return new HttpParams()
-      .set(HttpParamEnum.vendorId, partyId)
+      .set(HttpParamEnum.vendorId, vendorId)
       .set(HttpParamEnum.companyInfo, companyInfo);
   }
 

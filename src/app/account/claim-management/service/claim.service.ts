@@ -17,7 +17,7 @@ import {
 import { ConfigService } from '../../../core/config.service';
 import { LoggerService } from '../../../core/logger.service';
 import { ClaimPayloadInterface } from '../interface/claim.payload.interface';
-import { ClaimServiceAbstract } from './claim.abstract.service';
+import { ClaimServiceAbstract } from './abstract/claim.abstract.service';
 import { environment } from 'src/environments/environment';
 import { HttpParamEnum } from 'src/app/shared/enums/http-params.enums';
 
@@ -34,43 +34,48 @@ export class ClaimService implements ClaimServiceAbstract {
   ) {}
 
   public getClaims(
-    completion: Subject<boolean>,
+    completion$: Subject<boolean>,
+    error$: Subject<boolean>,
     claimData: BehaviorSubject<ClaimPayloadInterface[]>
   ): void {
-    const partyId: string = this._configService.getVendorId();
+    const vendorId: string = this._configService.getVendorId();
     const companyInfo: string = this._configService.getCompanyInfo();
-    const params: HttpParams = this.getClaimParams(partyId, companyInfo);
+    const params: HttpParams = this.getClaimParams(vendorId, companyInfo);
     this._httpClient.get(environment.claimsUrl, { params }).subscribe(
       (data: any) => {
-        this.getClaimsSuccessHandler(completion, claimData, data);
+        this.getClaimsSuccessHandler(completion$, error$, claimData, data);
       },
-      (error: any) => {
-        this.getClaimsFailureHandler(completion, error);
+      (errorResponse: any) => {
+        this.getClaimsFailureHandler(completion$, error$, errorResponse);
       }
     );
   }
 
-public getClaimParams(partyId: string, companyInfo: string): HttpParams {
+public getClaimParams(vendorId: string, companyInfo: string): HttpParams {
     return new HttpParams()
-      .set(HttpParamEnum.vendorId, partyId)
+      .set(HttpParamEnum.vendorId, vendorId)
       .set(HttpParamEnum.companyInfo, companyInfo);
   }
 
   public getClaimsSuccessHandler(
-    completion: Subject<boolean>,
-    claimData: BehaviorSubject<any>,
+    completion$: Subject<boolean>,
+    error$: Subject<boolean>,
+    claimData$: BehaviorSubject<any>,
     response: Observable<HttpResponse<ClaimPayloadInterface[]>>
   ): void {
     this._loggerService.action('Successfully obtain claim data');
-    claimData.next(response);
-    completion.next(true);
+    claimData$.next(response);
+    completion$.next(true);
+    error$.next(false);
   }
   public getClaimsFailureHandler(
-    completion: Subject<boolean>,
+    completion$: Subject<boolean>,
+    error$: Subject<boolean>,
     errorResponse: Observable<HttpErrorResponse>
   ): void {
     this._loggerService.error('Unable to retrieve claim data');
-    completion.next(false);
+    completion$.next(true);
+    error$.next(true);
   }
 
   public search(

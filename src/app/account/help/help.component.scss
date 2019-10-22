@@ -1,26 +1,30 @@
-.help-container{
-    input[type="text"]{
-        height: 3.125rem;
-    }
-    button[type="submit"]{
-        width: 10.9375rem;
-        height: 2.875rem;
-    }
-    .name-email{
-        width:25rem;
-    }
-    select{
-        height:3.125rem;
-    }
-    .txt-phone{
-        width:16.25rem;
-    }
-    .preferredmethod{
-        width:21.875rem;
-    }
-    .header-txt{
-        font-weight: 300;
-        font-size: 1.875rem;
-        color: #00849b;
-    }
+@import '../../../assets/styles/contractor-layout-styles.scss';
+
+.help-container {
+  .form-group {
+    width: 100%;
+  }
+  input[type="text"] {
+    height: 3.125rem;
+  }
+  input[type="email"] {
+    height: 3.125rem;
+  }
+  button[type="submit"] {
+    height: 2.875rem;
+  }
+
+  select {
+    height: 3.125rem;
+  }
+  .preferredmethod {
+    width: 25%;
+  }
+
+  .header-txt {
+    font-weight: 300;
+    font-size: 1.875rem;
+    color: $hwa-color-teal;
+  }
+
 }

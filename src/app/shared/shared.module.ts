@@ -5,10 +5,11 @@ import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.compo
 import { FormatMoney } from './pipe/price-format.pipe';
 import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 import { UploadService } from './progress-bar/service/upload.service';
+import { ResultJumbotronComponent } from './components/result-jumbotron/result-jumbotron.component';
 
 
 @NgModule({
-  declarations: [ModalComponent, LoadingSpinnerComponent, FormatMoney, ProgressBarComponent],
+  declarations: [ModalComponent, LoadingSpinnerComponent, FormatMoney, ProgressBarComponent, ResultJumbotronComponent],
   imports: [
     CommonModule,
   ],
@@ -16,7 +17,8 @@ import { UploadService } from './progress-bar/service/upload.service';
     ModalComponent,
     LoadingSpinnerComponent,
     FormatMoney,
-    ProgressBarComponent
+    ProgressBarComponent,
+    ResultJumbotronComponent
   ],
   entryComponents: [
     ModalComponent,

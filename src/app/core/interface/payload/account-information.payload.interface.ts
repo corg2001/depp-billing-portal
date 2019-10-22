@@ -5,5 +5,4 @@ export interface AccountInformationPayloadInterface {
   readonly segment_id?: string;
   readonly sub_segment_id?: string;
   readonly tax_id?: string;
-  
 }
