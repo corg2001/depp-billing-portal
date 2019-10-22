@@ -9,7 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SharedModule } from '../../shared/shared.module';
 import { ClaimFactoryService } from './service/factory/claim.factory.service';
-import { ClaimServiceAbstract } from './service/claim.abstract.service';
+import { ClaimServiceAbstract } from './service/abstract/claim.abstract.service';
 import { ClaimFactoryServiceAbstract } from './service/factory/claim.factory.abstract.service';
 import { ClaimNotificationComponent } from './claim-summary/claim-notification/claim-notification.component';
 @NgModule({

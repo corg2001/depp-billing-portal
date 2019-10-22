@@ -11,8 +11,8 @@ import { AuthenticationService } from './authentication.service';
 import { LoggerService } from './logger.service';
 import { LogoutService } from './logout.service';
 import { environment } from 'src/environments/environment';
-import { PartyDetailsPayloadInterface } from './interface/party-details.payload.interface';
-import { AssociationPayloadInterface } from './interface/association.payload.interface';
+import { PartyDetailsPayloadInterface } from './interface/payload/party-details.payload.interface';
+import { AssociationPayloadInterface } from './interface/payload/association.payload.interface';
 import { LocalStorageEnum } from './enums/local-storage.enums';
 
 
@@ -23,7 +23,7 @@ import { LocalStorageEnum } from './enums/local-storage.enums';
 export class PartyService {
   constructor(
     private authService: AuthenticationService,
-    private httpClient: HttpClient,
+    private _http: HttpClient,
     private loggerService: LoggerService,
     private logoutService: LogoutService
   ) {}
@@ -35,7 +35,7 @@ export class PartyService {
   }
 
   private getPartyDetails(subscription: Subscriber<boolean>): any {
-    this.httpClient.get(environment.partyDetailsUrl).subscribe(
+    this._http.get(environment.partyDetailsUrl).subscribe(
       (responseData: PartyDetailsPayloadInterface) => {
         this.getPartyDetailsSuccessHandler(subscription, responseData);
       },
@@ -81,19 +81,23 @@ export class PartyService {
     }
 
     if (data.associations._association[0].account_information) {
-      this._setLocalStorageAccountNumber(data);
-      this._setLocalStorageTaxId(data);
+      this._SetLocalAccountNumber(data);
+      this._SetLocalTaxId(data);
+    }
+
+    if(data.associations._association[0].company_info) {
+      this._SetLocalCompanyInfo(data);
     }
 
     if (data.emails[0]) {
-      this._setLocalStorageEmail(data);
+      this._SetLocalEmail(data);
     }
     if (data.phones[0]) {
       this._setLocalPhoneNumber(data);
     }
 
     if (!this.validateLocalStorage()) {
-      this.loggerService.error('Unable to get partyId from payload');
+      this.loggerService.error('Unable to get vendorId from payload');
     }
 
     if (data.addresses[0]) {
@@ -130,7 +134,7 @@ export class PartyService {
     return localStorage.getItem(LocalStorageEnum.VendorID) ? true : false;
   }
 
-  private _setLocalStorageAccountNumber(
+  private _SetLocalAccountNumber(
     partyDetails: PartyDetailsPayloadInterface
   ): void {
     localStorage.setItem(
@@ -138,13 +142,16 @@ export class PartyService {
       partyDetails.associations._association[0].account_information.account_id
     );
   }
+  private _SetLocalCompanyInfo(partyDetails: PartyDetailsPayloadInterface): void {
+    localStorage.setItem(LocalStorageEnum.CompanyInfo, JSON.stringify(partyDetails.associations._association[0].company_info));
+  }
 
-  private _setLocalStorageEmail(
+  private _SetLocalEmail(
     partyDetails: PartyDetailsPayloadInterface
   ): void {
     localStorage.setItem(LocalStorageEnum.Email, partyDetails.emails[0].value);
   }
-  private _setLocalStorageTaxId(
+  private _SetLocalTaxId(
     partyDetails: PartyDetailsPayloadInterface
   ): void {
     localStorage.setItem(

@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { States } from './us-states.enum';
 import { TimeToCall } from './time-to-call.enum';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { LoggerService } from '../../core/logger.service';
 import { EnrollAbstractService } from './services/enroll.abstract.service';
@@ -30,7 +26,7 @@ export class EnrollComponent implements OnInit {
     private _loggerService: LoggerService,
     private _formBuilder: FormBuilder,
     private _enrollService: EnrollAbstractService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.completionSubject.subscribe(this._responseHandler.bind(this));
@@ -44,7 +40,7 @@ export class EnrollComponent implements OnInit {
       business_state: [''],
       business_postal_code: [''],
       business_email: ['', Validators.email],
-      business_phone: ['', [Validators.required,this._phoneValidator]],
+      business_phone: ['', [Validators.required, this._phoneValidator]],
       cities_serve: [''],
       best_time_to_reach: ['']
     });
@@ -97,7 +93,7 @@ export class EnrollComponent implements OnInit {
   }
   // Validates US phone numbers
   private _phoneValidator(number): any {
-    if (number.pristine || number.value==='') {
+    if (number.pristine || number.value === '') {
       return null;
     }
     const PHONE_REGEXP = /^[0-9]{10}$/;

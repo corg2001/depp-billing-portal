@@ -1,4 +1,4 @@
-import { AddressBaseInterface } from './address.base.interface';
+import { AddressBaseInterface } from '../address.base.interface';
 
 export interface AddressPayloadInterface extends AddressBaseInterface {
   readonly ax_location_id?: string;

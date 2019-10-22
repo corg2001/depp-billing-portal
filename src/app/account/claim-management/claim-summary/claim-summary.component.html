@@ -2,23 +2,25 @@
   <header class="header-txt">Welcome<label *ngIf="partyName !== null">, {{partyName}}</label>
   </header>
   <p class="login-info" *ngIf="lastLoginDate">{{lastLoginDate}}</p>
-  <app-claim-notification [claimSubject$]="claimListSubject$"></app-claim-notification>
+  <app-claim-notification [claimSubject$]="claimList$"></app-claim-notification>
   <div class="claim-summary">
     <div class="activity">
       <span class="sub-title">{{ subTitleText1 }}</span>
       <span class="sub-title2">{{ subTitleText2 }}</span>
     </div>
-    <div class="search-box">
-      <app-search-box
-        [claimSubject$]="claimListSubject$"
-        (updatedClaimsEmitter)="search($event)"
-      ></app-search-box>
-    </div>
+    <ng-container *ngIf="isCompleted && claimsFound">
+      <div class="search-box">
+        <app-search-box
+          [claimSubject$]="claimList$"
+          (updatedClaimsEmitter)="search($event)"
+        ></app-search-box>
+      </div>
+    </ng-container>
     <div>
       <app-claim-table
-        [claimSubject$]="claimListSubject$"
-        [searchedClaimSubject$]="searchedClaimSubject$"
-        [completedSubject$]="completionSubject$"
+        [claimSubject$]="claimList$"
+        [searchedClaimSubject$]="searchedClaim$"
+        [completedSubject$]="completion$"
       ></app-claim-table>
     </div>
   </div>

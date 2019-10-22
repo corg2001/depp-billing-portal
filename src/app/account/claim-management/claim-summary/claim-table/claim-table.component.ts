@@ -21,6 +21,9 @@ export class ClaimTableComponent implements OnInit {
   @Input() public searchedClaimSubject$?: BehaviorSubject<
     Claim[]
   > = new BehaviorSubject([]);
+  @Input() public error$: Subject<boolean> = new Subject();
+  public isError: boolean;
+  public isCompleted: boolean;
   public claims: Claim[] = [];
   public page: number;
   public pageSize: number;
@@ -45,13 +48,17 @@ export class ClaimTableComponent implements OnInit {
     this.claimSubject$.subscribe((claimData: Claim[]) => {
       this.claims = claimData;
       this.collectionSize = this.claims.length;
-      this.loading = false;
       this.pageSize = this._getPageSize(this.collectionSize);
       this.claims.length > 0
         ? (this.claimsFound = true)
         : (this.claimsFound = false);
     });
 
+    this.completedSubject$.subscribe((completed: boolean) => {
+      console.log(completed);
+       this.isCompleted = completed;
+    });
+    this.error$.subscribe((error: boolean) => this.isError = error);
     this.searchedClaimSubject$.subscribe((claimData: Claim[]) => {
       this.claims = claimData;
       this.collectionSize = this.claims.length;
@@ -60,7 +67,6 @@ export class ClaimTableComponent implements OnInit {
         : (this.claimsFound = false);
       this.pageSize = this._getPageSize(this.collectionSize);
     });
-    this.loading = true;
     this.page = 1;
     this.pageSize = this._getPageSize(this.collectionSize);
   }

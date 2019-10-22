@@ -1,0 +1,25 @@
+@import '../../../../assets/styles/contractor-layout-styles.scss';
+
+.flag {
+  i {
+    font-size: 8rem;
+    font-weight: 100;
+  }
+}
+
+.icon-subtitle {
+  font-size: 0.7rem;
+}
+
+.result-title h1 {
+  font-size: 2rem;
+  font-weight: 200;
+}
+
+.details-wrapper {
+  font-size: 0.8rem;
+  max-width: 80%;
+}
+.text-blue {
+  color: $hwa-color-teal !important;
+}

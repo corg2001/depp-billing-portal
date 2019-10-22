@@ -31,6 +31,7 @@ export const environment = {
 
   // EnrollService
   enrollUrl: `${baseUrl}lead-generation`,
+  partyDetails: `${baseUrl}party/`,
 
   // PartyService
   partyDetailsUrl: `${baseUrl}services/party`,
@@ -56,7 +57,9 @@ export const environment = {
   uploadUrl: `${baseUrl}services/vendor/document-upload`,
 
   // CalenderService 
-  calenderUrl: `${baseUrl}services/vendor/work-calendar`
+  calenderUrl: `${baseUrl}services/vendor/work-calendar`,
+  // helpService
+  helpUrl: `${baseUrl}contact-us`
 };
 
 /*

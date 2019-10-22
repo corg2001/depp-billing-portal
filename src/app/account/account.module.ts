@@ -11,6 +11,9 @@ import { LayoutModule } from '../layout/layout.module';
 import { PartyResolverService } from './party-resolver.service';
 import {HelpComponent} from './help/help.component';
 import { ProfileManagementModule } from './profile-management/profile-management.module';
+import { HelpAbstractService } from './help/service/abstract/help-abstract.service';
+import { HelpService } from './help/service/help.service';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -26,10 +29,12 @@ import { ProfileManagementModule } from './profile-management/profile-management
     ClaimManagementModule,
     ProfileManagementModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule
   ],
   providers: [
-    PartyResolverService
+    PartyResolverService,
+    { provide: HelpAbstractService, useClass: HelpService}
   ],
 })
 export class AccountModule { }
