@@ -29,6 +29,7 @@ export class ServiceAreasComponent implements OnChanges {
   public noInfoText: string;
   public vendorId: string;
   public stateCode: string;
+  public companyName: string;
   constructor(private _conFigService: ConfigService) {}
 
   ngOnChanges(): void {
@@ -38,6 +39,7 @@ export class ServiceAreasComponent implements OnChanges {
   public intit(): void {
     this.searchExecuted = false;
     this.vendorId = this._conFigService.getVendorId();
+    this.companyName = this._conFigService.getcompanyName() ? this._conFigService.getcompanyName() : '';
     // tslint:disable-next-line: max-line-length
     this.noInfoText = `Your Service Areas is not set up. Please reach out to contractor relations at ${environment.core.customerServiceNumber}.`;
     if (this.serviceAreas) {
