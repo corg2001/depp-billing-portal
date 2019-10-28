@@ -118,7 +118,6 @@ export class PartyService {
       this._setLocalMailingAddress2(data);
       this._setLocalMailingAddressUnit(data);
       this._setLocalMailingAddressCity(data);
-      this._setLocalMailingAddressCity(data);
       this._setLocalMailingAddressCountry(data);
       this._setLocalMailingAddressPostalCode(data);
       this._setLocalMailingAddressState(data);

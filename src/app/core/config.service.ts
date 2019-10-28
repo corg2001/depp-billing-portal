@@ -195,7 +195,7 @@ export class ConfigService {
   }
 
   private _getMailingCityFromSession(): string {
-    return localStorage.getItem(LocalStorageEnum.BusinessCity);
+    return localStorage.getItem(LocalStorageEnum.MailingCity);
   }
 
   private _getMailingPostalCodeFromSession(): string {
