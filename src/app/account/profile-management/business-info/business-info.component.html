@@ -44,16 +44,26 @@
     <div class="d-flex info-items address">
       <div class="items-part-one">
         Business Address:
-        <div class="item-values">{{ businessAddress?.address1 }}</div>
-        <div *ngIf="businessAddress?.address2" class="item-values">{{ businessAddress?.address2 }}</div>
-        <div class="item-values">{{ businessAddress?.city }}, {{ businessAddress?.state }}, {{ businessAddress?.postalCode }}</div>
+        <ng-container *ngIf="businessAddress.address1">
+          <div class="item-values">{{ businessAddress?.address1 }}</div>
+          <div *ngIf="businessAddress?.address2" class="item-values">
+            {{ businessAddress?.address2 }}
+          </div>
+          <div class="item-values">
+            {{ businessAddress?.city }}, {{ businessAddress?.state }},
+            {{ businessAddress?.postalCode }}
+          </div>
+        </ng-container>
       </div>
       <div>
         Mailing Address:
-        <div class="item-values">{{ mailingAddress?.address1 }}</div>
-        <div class="item-values">
-          {{ mailingAddress?.city }}, {{ mailingAddress?.state }}, {{mailingAddress?.postalCode }}
-        </div>
+        <ng-container *ngIf="mailingAddress.address1">
+          <div class="item-values">{{ mailingAddress?.address1 }}</div>
+          <div class="item-values">
+            {{ mailingAddress?.city }}, {{ mailingAddress?.state }},
+            {{ mailingAddress?.postalCode }}
+          </div>
+        </ng-container>
       </div>
     </div>
     <div class="hwa-section">
