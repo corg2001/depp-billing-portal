@@ -36,7 +36,7 @@ export class HelpComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this._configService.init();
     this.resultTitle = 'Thank You';
-    this.resultDetails = 'Thank you for your messahe! We will be in touch soon.';
+    this.resultDetails = 'Thank you for your message! We will be in touch soon.';
    this.helpFormGroup = this._formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
