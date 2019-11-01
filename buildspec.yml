@@ -1,0 +1,27 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 8
+      docker: 18
+  pre_build:
+    commands:
+    - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
+    - npm install
+    - npm install -g @angular/cli@7.3.9
+  build:
+    commands:
+    - aws s3api get-object --bucket $PARAMETER_BUCKET --key $PARAMETER_FILE --version-id $PARAMETER_VERSION src/environments/environment.prod.ts
+    - ng build --prod --aot --build-optimizer
+    - docker build -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/hwa-contractor-portal:$(expr substr $CODEBUILD_RESOLVED_SOURCE_VERSION 1 8)-$(expr substr $PARAMETER_VERSION 1 8) .
+  post_build:
+    commands:
+    - >
+      echo "{\"Parameters\": {\"Version\": \"$(expr substr $CODEBUILD_RESOLVED_SOURCE_VERSION 1 8)-$(expr substr $PARAMETER_VERSION 1 8)\"}}" > deploy.json
+    - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/hwa-contractor-portal:$(expr substr $CODEBUILD_RESOLVED_SOURCE_VERSION 1 8)-$(expr substr $PARAMETER_VERSION 1 8)
+artifacts:
+  files:
+  - deploy.yaml
+  - deploy.json
+
