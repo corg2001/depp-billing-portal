@@ -1,0 +1,239 @@
+Description: Unify account portal application
+
+Parameters:
+  Environment:
+    Type: String
+    Description: Environment identifier suffix, will be appended to resource identifiers
+    AllowedValues: [prod, stg]
+  Version:
+    Type: String
+    Description: Application version
+  BrandName:
+    Type: String
+    Description: Brand name identifier prefix, will be prepended to resource identifiers
+    AllowedValues: [hwa]
+  Frontend:
+    Type: String
+    Description: Frontend application name identifier prefix, will be prepended to resource identifiers
+    AllowedValues: [contractor]
+  ClusterName:
+    Type: String
+    Description: ECS cluster name
+  SslCertificate:
+    Type: String
+    Description: SSL certificate for load balancer endpoint
+  HostedZoneId:
+    Type: AWS::Route53::HostedZone::Id
+    Description: Digital hosted zone id
+  HostedZoneName:
+    Type: String
+    Description: Digital hosted zone name
+
+Mappings:
+  EnvironmentVPCMap:
+    prod:
+      Id: vpc-88cd24f0
+      Subnets: [subnet-e056fe84, subnet-2a3a3c06]
+    stg:
+      Id: vpc-c2c029ba
+      Subnets: [subnet-03de9970b872bf9d2, subnet-03bd2fe06e3a2e15d]
+  EnvironmentTaskMap:
+    prod:
+      Cpu: 512
+      TaskMemory: 1GB
+      ContainerMemory: 1024
+      Desired: 2
+    stg:
+      Cpu: 256
+      TaskMemory: 0.5GB
+      ContainerMemory: 512
+      Desired: 2
+
+Resources:
+  LogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Join ["-", [!Ref BrandName, !Ref Frontend, "portal", !Ref Environment]]
+      RetentionInDays: 90
+  TaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    DependsOn: LogGroup
+    Properties:
+      Family: !Join ["-", [!Ref BrandName, !Ref Frontend, "portal", !Ref Environment]]
+      NetworkMode: awsvpc
+      RequiresCompatibilities:
+      - FARGATE
+      Cpu: !FindInMap [EnvironmentTaskMap, !Ref Environment, Cpu]
+      Memory: !FindInMap [EnvironmentTaskMap, !Ref Environment, TaskMemory]
+      TaskRoleArn: !Sub arn:aws:iam::${AWS::AccountId}:role/DE-Digital-ECS-Task-Role
+      ExecutionRoleArn: !Sub arn:aws:iam::${AWS::AccountId}:role/DE-Digital-ECS-TaskExecution-Role
+      ContainerDefinitions:
+      - Image: !Join ["", [!Ref "AWS::AccountId", ".dkr.ecr.", !Ref "AWS::Region", ".amazonaws.com/", !Join [":", [!Join ["-", [!Ref BrandName, !Ref Frontend, "portal"]], !Ref Version]]]]
+        LogConfiguration:
+          LogDriver: awslogs
+          Options:
+            awslogs-region: !Ref AWS::Region
+            awslogs-group: !Ref LogGroup
+            awslogs-stream-prefix: !Join ["-", [!Ref BrandName, !Ref Frontend, "portal"]]
+        Memory: !FindInMap [EnvironmentTaskMap, !Ref Environment, ContainerMemory]
+        Name: !Join ["-", [!Ref BrandName, !Ref Frontend, "portal", !Ref Environment]]
+        PortMappings:
+        - ContainerPort: 8080
+          Protocol: tcp
+  ServiceSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: !Join ["-", ["awue-sg", !Ref Environment, !Ref BrandName, !Ref Frontend, "portal-service"]]
+      GroupDescription: ECS service security group
+      VpcId: !FindInMap [EnvironmentVPCMap, !Ref Environment, Id]
+      SecurityGroupEgress:
+      - IpProtocol: -1
+        FromPort: 0
+        ToPort: 65535
+        CidrIp: 0.0.0.0/0
+        Description: Allow all outbound traffic
+      Tags:
+      - Key: Name
+        Value: !Join ["-", ["awue-sg", !Ref Environment, !Ref BrandName, !Ref Frontend, "portal-service"]]
+      - Key: Brand
+        Value: !Ref BrandName
+      - Key: Environment
+        Value: !Ref Environment
+  ServiceSecurityGroupIngress:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      GroupId: !Ref ServiceSecurityGroup
+      IpProtocol: tcp
+      FromPort: 0
+      ToPort: 65535
+      SourceSecurityGroupId: !Ref LbSecurityGroup
+      Description: Allow inbound TCP traffic from load balancer
+  LbSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: !Join ["-", ["awue-sg", !Ref Environment, !Ref BrandName, !Ref Frontend, "portal-lb"]]
+      GroupDescription: ECS service load balancer security group
+      VpcId: !FindInMap [EnvironmentVPCMap, !Ref Environment, Id]
+      SecurityGroupIngress:
+      - IpProtocol: tcp
+        FromPort: 443
+        ToPort: 443
+        CidrIp: 0.0.0.0/0
+        Description: Allow inbound HTTPS traffic
+      SecurityGroupEgress:
+      - IpProtocol: tcp
+        FromPort: 0
+        ToPort: 65535
+        DestinationSecurityGroupId: !Ref ServiceSecurityGroup
+        Description: Allow outbound TCP traffic to ECS service
+      Tags:
+      - Key: Name
+        Value: !Join ["-", ["awue-sg", !Ref Environment, !Ref BrandName, !Ref Frontend, "portal-lb"]]
+      - Key: Brand
+        Value: !Ref BrandName
+      - Key: Environment
+        Value: !Ref Environment
+  LoadBalancer:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      Name: !Join ["-", [!Ref BrandName, !Ref Frontend, "portal", !Ref Environment]]
+      Scheme: internal
+      SecurityGroups:
+      - !Ref LbSecurityGroup
+      Subnets: !FindInMap [EnvironmentVPCMap, !Ref Environment, Subnets]
+      IpAddressType: ipv4
+      Tags:
+      - Key: Name
+        Value: !Join ["-", [!Ref BrandName, !Ref Frontend, "portal", !Ref Environment]]
+      - Key: Brand
+        Value: !Ref BrandName
+      - Key: Environment
+        Value: !Ref Environment
+  TargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    DependsOn: LoadBalancer
+    Properties:
+      HealthCheckIntervalSeconds: 60
+      HealthCheckPath: "/"
+      HealthCheckPort: traffic-port
+      HealthCheckProtocol: HTTP
+      HealthCheckTimeoutSeconds: 10
+      HealthyThresholdCount: 5
+      UnhealthyThresholdCount: 2
+      Matcher:
+        HttpCode: 200
+      Name: !Join ["-", [!Ref BrandName, !Ref Frontend, "portal", !Ref Environment]]
+      Port: 80
+      Protocol: HTTP
+      TargetGroupAttributes:
+      - Key: deregistration_delay.timeout_seconds
+        Value: 5
+      - Key: stickiness.enabled
+        Value: true
+      - Key: stickiness.type
+        Value: lb_cookie
+      - Key: stickiness.lb_cookie.duration_seconds
+        Value: 86400
+      TargetType: ip
+      VpcId: !FindInMap [EnvironmentVPCMap, !Ref Environment, Id]
+      Tags:
+      - Key: Name
+        Value: !Join ["-", [!Ref BrandName, !Ref Frontend, "portal", !Ref Environment]]
+      - Key: Brand
+        Value: !Ref BrandName
+      - Key: Environment
+        Value: !Ref Environment
+  Listener:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      LoadBalancerArn: !Ref LoadBalancer
+      Port: 443
+      Protocol: HTTPS
+      DefaultActions:
+      - TargetGroupArn: !Ref TargetGroup
+        Type: forward
+      Certificates:
+      - CertificateArn: !Ref SslCertificate
+      SslPolicy: ELBSecurityPolicy-TLS-1-2-2017-01
+  DnsRecord:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      HostedZoneId: !Ref HostedZoneId
+      Name: !Join [".",  [!Join ["-", [!Ref BrandName, !Ref Frontend, "portal", !Ref Environment]], !Ref HostedZoneName]]
+      Type: A
+      AliasTarget:
+        HostedZoneId: Z35SXDOTRQ7X7K
+        DNSName: !GetAtt LoadBalancer.DNSName
+  Service:
+    Type: AWS::ECS::Service
+    DependsOn:
+    - LoadBalancer
+    - TargetGroup
+    - Listener
+    Properties:
+      Cluster: !Ref ClusterName
+      LaunchType: FARGATE
+      DeploymentConfiguration:
+        MaximumPercent: 200
+        MinimumHealthyPercent: 50
+      DesiredCount: !FindInMap [EnvironmentTaskMap, !Ref Environment, Desired]
+      LoadBalancers:
+      - ContainerName: !Join ["-", [!Ref BrandName, !Ref Frontend, "portal", !Ref Environment]]
+        ContainerPort: 8080
+        TargetGroupArn: !Ref TargetGroup
+      ServiceName: !Join ["-", [!Ref BrandName, !Ref Frontend, "portal", !Ref Environment]]
+      TaskDefinition: !Ref TaskDefinition
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          AssignPublicIp: DISABLED
+          SecurityGroups:
+          - !Ref ServiceSecurityGroup
+          Subnets: !FindInMap [EnvironmentVPCMap, !Ref Environment, Subnets]
+      Tags:
+      - Key: Name
+        Value: !Join ["-", [!Ref BrandName, !Ref Frontend, "portal", !Ref Environment]]
+      - Key: Brand
+        Value: !Ref BrandName
+      - Key: Environment
+        Value: !Ref Environment
+
