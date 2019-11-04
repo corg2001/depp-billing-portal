@@ -6,7 +6,8 @@ import { HttpParams, HttpErrorResponse } from "@angular/common/http";
   providedIn: "root"
 })
 export abstract class CalendarAbstractService {
-  constructor() {}
+  abstract selectedState: string;
+  constructor() { }
 
   abstract getCalendarInfo(
     calendar$: BehaviorSubject<any>,
@@ -35,7 +36,7 @@ export abstract class CalendarAbstractService {
     completion$: Subject<boolean>,
     error: HttpErrorResponse
   ): void;
-  abstract tradeSearch(tradeDetails: any[], trade: string): any[];
-  abstract stateSearch(tradeDetails: any[], state: string): any[];
-  abstract search(tradeDetails: any[], state: string, trade: string): any[];
+  abstract tradeSearch(tradeDetails: any[], trade : string): any[];
+  abstract stateSearch(tradeDetails: any[], state : string): any[];
+  abstract search(tradeDetails: any[], state: string, trade : string): any[];
 }
