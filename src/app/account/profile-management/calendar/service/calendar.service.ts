@@ -16,11 +16,12 @@ import * as _ from 'lodash';
   providedIn: 'root'
 })
 export class CalendarService implements CalendarAbstractService {
+  public selectedState: string = '';
   constructor(
     private _http: HttpClient,
     private _config: ConfigService,
     private _logger: LoggerService
-  ) {}
+  ) { }
 
   public getCalendarInfo(
     calendar$: BehaviorSubject<any>,

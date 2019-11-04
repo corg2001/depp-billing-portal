@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import * as _ from 'lodash';
 import { environment } from 'src/environments/environment';
+import { CalendarAbstractService } from '../../service/abstract/calendar.abstract.service';
 
 @Component({
   selector: 'app-service-info-table',
@@ -20,7 +21,7 @@ export class ServiceInfoTableComponent implements OnInit {
   public collectionSize: number = 0;
   public showTable: boolean = false;
   public noInfoText: string;
-  constructor() { }
+  constructor(private _calenderService: CalendarAbstractService) { }
 
   ngOnInit() {
     this.noInfoText = `Please contact Contractor Relations at ${environment.core.customerServiceNumber}for assistance.`;
@@ -32,23 +33,34 @@ export class ServiceInfoTableComponent implements OnInit {
 
   public getStateCode(serviceCallDetailsList: any[]): string {
     let statCode: string;
-   if (serviceCallDetailsList) {
-    serviceCallDetailsList.forEach((serviceCallDetail: any) => statCode = serviceCallDetail.state_code);
-    return statCode;
-
-   }
-   return '';
+    if (serviceCallDetailsList && this._calenderService.selectedState === '') {
+      serviceCallDetailsList.forEach((serviceCallDetail: any) => statCode = serviceCallDetail.state_code);
+      return statCode;
+    } else if (serviceCallDetailsList && this._calenderService.selectedState !== '') {
+      serviceCallDetailsList.forEach((serviceCallDetail: any) => {
+        if (serviceCallDetail.state_code === this._calenderService.selectedState) {
+          statCode = serviceCallDetail.state_code;
+        }
+      });
+      return statCode;
+    }
+    return '';
   }
 
   public getCallCount(serviceCallDetailsList: any[]): number {
     let callCount: number;
-    if(serviceCallDetailsList) {
+    if (serviceCallDetailsList && this._calenderService.selectedState === '') {
       serviceCallDetailsList.forEach((serviceCallDetail: any) => callCount = serviceCallDetail.service_call_count);
+      return callCount;
+    } else if (serviceCallDetailsList && this._calenderService.selectedState !== '') {
+      serviceCallDetailsList.forEach((serviceCallDetail: any) => {
+        if (serviceCallDetail.state_code === this._calenderService.selectedState) {
+          callCount = serviceCallDetail.service_call_count;
+        }
+      });
       return callCount;
     }
     return 0;
-   
-    
   }
 
   public modifiedDetails(): any[] {
