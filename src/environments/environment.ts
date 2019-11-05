@@ -17,6 +17,9 @@ export const environment = {
     email: 'Contractorrelations@mailinator.com',
     achEmail: 'VendorMaster@mailinator.com',
   },
+  forms: {
+    ach_form_path: '../assets/forms/centrica_vendor_Information_form.pdf'
+  },
   siblingPortals: {
     customer: `${custumerPortalUrl}`,
     realtor: `${realtorPortalUrl}`
