@@ -9,15 +9,15 @@ const routes: Routes = [
   },
   {
     path: 'auth',
-    loadChildren: './auth/auth.module#AuthModule'
+    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
   },
   {
     path: 'account',
-    loadChildren: './account/account.module#AccountModule'
+    loadChildren: () => import('./account/account.module').then(m => m.AccountModule)
   },
   {
     path: 'enroll',
-    loadChildren: './lead-generation/lead-generation.module#LeadGenerationModule'
+    loadChildren: () => import('./lead-generation/lead-generation.module').then(m => m.LeadGenerationModule)
   },
   { path: '', pathMatch: 'full', redirectTo: 'account' },
 ];
