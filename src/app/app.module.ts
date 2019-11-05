@@ -10,7 +10,8 @@ import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { ModalComponent } from './shared/modal/modal.component';
 import { TestComponent } from './test/test.component';
-
+import { Angulartics2Module } from 'angulartics2';
+import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,7 +23,8 @@ import { TestComponent } from './test/test.component';
     NgbModule,
     CoreModule,
     SharedModule,
-    HttpClientModule
+    HttpClientModule,
+    Angulartics2Module.forRoot()
   ],
   providers: [
   ],
