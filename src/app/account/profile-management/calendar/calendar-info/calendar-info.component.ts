@@ -21,7 +21,8 @@ import { Header } from '../model/header.model';
   styleUrls: ['./calendar-info.component.scss']
 })
 export class CalendarInfoComponent implements OnInit {
-  @ViewChild('calendar') calendarComponent: FullCalendarComponent; 
+  @ViewChild('calendar', { static: true })
+  calendarComponent: FullCalendarComponent;
   @Output() public dateChange: EventEmitter<string> = new EventEmitter<
     string
   >();
@@ -48,7 +49,6 @@ export class CalendarInfoComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-
     // get today
     const startDate = dateFormat(moment(), CalendarEnums.yearMonthDay);
     // get  60 days from today
@@ -62,7 +62,10 @@ export class CalendarInfoComponent implements OnInit {
     this.validRange = this._getValidDateRage(startDate, endDate);
   }
 
-  private _getValidDateRage(startDate: string, endDate: string): ValidDateRange {
+  private _getValidDateRage(
+    startDate: string,
+    endDate: string
+  ): ValidDateRange {
     const validDateRange = new ValidDateRange(startDate, endDate);
     return validDateRange;
   }

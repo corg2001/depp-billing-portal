@@ -12,7 +12,7 @@ import { async } from 'q';
 })
 export class AchModalComponent implements OnInit {
   @Input() public type: string;
-  @ViewChild('file') public file: ElementRef;
+  @ViewChild('file', { static: true }) public file: ElementRef;
   public loading: boolean;
   public modalSize: 'xl';
   public modalTitle: string = 'upload documents';
