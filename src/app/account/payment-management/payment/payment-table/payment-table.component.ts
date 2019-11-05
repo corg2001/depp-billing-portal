@@ -1,12 +1,9 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { PaymentHistoryInterface } from '../../interface/payment-history.interface';
-import { ModalService } from 'src/app/core/modal.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BehaviorSubject } from 'rxjs';
-import { PaymentService } from '../../service/payment.service';
 import { PaymentAbstractService } from '../../service/abstract/payment.abstract.service';
 import { InvoiceModalComponent } from '../invoice-modal/invoice-modal.component';
-import { VendorInvoiceDetailsInterface } from '../../interface/vendor-invoice-details.interface';
 
 @Component({
   selector: 'app-payment-table',

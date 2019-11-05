@@ -5,6 +5,7 @@ import {
   ViewChild,
   ElementRef
 } from '@angular/core';
+import { environment } from 'src/environments/environment';
 import { AchDocuments } from './model/ach-documents.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AchModalComponent } from './ach-modal/ach-modal.component';
@@ -33,18 +34,19 @@ export class AchDocumentsComponent implements OnChanges {
   public uploadSuccessful: boolean;
   public primaryButtonText: string;
   public type: string;
-  constructor(
-    private _modalService: NgbModal,
-  ) {}
+  public achFormPath: string;
+  public achFormTitle: string;
+  constructor(private _modalService: NgbModal) {}
 
   ngOnChanges(): void {
     this.init();
   }
 
   public init(): void {
+    this.achFormPath = environment.forms.ach_form_path;
+    this.achFormTitle = 'ACH Form';
     this.primaryButtonText = 'Upload';
-    this.noInfoText =
-      `Your ACH information is not set up. Please reach out to contractor relations at 1-888-888-8888.`;
+    this.noInfoText = `Your ACH information is not set up. Please reach out to contractor relations at 1-888-888-8888.`;
     if (this.achDocs) {
       this.achDocs.length > 0 && this.completion === true
         ? (this.isData = true)
@@ -52,10 +54,6 @@ export class AchDocumentsComponent implements OnChanges {
     }
 
     this.isloading();
-  }
-
-  public showOnlyLastFour(value: string): string {
-    return value.replace(/.(?=.{4})/g, '*');
   }
 
   public isloading(): void {

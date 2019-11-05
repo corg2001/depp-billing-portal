@@ -25,9 +25,9 @@ export class BusinessInfoComponent implements OnInit {
   public hwaContactEmail: string;
   public userName: string;
   public password: string;
-  public showUserDetails: boolean  = false;
+  public showUserDetails: boolean = false;
 
-  constructor(private _config: ConfigService) { }
+  constructor(private _config: ConfigService) {}
 
   ngOnInit() {
     this._config.init();
@@ -45,19 +45,4 @@ export class BusinessInfoComponent implements OnInit {
     this.userName = this._config.getUserName();
     this.password = this._config.getPassword();
   }
-
-  public showOnlyLastFour(value: string): string {
-    if (value) {
-      return value.replace(/.(?=.{4})/g, '*');
-    }
-    return '';
-  }
-
-  public hidePassword(password: string): string {3
-    if (password) {
-      return password.replace(/.()/g, '*');
-    }
-    return '';
-  }
-
 }

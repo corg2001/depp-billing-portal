@@ -7,7 +7,7 @@
       </div>
       <div>
         Tax ID Number (EIN):
-        <span class="item-values">{{ showOnlyLastFour(taxId) }}</span>
+        <span class="item-values">{{ taxId | formatLastFour }}</span>
       </div>
     </div>
     <div class="d-flex info-items">
@@ -24,7 +24,7 @@
         <span *ngIf="email" class="item-values">{{ email }}</span>
       </div>
       <div>
-        Phone Number: <span class="item-values">{{ phoneNumber }}</span>
+        Phone Number: <span class="item-values">{{ phoneNumber | formatphone }}</span>
       </div>
     </div>
     <div class="d-flex info-items">
@@ -83,7 +83,7 @@
         </div> -->
         <div>
           Contact Phone:
-          <span class="item-values">{{ hwaContactPhoneNumber }}</span>
+          <span class="item-values">{{ hwaContactPhoneNumber | formatphone}}</span>
         </div>
       </div>
       <!-- <div class="d-flex info-items hwa-items">
@@ -105,7 +105,7 @@
         </div>
         <div>
           Password:
-          <span class="item-values">{{ hidePassword(password) }}</span>
+          <span class="item-values">{{ password | formatPassword }}</span>
         </div>
         <!-- <div class="edit-symbol" style="margin-left:auto">Edit</div> -->
       </div>
