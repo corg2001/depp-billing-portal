@@ -2,6 +2,10 @@ import { Component } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalComponent } from './shared/modal/modal.component';
 import { ConfigService } from './core/config.service';
+import { Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
+import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
+declare var gtag: Function;
 
 @Component({
   selector: 'app-root',
@@ -11,8 +15,20 @@ import { ConfigService } from './core/config.service';
 export class AppComponent {
   title = 'testlab-application';
 
-  public constructor(private modalService: NgbModal, private configService: ConfigService) {}
-
+  public constructor(
+    private modalService: NgbModal,
+    private configService: ConfigService,
+    private _router: Router,
+    private _angulartics2GoogleAnalytics: Angulartics2GoogleAnalytics
+  ) {
+    _angulartics2GoogleAnalytics.startTracking();
+    const navEndEvents = _router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    );
+    navEndEvents.subscribe((event: NavigationEnd) => {
+      gtag('config', 'UA-827840-1', { page_path: event.urlAfterRedirects });
+    });
+  }
 
   public openModal(content: any): void {
     console.log('action: opening modal ...');
