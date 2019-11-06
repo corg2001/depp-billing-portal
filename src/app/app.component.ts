@@ -5,6 +5,7 @@ import { ConfigService } from './core/config.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
+import { environment } from '../environments/environment';
 declare var gtag: Function;
 
 @Component({
@@ -26,7 +27,7 @@ export class AppComponent {
       filter(event => event instanceof NavigationEnd)
     );
     navEndEvents.subscribe((event: NavigationEnd) => {
-      gtag('config', 'UA-827840-1', { page_path: event.urlAfterRedirects });
+      gtag('config', environment.analytics.google.brand.hwa, { page_path: event.urlAfterRedirects });
     });
   }
 
@@ -35,7 +36,6 @@ export class AppComponent {
     this.modalService.open(content);
     this.configService.init();
   }
-
   public openModal2(): void {
     console.log('action: opening modal from component');
     this.modalService.open(ModalComponent);
