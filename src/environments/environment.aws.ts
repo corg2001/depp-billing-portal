@@ -1,18 +1,25 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
-
+import * as moment from 'moment';
 const env: string = 'qa2';
 const baseUrl: string = `https://hwa-contractor-api-${env}.nahdigitalitdev.cloud.centricaplc.com/`;
 const custumerPortalUrl: string = `https://hwa-customer-${env}.nahdigitalitdev.cloud.centricaplc.com`;
 const realtorPortalUrl: string = `https://hwa-realtor-${env}.nahdigitalitdev.cloud.centricaplc.com/`;
 export const environment = {
   production: false,
+  analytics: {
+    google: {
+      brand: {
+        hwa: 'UA-827840-1'
+      }
+    }
+  },
   name: 'aws',
   core: {
     brandId: 'HWA',
     brandFriendlyName: 'HWA',
-    copyrightNotice: '&copy; 2017 HOME WARRANTY OF AMERICA. Inc. Home Warranty Information:',
+    opyrightNotice: `&copy; ${ moment().format('YYYY')} HOME WARRANTY OF AMERICA. Inc. Home Warranty Information:`,
     pageTitle: 'HWA - Home Warranty of America',
     customerServiceNumber: '1-888-888-8888',
     email: 'Contractorrelations@mailinator.com',
