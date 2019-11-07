@@ -1,10 +1,13 @@
+@import "../../../../assets/styles/contractor-layout-styles.scss";
 .footer-links {
-  color: #000;
+  color: $hwa-color-orange;
   font-family: Roboto;
+  font-weight: 700;
 }
 ul li {
   margin-bottom: 0.6rem;
   a {
+    color: $hwa-color-teal;
     font-family: Roboto;
     text-decoration: none;
   }

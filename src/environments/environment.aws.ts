@@ -24,6 +24,7 @@ export const environment = {
     customerServiceNumber: '1-888-888-8888',
     email: 'Contractorrelations@mailinator.com',
     achEmail: 'VendorMaster@mailinator.com',
+    noHistoryMessage: 'Greetings, we are working to bring your historical invoice & payment information in the following week.'
   },
   forms: {
     ach_form_path: '../assets/forms/centrica_vendor_Information_form.pdf'

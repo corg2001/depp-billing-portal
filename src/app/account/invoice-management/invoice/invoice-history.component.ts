@@ -3,7 +3,6 @@ import { InvoiceService } from '../service/invoice.service';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { ConfigService } from 'src/app/core/config.service';
 import { InvoiceInterface } from '../interface/invoice.interface';
-import { ConstantPool } from '@angular/compiler';
 import { environment } from 'src/environments/environment';
 import { InvoiceAsbstractService } from '../service/abstract/invoice.asbstract.service';
 
@@ -24,6 +23,7 @@ export class InvoiceHistoryComponent implements OnInit {
   public isData: boolean = false;
   public noInfoText: string;
   public headerText: string;
+  public noHistoryMessage: string;
 
   constructor(private _invoiceService: InvoiceAsbstractService, private _configService: ConfigService) {}
 
@@ -32,6 +32,7 @@ export class InvoiceHistoryComponent implements OnInit {
   }
 
   public init(): void {
+    this.noHistoryMessage = environment.core.noHistoryMessage;
     this.headerText = 'Invoice History';
     this._configService.init();
     this.noInfoText = `Invoice information is not available. Please reach out to your Territory Manager for assistance.`;
