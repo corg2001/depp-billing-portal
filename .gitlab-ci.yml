@@ -1,0 +1,16 @@
+stages:
+  - setup
+  - test
+
+gosetup:
+  stage: setup
+  script:
+    - echo "gosetup"
+    - pwd
+    - ls
+
+gotest:
+  stage: test
+  script:
+    - echo "gotest"
+    - uname -a
