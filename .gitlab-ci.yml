@@ -1,0 +1,24 @@
+stages:
+  - setup
+  - test
+
+gosetup:
+  stage: setup
+  script:
+    - echo "gosetup"
+    - pwd
+    - ls
+
+gotest:
+  stage: test
+  script:
+    - echo "gotest"
+    - uname -a
+
+#.something: &something
+#  - echo 'something'
+#
+#job_name:
+#  script:
+#    - *something
+#    - echo 'this is the script'
