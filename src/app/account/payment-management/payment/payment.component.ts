@@ -17,6 +17,7 @@ export class PaymentComponent implements OnInit, OnChanges{
   public completion$: Subject<boolean> = new Subject();
   public error$: Subject<boolean> = new Subject();
   public errorMessages$: Subject<string> = new Subject();
+  public historyMessage: string;
 
   public paymentHistory: PaymentHistoryInterface[];
   public completion: boolean = false;
@@ -37,6 +38,7 @@ export class PaymentComponent implements OnInit, OnChanges{
     this.isLoading();
   }
   public init(): void {
+    this.historyMessage = environment.core.noHistoryMessage;
     this.headerText = 'Payment History';
     this._configService.init();
     // tslint:disable-next-line: max-line-length

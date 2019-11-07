@@ -1,8 +1,13 @@
+@import "../../../../assets/styles/contractor-layout-styles";
 header {
     font-weight: 300;
     font-size: 1.875rem;
-    color: #00849b;
+    color: $hwa-color-teal;
     margin-bottom: 1.5625rem;
     margin-top: 0.9375rem;
+}
+
+p {
+    color: $hwa-color-teal;
 }
 
