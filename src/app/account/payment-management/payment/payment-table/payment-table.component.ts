@@ -13,7 +13,7 @@ import { InvoiceModalComponent } from '../invoice-modal/invoice-modal.component'
 export class PaymentTableComponent implements OnInit {
   @Input() public paymentHistory$: BehaviorSubject<PaymentHistoryInterface[]> = new BehaviorSubject([]);
   @Input() public updatedPaymentHistory$: BehaviorSubject<PaymentHistoryInterface[]> = new BehaviorSubject([]);
-  @ViewChild('invoiceModal', { static: false }) public modalHtml: ElementRef;
+  @ViewChild('invoiceModal') public modalHtml: ElementRef;
   public paymentHistory: PaymentHistoryInterface[] = [];
   public page: number;
   public pageSize: number;

@@ -10,7 +10,7 @@ import { forkJoin } from 'rxjs';
   styleUrls: ['./other-documents-modal.component.scss']
 })
 export class OtherDocumentsModalComponent implements OnInit {
-  @ViewChild('file', { static: true }) public file: ElementRef;
+  @ViewChild('file') public file: ElementRef;
   public loading: boolean;
   public modalSize: 'xl';
   public modalTitle: string = 'upload documents';
