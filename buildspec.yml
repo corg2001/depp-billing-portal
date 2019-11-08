@@ -3,13 +3,13 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      nodejs: 8
+      nodejs: 12
       docker: 18
   pre_build:
     commands:
     - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
     - npm install
-    - npm install -g @angular/cli@7.3.9
+    - npm install -g @angular/cli@8.15.0
   build:
     commands:
     - aws s3api get-object --bucket $PARAMETER_BUCKET --key $PARAMETER_FILE --version-id $PARAMETER_VERSION src/environments/environment.prod.ts
