@@ -34,7 +34,7 @@ export class ServiceInfoComponent implements OnInit, OnChanges {
     this.noInfoText = `Oh no! Your call volume is not setup. Please reach out to your Territory Manager to get started.`;
     this.calendarDate = this.formatDate((new Date()).toString());
     this.headertext = 'service call information for ';
-    this.emergencyCalltext = 'You are accepting emergency calls. If you want to change this, please reach out to your Territoy Manager';
+    this.emergencyCalltext = 'You are accepting emergency calls. If you want to change this, please reach out to your Territory Manager';
     this.tradeDetails$.subscribe((tradeDetails: any[]) => {
       this.tradeDetails = tradeDetails;
       this.infoFound = this._infoFound(this.tradeDetails);
