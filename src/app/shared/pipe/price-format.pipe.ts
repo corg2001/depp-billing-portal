@@ -6,13 +6,12 @@ export class FormatMoney implements PipeTransform {
     let num: number = 0;
     num = parseFloat(value);
     const convertToDollars: number = num / 100;
-    const formatToDecimal: string = convertToDollars
-      .toString()
+    const formatToDecimal: string = convertToDollars.toString();
     const convertToNumber: number = parseFloat(formatToDecimal);
 
     return convertToNumber.toLocaleString('en-US', {
       style: 'currency',
-      currency: 'USD',
+      currency: 'USD'
     });
   }
 }

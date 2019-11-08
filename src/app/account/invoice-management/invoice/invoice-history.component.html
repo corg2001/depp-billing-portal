@@ -1,12 +1,22 @@
 <div id="invoices-history-container" class="d-flex flex-column">
-    <header>{{ headerText }}</header>
-    <app-invoice-search [invoices$]="invoices$" *ngIf="!loading"></app-invoice-search>
-    <app-loading-spinner *ngIf="!completion"></app-loading-spinner>
-    <app-invoice-table [invoices$]="invoices$" [error]="error" [completion]="completion" *ngIf="!loading && isData"></app-invoice-table>
-    <ng-container *ngIf="!loading && !isData || error">
-        <div>
-            <p>{{ noInfoText }}</p>
-        </div>
-    </ng-container>
-    
+  <header>{{ headerText }}</header>
+  <app-invoice-search
+    [invoices$]="invoices$"
+    *ngIf="!loading"
+  ></app-invoice-search>
+  <app-loading-spinner *ngIf="!completion"></app-loading-spinner>
+  <ng-container *ngIf="!loading && isData">
+    <p>{{ noHistoryMessage }}</p>
+    <app-invoice-table
+      [invoices$]="invoices$"
+      [error]="error"
+      [completion]="completion"
+    ></app-invoice-table>
+  </ng-container>
+
+  <ng-container *ngIf="(!loading && !isData) || error">
+    <div>
+      <p>{{ noInfoText }}</p>
+    </div>
+  </ng-container>
 </div>

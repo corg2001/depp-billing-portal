@@ -1,3 +1,10 @@
 export const environment = {
-  production: true
+  production: true,
+  analytics: {
+    google: {
+      brand: {
+        hwa: 'UA-827840-1'
+      }
+    }
+  }
 };

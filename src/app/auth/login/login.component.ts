@@ -83,8 +83,8 @@ export class LoginComponent implements OnInit {
       username,
       password
     );
-    localStorage.setItem(LocalStorageEnum.UserName, username)
-    localStorage.setItem(LocalStorageEnum.Password, password);
+    
+    localStorage.setItem(LocalStorageEnum.UserName, username);
     this.showLoadingSpinner = true;
   }
 

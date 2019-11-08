@@ -24,28 +24,27 @@ export class ServiceInfoSearchBoxComponent implements OnInit {
   }
 
   public tradeSearch(form: FormGroup): void {
-   const trade: string = form.controls.trade.value;
-   trade ? this.updateCalendarInfo.emit(this._calenderService.tradeSearch(this.tradeDetails$.getValue(), trade))
-   : this.updateCalendarInfo.emit(this.tradeDetails$.getValue());
+    const trade: string = form.controls.trade.value;
+    trade ? this.updateCalendarInfo.emit(this._calenderService.tradeSearch(this.tradeDetails$.getValue(), trade))
+      : this.updateCalendarInfo.emit(this.tradeDetails$.getValue());
   }
 
   public stateSearch(form: FormGroup): void {
     const state: string = form.controls.state.value;
-    state ? this.updateCalendarInfo.emit(this._calenderService.stateSearch(this.tradeDetails$.getValue(), state)) 
-    : this.updateCalendarInfo.emit(this.tradeDetails$.getValue()); 
+    state ? this.updateCalendarInfo.emit(this._calenderService.stateSearch(this.tradeDetails$.getValue(), state))
+      : this.updateCalendarInfo.emit(this.tradeDetails$.getValue());
   }
 
   public search(form: FormGroup): void {
     const trade: string = form.controls.trade.value;
     const state: string = form.controls.state.value;
+    this._calenderService.selectedState = form.controls.state.value;
     trade && state
-    ? this.updateCalendarInfo.emit(this._calenderService.search(this.tradeDetails$.getValue(), state, trade))
-    : state
-    ? this.updateCalendarInfo.emit(this._calenderService.stateSearch(this.tradeDetails$.getValue(), state))
-    : trade
-    ?  this.updateCalendarInfo.emit(this._calenderService.tradeSearch(this.tradeDetails$.getValue(), trade))
-    : this.updateCalendarInfo.emit(this.tradeDetails$.getValue());
-
+      ? this.updateCalendarInfo.emit(this._calenderService.search(this.tradeDetails$.getValue(), state, trade))
+      : state
+        ? this.updateCalendarInfo.emit(this._calenderService.stateSearch(this.tradeDetails$.getValue(), state))
+        : trade
+          ? this.updateCalendarInfo.emit(this._calenderService.tradeSearch(this.tradeDetails$.getValue(), trade))
+          : this.updateCalendarInfo.emit(this.tradeDetails$.getValue());
   }
-
 }
