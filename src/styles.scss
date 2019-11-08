@@ -9,3 +9,7 @@ html, body {
 @import './assets/styles/contractor-layout-styles';
 @import '~@fullcalendar/core/main.css';
 @import '~@fullcalendar/daygrid/main.css'; 
+
+p, span { 
+  color: $hwa-color-teal;
+}
