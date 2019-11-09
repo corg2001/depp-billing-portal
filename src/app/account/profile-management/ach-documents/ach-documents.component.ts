@@ -20,7 +20,7 @@ export class AchDocumentsComponent implements OnChanges {
   @Input() public achDocs?: AchDocuments[];
   @Input() public error?: boolean;
   @Input() public completion?: boolean;
-  @ViewChild('file', { static: false }) public file: ElementRef;
+  @ViewChild('file') public file: ElementRef;
   public isData: boolean = false;
   public loading: boolean = true;
   public modalSize: 'xl';
