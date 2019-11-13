@@ -19,6 +19,8 @@ import { InvoiceInterface } from '../interface/invoice.interface';
 import { InvoiceAsbstractService } from './abstract/invoice.asbstract.service';
 import * as dateformat from 'dateformat';
 import { CalendarEnums } from 'src/app/shared/enums/calendar.enums';
+import { CompanyInfoPayloadInterface } from 'src/app/core/interface/payload/company-info.payload.interface';
+import { BrandsPayloadInterface } from 'src/app/core/interface/payload/brands.payload.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -70,6 +72,7 @@ export class InvoiceService implements InvoiceAsbstractService {
     companyInfo: string,
     date: string
   ): HttpParams {
+  
     return new HttpParams()
       .set(HttpParamEnum.vendorId, vendorId)
       .set(HttpParamEnum.starDate, date)

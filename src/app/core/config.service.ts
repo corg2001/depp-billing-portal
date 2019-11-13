@@ -112,7 +112,11 @@ export class ConfigService {
 
   private _getCompanyInfoFromSession(): string {
     // TODO: fix this and get it from proper factory
-    return 'eyJjb21wYW55X2lkIjoiSUwwMyIsImJyYW5kcyI6eyJicmFuZF9pZHMiOlsiSFdBIl19fQ==';
+    const companyInfo: CompanyInfoPayloadInterface = JSON.parse(this._getCompanyInfoFromLocalStorge());
+    const i04: string = 'eyJjb21wYW55X2lkIjoiSUwwNCIsImJyYW5kcyI6eyJicmFuZF9pZHMiOlsiSFdBIl19fQ==';
+    const i03: string = 'eyJjb21wYW55X2lkIjoiSUwwMyIsImJyYW5kcyI6eyJicmFuZF9pZHMiOlsiSFdBIl19fQ==';
+    console.log(companyInfo.company_id)
+    return companyInfo.company_id === 'IL04' ? i04 : i03;
   }
 
   private _getCompanyInfoFromLocalStorge(): string {
