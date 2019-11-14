@@ -36,7 +36,7 @@ Mappings:
       Subnets: [subnet-e056fe84, subnet-2a3a3c06]
     stg:
       Id: vpc-c2c029ba
-      Subnets: [subnet-03de9970b872bf9d2, subnet-03bd2fe06e3a2e15d]
+      Subnets: [subnet-3757ff53, subnet-e124f0ce]
   EnvironmentTaskMap:
     prod:
       Cpu: 512
