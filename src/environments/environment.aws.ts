@@ -21,7 +21,7 @@ export const environment = {
     brandFriendlyName: 'HWA',
     opyrightNotice: `&copy; ${ moment().format('YYYY')} HOME WARRANTY OF AMERICA. Inc. Home Warranty Information:`,
     pageTitle: 'HWA - Home Warranty of America',
-    customerServiceNumber: '1-888-888-8888',
+    customerServiceNumber: '1-888-492-7359',
     email: 'Contractorrelations@mailinator.com',
     achEmail: 'VendorMaster@mailinator.com',
     noHistoryMessage: 'Greetings, we are working to bring your historical invoice & payment information in the following week.'

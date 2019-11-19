@@ -9,7 +9,7 @@ import { AuthService } from '../auth.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PrivacyPolicyComponent } from '../privacy-policy/privacy-policy.component';
 import { TermsOfUseComponent } from '../terms-of-use/terms-of-use.component';
-import { LoginError } from './model/enums/login-error.enums';
+import { LoginErrorEnum } from './model/enums/login-error.enums';
 import { LocalStorageEnum } from 'src/app/core/enums/local-storage.enums';
 import { environment } from 'src/environments/environment';
 
@@ -26,8 +26,8 @@ export class LoginComponent implements OnInit {
   public showResponseError: boolean = false;
   public responseErrorMessage: string;
   private errorMessage: string =
-    'Sign in failed. Please re-enter your password to try again. If you need help, give Contractor Relations a call at 1-888-888-8888';
-    private _
+    // tslint:disable-next-line: max-line-length
+    `Sign in failed. Please re-enter your password to try again. If you need help, give Contractor Relations a call at ${environment.core.customerServiceNumber}.`;
 
   // TODO: Pull this information from teh config
   public siblingPortals: any = {
@@ -44,8 +44,8 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.buildForm();
     this.dataSubject.subscribe((data: any) => {
-      if (data.error.message === LoginError.message || LoginError.credentials) {
-        data.error.message = LoginError.message;
+      if (data.error.message === this.errorMessage || LoginErrorEnum.credentials) {
+        data.error.message = this.errorMessage;
       }
       this.responseErrorMessage = data.error.message;
     });
