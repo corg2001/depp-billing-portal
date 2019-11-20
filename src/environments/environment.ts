@@ -16,9 +16,20 @@ export const environment = {
     }
   },
   core: {
+    maintenance: {
+      active: false,
+      endDateMonth: '',
+      endDateDay: '',
+      endDateYear: '',
+      title: 'Website under maintenance...',
+      email: 'info@hwahomewarranty.com',
+      firstSentence: `We are currently updating our site to give you a better experience. Our systems will be back online`,
+      secondSentence: 'We apologize for any inconvenience.',
+      thirdSentence: 'In the meantime, if you need to reach us, please call 1.888.492.7359 or email us at'
+    },
     brandId: 'HWA',
     brandFriendlyName: 'HWA',
-    copyrightNotice: `&copy; ${ moment().format('YYYY')} HOME WARRANTY OF AMERICA. Inc. Home Warranty Information:`,
+    copyrightNotice: `&copy; ${moment().format('YYYY')} HOME WARRANTY OF AMERICA. Inc. Home Warranty Information:`,
     pageTitle: 'HWA - Home Warranty of America',
     customerServiceNumber: '1-888-492-7359',
     email: 'Contractorrelations@mailinator.com',
