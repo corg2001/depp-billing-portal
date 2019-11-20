@@ -46,7 +46,7 @@ export class AchDocumentsComponent implements OnChanges {
     this.achFormPath = environment.forms.ach_form_path;
     this.achFormTitle = 'ACH Form';
     this.primaryButtonText = 'Upload';
-    this.noInfoText = `Your ACH information is not set up. Please reach out to contractor relations at 1-888-888-8888.`;
+    this.noInfoText = `Your ACH information is not set up. Please reach out to contractor relations at ${environment.core.customerServiceNumber}`;
     if (this.achDocs) {
       this.achDocs.length > 0 && this.completion === true
         ? (this.isData = true)

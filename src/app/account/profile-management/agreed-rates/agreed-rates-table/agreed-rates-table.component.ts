@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { AgreedRates } from '../model/agreed-rates.model';
 import { TradeAgreementDetailsInterface } from '../interface/trade-agreement-deatils.interface';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-agreed-rates-table',
@@ -23,7 +24,7 @@ export class AgreedRatesTableComponent implements OnInit {
 
   ngOnInit() {
     this.noInfoText =
-      'Your Agreed Rates Trade Agreement Details is not set up. Please reach out to contractor relations at 1-888-888-8888.';
+      `Your Agreed Rates Trade Agreement Details is not set up. Please reach out to contractor relations at ${environment.core.customerServiceNumber}.`;
     this.page = 1;
     this.pageSize = 15;
     this.collectionSize = this.tradeAgreementDetails.length;
