@@ -54,13 +54,11 @@ export class HelpComponent implements OnInit, OnDestroy {
     return this.helpFormGroup.controls;
   }
   public sendHelpContent(form: FormGroup) {
-    console.log('help page submit')
-    // service code
     const completion$: Subject<boolean> = new Subject<boolean>();
     const error$: Subject<boolean> = new Subject<boolean>();
     const vendorId: string = this._configService.getVendorId();
     const companyInfo: CompanyInfoPayloadInterface = this._configService.getCompanyInfoObj();
-    const contact: ContactPayloadInterface = this._buildContactObj(form, companyInfo, vendorId);
+    const contact: ContactPayloadInterface = this._buildContactPayload(form, companyInfo, vendorId);
 
     this._helpService.postHelpInfo(contact, completion$, error$, this.successMessage$);
     this._completionSubscription = completion$.subscribe((completed: boolean) => this.isCompleted = completed);
@@ -68,7 +66,7 @@ export class HelpComponent implements OnInit, OnDestroy {
     this._successMessageSubscription = this.successMessage$.subscribe((message: string) => this.successMessage = message);
   }
 
-  private _buildContactObj(form: FormGroup, companyInfo: CompanyInfoPayloadInterface, vendorId: string ): ContactPayloadInterface {
+  private _buildContactPayload(form: FormGroup, companyInfo: CompanyInfoPayloadInterface, vendorId: string ): ContactPayloadInterface {
     const phone: AxPhoneNumberPayloadInterface = {
       value: form.controls.phoneNumber.value,
       type: form.controls.phoneType.value,

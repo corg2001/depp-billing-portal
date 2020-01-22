@@ -4,6 +4,7 @@ import { LocalStorageEnum } from './enums/local-storage.enums';
 import { ConfigInterface } from './interface/config.interface';
 import { AddressInterface } from './interface/address.interface';
 import { CompanyInfoPayloadInterface } from './interface/payload/company-info.payload.interface';
+import { AssociationPayloadInterface } from './interface/payload/association.payload.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +31,9 @@ export class ConfigService {
       mailingAddress: this._getMailingAddress(),
       accountNumber: this._getAccountNumberFromSession(),
       username: this._getUserNameFromSession(),
-      password: this._getPasswordFromSession()
+      password: this._getPasswordFromSession(),
+      hasMultiAssociations: this.hasMultiAssociations,
+      multipleAssociations: this.multipleAssociations
     };
   }
 
@@ -39,6 +42,13 @@ export class ConfigService {
     console.log(this._config);
   }
 
+  public get hasMultiAssociations(): boolean {
+    return localStorage.getItem(LocalStorageEnum.HasMultiAssociations) === 'true';
+  }
+
+  public get multipleAssociations(): AssociationPayloadInterface[] {
+    return JSON.parse(localStorage.getItem(LocalStorageEnum.MultiAssociations));
+  }
   public getToken(): string {
     return this._config.token;
   }
@@ -115,7 +125,6 @@ export class ConfigService {
     const companyInfo: CompanyInfoPayloadInterface = JSON.parse(this._getCompanyInfoFromLocalStorge());
     const i04: string = 'eyJjb21wYW55X2lkIjoiSUwwNCIsImJyYW5kcyI6eyJicmFuZF9pZHMiOlsiSFdBIl19fQ==';
     const i03: string = 'eyJjb21wYW55X2lkIjoiSUwwMyIsImJyYW5kcyI6eyJicmFuZF9pZHMiOlsiSFdBIl19fQ==';
-    console.log(companyInfo.company_id)
     return companyInfo.company_id === 'IL04' ? i04 : i03;
   }
 

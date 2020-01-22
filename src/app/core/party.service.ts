@@ -21,12 +21,13 @@ import { LocalStorageEnum } from './enums/local-storage.enums';
   providedIn: 'root'
 })
 export class PartyService {
+  private _isMultiAssociations: boolean;
   constructor(
     private authService: AuthenticationService,
     private _http: HttpClient,
     private loggerService: LoggerService,
     private logoutService: LogoutService
-  ) {}
+  ) { }
 
   public init(): Observable<boolean> {
     return new Observable(observer => {
@@ -70,8 +71,17 @@ export class PartyService {
     subscription: Subscriber<boolean>,
     data: PartyDetailsPayloadInterface
   ): void {
+
     const associations: AssociationPayloadInterface =
       data.associations._association[0];
+    data.associations._association.length > 1 ? this._isMultiAssociations = true : this._isMultiAssociations = false;
+
+    this._hasMultiAssociations = this._isMultiAssociations;
+
+    if (this._isMultiAssociations) {
+      this._multipleAssociations = data.associations._association;
+    }
+
     this._setLocalVendorId(associations);
     if (data.party_name_details.person_name !== null) {
       this._setLocalPartyName(data);
@@ -85,7 +95,7 @@ export class PartyService {
       this._SetLocalTaxId(data);
     }
 
-    if(data.associations._association[0].company_info) {
+    if (data.associations._association[0].company_info) {
       this._SetLocalCompanyInfo(data);
     }
 
@@ -142,6 +152,7 @@ export class PartyService {
     );
   }
   private _SetLocalCompanyInfo(partyDetails: PartyDetailsPayloadInterface): void {
+
     localStorage.setItem(LocalStorageEnum.CompanyInfo, JSON.stringify(partyDetails.associations._association[0].company_info));
   }
 
@@ -356,5 +367,12 @@ export class PartyService {
       `${partyDetails.party_name_details.person_name.last_name},
       ${partyDetails.party_name_details.person_name.first_name}`
     );
+  }
+  private set _hasMultiAssociations(value: boolean) {
+
+    localStorage.setItem(LocalStorageEnum.HasMultiAssociations, value.toString());
+  }
+  private set _multipleAssociations(value: AssociationPayloadInterface[]) {
+    localStorage.setItem(LocalStorageEnum.MultiAssociations, JSON.stringify(value));
   }
 }
