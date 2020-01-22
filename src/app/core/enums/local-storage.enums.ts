@@ -32,5 +32,6 @@ export enum LocalStorageEnum {
   MailingAddressPurpose = 'mailingAddressPurpose',
   MailingAxLocationId = 'businessAxLocationId',
   MailingAxRecordId = 'businessAxRecordId',
-  
+  HasMultiAssociations = 'hasMultiAssociations',
+  MultiAssociations = 'multiAssociations'
 }

@@ -2,7 +2,7 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 import * as moment from 'moment';
-const env: string = 'qa7';
+const env: string = 'qa4';
 const baseUrl: string = `https://unify-hwa-contractor-api-${env}.engine.host/`;
 const custumerPortalUrl: string = `https://unify-hwa-portal-${env}.engine.host`;
 const realtorPortalUrl: string = `https://unify-hwa-realtor-portal-${env}.engine.host`;

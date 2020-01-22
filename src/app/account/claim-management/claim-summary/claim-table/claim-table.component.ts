@@ -80,7 +80,7 @@ export class ClaimTableComponent implements OnInit {
 
   public authorizeInvoice(jobNumber: string): void {
     const authPortal = this._windowRefService.window.open('', '_blank');
-    authPortal.document.write('Loading Page Auth portal ......');
+    authPortal.document.write('Loading Invoice Portal, Please Wait ......');
 
     this.loading = true;
     const completion$: Subject<boolean> = new Subject<boolean>();

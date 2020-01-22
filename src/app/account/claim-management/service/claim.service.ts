@@ -20,6 +20,7 @@ import { ClaimPayloadInterface } from '../interface/claim.payload.interface';
 import { ClaimServiceAbstract } from './abstract/claim.abstract.service';
 import { environment } from 'src/environments/environment';
 import { HttpParamEnum } from 'src/app/shared/enums/http-params.enums';
+import { AssociationPayloadInterface } from 'src/app/core/interface/payload/association.payload.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -31,19 +32,48 @@ export class ClaimService implements ClaimServiceAbstract {
     private _configService: ConfigService,
     private _httpClient: HttpClient,
     private _loggerService: LoggerService
-  ) {}
+  ) { }
 
   public getClaims(
-    completion$: Subject<boolean>,
-    error$: Subject<boolean>,
-    claimData: BehaviorSubject<ClaimPayloadInterface[]>
+    isComplete$: Subject<boolean>,
+    isError$: Subject<boolean>,
+    claimData$: BehaviorSubject<ClaimPayloadInterface[]>
   ): void {
+    const hasMultiAssociations: boolean = this._configService.hasMultiAssociations;
+    const multipleAssociations: AssociationPayloadInterface[] = this._configService.multipleAssociations;
+    hasMultiAssociations && multipleAssociations ?
+      this._getMultiClaims(multipleAssociations, isComplete$, isError$, claimData$) : this._getClaims(isComplete$, isError$, claimData$);
+
+
+  }
+
+  private _getMultiClaims(multipleAssociations: AssociationPayloadInterface[],
+    isComplete$: Subject<boolean>, isError$: Subject<boolean>, claimData$: BehaviorSubject<ClaimPayloadInterface[]>): void {
+
+    const i04: string = 'eyJjb21wYW55X2lkIjoiSUwwNCIsImJyYW5kcyI6eyJicmFuZF9pZHMiOlsiSFdBIl19fQ==';
+    const i03: string = 'eyJjb21wYW55X2lkIjoiSUwwMyIsImJyYW5kcyI6eyJicmFuZF9pZHMiOlsiSFdBIl19fQ==';
+
+    multipleAssociations.forEach((association: AssociationPayloadInterface) => {
+      const companyInfo = association.company_info.company_id === 'IL04' ? i04 : i03;
+      const vendorId = association.account_information.account_id;
+      const params: HttpParams = this.getClaimParams(vendorId, companyInfo);
+      this._httpClient.get<ClaimPayloadInterface[]>(environment.claimsUrl,
+        { params: params }).subscribe((data: ClaimPayloadInterface[]) => {
+          this.getClaimsSuccessHandler(isComplete$, isError$, claimData$, data);
+        }, (error: HttpErrorResponse) => {
+          this.getClaimsFailureHandler(isComplete$, isError$, error);
+        });
+    });
+  }
+
+  private _getClaims(completion$: Subject<boolean>, error$: Subject<boolean>, claimData$: BehaviorSubject<ClaimPayloadInterface[]>): void {
     const vendorId: string = this._configService.getVendorId();
     const companyInfo: string = this._configService.getCompanyInfo();
     const params: HttpParams = this.getClaimParams(vendorId, companyInfo);
+
     this._httpClient.get(environment.claimsUrl, { params }).subscribe(
       (data: any) => {
-        this.getClaimsSuccessHandler(completion$, error$, claimData, data);
+        this.getClaimsSuccessHandler(completion$, error$, claimData$, data);
       },
       (errorResponse: any) => {
         this.getClaimsFailureHandler(completion$, error$, errorResponse);
@@ -51,7 +81,7 @@ export class ClaimService implements ClaimServiceAbstract {
     );
   }
 
-public getClaimParams(vendorId: string, companyInfo: string): HttpParams {
+  public getClaimParams(vendorId: string, companyInfo: string): HttpParams {
     return new HttpParams()
       .set(HttpParamEnum.vendorId, vendorId)
       .set(HttpParamEnum.companyInfo, companyInfo);
@@ -61,7 +91,7 @@ public getClaimParams(vendorId: string, companyInfo: string): HttpParams {
     completion$: Subject<boolean>,
     error$: Subject<boolean>,
     claimData$: BehaviorSubject<any>,
-    response: Observable<HttpResponse<ClaimPayloadInterface[]>>
+    response: ClaimPayloadInterface[]
   ): void {
     this._loggerService.action('Successfully obtain claim data');
     claimData$.next(response);
@@ -71,7 +101,7 @@ public getClaimParams(vendorId: string, companyInfo: string): HttpParams {
   public getClaimsFailureHandler(
     completion$: Subject<boolean>,
     error$: Subject<boolean>,
-    errorResponse: Observable<HttpErrorResponse>
+    errorResponse: HttpErrorResponse
   ): void {
     this._loggerService.error('Unable to retrieve claim data');
     completion$.next(true);
@@ -91,10 +121,10 @@ public getClaimParams(vendorId: string, companyInfo: string): HttpParams {
       return name
         ? claim.customerName.toLowerCase().includes(nameInput)
         : jobId
-        ? claim.jobNumber.toLowerCase().includes(jobIdInput)
-        : address
-        ? claim.serviceAddress.toLowerCase().includes(addressInput)
-        : claim;
+          ? claim.jobNumber.toLowerCase().includes(jobIdInput)
+          : address
+            ? claim.serviceAddress.toLowerCase().includes(addressInput)
+            : claim;
     });
   }
 
@@ -134,7 +164,7 @@ public getClaimParams(vendorId: string, companyInfo: string): HttpParams {
     this._loggerService.action('Successfully obtain auth Invoice data');
   }
 
-  public authInvoiceErroreHandler(error$: Subject<boolean>, errorMessage$: Subject<string>,  error: any): void {
+  public authInvoiceErroreHandler(error$: Subject<boolean>, errorMessage$: Subject<string>, error: any): void {
     error$.next(true);
     errorMessage$.next(error.error.message);
     this._loggerService.error(` unable to get auth portal url <br/> ${error.error.message}`);
