@@ -1,0 +1,61 @@
+.depp .body-container {
+    height: 100vh;
+    padding: 4rem 0;
+  }
+
+  body {
+    background: #005776;;
+  }
+
+
+  .head-container,
+  .maintenance-page {
+    margin: 0 auto;
+    width: 1020px;
+  }
+
+  .brand-logo {
+    padding: 15px 0;
+  }
+
+  .maintenance-msg {
+    padding: 30px 50px;
+    text-align: center;
+  }
+
+  .maintenance-msg,
+  .maintenance-msg h1,
+  .maintenance-msg a {
+    color: #fff;
+  }
+
+  .maintenance-msg h1 {
+    font-size: 2.5em;
+  }
+
+  .maintenance-msg h2 {
+    font-size: 1.5rem;
+  }
+
+  .maintenance-msg h3 {
+    font-size: 1.25em;
+  }
+
+  .maintenance-plugs img {
+    background: center center / cover no-repeat;
+  }
+
+  @media screen and(max-width: 650px) {
+    .head-container .maintenance-page {
+      width: auto;
+    }
+
+    .brand-logo {
+      margin-top: 3rem;
+      text-align: center;
+    }
+
+    .brand-logo img {
+      width: 30.75rem !important;
+    }
+  }

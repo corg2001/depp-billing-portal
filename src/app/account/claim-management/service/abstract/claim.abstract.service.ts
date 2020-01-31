@@ -24,12 +24,12 @@ export abstract class ClaimServiceAbstract {
     completion$: Subject<boolean>,
     error$: Subject<boolean>,
     claimData$: BehaviorSubject<any>,
-    response: Observable<HttpResponse<ClaimPayloadInterface[]>>
+    response: ClaimPayloadInterface[]
   ): void;
   abstract getClaimsFailureHandler(
     completion$: Subject<boolean>,
     error$: Subject<boolean>,
-    errorResponse: Observable<HttpErrorResponse>
+    errorResponse: HttpErrorResponse
   ): void;
   abstract search(
     claimData: Claim[],
