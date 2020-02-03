@@ -1,18 +1,12 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, forkJoin } from 'rxjs';
 import { Claim } from '../model/claims.model';
-import {
-  JobStatus,
-  ClaimOrderType,
-  ClaimDisposition
-} from '../model/claims.enums';
 
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import {
   HttpClient,
   HttpErrorResponse,
-  HttpParams,
-  HttpResponse
+  HttpParams
 } from '@angular/common/http';
 import { ConfigService } from '../../../core/config.service';
 import { LoggerService } from '../../../core/logger.service';
@@ -21,12 +15,12 @@ import { ClaimServiceAbstract } from './abstract/claim.abstract.service';
 import { environment } from 'src/environments/environment';
 import { HttpParamEnum } from 'src/app/shared/enums/http-params.enums';
 import { AssociationPayloadInterface } from 'src/app/core/interface/payload/association.payload.interface';
+import { ClaimsParams } from 'src/app/core/models/claims-params.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClaimService implements ClaimServiceAbstract {
-  private _claims: Claim[] = [];
   public claims$: BehaviorSubject<Claim[]>;
   constructor(
     private _configService: ConfigService,
@@ -37,48 +31,61 @@ export class ClaimService implements ClaimServiceAbstract {
   public getClaims(
     isComplete$: Subject<boolean>,
     isError$: Subject<boolean>,
-    claimData$: BehaviorSubject<ClaimPayloadInterface[]>
+    claimData$: BehaviorSubject<ClaimPayloadInterface[]>,
+    isIl03Complete?: boolean,
+    isIl04Complete?: boolean
   ): void {
     const hasMultiAssociations: boolean = this._configService.hasMultiAssociations;
     const multipleAssociations: AssociationPayloadInterface[] = this._configService.multipleAssociations;
     hasMultiAssociations && multipleAssociations ?
-      this._getMultiClaims(multipleAssociations, isComplete$, isError$, claimData$) : this._getClaims(isComplete$, isError$, claimData$);
-
-
+      this._getMultiClaims(multipleAssociations, isComplete$, isError$,
+        claimData$, isIl03Complete, isIl04Complete) : this._getClaims(isComplete$, isError$, claimData$);
   }
 
   private _getMultiClaims(multipleAssociations: AssociationPayloadInterface[],
-    isComplete$: Subject<boolean>, isError$: Subject<boolean>, claimData$: BehaviorSubject<ClaimPayloadInterface[]>): void {
-
-    const i04: string = 'eyJjb21wYW55X2lkIjoiSUwwNCIsImJyYW5kcyI6eyJicmFuZF9pZHMiOlsiSFdBIl19fQ==';
-    const i03: string = 'eyJjb21wYW55X2lkIjoiSUwwMyIsImJyYW5kcyI6eyJicmFuZF9pZHMiOlsiSFdBIl19fQ==';
+    isComplete$: Subject<boolean>, isError$: Subject<boolean>,
+    claimData$: BehaviorSubject<ClaimPayloadInterface[]>, isIl03Complete?: boolean, isIl04Complete?: boolean): void {
+    const il04_companyInfo: string = 'eyJjb21wYW55X2lkIjoiSUwwNCIsImJyYW5kcyI6eyJicmFuZF9pZHMiOlsiSFdBIl19fQ==';
+    const il03_companyInfo: string = 'eyJjb21wYW55X2lkIjoiSUwwMyIsImJyYW5kcyI6eyJicmFuZF9pZHMiOlsiSFdBIl19fQ==';
+    let il04: ClaimsParams;
+    let il03: ClaimsParams;
 
     multipleAssociations.forEach((association: AssociationPayloadInterface) => {
-      const companyInfo = association.company_info.company_id === 'IL04' ? i04 : i03;
-      const vendorId = association.account_information.account_id;
-      const params: HttpParams = this.getClaimParams(vendorId, companyInfo);
-      this._httpClient.get<ClaimPayloadInterface[]>(environment.claimsUrl,
-        { params: params }).subscribe((data: ClaimPayloadInterface[]) => {
-          this.getClaimsSuccessHandler(isComplete$, isError$, claimData$, data);
-        }, (error: HttpErrorResponse) => {
-          this.getClaimsFailureHandler(isComplete$, isError$, error);
-        });
+      association.company_info.company_id === 'IL04' ? il04 = new ClaimsParams(il04_companyInfo,
+        association.account_information.account_id) : il03 = new ClaimsParams(il03_companyInfo, association.account_information.account_id);
     });
+    forkJoin(this._multiClaimsConfig(il03), this._multiClaimsConfig(il04)).subscribe((data: Array<ClaimPayloadInterface[]>) => {
+      this.getClaimsSuccessHandler(isComplete$, isError$, claimData$,
+        data.reduce((previousValue: ClaimPayloadInterface[], val: ClaimPayloadInterface[]) => previousValue.concat(val), []));
+    }, (error: HttpErrorResponse) => {
+      this.getClaimsFailureHandler(isComplete$, isError$);
+    });
+
+  }
+
+
+  private _multiClaimsConfig(claimsParam: ClaimsParams): Observable<ClaimPayloadInterface[]> {
+    console.log(claimsParam.vendorId)
+    const params = this.getClaimParams(claimsParam.vendorId, claimsParam.companyInfo);
+    return this._httpClient.get<ClaimPayloadInterface[]>(environment.claimsUrl,
+      { params: params });
+  }
+
+  private _claimsConfig(companyInfo: string, vendorId: string, isComplete$: Subject<boolean>, isError$: Subject<boolean>,
+    claimData$: BehaviorSubject<ClaimPayloadInterface[]>, ): void {
+    const params: HttpParams = this.getClaimParams(vendorId, companyInfo);
+    this._httpClient.get<ClaimPayloadInterface[]>(environment.claimsUrl,
+      { params: params }).subscribe((data: ClaimPayloadInterface[]) => {
+        this.getClaimsSuccessHandler(isComplete$, isError$, claimData$, data);
+      }, (error: HttpErrorResponse) => {
+        this.getClaimsFailureHandler(isComplete$, isError$);
+      });
   }
 
   private _getClaims(completion$: Subject<boolean>, error$: Subject<boolean>, claimData$: BehaviorSubject<ClaimPayloadInterface[]>): void {
     const vendorId: string = this._configService.getVendorId();
     const companyInfo: string = this._configService.getCompanyInfo();
-    const params: HttpParams = this.getClaimParams(vendorId, companyInfo);
-
-    this._httpClient.get(environment.claimsUrl, { params }).subscribe(
-      (data: any) => {
-        this.getClaimsSuccessHandler(completion$, error$, claimData$, data);
-      },
-      (errorResponse: any) => {
-        this.getClaimsFailureHandler(completion$, error$, errorResponse);
-      }
-    );
+    this._claimsConfig(companyInfo, vendorId, completion$, error$, claimData$);
   }
 
   public getClaimParams(vendorId: string, companyInfo: string): HttpParams {
@@ -100,8 +107,7 @@ export class ClaimService implements ClaimServiceAbstract {
   }
   public getClaimsFailureHandler(
     completion$: Subject<boolean>,
-    error$: Subject<boolean>,
-    errorResponse: HttpErrorResponse
+    error$: Subject<boolean>
   ): void {
     this._loggerService.error('Unable to retrieve claim data');
     completion$.next(true);
