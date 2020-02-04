@@ -37,7 +37,7 @@ export class ClaimService implements ClaimServiceAbstract {
     isError$: Subject<boolean>,
     claimData$: BehaviorSubject<ClaimPayloadInterface[]>,
   ): void {
-    const hasMultiAssociations = this._configService.hasMultiAssociations;
+    const hasMultiAssociations: boolean = this._configService.hasMultiAssociations;
     const multipleAssociations: AssociationPayloadInterface[] = this._configService.multipleAssociations;
     hasMultiAssociations && multipleAssociations ?
       this._getMultiClaims(multipleAssociations, isComplete$, isError$,
@@ -189,7 +189,7 @@ export class ClaimService implements ClaimServiceAbstract {
     const il03_vendorId: string = localStorage.getItem(AssociationEnums.il03VendorId);
     const il04_vendorId: string = localStorage.getItem(AssociationEnums.il04VendorId);
 
-    return jobNumber.includes(AssociationEnums.il04.toLowerCase()) ? il04_vendorId : il03_vendorId;
+    return jobNumber.toLowerCase().includes(AssociationEnums.il04.toLowerCase()) ? il04_vendorId : il03_vendorId;
   }
 
   private _checkMultipleAssociations(): boolean {
