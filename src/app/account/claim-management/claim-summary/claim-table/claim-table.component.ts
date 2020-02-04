@@ -3,8 +3,8 @@ import { ClaimService } from '../../service/claim.service';
 import { Claim } from '../../model/claims.model';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { JobStatus, LinkText } from '../../model/claims.enums';
-import { WindowRefAbstract } from 'src/app/core/window-ref.abstract.service';
 import { environment } from 'src/environments/environment';
+import { WindowRefAbstract } from 'src/app/core/window-ref.abstract.service';
 
 @Component({
   selector: 'app-claim-table',
@@ -55,7 +55,6 @@ export class ClaimTableComponent implements OnInit {
     });
 
     this.completedSubject$.subscribe((completed: boolean) => {
-      console.log(completed);
        this.isCompleted = completed;
     });
     this.error$.subscribe((error: boolean) => this.isError = error);
