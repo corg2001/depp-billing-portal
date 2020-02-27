@@ -161,7 +161,7 @@ Resources:
       HealthyThresholdCount: 5
       UnhealthyThresholdCount: 2
       Matcher:
-        HttpCode: 200,302
+        HttpCode: 200
       Name: !Join ["-", [!Ref BrandName, !Ref Frontend, "portal", !Ref Environment]]
       Port: 80
       Protocol: HTTP
