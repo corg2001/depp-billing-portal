@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PublicLayoutComponent implements OnInit {
 
-  public appLogo = '../../../assets/images/hwa-app-logo.png';
+  public appLogo = '../../../assets/images/depp-hwa-logos.jpg';
   public logoAltText = 'HWA - Home Warranty Of America';
 
   constructor() { }
