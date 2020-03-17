@@ -1,0 +1,36 @@
+version: 0.2
+
+env:
+  variables:
+    DEBIAN_FRONTEND: noninteractive
+
+phases:
+  install:
+    runtime-versions:
+      docker: 18
+  pre_build:
+    commands:
+    - aws s3api get-object --bucket ${BUILD_CONFIGS} --key hwa/contractor/environment-${ENVIRONMENT}.ts src/environments/environment.prod.ts --version-id $PORTAL_CONFIG_VERSION
+    - IMAGE_NAME="hwa-contractor-portal"
+    - IMAGE_VERSION="${ENVIRONMENT}_$(expr substr $CODEBUILD_RESOLVED_SOURCE_VERSION 1 8)_${PORTAL_CONFIG_VERSION}"
+    - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
+  build:
+    commands:
+    - docker run -i --name unify-hwa-contractor-portal -v $(pwd):/usr/src node:12.0.0 /bin/bash -c "apt update && cd /usr/src && npm install && npm install -g @angular/cli@7.3.9 && ng build --prod --aot --build-optimizer"
+    - docker build --build-arg DIST_PATH=dist/hwa-contractor -f Dockerfile  -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/unify/${IMAGE_NAME}:${IMAGE_VERSION} .
+    - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/unify/${IMAGE_NAME}:${IMAGE_VERSION}
+  post_build:
+    commands:
+    - >
+      echo "{\"Parameters\":
+      {\"Environment\": \"${ENVIRONMENT}\",
+      \"SslCertificate\": \"${SSL_CERTIFICATE}\",
+      \"Version\": \"${IMAGE_VERSION}\"
+      }
+      }" > deploy.json
+
+artifacts:
+  files:
+  - deploy-aws-dev.yaml
+  - deploy.json
+
