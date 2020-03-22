@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
     private _authService: AuthService,
     private _ngbModalService: NgbModal,
     private _router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.buildForm();
@@ -75,15 +75,15 @@ export class LoginComponent implements OnInit {
   }
 
   public login(): void {
-    const username = this.loginForm.get('userName').value.trim();
-    const password = this.loginForm.get('userPassword').value.trim();
+    const username: string = this.loginForm.get('userName').value.trim();
+    const password: string = this.loginForm.get('userPassword').value.trim();
     this._authService.login(
       this.responseSubject,
       this.dataSubject,
       username,
       password
     );
-    
+
     localStorage.setItem(LocalStorageEnum.UserName, username);
     this.showLoadingSpinner = true;
   }
