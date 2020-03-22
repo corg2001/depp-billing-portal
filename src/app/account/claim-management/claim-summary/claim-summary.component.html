@@ -1,6 +1,9 @@
 <div id="claim-summary-container" class="d-flex flex-column">
   <header class="header-txt">Welcome<label *ngIf="partyName !== null">, {{partyName}}</label>
   </header>
+  <div class="alert alert-danger text-danger text-center">
+    {{ coronoaVirusMsg }}
+  </div>
   <p class="login-info" *ngIf="lastLoginDate">{{lastLoginDate}}</p>
   <app-claim-notification [claimSubject$]="claimList$"></app-claim-notification>
   <div class="claim-summary">
