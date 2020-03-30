@@ -12,12 +12,14 @@ import { ClaimFactoryService } from './service/factory/claim.factory.service';
 import { ClaimServiceAbstract } from './service/abstract/claim.abstract.service';
 import { ClaimFactoryServiceAbstract } from './service/factory/claim.factory.abstract.service';
 import { ClaimNotificationComponent } from './claim-summary/claim-notification/claim-notification.component';
+import { SortableHeaderDirective } from '../../core/directive/sortable-header.directive';
 @NgModule({
   declarations: [
     ClaimSummaryComponent,
     SearchBoxComponent,
     ClaimTableComponent,
-    ClaimNotificationComponent
+    ClaimNotificationComponent,
+    SortableHeaderDirective
   ],
   imports: [
     CommonModule,
