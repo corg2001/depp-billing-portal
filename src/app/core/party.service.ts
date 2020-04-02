@@ -51,6 +51,7 @@ export class PartyService {
     responseData: PartyDetailsPayloadInterface
     // responseData: Observable<HttpResponse<PartyDetailsPayload>>
   ): void {
+    console.log(responseData)
     this.loggerService.action(' Party details successfully obtained ...');
     this.partyDetailsHandler(subscription, responseData);
     subscription.next(true);
@@ -359,6 +360,7 @@ export class PartyService {
       LocalStorageEnum.VendorID,
       association.account_information.account_id
     );
+    console.log(association.account_information.account_id)
   }
 
   private _setLocalPartyName(partyDetails: PartyDetailsPayloadInterface): void {
