@@ -17,7 +17,6 @@ export abstract class ClaimServiceAbstract {
     error$: Subject<boolean>,
     claimData: BehaviorSubject<ClaimPayloadInterface[]>
   ): void;
-  abstract getClaimParams(vendorId: string, companyInfo: string): HttpParams;
   abstract getClaimsSuccessHandler(
     completion$: Subject<boolean>,
     error$: Subject<boolean>,
