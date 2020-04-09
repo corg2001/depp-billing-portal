@@ -23,7 +23,7 @@
         <td>{{ claim.customerName }}</td>
         <td>{{ claim.jobStatus }}</td>
         <td>{{ claim.serviceAddress }}</td>
-        <td>{{ claim.customerContactPhone }}</td>
+        <td>{{ claim.customerContactPhone | formatphone }}</td>
         <td>
           <a
             class="text-uppercase"
