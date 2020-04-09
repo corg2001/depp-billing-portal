@@ -14,8 +14,6 @@ import { ClaimPayloadInterface } from '../interface/claim.payload.interface';
 import { ClaimServiceAbstract } from './abstract/claim.abstract.service';
 import { environment } from 'src/environments/environment';
 import { HttpParamEnum } from 'src/app/shared/enums/http-params.enums';
-import { AssociationPayloadInterface } from 'src/app/core/interface/payload/association.payload.interface';
-import { ClaimsParams } from 'src/app/core/models/claims-params.model';
 import { AssociationEnums } from 'src/app/shared/enums/association.enums';
 
 @Injectable({
@@ -37,68 +35,12 @@ export class ClaimService implements ClaimServiceAbstract {
     isError$: Subject<boolean>,
     claimData$: BehaviorSubject<ClaimPayloadInterface[]>,
   ): void {
-    const hasMultiAssociations: boolean = this._configService.hasMultiAssociations;
-    const multipleAssociations: AssociationPayloadInterface[] = this._configService.multipleAssociations;
-    hasMultiAssociations && multipleAssociations ?
-      this._getMultiClaims(multipleAssociations, isComplete$, isError$,
-        claimData$) : this._getClaims(isComplete$, isError$, claimData$);
-  }
-
-  private _getMultiClaims(multipleAssociations: AssociationPayloadInterface[],
-    isComplete$: Subject<boolean>, isError$: Subject<boolean>,
-    claimData$: BehaviorSubject<ClaimPayloadInterface[]>, isIl03Complete?: boolean, isIl04Complete?: boolean): void {
-    const il04_companyInfo: string = 'eyJjb21wYW55X2lkIjoiSUwwNCIsImJyYW5kcyI6eyJicmFuZF9pZHMiOlsiSFdBIl19fQ==';
-    const il03_companyInfo: string = 'eyJjb21wYW55X2lkIjoiSUwwMyIsImJyYW5kcyI6eyJicmFuZF9pZHMiOlsiSFdBIl19fQ==';
-    let il04: ClaimsParams;
-    let il03: ClaimsParams;
-
-
-    multipleAssociations.forEach((association: AssociationPayloadInterface) => {
-      association.company_info.company_id === AssociationEnums.il04 ? il04 = new ClaimsParams(il04_companyInfo,
-        association.account_information.account_id) : il03 = new ClaimsParams(il03_companyInfo, association.account_information.account_id);
-    });
-    localStorage.setItem(AssociationEnums.il03VendorId, il03.vendorId);
-    localStorage.setItem(AssociationEnums.il04VendorId, il04.vendorId);
-    this.il03_vendorId$.next(il03.vendorId);
-    this.il04_vendorId$.next(il04.vendorId);
-
-    forkJoin(this._multiClaimsConfig(il03), this._multiClaimsConfig(il04)).subscribe((data: Array<ClaimPayloadInterface[]>) => {
-      this.getClaimsSuccessHandler(isComplete$, isError$, claimData$,
-        data.reduce((previousValue: ClaimPayloadInterface[], val: ClaimPayloadInterface[]) => previousValue.concat(val), []));
-    }, (error: HttpErrorResponse) => {
-      this.getClaimsFailureHandler(isComplete$, isError$);
-    });
-
-  }
-
-
-  private _multiClaimsConfig(claimsParam: ClaimsParams): Observable<ClaimPayloadInterface[]> {
-    const params = this.getClaimParams(claimsParam.vendorId, claimsParam.companyInfo);
-    return this._httpClient.get<ClaimPayloadInterface[]>(environment.claimsUrl,
-      { params: params });
-  }
-
-  private _claimsConfig(companyInfo: string, vendorId: string, isComplete$: Subject<boolean>, isError$: Subject<boolean>,
-    claimData$: BehaviorSubject<ClaimPayloadInterface[]>, ): void {
-    const params: HttpParams = this.getClaimParams(vendorId, companyInfo);
-    this._httpClient.get<ClaimPayloadInterface[]>(environment.claimsUrl,
-      { params: params }).subscribe((data: ClaimPayloadInterface[]) => {
+    this._httpClient.get<ClaimPayloadInterface[]>(environment.claimsUrl)
+      .subscribe((data: ClaimPayloadInterface[]) => {
         this.getClaimsSuccessHandler(isComplete$, isError$, claimData$, data);
       }, (error: HttpErrorResponse) => {
         this.getClaimsFailureHandler(isComplete$, isError$);
       });
-  }
-
-  private _getClaims(completion$: Subject<boolean>, error$: Subject<boolean>, claimData$: BehaviorSubject<ClaimPayloadInterface[]>): void {
-    const vendorId: string = this._configService.getVendorId();
-    const companyInfo: string = this._configService.getCompanyInfo();
-    this._claimsConfig(companyInfo, vendorId, completion$, error$, claimData$);
-  }
-
-  public getClaimParams(vendorId: string, companyInfo: string): HttpParams {
-    return new HttpParams()
-      .set(HttpParamEnum.vendorId, vendorId)
-      .set(HttpParamEnum.companyInfo, companyInfo);
   }
 
   public getClaimsSuccessHandler(
