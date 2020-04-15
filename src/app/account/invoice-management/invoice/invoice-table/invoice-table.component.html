@@ -2,13 +2,13 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th scope="col">Claim ID</th>
-        <th scope="col">Claim Date</th>
-        <th scope="col">Homeowner Name</th>
-        <th scope="col">Service Address</th>
-        <th scope="col">Invoice No.</th>
-        <th scope="col">Invoice Date</th>
-        <th scope="col">Amount</th>
+        <th scope="col" appSortable="claimId" (sort)="onSort($event)">Claim ID</th>
+        <th scope="col" appSortable="claimDate" (sort)="onSort($event)">Claim Date</th>
+        <th scope="col" appSortable="customerName" (sort)="onSort($event)">Homeowner Name</th>
+        <th scope="col" appSortable="serviceAddress" (sort)="onSort($event)">Service Address</th>
+        <th scope="col" appSortable="invoiceId" (sort)="onSort($event)">Invoice No.</th>
+        <th scope="col" appSortable="invoiceDate" (sort)="onSort($event)">Invoice Date</th>
+        <th scope="col" appSortable="invoiceAmount" (sort)="onSort($event)">Amount</th>
       </tr>
     </thead>
     <tbody>
