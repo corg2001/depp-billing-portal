@@ -58,9 +58,7 @@ export class ClaimTableComponent implements OnInit {
       this.claims.length > 0
         ? (this.claimsFound = true)
         : (this.claimsFound = false);
-      if (this.claimsFound) {
-        this.onSort({column: 'dateRequested', direction: SortDirectionEnums.Descending});
-      }
+      this._sortList('dateRequested', SortDirectionEnums.Descending);
     });
 
     this.completedSubject$.subscribe((completed: boolean) => {
@@ -124,16 +122,27 @@ export class ClaimTableComponent implements OnInit {
   }
 
   public onSort(sort: SortEventInterface) {
+    if (!this.headers || !this.claimsFound) {
+      return;
+    }
+
     this.headers.forEach(header => {
       if (header.appSortable !== sort.column) {
         header.direction = SortDirectionEnums.None;
       }
     });
 
-    if (sort.direction !== SortDirectionEnums.None && sort.column !== '') {
+    this._sortList(sort.column, sort.direction);
+  }
+
+  private _sortList(
+    column: string,
+    direction: string
+  ): void {
+    if (direction !== SortDirectionEnums.None && column !== '') {
       this.claims = this.claims.sort((a: Claim, b: Claim) => {
-        const result = this._compare(`${a[sort.column]}`, `${b[sort.column]}`);
-        return sort.direction === SortDirectionEnums.Ascending ? result : -result;
+        const result = this._compareString(`${a[column]}`, `${b[column]}`);
+        return direction === SortDirectionEnums.Ascending ? result : -result;
       });
     }
   }
@@ -146,7 +155,7 @@ export class ClaimTableComponent implements OnInit {
     return claimsAmount > 150 ? 20 : 10;
   }
 
-  private _compare (v1: string, v2: string) {
+  private _compareString (v1?: string, v2?: string) {
     return (v1 < v2) ? -1 : (v1 > v2) ? 1 : 0;
   }
 }
