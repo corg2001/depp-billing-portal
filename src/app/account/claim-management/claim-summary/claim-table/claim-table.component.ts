@@ -84,7 +84,7 @@ export class ClaimTableComponent implements OnInit {
     );
   }
 
-  public authorizeInvoice(jobNumber: string): void {
+  public authorizeInvoice(jobNumber: string, vendorId: string): void {
     const authPortal = this._windowRefService.window.open('', '_blank');
     authPortal.document.write('Loading Invoice Portal, Please Wait ......');
 
@@ -94,6 +94,7 @@ export class ClaimTableComponent implements OnInit {
     const errorMessage$: Subject<string> = new Subject();
     this._claimService.authInvoiceRedirect(
       jobNumber,
+      vendorId,
       this.authorizeUrl$,
       completion$,
       error$,

@@ -27,7 +27,7 @@
         <td>
           <a
             class="text-uppercase"
-            (click)="authorizeInvoice(claim.jobNumber)"
+            (click)="authorizeInvoice(claim.jobNumber, claim.vendorId)"
             >{{ authorizeLinkText(claim.jobStatus) }}</a
           >
         </td>
