@@ -10,6 +10,7 @@ export class Claim implements ClaimInterface {
   private _jobStatus: JobStatus;
   private _serviceAddress: string;
   private _customerContactPhone: string;
+  private _vendorId: string;
   constructor(
     jobNumber?: string,
     dateRequested?: string,
@@ -18,7 +19,8 @@ export class Claim implements ClaimInterface {
     customerName?: string,
     jobStatus?: JobStatus,
     serviceAddress?: string,
-    customerContactPhone?: string
+    customerContactPhone?: string,
+    vendorId?: string
   ) {
     this._jobNumber = jobNumber;
     this._dateRequested = dateRequested;
@@ -28,6 +30,7 @@ export class Claim implements ClaimInterface {
     this._jobStatus = jobStatus;
     this._serviceAddress = serviceAddress;
     this._customerContactPhone = customerContactPhone;
+    this._vendorId = vendorId;
   }
   get jobNumber(): string {
     return this._jobNumber;
@@ -61,6 +64,10 @@ export class Claim implements ClaimInterface {
     return this._customerContactPhone;
   }
 
+  get vendorId(): string {
+    return this._vendorId;
+  }
+
   set jobNumber(jobNumber: string) {
     this._jobNumber = jobNumber;
   }
@@ -91,5 +98,9 @@ export class Claim implements ClaimInterface {
 
   set customerContactPhone(customerContactPhone: string) {
     this._customerContactPhone = customerContactPhone;
+  }
+
+  set vendorId(vendorId: string) {
+    this._vendorId = vendorId;
   }
 }
