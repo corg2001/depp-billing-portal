@@ -20,7 +20,7 @@ export class MenuComponent implements OnInit {
       desc: 'Review Documents'
     },
     {
-      label: 'Invoices',
+      label: 'Open Invoices',
       path: '/account/invoice',
       desc: 'Invoice History'
     },
