@@ -9,8 +9,8 @@
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="nav nav-pills ml-4">
       <li class="nav-item" *ngFor="let item of mainMenu">
-        <a class="nav-link" routerLink="{{item.path}}" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"
-          (click)="test(item)">{{ item.label }}</a>
+        <a class="nav-link" routerLink="{{item.path}}" [routerLinkActive]="['active']"
+          [routerLinkActiveOptions]="{exact:true}">{{ item.label }}</a>
       </li>
     </ul>
   </div>

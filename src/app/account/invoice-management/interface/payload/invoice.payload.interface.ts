@@ -1,4 +1,5 @@
 import * as Money from 'js-money';
+import { InvoicPaymentStatusEnum } from '../../model/enums/invoice-payment-status.enum';
 
 export interface InvoicePayloadInterface {
     readonly claim_date?: string;
@@ -8,4 +9,5 @@ export interface InvoicePayloadInterface {
     readonly invoice_date?: string;
     readonly invoice_id?: string;
     readonly service_address?: string;
+    readonly invoice_payment_status?: InvoicPaymentStatusEnum;
 }

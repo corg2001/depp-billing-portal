@@ -8,6 +8,7 @@ import { SortableHeaderDirective } from 'src/app/core/directive/sortable-header.
 import { SortDirectionEnums } from 'src/app/core/enums/sort-direction.enums';
 import { SortEventInterface } from 'src/app/core/interface/sort-event.interface';
 import * as Money from 'js-money';
+import { InvoicPaymentStatusEnum } from '../../model/enums/invoice-payment-status.enum';
 
 @Component({
   selector: 'app-invoice-table',
@@ -40,6 +41,7 @@ export class InvoiceTableComponent implements OnInit {
     this.noInfoText = `Invoice information is not available. Please reach out to your Territory Manager for assistance.`;
     this.invoices$.subscribe((invoices: InvoiceInterface[]) => {
       this.invoices = invoices;
+      this.invoices = this._filterbyPaymentStatus(invoices, InvoicPaymentStatusEnum.paid);
       this.collectionSize = invoices.length;
       this.infoFound = this._inFound(this.invoices);
       this._sortList('claimDate', SortDirectionEnums.Descending);
@@ -97,5 +99,9 @@ export class InvoiceTableComponent implements OnInit {
     num2 = parseFloat(v2.amount);
 
     return num1 - num2;
+  }
+
+  private _filterbyPaymentStatus(invoices: InvoiceInterface[], status: InvoicPaymentStatusEnum ): InvoiceInterface[] {
+    return invoices.filter((invoice: InvoiceInterface) => invoice.invoicePaymentStatus === status);
   }
 }

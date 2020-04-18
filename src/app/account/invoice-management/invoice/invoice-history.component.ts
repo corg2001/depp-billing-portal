@@ -33,7 +33,7 @@ export class InvoiceHistoryComponent implements OnInit {
 
   public init(): void {
     this.noHistoryMessage = environment.core.noHistoryMessage;
-    this.headerText = 'Invoice History';
+    this.headerText = 'Open Invoice History';
     this._configService.init();
     this.noInfoText = `Invoice information is not available. Please reach out to your Territory Manager for assistance.`;
     this.getInvoice(this.invoices$, this.completion$, this.error$, this.errorMessage$);

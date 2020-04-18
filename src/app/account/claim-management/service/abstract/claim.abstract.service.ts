@@ -36,6 +36,7 @@ export abstract class ClaimServiceAbstract {
 
   abstract authInvoiceRedirect(
     jobNumber: string,
+    vendorId: string,
     data$: BehaviorSubject<any>,
     completion$: Subject<boolean>,
     error$: Subject<boolean>,
