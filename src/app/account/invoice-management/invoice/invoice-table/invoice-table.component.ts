@@ -42,7 +42,7 @@ export class InvoiceTableComponent implements OnInit {
     this.invoices$.subscribe((invoices: InvoiceInterface[]) => {
       this.invoices = invoices;
       this.invoices = this._filterUnpaidInvoices(invoices);
-      this.collectionSize = invoices.length;
+      this.collectionSize = this.invoices.length;
       this.infoFound = this._inFound(this.invoices);
       this._sortList('claimDate', SortDirectionEnums.Descending);
     });
