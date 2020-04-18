@@ -9,5 +9,6 @@ export interface ClaimInterface {
   readonly jobStatus: JobStatus;
   readonly serviceAddress: string;
   readonly customerContactPhone: string;
+  readonly vendorId: string;
 }
 

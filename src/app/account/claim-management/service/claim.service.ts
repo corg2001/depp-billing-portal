@@ -85,14 +85,12 @@ export class ClaimService implements ClaimServiceAbstract {
 
   public authInvoiceRedirect(
     jobNumber: string,
+    vendorId: string,
     data$: BehaviorSubject<any>,
     completion$: Subject<boolean>,
     error$: Subject<boolean>,
     errorMessage$: Subject<string>
   ): void {
-    let vendorId: string;
-    const hasMultiAssociations = this._checkMultipleAssociations();
-    hasMultiAssociations ? vendorId = this._getMultiAssociationsVendorId(jobNumber) : vendorId = this._configService.getVendorId();
     const params: HttpParams = this.getAuthInvoiceParams(vendorId, jobNumber);
     this._httpClient.get(environment.authInoviceUrl, { params }).subscribe(
       (data: any) => {
@@ -125,16 +123,5 @@ export class ClaimService implements ClaimServiceAbstract {
     error$.next(true);
     errorMessage$.next(error.error.message);
     this._loggerService.error(` unable to get auth portal url <br/> ${error.error.message}`);
-  }
-
-  private _getMultiAssociationsVendorId(jobNumber: string): string {
-    const il03_vendorId: string = localStorage.getItem(AssociationEnums.il03VendorId);
-    const il04_vendorId: string = localStorage.getItem(AssociationEnums.il04VendorId);
-
-    return jobNumber.toLowerCase().includes(AssociationEnums.il04.toLowerCase()) ? il04_vendorId : il03_vendorId;
-  }
-
-  private _checkMultipleAssociations(): boolean {
-    return this._configService.hasMultiAssociations;
   }
 }

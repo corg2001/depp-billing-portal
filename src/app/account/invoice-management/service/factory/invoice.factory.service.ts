@@ -21,7 +21,8 @@ export class InvoiceFactoryService implements InvoiceFactoryAbstractService {
         invoiceAmount: invoice.invoice_amount,
         invoiceDate: invoice.invoice_date,
         invoiceId: invoice.invoice_id,
-        serviceAddress: invoice.service_address
+        serviceAddress: invoice.service_address,
+        invoicePaymentStatus: invoice.invoice_payment_status
       };
       invoicesList.push(_invoice);
     });

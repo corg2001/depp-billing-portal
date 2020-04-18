@@ -21,7 +21,8 @@ export class ClaimFactoryService {
         claimPlayload.customer_name,
         claimPlayload.job_status,
         claimPlayload.service_address,
-        claimPlayload.customer_contact_phone
+        claimPlayload.customer_contact_phone,
+        claimPlayload.vendor_id
       );
       claims.push(claim);
     });
