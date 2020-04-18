@@ -41,7 +41,7 @@ export class InvoiceTableComponent implements OnInit {
     this.noInfoText = `Invoice information is not available. Please reach out to your Territory Manager for assistance.`;
     this.invoices$.subscribe((invoices: InvoiceInterface[]) => {
       this.invoices = invoices;
-      this.invoices = this._filterbyPaymentStatus(invoices, InvoicPaymentStatusEnum.paid);
+      this.invoices = this._filterUnpaidInvoices(invoices);
       this.collectionSize = invoices.length;
       this.infoFound = this._inFound(this.invoices);
       this._sortList('claimDate', SortDirectionEnums.Descending);
@@ -101,7 +101,7 @@ export class InvoiceTableComponent implements OnInit {
     return num1 - num2;
   }
 
-  private _filterbyPaymentStatus(invoices: InvoiceInterface[], status: InvoicPaymentStatusEnum ): InvoiceInterface[] {
-    return invoices.filter((invoice: InvoiceInterface) => invoice.invoicePaymentStatus === status);
+  private _filterUnpaidInvoices(invoices: InvoiceInterface[]): InvoiceInterface[] {
+    return invoices.filter((invoice: InvoiceInterface) => invoice.invoicePaymentStatus === InvoicPaymentStatusEnum.unpaid);
   }
 }
