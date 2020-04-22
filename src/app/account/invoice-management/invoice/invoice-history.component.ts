@@ -23,7 +23,6 @@ export class InvoiceHistoryComponent implements OnInit {
   public isData: boolean = false;
   public noInfoText: string;
   public headerText: string;
-  public noHistoryMessage: string;
 
   constructor(private _invoiceService: InvoiceAsbstractService, private _configService: ConfigService) {}
 
@@ -32,7 +31,6 @@ export class InvoiceHistoryComponent implements OnInit {
   }
 
   public init(): void {
-    this.noHistoryMessage = environment.core.noHistoryMessage;
     this.headerText = 'Open Invoice History';
     this._configService.init();
     this.noInfoText = `Invoice information is not available. Please reach out to your Territory Manager for assistance.`;
