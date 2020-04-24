@@ -1,4 +1,5 @@
 import { InvoiceInterface } from '../interface/invoice.interface';
+import { InvoicPaymentStatusEnum } from './enums/invoice-payment-status.enum';
 
 export class Invoice implements InvoiceInterface {
   private _claimId: string;
@@ -8,6 +9,7 @@ export class Invoice implements InvoiceInterface {
   private _invoiceNo: string;
   private _invoiceDate: string;
   private _amount: string;
+  private _invoicePaymentStatus: InvoicPaymentStatusEnum;
   constructor(
     claimId?: string,
     claimDate?: string,
@@ -15,7 +17,8 @@ export class Invoice implements InvoiceInterface {
     serviceAddress?: string,
     invoiceNo?: string,
     invoiceDate?: string,
-    amount?: string
+    amount?: string,
+    invoicePaymentStatus?: InvoicPaymentStatusEnum
   ) {
     this._claimId = claimId;
     this._claimDate = claimDate;
@@ -24,6 +27,7 @@ export class Invoice implements InvoiceInterface {
     this._invoiceNo = invoiceNo;
     this._invoiceDate = invoiceDate;
     this._amount = amount;
+    this._invoicePaymentStatus = invoicePaymentStatus;
   }
   get claimId(): string {
     return this._claimId;
@@ -53,6 +57,10 @@ export class Invoice implements InvoiceInterface {
     return this._amount;
   }
 
+  get invoicePaymentStatus(): InvoicPaymentStatusEnum {
+    return this._invoicePaymentStatus;
+  }
+
   set claimId(claimId: string) {
     this._claimId = claimId;
   }
@@ -79,5 +87,9 @@ export class Invoice implements InvoiceInterface {
 
   set amount(amount: string) {
     this._amount = amount;
+  }
+
+  set invoicePaymentStatus(status: InvoicPaymentStatusEnum) {
+    this._invoicePaymentStatus = status;
   }
 }

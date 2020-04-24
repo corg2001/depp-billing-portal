@@ -1,9 +1,12 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChildren, QueryList } from '@angular/core';
 import { ClaimService } from '../../service/claim.service';
 import { Claim } from '../../model/claims.model';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { JobStatus, LinkText } from '../../model/claims.enums';
 import { environment } from 'src/environments/environment';
+import { SortableHeaderDirective } from 'src/app/core/directive/sortable-header.directive';
+import { SortDirectionEnums } from 'src/app/core/enums/sort-direction.enums';
+import { SortEventInterface } from 'src/app/core/interface/sort-event.interface';
 import { WindowRefAbstract } from 'src/app/core/window-ref.abstract.service';
 
 @Component({
@@ -22,6 +25,9 @@ export class ClaimTableComponent implements OnInit {
     Claim[]
   > = new BehaviorSubject([]);
   @Input() public error$: Subject<boolean> = new Subject();
+
+  @ViewChildren(SortableHeaderDirective) headers: QueryList<SortableHeaderDirective>;
+
   public isError: boolean;
   public isCompleted: boolean;
   public claims: Claim[] = [];
@@ -52,6 +58,7 @@ export class ClaimTableComponent implements OnInit {
       this.claims.length > 0
         ? (this.claimsFound = true)
         : (this.claimsFound = false);
+      this._sortList('dateRequested', SortDirectionEnums.Descending);
     });
 
     this.completedSubject$.subscribe((completed: boolean) => {
@@ -77,7 +84,7 @@ export class ClaimTableComponent implements OnInit {
     );
   }
 
-  public authorizeInvoice(jobNumber: string): void {
+  public authorizeInvoice(jobNumber: string, vendorId: string): void {
     const authPortal = this._windowRefService.window.open('', '_blank');
     authPortal.document.write('Loading Invoice Portal, Please Wait ......');
 
@@ -87,6 +94,7 @@ export class ClaimTableComponent implements OnInit {
     const errorMessage$: Subject<string> = new Subject();
     this._claimService.authInvoiceRedirect(
       jobNumber,
+      vendorId,
       this.authorizeUrl$,
       completion$,
       error$,
@@ -114,11 +122,41 @@ export class ClaimTableComponent implements OnInit {
       LinkText.authorize : '';
   }
 
+  public onSort(sort: SortEventInterface) {
+    if (!this.headers || !this.claimsFound) {
+      return;
+    }
+
+    this.headers.forEach(header => {
+      if (header.appSortable !== sort.column) {
+        header.direction = SortDirectionEnums.None;
+      }
+    });
+
+    this._sortList(sort.column, sort.direction);
+  }
+
+  private _sortList(
+    column: string,
+    direction: string
+  ): void {
+    if (direction !== SortDirectionEnums.None && column !== '') {
+      this.claims = this.claims.sort((a: Claim, b: Claim) => {
+        const result = this._compareString(`${a[column]}`, `${b[column]}`);
+        return direction === SortDirectionEnums.Ascending ? result : -result;
+      });
+    }
+  }
+
   private _sendToPortal(authPortal: any, url: string): void {
     authPortal.location.href = url;
   }
 
   private _getPageSize(claimsAmount: number): number {
     return claimsAmount > 150 ? 20 : 10;
+  }
+
+  private _compareString (v1?: string, v2?: string) {
+    return (v1 < v2) ? -1 : (v1 > v2) ? 1 : 0;
   }
 }

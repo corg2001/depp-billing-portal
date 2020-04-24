@@ -3,13 +3,14 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th scope="col">Job ID</th>
-        <th scope="col">Date</th>
-        <th scope="col">Claim Order Type</th>
-        <th scope="col">Claim Disposition</th>
-        <th scope="col">Name</th>
-        <th scope="col">Job Status</th>
-        <th scope="col">Service Address</th>
+        <th scope="col" appSortable="jobNumber" (sort)="onSort($event)">Job ID</th>
+        <th scope="col" appSortable="dateRequested" (sort)="onSort($event)">Date</th>
+        <th scope="col" appSortable="claimType" (sort)="onSort($event)">Claim Order Type</th>
+        <th scope="col" appSortable="claimDisposition" (sort)="onSort($event)">Claim Disposition</th>
+        <th scope="col" appSortable="customerName" (sort)="onSort($event)">Name</th>
+        <th scope="col" appSortable="jobStatus" (sort)="onSort($event)">Job Status</th>
+        <th scope="col" appSortable="serviceAddress" (sort)="onSort($event)">Service Address</th>
+        <th scope="col" appSortable="customerContactPhone" (sort)="onSort($event)">Best Contact Number</th>
         <th></th>
       </tr>
     </thead>
@@ -22,10 +23,11 @@
         <td>{{ claim.customerName }}</td>
         <td>{{ claim.jobStatus }}</td>
         <td>{{ claim.serviceAddress }}</td>
+        <td>{{ claim.customerContactPhone | formatphone }}</td>
         <td>
           <a
             class="text-uppercase"
-            (click)="authorizeInvoice(claim.jobNumber)"
+            (click)="authorizeInvoice(claim.jobNumber, claim.vendorId)"
             >{{ authorizeLinkText(claim.jobStatus) }}</a
           >
         </td>

@@ -12,4 +12,6 @@ export interface ClaimPayloadInterface {
   readonly customer_name: string;
   readonly job_status: JobStatus;
   readonly service_address: string;
+  readonly customer_contact_phone: string;
+  readonly vendor_id: string;
 }

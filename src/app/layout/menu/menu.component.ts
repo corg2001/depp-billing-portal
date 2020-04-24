@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class MenuComponent implements OnInit {
 
 
-  public mainMenu: any =  [
+  public mainMenu: any = [
     {
       label: 'Dashboard',
       path: '/',
@@ -20,7 +20,7 @@ export class MenuComponent implements OnInit {
       desc: 'Review Documents'
     },
     {
-      label: 'Invoices',
+      label: 'Open Invoices',
       path: '/account/invoice',
       desc: 'Invoice History'
     },
@@ -40,9 +40,4 @@ export class MenuComponent implements OnInit {
 
   ngOnInit() {
   }
-
-  public test(item: any): void {
-    console.log(item);
-  }
-
 }

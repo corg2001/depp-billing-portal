@@ -30,12 +30,8 @@ export class PaymentService implements PaymentAbstractService {
     error$: Subject<boolean>,
     errorMessage$: Subject<any>
   ): void {
-    // const vendorId: string = this._configService.getPartyId();
-    const vendorId =  this._configService.getVendorId();
-    const companyInfo: string = this._configService.getCompanyInfo();
-    const params = this.buildPaymentHistoryParams(vendorId, companyInfo);
     this._http
-      .get(environment.payementHistoryUrl, { params })
+      .get(environment.payementHistoryUrl)
       .subscribe((response: any) => {
         this.paymentHistorySuccessHandler(
           paymentHistory$,
@@ -44,15 +40,6 @@ export class PaymentService implements PaymentAbstractService {
           response
         );
       }, (error: any) => this.paymentHistoryErrorHandler(error$, errorMessage$, completion$, error));
-  }
-
-  public buildPaymentHistoryParams(
-    vendorId: string,
-    companyInfo: string
-  ): HttpParams {
-    return new HttpParams()
-      .set(HttpParamEnum.vendorId, vendorId)
-      .set(HttpParamEnum.companyInfo, companyInfo);
   }
 
   public paymentHistorySuccessHandler(

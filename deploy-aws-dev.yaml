@@ -1,0 +1,283 @@
+Description: Elastic container service for Unify HWA contractor portal
+
+Parameters:
+  Environment:
+    Type: String
+    Description: Environment identifier suffix, will be appended to resource identifiers
+    AllowedValues: [prod, uat, qa11, qa10, qa7, qa5, qa4, qa3, qa2, qa1]
+  Version:
+    Type: String
+    Description: Application version
+  ClusterName:
+    Type: String
+    Description: ECS cluster name
+  SslCertificate:
+    Type: String
+    Description: SSL certificate ARN for HTTPS listener
+  HostedZoneId:
+    Type: AWS::Route53::HostedZone::Id
+    Description: Digital hosted zone id
+  HostedZoneName:
+    Type: String
+    Description: Digital hosted zone name
+
+Mappings:
+  EnvironmentVPCMap:
+    prod:
+      Name: awue-vpc-digitaldev-dev-001
+      Id: vpc-d6e30dad
+      Subnets: [subnet-caebc0ae, subnet-90443fbf]
+    uat:
+      Name: awue-vpc-digitaldev-dev-001
+      Id: vpc-d6e30dad
+      Subnets: [subnet-caebc0ae, subnet-90443fbf]
+    qa11:
+      Name: awue-vpc-digitaldev-dev-001
+      Id: vpc-d6e30dad
+      Subnets: [subnet-caebc0ae, subnet-90443fbf]
+    qa7:
+      Name: awue-vpc-digitaldev-dev-001
+      Id: vpc-d6e30dad
+      Subnets: [subnet-f79595bc, subnet-90443fbf]
+    qa5:
+      Name: awue-vpc-digitaldev-dev-001
+      Id: vpc-d6e30dad
+      Subnets: [subnet-caebc0ae, subnet-90443fbf]
+    qa4:
+      Name: awue-vpc-digitaldev-dev-001
+      Id: vpc-d6e30dad
+      Subnets: [subnet-caebc0ae, subnet-90443fbf]
+    qa3:
+      Name: awue-vpc-digitaldev-dev-001
+      Id: vpc-d6e30dad
+      Subnets: [subnet-09b7c7b0508c0eead, subnet-03fe953c06cd8328c]
+    qa2:
+      Name: awue-vpc-digitaldev-dev-001
+      Id: vpc-d6e30dad
+      Subnets: [subnet-caebc0ae, subnet-90443fbf]
+    qa1:
+      Name: awue-vpc-digitaldev-dev-001
+      Id: vpc-d6e30dad
+      Subnets: [subnet-caebc0ae, subnet-90443fbf]
+  EnvironmentCIMap:
+    prod:
+      Name: production
+    uat:
+      Name: development
+    qa11:
+      Name: development
+    qa7:
+      Name: development
+    qa5:
+      Name: development
+    qa4:
+      Name: development
+    qa3:
+      Name: development
+    qa2:
+      Name: development
+    qa1:
+      Name: development
+  EnvironmentTaskMap:
+    prod:
+      Cpu: 256
+      Memory: 0.5GB
+      Desired: 2
+    uat:
+      Cpu: 256
+      Memory: 0.5GB
+      Desired: 2
+    qa11:
+      Cpu: 256
+      Memory: 0.5GB
+      Desired: 1
+    qa7:
+      Cpu: 256
+      Memory: 0.5GB
+      Desired: 1
+    qa5:
+      Cpu: 256
+      Memory: 0.5GB
+      Desired: 1
+    qa4:
+      Cpu: 256
+      Memory: 0.5GB
+      Desired: 1
+    qa3:
+      Cpu: 256
+      Memory: 0.5GB
+      Desired: 1
+    qa2:
+      Cpu: 256
+      Memory: 0.5GB
+      Desired: 1
+    qa1:
+      Cpu: 256
+      Memory: 0.5GB
+      Desired: 1
+
+Resources:
+  LogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Join ["-", ["unify", "hwa-contractor", "portal", !Ref Environment]]
+      RetentionInDays: 90
+  TaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    DependsOn: LogGroup
+    Properties:
+      Family: !Join ["-", ["unify", "hwa-contractor", "portal", !Ref Environment]]
+      NetworkMode: awsvpc
+      RequiresCompatibilities:
+      - FARGATE
+      Cpu: !FindInMap [EnvironmentTaskMap, !Ref Environment, Cpu]
+      Memory: !FindInMap [EnvironmentTaskMap, !Ref Environment, Memory]
+      ExecutionRoleArn: arn:aws:iam::229218735471:role/DE-Digital-ECS-TaskExecution-Role
+      ContainerDefinitions:
+      -
+        Environment:
+        - Name: CI_ENV
+          Value: !FindInMap [EnvironmentCIMap, !Ref Environment, Name]
+        Image: !Join ["", [!Ref "AWS::AccountId", ".dkr.ecr.", !Ref "AWS::Region", ".amazonaws.com/unify/", !Join [":", [!Join ["-", ["hwa-contractor", "portal"]], !Ref Version]]]]
+        LogConfiguration:
+          LogDriver: awslogs
+          Options:
+            awslogs-region: !Ref AWS::Region
+            awslogs-group: !Ref LogGroup
+            awslogs-stream-prefix: "unify-hwa-contractor"
+        Memory: 128
+        Name: !Join ["-", ["unify", "hwa-contractor", "portal", !Ref Environment]]
+        PortMappings:
+        - ContainerPort: 8080
+          Protocol: tcp
+
+  ServiceSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: !Join ["-", ["awue-sg-unify", "hwa-contractor", "portal", !Ref Environment, "service"]]
+      GroupDescription: ECS service security group
+      VpcId: !FindInMap [EnvironmentVPCMap, !Ref Environment, Id]
+      SecurityGroupIngress:
+      - IpProtocol: -1
+        FromPort: 0
+        ToPort: 65535
+        CidrIp: 0.0.0.0/0
+        Description: Allow all inbound traffic
+      SecurityGroupEgress:
+      - IpProtocol: -1
+        FromPort: 0
+        ToPort: 65535
+        CidrIp: 0.0.0.0/0
+        Description: Allow all outbound traffic
+      Tags:
+      - Key: Name
+        Value: !Join ["-", ["awue-sg", "unify", "hwa-contractor", "portal", !Ref Environment, "-service"]]
+      - Key: Environment
+        Value: !Ref Environment
+  LbSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: !Join ["-", ["awue-sg", "unify", "hwa-contractor", "portal", !Ref Environment, "-lb"]]
+      GroupDescription: ECS service load balancer security group
+      VpcId: !FindInMap [EnvironmentVPCMap, !Ref Environment, Id]
+      SecurityGroupIngress:
+      - IpProtocol: tcp
+        FromPort: 443
+        ToPort: 443
+        CidrIp: 0.0.0.0/0
+        Description: Allow inbound HTTPS traffic
+      SecurityGroupEgress:
+      - IpProtocol: tcp
+        FromPort: 0
+        ToPort: 65535
+        CidrIp: 0.0.0.0/0
+        Description: Allow all outbound TCP traffic
+      Tags:
+      - Key: Name
+        Value: !Join ["-", ["awue-sg", "unify", "hwa-contractor", "portal", !Ref Environment, "-lb"]]
+      - Key: Environment
+        Value: !Ref Environment
+  LoadBalancer:
+    Type: "AWS::ElasticLoadBalancingV2::LoadBalancer"
+    Properties:
+      Name: !Join ["-", ["unify", "hwa-contractor", "portal", !Ref Environment]]
+      Scheme: internal
+      SecurityGroups:
+      - !Ref LbSecurityGroup
+      Subnets: !FindInMap [EnvironmentVPCMap, !Ref Environment, Subnets]
+      IpAddressType: ipv4
+  TargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    DependsOn: LoadBalancer
+    Properties:
+      HealthCheckIntervalSeconds: 10
+      HealthCheckPath: "/"
+      HealthCheckPort: traffic-port
+      HealthCheckProtocol: HTTP
+      HealthCheckTimeoutSeconds: 5
+      HealthyThresholdCount: 5
+      UnhealthyThresholdCount: 2
+      Matcher:
+        HttpCode: 200
+      Name: !Join ["-", ["unify", "hwa-contractor", "portal", !Ref Environment]]
+      Port: 80
+      Protocol: HTTP
+      TargetGroupAttributes:
+      - Key: deregistration_delay.timeout_seconds
+        Value: 5
+      - Key: stickiness.enabled
+        Value: true
+      - Key: stickiness.type
+        Value: lb_cookie
+      - Key: stickiness.lb_cookie.duration_seconds
+        Value: 86400
+      TargetType: ip
+      VpcId: !FindInMap [EnvironmentVPCMap, !Ref Environment, Id]
+  Listener:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      LoadBalancerArn: !Ref LoadBalancer
+      Port: 443
+      Protocol: HTTPS
+      DefaultActions:
+      - TargetGroupArn: !Ref TargetGroup
+        Type: forward
+      Certificates:
+      - CertificateArn: !Ref SslCertificate
+      SslPolicy: ELBSecurityPolicy-TLS-1-2-2017-01
+  DnsRecord:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      HostedZoneId: !Ref HostedZoneId
+      Name: !Join [".",  [!Join ["-", ["hwa-contractor", !Ref Environment]], !Ref HostedZoneName]]
+      Type: A
+      AliasTarget:
+        HostedZoneId: Z35SXDOTRQ7X7K
+        DNSName: !GetAtt LoadBalancer.DNSName
+
+  Service:
+    Type: AWS::ECS::Service
+    DependsOn:
+    - LoadBalancer
+    - TargetGroup
+    - Listener
+    Properties:
+      Cluster: !Ref ClusterName
+      LaunchType: FARGATE
+      DeploymentConfiguration:
+        MaximumPercent: 200
+        MinimumHealthyPercent: 50
+      DesiredCount: !FindInMap [EnvironmentTaskMap, !Ref Environment, Desired]
+      LoadBalancers:
+        - ContainerName: !Join ["-", ["unify", "hwa-contractor", "portal", !Ref Environment]]
+          ContainerPort: 8080
+          TargetGroupArn: !Ref TargetGroup
+      ServiceName: !Join ["-", ["unify", "hwa-contractor", "portal", !Ref Environment]]
+      TaskDefinition: !Ref TaskDefinition
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          AssignPublicIp: DISABLED
+          SecurityGroups:
+          - !Ref ServiceSecurityGroup
+          #- !Ref DatabaseSecurityGroup
+          Subnets: !FindInMap [EnvironmentVPCMap, !Ref Environment, Subnets]

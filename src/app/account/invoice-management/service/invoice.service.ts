@@ -19,8 +19,6 @@ import { InvoiceInterface } from '../interface/invoice.interface';
 import { InvoiceAsbstractService } from './abstract/invoice.asbstract.service';
 import * as dateformat from 'dateformat';
 import { CalendarEnums } from 'src/app/shared/enums/calendar.enums';
-import { CompanyInfoPayloadInterface } from 'src/app/core/interface/payload/company-info.payload.interface';
-import { BrandsPayloadInterface } from 'src/app/core/interface/payload/brands.payload.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -45,11 +43,7 @@ export class InvoiceService implements InvoiceAsbstractService {
   ): void {
     // get invoice starting from a year ago
     const date: string = dateformat(moment().subtract(1, 'y'), HttpParamEnum.yearMonthDayFormat);
-    const vendorId: string = this._configService.getVendorId();
-    const companyInfo: string = this._configService.getCompanyInfo();
     const params: HttpParams = this.getInvoiceParams(
-      vendorId,
-      companyInfo,
       date
     );
     this._http
@@ -68,15 +62,10 @@ export class InvoiceService implements InvoiceAsbstractService {
   }
 
   public getInvoiceParams(
-    vendorId: string,
-    companyInfo: string,
     date: string
   ): HttpParams {
-  
     return new HttpParams()
-      .set(HttpParamEnum.vendorId, vendorId)
-      .set(HttpParamEnum.starDate, date)
-      .set(HttpParamEnum.companyInfo, companyInfo);
+      .set(HttpParamEnum.starDate, date);
   }
 
   public getInvoiceSuccessHandler(

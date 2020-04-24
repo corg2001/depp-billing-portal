@@ -17,7 +17,9 @@ export abstract class InvoiceAsbstractService {
     errorMessage$?: Subject<string>
   ): void;
 
-  abstract getInvoiceParams(vendorId: string, companyInfo: string, date: string): HttpParams;
+  abstract getInvoiceParams(
+    date: string
+  ): HttpParams;
 
   abstract getInvoiceSuccessHandler(
     invoices$: BehaviorSubject<InvoiceInterface[]>,

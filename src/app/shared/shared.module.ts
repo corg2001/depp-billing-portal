@@ -1,3 +1,4 @@
+import { SortableHeaderDirective } from './../core/directive/sortable-header.directive';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ModalComponent } from './modal/modal.component';
@@ -19,7 +20,8 @@ import { FromatLastFour } from './pipe/show-last-four-format';
     FormatPassword,
     FromatLastFour,
     ProgressBarComponent,
-    ResultJumbotronComponent
+    ResultJumbotronComponent,
+    SortableHeaderDirective
   ],
   imports: [CommonModule],
   exports: [
@@ -30,7 +32,8 @@ import { FromatLastFour } from './pipe/show-last-four-format';
     FormatPassword,
     FromatLastFour,
     ProgressBarComponent,
-    ResultJumbotronComponent
+    ResultJumbotronComponent,
+    SortableHeaderDirective
   ],
   entryComponents: [ModalComponent, ProgressBarComponent],
 
