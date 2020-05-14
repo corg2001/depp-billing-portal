@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, forkJoin } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { Claim } from '../model/claims.model';
 
 import { Subject } from 'rxjs';
@@ -14,7 +14,7 @@ import { ClaimPayloadInterface } from '../interface/claim.payload.interface';
 import { ClaimServiceAbstract } from './abstract/claim.abstract.service';
 import { environment } from 'src/environments/environment';
 import { HttpParamEnum } from 'src/app/shared/enums/http-params.enums';
-import { AssociationEnums } from 'src/app/shared/enums/association.enums';
+import { JobDetailInterface } from './../interface/job-detail.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -124,4 +124,5 @@ export class ClaimService implements ClaimServiceAbstract {
     errorMessage$.next(error.error.message);
     this._loggerService.error(` unable to get auth portal url <br/> ${error.error.message}`);
   }
+
 }

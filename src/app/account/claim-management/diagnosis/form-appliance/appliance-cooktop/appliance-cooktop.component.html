@@ -1,0 +1,101 @@
+<div [formGroup]="diagnosisForm">
+  <div formGroupName="applianceTypeInfo">
+    <div formGroupName="cooktop">
+      <div class="form-row">
+        <div class="form-group form-inline ml-1">
+          <div class="option-group-label">
+            30"/36"?
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="size" formControlName="size" id="cooktopSize30" value="30">
+            <label class="custom-control-label" for="cooktopSize30">30"</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="size" formControlName="size" id="cooktopSize36" value="36">
+            <label class="custom-control-label" for="cooktopSize36">36"</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group form-inline ml-1">
+          <div class="option-group-label">
+            Gas or Electric?
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="gasOrElectric" formControlName="gasOrElectric" id="ctGasOrElectricYes" value="Yes">
+            <label class="custom-control-label" for="ctGasOrElectricYes">Yes</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="gasOrElectric" formControlName="gasOrElectric" id="ctGasOrElectricNo" value="No">
+            <label class="custom-control-label" for="ctGasOrElectricNo">No</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group form-inline ml-1">
+          <div class="option-group-label">
+            Coil or Smooth Top (if electric)?
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="topType" formControlName="topType" id="topTypeCoil" value="Coil">
+            <label class="custom-control-label" for="topTypeCoil">Coil</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="topType" formControlName="topType" id="topTypeSmooth" value="Smooth">
+            <label class="custom-control-label" for="topTypeSmooth">Smooth Top</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group form-inline ml-1">
+          <div class="option-group-label">
+            Glass or porcelain?
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="glassOrPorcelain" formControlName="glassOrPorcelain" id="gopGlass" value="Glass">
+            <label class="custom-control-label" for="gopGlass">Glass</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="glassOrPorcelain" formControlName="glassOrPorcelain" id="gopPorcelain" value="Porcelain">
+            <label class="custom-control-label" for="gopPorcelain">Porcelain</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group form-inline ml-1">
+          <div class="option-group-label">
+            Downdraft Fan (yes or no)?
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="hasDowndraftFan" formControlName="hasDowndraftFan" id="hasDowndraftFanYes" value="Yes">
+            <label class="custom-control-label" for="hasDowndraftFanYes">Yes</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="hasDowndraftFan" formControlName="hasDowndraftFan" id="hasDowndraftFanNo" value="No">
+            <label class="custom-control-label" for="hasDowndraftFanNo">No</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="ctCordLength">Cord length and # of prongs:</label>
+          <input type="text" class="form-control" id="ctCordLength" formControlName="cordLength">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="ctColor">Color:</label>
+          <input type="text" class="form-control" id="ctColor" formControlName="color">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="ctModelNumber">Model number:</label>
+          <input type="text" class="form-control" id="ctModelNumber" formControlName="modelNumber">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="ctSerialNumber">Serial number:</label>
+          <input type="text" class="form-control" id="ctSerialNumber" formControlName="serialNumber">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

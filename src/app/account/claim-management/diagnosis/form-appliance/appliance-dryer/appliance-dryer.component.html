@@ -1,0 +1,81 @@
+<div [formGroup]="diagnosisForm">
+  <div formGroupName="applianceTypeInfo">
+    <div formGroupName="dryer">
+      <div class="form-row">
+        <div class="form-group form-inline ml-1">
+          <div class="option-group-label">
+            Gas or Electric?
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="gasOrElectric" formControlName="gasOrElectric" id="dGasOrElectricYes" value="Yes">
+            <label class="custom-control-label" for="dGasOrElectricYes">Yes</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="gasOrElectric" formControlName="gasOrElectric" id="dGasOrElectricNo" value="No">
+            <label class="custom-control-label" for="dGasOrElectricNo">No</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group form-inline ml-1">
+          <div class="option-group-label">
+            Capacity?
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="capacity" formControlName="capacity" id="dSuper" value="Super">
+            <label class="custom-control-label" for="dSuper">Super</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="capacity" formControlName="capacity" id="dExtraLarge" value="Extra Large">
+            <label class="custom-control-label" for="dExtraLarge">Extra Large</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="capacity" formControlName="capacity" id="dStandard" value="Standard">
+            <label class="custom-control-label" for="dStandard">Standard</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group form-inline ml-1">
+          <div class="option-group-label">
+            Stackable (yes or no)?
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="isStackable" formControlName="isStackable" id="dIsStackableYes" value="Yes">
+            <label class="custom-control-label" for="dIsStackableYes">Yes</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="isStackable" formControlName="isStackable" id="dIsStackableNo" value="No">
+            <label class="custom-control-label" for="dIsStackableNo">No</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="dCordLength">Cord length and # of prongs:</label>
+          <input type="text" class="form-control" id="dCordLength" formControlName="cordLength">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="dColor">Color:</label>
+          <input type="text" class="form-control" id="dColor" formControlName="color">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="dCubicFeet">Cubic feet:</label>
+          <input type="text" class="form-control" id="dCubicFeet" formControlName="cubicFeet">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="dModelNumber">Model number:</label>
+          <input type="text" class="form-control" id="dModelNumber" formControlName="modelNumber">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="dSerialNumber">Serial number:</label>
+          <input type="text" class="form-control" id="dSerialNumber" formControlName="serialNumber">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
