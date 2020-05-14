@@ -1,0 +1,32 @@
+<div class="modal-header">
+  <h4 class="modal-title text-muted">Select a Form to Initiate</h4>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="close()"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <p class="select-instructions">
+    Select one of the following forms from the drop down to initiate a replacement:
+  </p>
+  <form [formGroup]="diagnosisForm">
+    <div class="form-group">
+      <select id="formType" formControlName="formType" class="form-control">
+        <option [ngValue]="null" selected disabled>Select form</option>
+        <option *ngFor="let diagnosisFormType of keys(diagnosisFormTypes)"
+          value="{{ diagnosisFormType }}">
+          {{ diagnosisFormTypes[diagnosisFormType] }}
+        </option>
+      </select>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-light text-uppercase" [disabled]="!diagnosisForm.valid" (click)="openDiagnosisForm(diagnosisForm)">
+    Initiate Replace
+  </button>
+</div>

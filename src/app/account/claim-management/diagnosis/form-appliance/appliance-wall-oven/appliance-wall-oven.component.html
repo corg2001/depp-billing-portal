@@ -1,0 +1,106 @@
+<div [formGroup]="diagnosisForm">
+  <div formGroupName="applianceTypeInfo">
+    <div formGroupName="wallOven">
+      <div class="form-row">
+        <div class="form-group form-inline ml-1">
+          <div class="option-group-label">
+            24"/27"/30"?
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="width" formControlName="width" id="wallOvenWidth24" value="24">
+            <label class="custom-control-label" for="wallOvenWidth24">24"</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="width" formControlName="width" id="wallOvenWidth27" value="27">
+            <label class="custom-control-label" for="wallOvenWidth27">27"</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="width" formControlName="width" id="wallOvenWidth30" value="30">
+            <label class="custom-control-label" for="wallOvenWidth30">30"</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group form-inline ml-1">
+          <div class="option-group-label">
+            Gas or Electric?
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="gasOrElectric" formControlName="gasOrElectric" id="woGasOrElectricYes" value="Yes">
+            <label class="custom-control-label" for="woGasOrElectricYes">Yes</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="gasOrElectric" formControlName="gasOrElectric" id="woGasOrElectricNo" value="No">
+            <label class="custom-control-label" for="woGasOrElectricNo">No</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group form-inline ml-1">
+          <div class="option-group-label">
+            Single or Double?
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="singleOrDouble" formControlName="singleOrDouble" id="sodSingle" value="Single">
+            <label class="custom-control-label" for="sodSingle">Single</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="singleOrDouble" formControlName="singleOrDouble" id="sodDouble" value="Double">
+            <label class="custom-control-label" for="sodDouble">Double</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group form-inline ml-1">
+          <div class="option-group-label">
+            Self Clean?
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="hasSelfClean" formControlName="hasSelfClean" id="woHasSelfCleanYes" value="Yes">
+            <label class="custom-control-label" for="woHasSelfCleanYes">Yes</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="hasSelfClean" formControlName="hasSelfClean" id="woHasSelfCleanNo" value="No">
+            <label class="custom-control-label" for="woHasSelfCleanNo">No</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group form-inline ml-1">
+          <div class="option-group-label">
+            Convection?
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="hasConvection" formControlName="hasConvection" id="woHasConvectionYes" value="Yes">
+            <label class="custom-control-label" for="woHasConvectionYes">Yes</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="hasConvection" formControlName="hasConvection" id="woHasConvectionNo" value="No">
+            <label class="custom-control-label" for="woHasConvectionNo">No</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group form-inline ml-1">
+          <div class="option-group-label">
+            Microwave combo?
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="hasMicrowaveCombo" formControlName="hasMicrowaveCombo" id="hasMicrowaveComboYes" value="Yes">
+            <label class="custom-control-label" for="hasMicrowaveComboYes">Yes</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="hasMicrowaveCombo" formControlName="hasMicrowaveCombo" id="hasMicrowaveComboNo" value="No">
+            <label class="custom-control-label" for="hasMicrowaveComboNo">No</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="woColor">Color:</label>
+          <input type="text" class="form-control" id="woColor" formControlName="color">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

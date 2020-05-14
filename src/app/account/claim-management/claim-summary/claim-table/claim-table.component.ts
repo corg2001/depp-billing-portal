@@ -1,5 +1,7 @@
+import { Router } from '@angular/router';
+import { UserInFo } from './../../../profile-management/interface/business-details';
 import { Component, OnInit, Input, ViewChildren, QueryList } from '@angular/core';
-import { ClaimService } from '../../service/claim.service';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Claim } from '../../model/claims.model';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { JobStatus, LinkText } from '../../model/claims.enums';
@@ -8,6 +10,8 @@ import { SortableHeaderDirective } from 'src/app/core/directive/sortable-header.
 import { SortDirectionEnums } from 'src/app/core/enums/sort-direction.enums';
 import { SortEventInterface } from 'src/app/core/interface/sort-event.interface';
 import { WindowRefAbstract } from 'src/app/core/window-ref.abstract.service';
+import { DiagnosisSelectModalComponent } from '../../diagnosis/diagnosis-select-modal/diagnosis-select-modal.component';
+import { ClaimServiceAbstract } from '../../service/abstract/claim.abstract.service';
 
 @Component({
   selector: 'app-claim-table',
@@ -43,10 +47,13 @@ export class ClaimTableComponent implements OnInit {
   public claimsFound: boolean = true;
   public noInfoText: string;
   public authorizeUrl$: BehaviorSubject<string> = new BehaviorSubject(null);
+  public JobStatus = JobStatus;
 
   constructor(
-    private _claimService: ClaimService,
-    private _windowRefService: WindowRefAbstract
+    private _claimService: ClaimServiceAbstract,
+    private _windowRefService: WindowRefAbstract,
+    private _modalService: NgbModal,
+    private _router: Router
   ) {}
 
   ngOnInit() {
@@ -111,6 +118,27 @@ export class ClaimTableComponent implements OnInit {
     });
   }
 
+  public diagnoseJob(
+    jobNumber: string,
+    dateRequested: Date,
+    customerContactPhone: string
+  ): void {
+    const modalRef: NgbModalRef = this._modalService.open(DiagnosisSelectModalComponent);
+    modalRef.result.then((formType: string) => {
+      if (formType) {
+        this._router.navigate([
+          '/account/claim/diagnosis',
+          formType,
+          jobNumber,
+          dateRequested,
+          customerContactPhone
+        ]).then(() => {
+          window.scroll(0, 0);
+        });
+      }
+    });
+  }
+
   public authorizeLinkText(jobStatus: JobStatus): string {
     return jobStatus === JobStatus.authorized
       ? LinkText.complete
@@ -120,6 +148,11 @@ export class ClaimTableComponent implements OnInit {
       ? LinkText.invoiced
       : jobStatus === JobStatus.pendingAuthorization ?
       LinkText.authorize : '';
+  }
+
+  public diagnoseLinkText(jobStatus: JobStatus): string {
+    return jobStatus === JobStatus.wip
+      ? LinkText.diagnosis : '';
   }
 
   public onSort(sort: SortEventInterface) {
