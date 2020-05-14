@@ -1,0 +1,71 @@
+<div [formGroup]="diagnosisForm">
+  <div formGroupName="applianceTypeInfo">
+    <div formGroupName="dishwasher">
+      <div class="form-row">
+        <div class="form-group form-inline ml-1">
+          <div class="option-group-label">
+            Push buttons or Digital?
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="buttonType" formControlName="buttonType" id="buttonTypePush" value="Push button">
+            <label class="custom-control-label" for="buttonTypePush">Push button</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="buttonType" formControlName="buttonType" id="buttonTypeDigital" value="Digital">
+            <label class="custom-control-label" for="buttonTypeDigital">Digital</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group form-inline ml-1">
+          <div class="option-group-label">
+            Plastic or Stainless tub?
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="tubType" formControlName="tubType" id="tubTypePlastic" value="Plastic">
+            <label class="custom-control-label" for="tubTypePlastic">Plastic</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="tubType" formControlName="tubType" id="tubTypeStainless" value="Stainless">
+            <label class="custom-control-label" for="tubTypeStainless">Stainless</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group form-inline ml-1">
+          <div class="option-group-label">
+            Hard Wired or Plug in?
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="wireType" formControlName="wireType" id="wireTypeHardWired" value="HardWired">
+            <label class="custom-control-label" for="wireTypeHardWired">Hard wired</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="wireType" formControlName="wireType" id="wireTypePlugIn" value="PlugIn">
+            <label class="custom-control-label" for="wireTypePlugIn">Plug in</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="dishwasherColor">Color:</label>
+          <input type="text" class="form-control" id="dishwasherColor" formControlName="color">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="numberWashLevels">Number of wash levels:</label>
+          <input type="text" class="form-control" id="numberWashLevels" formControlName="numberWashLevels">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="numberCycles">Number of cycles:</label>
+          <input type="text" class="form-control" id="numberCycles" formControlName="numberCycles">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="numberSprayArms">Number of spray arms:</label>
+          <input type="text" class="form-control" id="numberSprayArms" formControlName="numberSprayArms">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

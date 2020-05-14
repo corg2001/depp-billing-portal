@@ -1,0 +1,27 @@
+<div [formGroup]="diagnosisForm">
+  <div formGroupName="plumbingClaimInfo">
+    <div formGroupName="plumbing">
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="pLocation">Location of issue:</label>
+          <input type="text" class="form-control" id="pLocation" formControlName="location">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group form-inline ml-1">
+          <div class="option-group-label">
+            Access Needed?
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="isAccessNeeded" formControlName="isAccessNeeded" id="pIsAccessNeededYes" value="Yes">
+            <label class="custom-control-label" for="pIsAccessNeededYes">Yes</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="isAccessNeeded" formControlName="isAccessNeeded" id="pIsAccessNeededNo" value="No">
+            <label class="custom-control-label" for="pIsAccessNeededNo">No</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

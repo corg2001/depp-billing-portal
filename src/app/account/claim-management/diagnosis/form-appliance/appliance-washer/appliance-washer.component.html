@@ -1,0 +1,95 @@
+<div [formGroup]="diagnosisForm">
+  <div formGroupName="applianceTypeInfo">
+    <div formGroupName="washer">
+      <div class="form-row">
+        <div class="form-group form-inline ml-1">
+          <div class="option-group-label">
+            Front Load/Top Load/Stackable?
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="washerType" formControlName="washerType" id="wtFrontLoad" value="Front Load">
+            <label class="custom-control-label" for="wtFrontLoad">Front Load</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="washerType" formControlName="washerType" id="wtTopLoad" value="Top Load">
+            <label class="custom-control-label" for="wtTopLoad">Top Load</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="washerType" formControlName="washerType" id="wtStackable" value="Stackable">
+            <label class="custom-control-label" for="wtStackable">Stackable</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group form-inline ml-1">
+          <div class="option-group-label">
+            Control types?
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="controlType" formControlName="controlType" id="wctControlTypeDigital" value="Digital">
+            <label class="custom-control-label" for="wctControlTypeDigital">Digital</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="controlType" formControlName="controlType" id="wctControlTypeKnobs" value="No">
+            <label class="custom-control-label" for="wctControlTypeKnobs">Knobs</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group form-inline ml-1">
+          <div class="option-group-label">
+            Capacity?
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="capacity" formControlName="capacity" id="wcSuper" value="Super">
+            <label class="custom-control-label" for="wcSuper">Super</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="capacity" formControlName="capacity" id="wcExtraLarge" value="Extra Large">
+            <label class="custom-control-label" for="wcExtraLarge">Extra Large</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="capacity" formControlName="capacity" id="wcStandard" value="Standard">
+            <label class="custom-control-label" for="wcStandard">Standard</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="wColor">Color:</label>
+          <input type="text" class="form-control" id="wColor" formControlName="color">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="wNumberWashLevels">Number of wash levels:</label>
+          <input type="text" class="form-control" id="wNumberWashLevels" formControlName="numberWashLevels">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="wNumberCycles">Number of cycles:</label>
+          <input type="text" class="form-control" id="wNumberCycles" formControlName="numberCycles">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="wNumberWaterTemps">Number of water temps:</label>
+          <input type="text" class="form-control" id="wNumberWaterTemps" formControlName="numberWaterTemps">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="wCubicFeet">Cubic feet:</label>
+          <input type="text" class="form-control" id="wCubicFeet" formControlName="cubicFeet">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="wModelNumber">Model number:</label>
+          <input type="text" class="form-control" id="wModelNumber" formControlName="modelNumber">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="wSerialNumber">Serial number:</label>
+          <input type="text" class="form-control" id="wSerialNumber" formControlName="serialNumber">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
