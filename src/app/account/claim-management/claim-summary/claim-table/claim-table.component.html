@@ -33,7 +33,7 @@
           {{ claim.jobStatus === JobStatus.wip ? ' | ' : ''  }}
           <a
             class="text-uppercase"
-            (click)="diagnoseJob(claim.jobNumber, claim.dateRequested, claim.customerContactPhone)"
+            (click)="diagnoseJob(claim.vendorId, claim.jobNumber, claim.dateRequested, claim.customerContactPhone)"
             >{{ diagnoseLinkText(claim.jobStatus) }}</a
           >
         </td>

@@ -33,5 +33,6 @@ export enum LocalStorageEnum {
   MailingAxLocationId = 'businessAxLocationId',
   MailingAxRecordId = 'businessAxRecordId',
   HasMultiAssociations = 'hasMultiAssociations',
-  MultiAssociations = 'multiAssociations'
+  MultiAssociations = 'multiAssociations',
+  JobDetail = 'jobDetail'
 }

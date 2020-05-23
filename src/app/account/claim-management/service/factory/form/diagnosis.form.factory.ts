@@ -2,9 +2,7 @@ import { Injectable } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
-  FormGroup,
-  ValidatorFn,
-  Validators
+  FormGroup
 } from '@angular/forms';
 import { DiagnosisFormFactoryAbstract } from '../../abstract/diagnosis.form.factory.abstract';
 

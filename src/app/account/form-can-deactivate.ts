@@ -1,4 +1,4 @@
-import { BaseDiagnosisFormComponent } from './claim-management/diagnosis/base-diagnosis-form/base-diagnosis-form.component';
+import { BaseDiagnosisFormComponent } from './claim-management/diagnosis/diagnosis-form/base-diagnosis-form/base-diagnosis-form.component';
 import {ComponentCanDeactivate} from './component-can-deactivate';
 
 export abstract class FormCanDeactivate extends ComponentCanDeactivate {

@@ -1,5 +1,5 @@
+import { JobDetailInterface } from './../../interface/job-detail.interface';
 import { Router } from '@angular/router';
-import { UserInFo } from './../../../profile-management/interface/business-details';
 import { Component, OnInit, Input, ViewChildren, QueryList } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Claim } from '../../model/claims.model';
@@ -119,19 +119,24 @@ export class ClaimTableComponent implements OnInit {
   }
 
   public diagnoseJob(
+    vendorId: string,
     jobNumber: string,
     dateRequested: Date,
     customerContactPhone: string
   ): void {
+    const jobDetail: JobDetailInterface = {
+      vendorId: vendorId,
+      jobNumber: jobNumber,
+      dateRequested: dateRequested,
+      customerContactPhone: customerContactPhone
+    };
+    this._claimService.setJobDetail(jobDetail);
     const modalRef: NgbModalRef = this._modalService.open(DiagnosisSelectModalComponent);
     modalRef.result.then((formType: string) => {
       if (formType) {
         this._router.navigate([
           '/account/claim/diagnosis',
-          formType,
-          jobNumber,
-          dateRequested,
-          customerContactPhone
+          formType
         ]).then(() => {
           window.scroll(0, 0);
         });
