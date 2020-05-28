@@ -12,7 +12,6 @@ import { WindowRefAbstract } from 'src/app/core/window-ref.abstract.service';
 import { DiagnosisSelectModalComponent } from '../../diagnosis/diagnosis-select-modal/diagnosis-select-modal.component';
 import { ClaimServiceAbstract } from '../../service/abstract/claim.abstract.service';
 import { JobDetailInterface } from './../../interface/job-detail.interface';
-import { ClaimOrderType } from './../../model/claims.enums';
 
 @Component({
   selector: 'app-claim-table',
@@ -49,7 +48,6 @@ export class ClaimTableComponent implements OnInit {
   public noInfoText: string;
   public authorizeUrl$: BehaviorSubject<string> = new BehaviorSubject(null);
   public JobStatus = JobStatus;
-  public ClaimOrderType = ClaimOrderType;
   public LinkText = LinkText;
 
   constructor(
