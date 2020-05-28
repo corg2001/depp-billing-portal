@@ -31,7 +31,7 @@
           >
             {{ authorizeLinkText(claim.jobStatus) }}
           </a>
-          <span *ngIf="claim.jobStatus === JobStatus.wip && claim.claimType === ClaimOrderType.replace">
+          <span *ngIf="claim.jobStatus === JobStatus.wip">
             |
             <a
               class="text-uppercase"
