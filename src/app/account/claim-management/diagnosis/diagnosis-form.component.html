@@ -7,11 +7,12 @@
       <span class="label-print">Print Form</span>
     </div>
   </div>
-  <div class="row">
+  <div class="row" id="content">
     <div class="col-md-5 col-lg-4 col-sm-12 job-summary-card">
-      <app-job-summary-card class="d-block" [headerText]="formLabel" [jobDetail]="jobDetail" (submitFormEmitter)="submitForm($event)"></app-job-summary-card>
+      <app-job-summary-card class="d-block" [headerText]="formLabel" [jobDetail]="jobDetail"
+        (submitFormEmitter)="submitForm($event)"></app-job-summary-card>
     </div>
-    <div class="col-md-7 col-lg-8 col-sm-12 diagnosis-form" id="content">
+    <div class="col-md-7 col-lg-8 col-sm-12 diagnosis-form">
       <div *ngIf="formType === 'appliance'">
         <app-form-appliance [formLabel]="formLabel" (submitFormEmitter)="submitForm($event)"></app-form-appliance>
       </div>
@@ -28,7 +29,8 @@
         <app-form-water-heater [formLabel]="formLabel" (submitFormEmitter)="submitForm($event)"></app-form-water-heater>
       </div>
       <div *ngIf="formType === 'wellPumpSeptic'">
-        <app-form-well-pump-septic [formLabel]="formLabel" (submitFormEmitter)="submitForm($event)"></app-form-well-pump-septic>
+        <app-form-well-pump-septic [formLabel]="formLabel" (submitFormEmitter)="submitForm($event)">
+        </app-form-well-pump-septic>
       </div>
       <div *ngIf="formType === 'electrical'">
         <app-form-electrical [formLabel]="formLabel" (submitFormEmitter)="submitForm($event)"></app-form-electrical>
