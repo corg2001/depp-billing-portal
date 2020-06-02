@@ -1,5 +1,5 @@
-import { SortableHeaderDirective } from './../core/directive/sortable-header.directive';
 import { NgModule } from '@angular/core';
+import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
 import { ModalComponent } from './modal/modal.component';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
@@ -10,6 +10,8 @@ import { ResultJumbotronComponent } from './components/result-jumbotron/result-j
 import { FormatPhone } from './pipe/phone-number-format';
 import { FormatPassword } from './pipe/password-format';
 import { FromatLastFour } from './pipe/show-last-four-format';
+import { SortableHeaderDirective } from './../core/directive/sortable-header.directive';
+import { NgxCurrencyModule } from 'ngx-currency';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,11 @@ import { FromatLastFour } from './pipe/show-last-four-format';
     ResultJumbotronComponent,
     SortableHeaderDirective
   ],
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    NgbModule,
+    NgxCurrencyModule
+  ],
   exports: [
     ModalComponent,
     LoadingSpinnerComponent,
@@ -33,7 +39,8 @@ import { FromatLastFour } from './pipe/show-last-four-format';
     FromatLastFour,
     ProgressBarComponent,
     ResultJumbotronComponent,
-    SortableHeaderDirective
+    SortableHeaderDirective,
+    NgxCurrencyModule
   ],
   entryComponents: [ModalComponent, ProgressBarComponent],
 

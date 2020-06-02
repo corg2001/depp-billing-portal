@@ -19,5 +19,6 @@ export enum ClaimDisposition {
 export enum LinkText {
   authorize = 'Authorize',
   complete = 'Complete Job',
-  invoiced = 'Invoice'
+  invoiced = 'Invoice',
+  diagnosis = 'Diagnosis'
 }

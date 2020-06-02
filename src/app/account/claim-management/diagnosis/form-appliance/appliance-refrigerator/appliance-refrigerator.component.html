@@ -1,0 +1,53 @@
+<div [formGroup]="diagnosisForm">
+  <div formGroupName="applianceTypeInfo">
+    <div formGroupName="refrigerator">
+      <div class="form-row">
+        <div class="form-group form-inline ml-1">
+          <div class="option-group-label">
+            Ice maker?
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="hasIceMaker" formControlName="hasIceMaker" id="hasIceMakerYes" value="Yes">
+            <label class="custom-control-label" for="hasIceMakerYes">Yes</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="hasIceMaker" formControlName="hasIceMaker" id="hasIceMakerNo" value="No">
+            <label class="custom-control-label" for="hasIceMakerNo">No</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="refrigeratorType">Type:</label>
+          <select class="form-control" id="refrigeratorType" formControlName="refrigeratorType">
+            <option [ngValue]="null" selected disabled>Select a type</option>
+            <option *ngFor="let refrigeratorType of keys(refrigeratorTypes)"
+            value="{{ refrigeratorTypes[refrigeratorType] }}">
+            {{ refrigeratorTypes[refrigeratorType] }}
+            </option>
+          </select>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="cubicFeet">Cubic feet:</label>
+          <input type="text" class="form-control" id="cubicFeet" formControlName="cubicFeet">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="doorType">Door type:</label>
+          <select class="form-control" id="doorType" formControlName="doorType">
+            <option [ngValue]="null" selected disabled>Select a door type</option>
+            <option *ngFor="let refrigeratorDoorType of keys(refrigeratorDoorTypes)"
+              value="{{ refrigeratorDoorTypes[refrigeratorDoorType] }}">
+              {{ refrigeratorDoorTypes[refrigeratorDoorType] }}
+            </option>
+          </select>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="color">Color:</label>
+          <input type="text" class="form-control" id="color" formControlName="color">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

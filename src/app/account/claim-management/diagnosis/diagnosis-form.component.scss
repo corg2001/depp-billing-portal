@@ -1,0 +1,78 @@
+@import "../../../../assets/styles/contractor-layout-styles";
+
+.title {
+  color: $hwa-color-teal;
+  font-size: 1.5rem;
+  margin-bottom: 1.5625rem;
+  margin-top: 0.9375rem;
+}
+.sub-title {
+  color: $hwa-color-orange;
+  font-size: 1.3rem;
+  margin-top: 2.0rem;
+  margin-bottom: 1.0rem;
+}
+.component-sub-header {
+  text-transform: uppercase;
+  color: $hwa-color-gray;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  margin-bottom: 1.0rem;
+}
+.option-group-label {
+  margin-right: 1.0rem;
+}
+.add-another {
+  cursor:  pointer;
+  margin-bottom: 1.0rem;
+}
+.btn-add-another {
+  color: $hwa-color-teal;
+  border: 0;
+  background: none;
+  box-shadow: none;
+  border-radius: 0;
+  vertical-align: middle;
+}
+.label-add-another {
+  vertical-align: middle;
+  font-weight: 700;
+}
+.btn-remove-item {
+  cursor:  pointer;
+  color: $hwa-color-teal;
+  border: 0;
+  background: none;
+  box-shadow: none;
+  border-radius: 0;
+  vertical-align: middle;
+}
+.btn-print {
+  color: black;
+  border: 0;
+  background: none;
+  box-shadow: none;
+  border-radius: 0;
+  vertical-align: middle;
+}
+.label-print {
+  cursor:  pointer;
+    color: black;
+  font-size: 0.9375rem;
+  font-weight: 700;
+}
+.label-total {
+  text-align: right;
+  padding-right: 1.0rem;
+}
+.card {
+  box-shadow: 0 0.5rem 1.0rem rgba(0, 0, 0, 0.15);
+  margin-bottom: 1.0rem;
+}
+.row-total {
+  margin-bottom: 1.0rem;
+}
+.form-check {
+  margin-left: 1.5rem;
+  margin-bottom: 0.25rem;
+}
