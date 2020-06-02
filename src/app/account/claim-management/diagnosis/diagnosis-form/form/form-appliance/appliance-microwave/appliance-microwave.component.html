@@ -1,0 +1,101 @@
+<div [formGroup]="diagnosisForm">
+  <div formGroupName="applianceTypeInfo">
+    <div formGroupName="microwave">
+      <div class="form-row">
+        <div class="form-group form-inline ml-1">
+          <div class="option-group-label">
+            Built In or Over the Range?
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="microwaveType" formControlName="microwaveType" id="microwaveTypeBI" value="Built in">
+            <label class="custom-control-label" for="microwaveTypeBI">Built in</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="microwaveType" formControlName="microwaveType" id="microwaveTypeOTR" value="Over the range">
+            <label class="custom-control-label" for="microwaveTypeOTR">Over the range</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group form-inline ml-1">
+          <div class="option-group-label">
+            Convection?
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="hasConvection" formControlName="hasConvection" id="mwHasConvectionYes" value="Yes">
+            <label class="custom-control-label" for="mwHasConvectionYes">Yes</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="hasConvection" formControlName="hasConvection" id="mwHasConvectionNo" value="No">
+            <label class="custom-control-label" for="mwHasConvectionNo">No</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group form-inline ml-1">
+          <div class="option-group-label">
+            Vented?
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="isVented" formControlName="isVented" id="mwIsVentedYes" value="Yes">
+            <label class="custom-control-label" for="mwIsVentedYes">Yes</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="isVented" formControlName="isVented" id="mwIsVentedNo" value="No">
+            <label class="custom-control-label" for="mwIsVentedNo">No</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group form-inline ml-1">
+          <div class="option-group-label">
+            30"/36"?
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="size" formControlName="size" id="mwSize30" value="30">
+            <label class="custom-control-label" for="mwSize30">30"</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="size" formControlName="size" id="mwSize36" value="36">
+            <label class="custom-control-label" for="mwSize36">36"</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group form-inline ml-1">
+          <div class="option-group-label">
+            Trim Kit (built in only)?
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="trimKit" formControlName="trimKit" id="mwTrimKit27" value="27">
+            <label class="custom-control-label" for="mwTrimKit27">27"</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="trimKit" formControlName="trimKit" id="mwTrimKit30" value="30">
+            <label class="custom-control-label" for="mwTrimKit30">30"</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="mwWattage">Wattage:</label>
+          <input type="text" class="form-control" id="mwWattage" formControlName="wattage">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="mwColor">Color:</label>
+          <input type="text" class="form-control" id="mwColor" formControlName="color">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="mwModelNumber">Model number:</label>
+          <input type="text" class="form-control" id="mwModelNumber" formControlName="modelNumber">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="mwSerialNumber">Serial number:</label>
+          <input type="text" class="form-control" id="mwSerialNumber" formControlName="serialNumber">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -47,6 +47,7 @@ export const environment = {
   // ClaimService
   claimsUrl: `${baseUrl}services/vendor/purchase-orders`,
   authInoviceUrl: `${baseUrl}services/vendor/geturl`,
+  submitDiagnosisUrl: `${baseUrl}services/vendor/contractor-form`,
 
   // ProfileService
   achDocsUrl: `${baseUrl}services/vendor/ach-info`,

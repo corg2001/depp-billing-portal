@@ -1,0 +1,142 @@
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { ConfigService } from './../../../../core/config.service';
+
+import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription, Subject } from 'rxjs';
+
+import { FormOtherComponent } from './form/form-other/form-other.component';
+import { FormExternalComponent } from './form/form-external/form-external.component';
+import { FormElectricalComponent } from './form/form-electrical/form-electrical.component';
+import { FormWellPumpSepticComponent } from './form/form-well-pump-septic/form-well-pump-septic.component';
+import { FormWaterHeaterComponent } from './form/form-water-heater/form-water-heater.component';
+import { FormPoolComponent } from './form/form-pool/form-pool.component';
+import { FormPlumbingComponent } from './form/form-plumbing/form-plumbing.component';
+import { FormApplianceComponent } from './form/form-appliance/form-appliance.component';
+import { FormHvacComponent } from './form/form-hvac/form-hvac.component';
+import { BaseDiagnosisFormComponent } from './base-diagnosis-form/base-diagnosis-form.component';
+import { DiagnosisFormEnum } from './../../model/diagnosis.enums';
+import { JobDetailInterface } from './../../interface/job-detail.interface';
+import { FormCanDeactivate } from './../../../form-can-deactivate';
+import { ClaimServiceAbstract } from './../../service/abstract/claim.abstract.service';
+import { DiagnosisSubmitModalComponent } from './../diagnosis-submit-modal/diagnosis-submit-modal.component';
+import { PdfService } from 'src/app/core/pdf.service';
+
+@Component({
+  selector: 'app-diagnosis-form',
+  templateUrl: './diagnosis-form.component.html',
+  styleUrls: ['./diagnosis-form.component.scss']
+})
+export class DiagnosisFormComponent extends FormCanDeactivate implements OnInit {
+  @ViewChild('content') content: ElementRef;
+
+  public _params$: Subscription;
+  public formType: string;
+  public formLabel: string;
+  public jobDetail: JobDetailInterface;
+  public submissionComplete: boolean;
+
+  @ViewChild(FormApplianceComponent) applianceForm: BaseDiagnosisFormComponent;
+  @ViewChild(FormHvacComponent) hvacForm: BaseDiagnosisFormComponent;
+  @ViewChild(FormPoolComponent) poolSpaSaltwaterForm: BaseDiagnosisFormComponent;
+  @ViewChild(FormPlumbingComponent) plumbingForm: BaseDiagnosisFormComponent;
+  @ViewChild(FormWaterHeaterComponent) waterHeaterForm: BaseDiagnosisFormComponent;
+  @ViewChild(FormWellPumpSepticComponent) wellPumpSeptic: BaseDiagnosisFormComponent;
+  @ViewChild(FormElectricalComponent) electrical: BaseDiagnosisFormComponent;
+  @ViewChild(FormExternalComponent) externalSewerWater: BaseDiagnosisFormComponent;
+  @ViewChild(FormOtherComponent) other: BaseDiagnosisFormComponent;
+
+  constructor(
+    private _activeRoute: ActivatedRoute,
+    private _claimService: ClaimServiceAbstract,
+    private _configService: ConfigService,
+    private _modalService: NgbModal,
+    private _pdfService: PdfService
+  ) {
+    super();
+    this.submissionComplete = true;
+  }
+
+  get form(): BaseDiagnosisFormComponent {
+    switch (this.formType) {
+      case 'appliance':
+        return this.applianceForm;
+      case 'hvac':
+        return this.hvacForm;
+      case 'plumbing':
+        return this.plumbingForm;
+      case 'poolSpaSaltwater':
+        return this.poolSpaSaltwaterForm;
+      case 'waterHeaterForm':
+        return this.waterHeaterForm;
+      case 'wellPumpSeptic':
+        return this.wellPumpSeptic;
+      case 'electrical':
+        return this.electrical;
+      case 'externalSewerWater':
+        return this.externalSewerWater;
+      case 'other':
+        return this.other;
+      default:
+        return null;
+    }
+  }
+
+  ngOnInit() {
+    this._params$ = this._activeRoute.paramMap.subscribe((params: any) => {
+      this.formType = params.params.formType;
+      this.jobDetail = this._claimService.getJobDetail();
+    });
+
+    this.formLabel = DiagnosisFormEnum[this.formType];
+  }
+
+  public printForm(): void {
+    window.print();
+  }
+
+  public submitForm(diagnosisForm: FormGroup) {
+    const companyInfo: string = this._configService.getCompanyInfo();
+    const pdfBlob$: Subject<Blob> = new Subject<Blob>();
+    const apiSubmitSuccess$: Subject<any> = new Subject<any>();
+    const isError$: Subject<boolean> = new Subject<boolean>();
+
+    this.submissionComplete = false;
+
+    apiSubmitSuccess$.subscribe((result: any) => {
+      this.submissionComplete = true;
+      const submissionModalRef: NgbModalRef = this._modalService.open(
+        DiagnosisSubmitModalComponent,
+        { centered: true }
+      );
+
+      submissionModalRef.componentInstance.success = true;
+      this.form.diagnosisForm.reset();
+    });
+
+    isError$.subscribe((result: boolean) => {
+      this.submissionComplete = true;
+      const submissionModalRef: NgbModalRef = this._modalService.open(
+        DiagnosisSubmitModalComponent,
+        { centered: true }
+      );
+
+      submissionModalRef.componentInstance.success = false;
+    });
+
+    pdfBlob$.subscribe((docBlob: Blob) => {
+      this._claimService.submitDiagnosisForm(
+        companyInfo,
+        this.formType,
+        this.jobDetail,
+        docBlob,
+        apiSubmitSuccess$,
+        isError$
+      );
+    });
+
+    this._pdfService.documentElementToPdfBlob(document, 'content', pdfBlob$, isError$);
+  }
+
+}

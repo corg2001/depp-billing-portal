@@ -1,5 +1,4 @@
 import { Router } from '@angular/router';
-import { UserInFo } from './../../../profile-management/interface/business-details';
 import { Component, OnInit, Input, ViewChildren, QueryList } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Claim } from '../../model/claims.model';
@@ -12,6 +11,8 @@ import { SortEventInterface } from 'src/app/core/interface/sort-event.interface'
 import { WindowRefAbstract } from 'src/app/core/window-ref.abstract.service';
 import { DiagnosisSelectModalComponent } from '../../diagnosis/diagnosis-select-modal/diagnosis-select-modal.component';
 import { ClaimServiceAbstract } from '../../service/abstract/claim.abstract.service';
+import { JobDetailInterface } from './../../interface/job-detail.interface';
+import { ClaimOrderType } from './../../model/claims.enums';
 
 @Component({
   selector: 'app-claim-table',
@@ -48,13 +49,14 @@ export class ClaimTableComponent implements OnInit {
   public noInfoText: string;
   public authorizeUrl$: BehaviorSubject<string> = new BehaviorSubject(null);
   public JobStatus = JobStatus;
+  public LinkText = LinkText;
 
   constructor(
     private _claimService: ClaimServiceAbstract,
     private _windowRefService: WindowRefAbstract,
     private _modalService: NgbModal,
     private _router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.noInfoText = `Please contact Contractor Relations at ${environment.core.customerServiceNumber} for assistance.`;
@@ -69,7 +71,7 @@ export class ClaimTableComponent implements OnInit {
     });
 
     this.completedSubject$.subscribe((completed: boolean) => {
-       this.isCompleted = completed;
+      this.isCompleted = completed;
     });
     this.error$.subscribe((error: boolean) => this.isError = error);
     this.searchedClaimSubject$.subscribe((claimData: Claim[]) => {
@@ -119,19 +121,24 @@ export class ClaimTableComponent implements OnInit {
   }
 
   public diagnoseJob(
+    vendorId: string,
     jobNumber: string,
     dateRequested: Date,
     customerContactPhone: string
   ): void {
+    const jobDetail: JobDetailInterface = {
+      vendorId: vendorId,
+      jobNumber: jobNumber,
+      dateRequested: dateRequested,
+      customerContactPhone: customerContactPhone
+    };
+    this._claimService.setJobDetail(jobDetail);
     const modalRef: NgbModalRef = this._modalService.open(DiagnosisSelectModalComponent);
     modalRef.result.then((formType: string) => {
       if (formType) {
         this._router.navigate([
           '/account/claim/diagnosis',
-          formType,
-          jobNumber,
-          dateRequested,
-          customerContactPhone
+          formType
         ]).then(() => {
           window.scroll(0, 0);
         });
@@ -143,11 +150,11 @@ export class ClaimTableComponent implements OnInit {
     return jobStatus === JobStatus.authorized
       ? LinkText.complete
       : jobStatus === JobStatus.wip
-      ? LinkText.authorize
-      : jobStatus === JobStatus.completed
-      ? LinkText.invoiced
-      : jobStatus === JobStatus.pendingAuthorization ?
-      LinkText.authorize : '';
+        ? LinkText.authorize
+        : jobStatus === JobStatus.completed
+          ? LinkText.invoiced
+          : jobStatus === JobStatus.pendingAuthorization ?
+            LinkText.authorize : '';
   }
 
   public diagnoseLinkText(jobStatus: JobStatus): string {
@@ -189,7 +196,7 @@ export class ClaimTableComponent implements OnInit {
     return claimsAmount > 150 ? 20 : 10;
   }
 
-  private _compareString (v1?: string, v2?: string) {
+  private _compareString(v1?: string, v2?: string) {
     return (v1 < v2) ? -1 : (v1 > v2) ? 1 : 0;
   }
 }
