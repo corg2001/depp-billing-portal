@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { JobDetailInterface } from './../../interface/job-detail.interface';
+import { ConfigService } from 'src/app/core/config.service';
 
 @Component({
   selector: 'app-job-summary-card',
@@ -12,11 +13,12 @@ export class JobSummaryCardComponent implements OnInit {
 
   public isCollapsed: boolean = false;
   public dateFormat: string = 'M/d/yyyy';
+  public contractorPhoneNumber: string;
 
-  constructor(
-  ) { }
+  constructor(private _config: ConfigService ) { }
 
   ngOnInit() {
+    this.contractorPhoneNumber = this._config.getPhoneNumber();
   }
 
 }

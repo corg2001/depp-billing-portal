@@ -3,7 +3,7 @@ import { ConfigService } from './../../../../core/config.service';
 
 import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, Subject } from 'rxjs';
 
 import { FormOtherComponent } from './form/form-other/form-other.component';
@@ -52,7 +52,8 @@ export class DiagnosisFormComponent extends FormCanDeactivate implements OnInit 
     private _claimService: ClaimServiceAbstract,
     private _configService: ConfigService,
     private _modalService: NgbModal,
-    private _pdfService: PdfService
+    private _pdfService: PdfService,
+    private _router: Router
   ) {
     super();
     this.submissionComplete = true;
@@ -113,6 +114,11 @@ export class DiagnosisFormComponent extends FormCanDeactivate implements OnInit 
 
       submissionModalRef.componentInstance.success = true;
       this.form.diagnosisForm.reset();
+      this._router.navigate([
+        '/account'
+      ]).then(() => {
+        window.scroll(0, 0);
+      });
     });
 
     isError$.subscribe((result: boolean) => {

@@ -16,7 +16,7 @@
   <form [formGroup]="diagnosisForm">
     <div class="form-group">
       <select id="formType" formControlName="formType" class="form-control">
-        <option [ngValue]="null" selected disabled>Select form</option>
+        <option [ngValue]="'Select form'" selected disabled>Select form</option>
         <option *ngFor="let diagnosisFormType of keys(diagnosisFormTypes)"
           value="{{ diagnosisFormType }}">
           {{ diagnosisFormTypes[diagnosisFormType] }}
