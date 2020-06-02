@@ -12,7 +12,7 @@ import { WindowRefAbstract } from 'src/app/core/window-ref.abstract.service';
 import { DiagnosisSelectModalComponent } from '../../diagnosis/diagnosis-select-modal/diagnosis-select-modal.component';
 import { ClaimServiceAbstract } from '../../service/abstract/claim.abstract.service';
 import { JobDetailInterface } from './../../interface/job-detail.interface';
-import { ClaimOrderType } from './../../model/claims.enums';
+
 
 @Component({
   selector: 'app-claim-table',
