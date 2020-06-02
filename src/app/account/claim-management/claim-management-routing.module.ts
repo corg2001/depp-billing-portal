@@ -1,5 +1,3 @@
-import { DataLossGuard } from './../data-loss.guard';
-import { DiagnosisFormComponent } from './diagnosis/diagnosis-form.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ClaimSummaryComponent } from './claim-summary/claim-summary.component';
@@ -11,9 +9,8 @@ const routes: Routes = [
     component:  ClaimSummaryComponent
   },
   {
-    path: 'diagnosis/:formType/:jobNumber/:dateRequested/:customerContactPhone',
-    component: DiagnosisFormComponent,
-    canDeactivate: [DataLossGuard]
+    path: 'diagnosis',
+    loadChildren: './diagnosis/diagnosis.module#DiagnosisModule'
   }
 ];
 

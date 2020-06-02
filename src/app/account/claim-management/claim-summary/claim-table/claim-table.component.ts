@@ -13,19 +13,14 @@ import { DiagnosisSelectModalComponent } from '../../diagnosis/diagnosis-select-
 import { ClaimServiceAbstract } from '../../service/abstract/claim.abstract.service';
 import { JobDetailInterface } from './../../interface/job-detail.interface';
 
-
 @Component({
   selector: 'app-claim-table',
   templateUrl: './claim-table.component.html',
   styleUrls: ['./claim-table.component.scss']
 })
 export class ClaimTableComponent implements OnInit {
-  @Input() public claimSubject$?: BehaviorSubject<
-    Claim[]
-  > = new BehaviorSubject([]);
-  @Input() public completedSubject$?: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject(false);
+  @Input() public claimSubject$?: BehaviorSubject<Claim[]> = new BehaviorSubject([]);
+  @Input() public completedSubject$?: BehaviorSubject<boolean> = new BehaviorSubject(false);
   @Input() public searchedClaimSubject$?: BehaviorSubject<
     Claim[]
   > = new BehaviorSubject([]);
@@ -40,14 +35,14 @@ export class ClaimTableComponent implements OnInit {
   public pageSize: number;
   public collectionSize: number = 0;
   public pageList: number[] = [2, 4, 6, 8];
-
+  public authorizingJobNumber: string;
+  public authorizingJobStatus: string;
   public claimListSubject: Subject<any> = new Subject();
   public completionSubject: Subject<boolean> = new Subject();
-  public loading: boolean = true;
+  public loading: boolean = false;
   public authorizeInvoiceLinkText = 'authorize / invoice';
   public claimsFound: boolean = true;
   public noInfoText: string;
-  public authorizeUrl$: BehaviorSubject<string> = new BehaviorSubject(null);
   public JobStatus = JobStatus;
   public LinkText = LinkText;
 
@@ -93,18 +88,18 @@ export class ClaimTableComponent implements OnInit {
     );
   }
 
-  public authorizeInvoice(jobNumber: string, vendorId: string): void {
-    const authPortal = this._windowRefService.window.open('', '_blank');
-    authPortal.document.write('Loading Invoice Portal, Please Wait ......');
-
+  public authorizeInvoice(jobNumber: string, jobStatus: string, vendorId: string): void {
+    this.authorizingJobNumber = jobNumber;
+    this.authorizingJobStatus = jobStatus;
     this.loading = true;
     const completion$: Subject<boolean> = new Subject<boolean>();
     const error$: Subject<boolean> = new Subject();
+    const authorizeUrl$: Subject<string> = new Subject();
     const errorMessage$: Subject<string> = new Subject();
     this._claimService.authInvoiceRedirect(
       jobNumber,
       vendorId,
-      this.authorizeUrl$,
+      authorizeUrl$,
       completion$,
       error$,
       errorMessage$
@@ -113,13 +108,15 @@ export class ClaimTableComponent implements OnInit {
     completion$.subscribe((completed: boolean) => {
       completed ? this.loading = false : this.loading = true;
       if (!this.loading) {
-        this.authorizeUrl$.subscribe((url: string) => {
-          this._sendToPortal(authPortal, url);
+        authorizeUrl$.subscribe((url: string) => {
+          this._sendToPortal(url);
         });
       }
     });
   }
-
+  public isAuthorizing(jobNumber: string, jobStatus: string): boolean {
+    return this.authorizingJobNumber === jobNumber && this.authorizingJobStatus === jobStatus;
+  }
   public diagnoseJob(
     vendorId: string,
     jobNumber: string,
@@ -157,11 +154,6 @@ export class ClaimTableComponent implements OnInit {
             LinkText.authorize : '';
   }
 
-  public diagnoseLinkText(jobStatus: JobStatus): string {
-    return jobStatus === JobStatus.wip
-      ? LinkText.diagnosis : '';
-  }
-
   public onSort(sort: SortEventInterface) {
     if (!this.headers || !this.claimsFound) {
       return;
@@ -188,8 +180,8 @@ export class ClaimTableComponent implements OnInit {
     }
   }
 
-  private _sendToPortal(authPortal: any, url: string): void {
-    authPortal.location.href = url;
+  private _sendToPortal(url: string): void {
+    this._windowRefService.window.open(url, '_blank');
   }
 
   private _getPageSize(claimsAmount: number): number {

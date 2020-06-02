@@ -1,4 +1,3 @@
-import { DataLossGuard } from './../data-loss.guard';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ClaimManagementRoutingModule } from './claim-management-routing.module';
