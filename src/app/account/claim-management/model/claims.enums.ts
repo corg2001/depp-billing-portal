@@ -6,7 +6,7 @@ export enum JobStatus {
   pendingAuthorization = 'PendingAuthorization'
 }
 export enum ClaimOrderType {
-  replace = 'Replace',
+  replace = 'Replacement',
   repair = 'Repair',
   surge = 'Surge'
 }

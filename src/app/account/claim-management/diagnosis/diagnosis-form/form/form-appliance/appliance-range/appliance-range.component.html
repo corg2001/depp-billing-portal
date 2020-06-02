@@ -1,0 +1,113 @@
+<div [formGroup]="diagnosisForm">
+  <div formGroupName="applianceTypeInfo">
+    <div formGroupName="range">
+      <div class="form-row">
+        <div class="form-group form-inline ml-1">
+          <div class="option-group-label">
+            Gas or Electric?
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="gasOrElectric" formControlName="gasOrElectric" id="gasOrElectricYes" value="Yes">
+            <label class="custom-control-label" for="gasOrElectricYes">Yes</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="gasOrElectric" formControlName="gasOrElectric" id="gasOrElectricNo" value="No">
+            <label class="custom-control-label" for="gasOrElectricNo">No</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group form-inline ml-1">
+          <div class="option-group-label">
+            Coil or Smooth Top (if electric)?
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="rangeTopType" formControlName="rangeTopType" id="rangeTopTypeCoil" value="Coil">
+            <label class="custom-control-label" for="rangeTopTypeCoil">Coil</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="rangeTopType" formControlName="rangeTopType" id="rangeTopTypeSmooth" value="Smooth">
+            <label class="custom-control-label" for="rangeTopTypeSmooth">Smooth Top</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group form-inline ml-1">
+          <div class="option-group-label">
+            Slide in/Drop in/Freestanding?
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="slideDropFreestanding" formControlName="slideDropFreestanding"
+              id="sdfSlide" value="Slide in">
+            <label class="custom-control-label" for="sdfSlide">Slide in</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="slideDropFreestanding" formControlName="slideDropFreestanding"
+              id="sdfDropIn" value="Drop in">
+            <label class="custom-control-label" for="sdfDropIn">Drop in</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="slideDropFreestanding" formControlName="slideDropFreestanding"
+              id="sdfFreestanding" value="Freestanding">
+            <label class="custom-control-label" for="sdfFreestanding">Freestanding</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group form-inline ml-1">
+          <div class="option-group-label">
+            Convection?
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="hasConvection" formControlName="hasConvection" id="hasConvectionYes" value="Yes">
+            <label class="custom-control-label" for="hasConvectionYes">Yes</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="hasConvection" formControlName="hasConvection" id="hasConvectionNo" value="No">
+            <label class="custom-control-label" for="hasConvectionNo">No</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group form-inline ml-1">
+          <div class="option-group-label">
+            Self Clean?
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="hasSelfClean" formControlName="hasSelfClean" id="hasSelfCleanYes" value="Yes">
+            <label class="custom-control-label" for="hasSelfCleanYes">Yes</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="hasSelfClean" formControlName="hasSelfClean" id="hasSelfCleanNo" value="No">
+            <label class="custom-control-label" for="hasSelfCleanNo">No</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group form-inline ml-1">
+          <div class="option-group-label">
+            Window on oven?
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="hasWindow" formControlName="hasWindow" id="hasWindowYes" value="Yes">
+            <label class="custom-control-label" for="hasWindowYes">Yes</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" name="hasWindow" formControlName="hasWindow" id="hasWindowNo" value="No">
+            <label class="custom-control-label" for="hasWindowNo">No</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="cordLength">Cord length and # prongs:</label>
+          <input type="text" class="form-control" id="cordLength" formControlName="cordLength">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="rangeColor">Color:</label>
+          <input type="text" class="form-control" id="rangeColor" formControlName="color">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

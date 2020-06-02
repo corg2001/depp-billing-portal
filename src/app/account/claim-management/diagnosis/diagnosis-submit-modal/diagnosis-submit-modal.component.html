@@ -1,0 +1,23 @@
+<div class="diagnosis-submit-modal" tabindex="-1" role="dialog">
+  <div class="modal-body">
+    <button type="button" class="close" aria-label="Close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <div *ngIf="success">
+      <h3  class="text-info text-center my-3">Success</h3>
+      <p class="submit-modal-message text-center">
+        Your form has been submitted and sent to the authorizations team.
+        They will contact you once reviewed.
+      </p>
+    </div>
+    <div *ngIf="!success">
+      <h3 class="text-danger text-center my-3">Error</h3>
+      <p class="submit-modal-message text-center">
+        There was a problem submitting your replacement form. Please try again.
+      </p>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="close()">Close</button>
+  </div>
+</div>

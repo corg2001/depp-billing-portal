@@ -11,7 +11,7 @@
 </div>
 <div class="modal-body">
   <p class="select-instructions">
-    Select one of the following forms from the drop down to initiate a replacement:
+    Select one of the following forms from the drop down to initiate a diagnosis:
   </p>
   <form [formGroup]="diagnosisForm">
     <div class="form-group">
@@ -27,6 +27,6 @@
 </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-light text-uppercase" [disabled]="!diagnosisForm.valid" (click)="openDiagnosisForm(diagnosisForm)">
-    Initiate Replace
+    Initiate Diagnosis
   </button>
 </div>

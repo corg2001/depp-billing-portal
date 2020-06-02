@@ -28,14 +28,18 @@
           <a
             class="text-uppercase"
             (click)="authorizeInvoice(claim.jobNumber, claim.vendorId)"
-            >{{ authorizeLinkText(claim.jobStatus) }}</a
           >
-          {{ claim.jobStatus === JobStatus.wip ? ' | ' : ''  }}
-          <a
-            class="text-uppercase"
-            (click)="diagnoseJob(claim.jobNumber, claim.dateRequested, claim.customerContactPhone)"
-            >{{ diagnoseLinkText(claim.jobStatus) }}</a
-          >
+            {{ authorizeLinkText(claim.jobStatus) }}
+          </a>
+          <span *ngIf="claim.jobStatus === JobStatus.wip">
+            |
+            <a
+              class="text-uppercase"
+              (click)="diagnoseJob(claim.vendorId, claim.jobNumber, claim.dateRequested, claim.customerContactPhone)"
+            >
+              {{ LinkText.diagnosis }}
+            </a>
+          </span>
         </td>
       </tr>
     </tbody>
