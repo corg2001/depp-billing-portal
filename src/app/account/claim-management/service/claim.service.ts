@@ -146,7 +146,7 @@ export class ClaimService implements ClaimServiceAbstract {
     isError$: Subject<boolean>
   ): void {
     const formData = new FormData();
-    formData.append('file', blobData);
+    formData.append('file', blobData, jobDetail.jobNumber + '.pdf');
 
     const params: HttpParams = new HttpParams()
       .set(HttpParamEnum.vendorId, jobDetail.vendorId)
