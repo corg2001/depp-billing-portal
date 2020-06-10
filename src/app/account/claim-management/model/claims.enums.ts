@@ -6,7 +6,7 @@ export enum JobStatus {
   pendingAuthorization = 'PendingAuthorization'
 }
 export enum ClaimOrderType {
-  replace = 'Replace',
+  replace = 'Replacement',
   repair = 'Repair',
   surge = 'Surge'
 }
@@ -19,5 +19,6 @@ export enum ClaimDisposition {
 export enum LinkText {
   authorize = 'Authorize',
   complete = 'Complete Job',
-  invoiced = 'Invoice'
+  invoiced = 'Invoice',
+  diagnosis = 'Diagnosis'
 }

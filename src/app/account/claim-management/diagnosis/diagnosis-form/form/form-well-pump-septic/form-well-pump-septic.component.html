@@ -1,0 +1,92 @@
+<div class="container-fluid card">
+  <div class="title">
+    {{ formLabel }}
+  </div>
+  <div class="diagnosis-form-description">
+    Well Pump, Sewage Ejector Pump, Septic System, Septic Tank Pumping
+  </div>
+  <form [formGroup]="diagnosisForm" (ngSubmit)="submitDiagnosisForm()">
+    <div class="form-group">
+      <div class="sub-title">
+        Claim Type and Specs
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <select class="form-control" id="claimType" formControlName="claimType" (change)="selectClaimType($event.target.value)">
+            <option [ngValue]="null" selected disabled>Select a claim type</option>
+            <option *ngFor="let wellPumpSepticClaimType of keys(wellPumpSepticClaimTypes)"
+              value="{{ wellPumpSepticClaimTypes[wellPumpSepticClaimType] }}">
+              {{ wellPumpSepticClaimTypes[wellPumpSepticClaimType] }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div formGroupName="claimTypeInfo">
+        <div *ngIf="selectedClaimType && selectedClaimType !== wellPumpSepticClaimTypes.wellPump"  class="small mb-3">
+          *Shared* between Sewage Ejector Pump/Septic System and Septic Tank Pumping.
+        </div>
+        <div *ngIf="selectedClaimType === wellPumpSepticClaimTypes.sewageEjectorPump">
+          <div formGroupName="sewageEjector">
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="horsepower">Horsepower:</label>
+                <input type="text" class="form-control" id="horsepower" formControlName="horsepower">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="selectedClaimType === wellPumpSepticClaimTypes.septicTankPumping">
+          <div formGroupName="septicTankPumping">
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="gallons">How many gallons:</label>
+                <input type="text" class="form-control" id="gallons" formControlName="gallons">
+              </div>
+              <div class="form-group col-md-6">
+                <label for="isCertNeeded">Do we need a cert?</label>
+                <input type="text" class="form-control" id="isCertNeeded" formControlName="isCertNeeded">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group form-inline ml-1">
+                <div class="col-md-6">
+                  Have we pumped during this contract period? If yes, deny the claim. HWA only covers to pump one time per contract period.
+                </div>
+                <div class="col-md-6">
+                  <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" class="custom-control-input" name="hasBeenPumped" formControlName="hasBeenPumped" id="hasBeenPumpedYes" value="Yes">
+                    <label class="custom-control-label" for="hasBeenPumpedYes">Yes</label>
+                  </div>
+                  <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" class="custom-control-input" name="hasBeenPumped" formControlName="hasBeenPumped" id="hasBeenPumpedNo" value="No">
+                    <label class="custom-control-label" for="hasBeenPumpedNo">No</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row border-bottom my-3"></div>
+      <app-part-failure [diagnosisForm]="diagnosisForm"></app-part-failure>
+      <div class="row border-bottom my-3"></div>
+      <app-cost-time-material [diagnosisForm]="diagnosisForm"></app-cost-time-material>
+      <div class="row border-bottom my-3"></div>
+      <app-cost-flat-rate [diagnosisForm]="diagnosisForm"></app-cost-flat-rate>
+      <div class="row border-bottom my-3"></div>
+      <app-non-covered-charge [diagnosisForm]="diagnosisForm"></app-non-covered-charge>
+      <div class="row border-bottom my-3"></div>
+      <app-tcf [diagnosisForm]="diagnosisForm"></app-tcf>
+      <div class="row border-bottom my-3"></div>
+      <div class="sub-title">
+        Additional Comments
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-12">
+          <textarea class="form-control" id="additionalComments" formControlName="additionalComments"></textarea>
+        </div>
+      </div>
+      <button class="btn btn-light text-uppercase" type="submit" [disabled]="!diagnosisForm.valid">Submit Form</button>
+    </div>
+  </form>
+</div>

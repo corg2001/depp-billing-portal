@@ -1,5 +1,6 @@
+import { Router } from '@angular/router';
 import { Component, OnInit, Input, ViewChildren, QueryList } from '@angular/core';
-import { ClaimService } from '../../service/claim.service';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Claim } from '../../model/claims.model';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { JobStatus, LinkText } from '../../model/claims.enums';
@@ -8,6 +9,9 @@ import { SortableHeaderDirective } from 'src/app/core/directive/sortable-header.
 import { SortDirectionEnums } from 'src/app/core/enums/sort-direction.enums';
 import { SortEventInterface } from 'src/app/core/interface/sort-event.interface';
 import { WindowRefAbstract } from 'src/app/core/window-ref.abstract.service';
+import { DiagnosisSelectModalComponent } from '../../diagnosis/diagnosis-select-modal/diagnosis-select-modal.component';
+import { ClaimServiceAbstract } from '../../service/abstract/claim.abstract.service';
+import { JobDetailInterface } from './../../interface/job-detail.interface';
 
 @Component({
   selector: 'app-claim-table',
@@ -15,12 +19,8 @@ import { WindowRefAbstract } from 'src/app/core/window-ref.abstract.service';
   styleUrls: ['./claim-table.component.scss']
 })
 export class ClaimTableComponent implements OnInit {
-  @Input() public claimSubject$?: BehaviorSubject<
-    Claim[]
-  > = new BehaviorSubject([]);
-  @Input() public completedSubject$?: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject(false);
+  @Input() public claimSubject$?: BehaviorSubject<Claim[]> = new BehaviorSubject([]);
+  @Input() public completedSubject$?: BehaviorSubject<boolean> = new BehaviorSubject(false);
   @Input() public searchedClaimSubject$?: BehaviorSubject<
     Claim[]
   > = new BehaviorSubject([]);
@@ -35,19 +35,23 @@ export class ClaimTableComponent implements OnInit {
   public pageSize: number;
   public collectionSize: number = 0;
   public pageList: number[] = [2, 4, 6, 8];
-
+  public authorizingJobNumber: string;
+  public authorizingJobStatus: string;
   public claimListSubject: Subject<any> = new Subject();
   public completionSubject: Subject<boolean> = new Subject();
-  public loading: boolean = true;
+  public loading: boolean = false;
   public authorizeInvoiceLinkText = 'authorize / invoice';
   public claimsFound: boolean = true;
   public noInfoText: string;
-  public authorizeUrl$: BehaviorSubject<string> = new BehaviorSubject(null);
+  public JobStatus = JobStatus;
+  public LinkText = LinkText;
 
   constructor(
-    private _claimService: ClaimService,
-    private _windowRefService: WindowRefAbstract
-  ) {}
+    private _claimService: ClaimServiceAbstract,
+    private _windowRefService: WindowRefAbstract,
+    private _modalService: NgbModal,
+    private _router: Router
+  ) { }
 
   ngOnInit() {
     this.noInfoText = `Please contact Contractor Relations at ${environment.core.customerServiceNumber} for assistance.`;
@@ -62,7 +66,7 @@ export class ClaimTableComponent implements OnInit {
     });
 
     this.completedSubject$.subscribe((completed: boolean) => {
-       this.isCompleted = completed;
+      this.isCompleted = completed;
     });
     this.error$.subscribe((error: boolean) => this.isError = error);
     this.searchedClaimSubject$.subscribe((claimData: Claim[]) => {
@@ -84,18 +88,18 @@ export class ClaimTableComponent implements OnInit {
     );
   }
 
-  public authorizeInvoice(jobNumber: string, vendorId: string): void {
-    const authPortal = this._windowRefService.window.open('', '_blank');
-    authPortal.document.write('Loading Invoice Portal, Please Wait ......');
-
+  public authorizeInvoice(jobNumber: string, jobStatus: string, vendorId: string): void {
+    this.authorizingJobNumber = jobNumber;
+    this.authorizingJobStatus = jobStatus;
     this.loading = true;
     const completion$: Subject<boolean> = new Subject<boolean>();
     const error$: Subject<boolean> = new Subject();
+    const authorizeUrl$: Subject<string> = new Subject();
     const errorMessage$: Subject<string> = new Subject();
     this._claimService.authInvoiceRedirect(
       jobNumber,
       vendorId,
-      this.authorizeUrl$,
+      authorizeUrl$,
       completion$,
       error$,
       errorMessage$
@@ -104,8 +108,36 @@ export class ClaimTableComponent implements OnInit {
     completion$.subscribe((completed: boolean) => {
       completed ? this.loading = false : this.loading = true;
       if (!this.loading) {
-        this.authorizeUrl$.subscribe((url: string) => {
-          this._sendToPortal(authPortal, url);
+        authorizeUrl$.subscribe((url: string) => {
+          this._sendToPortal(url);
+        });
+      }
+    });
+  }
+  public isAuthorizing(jobNumber: string, jobStatus: string): boolean {
+    return this.authorizingJobNumber === jobNumber && this.authorizingJobStatus === jobStatus;
+  }
+  public diagnoseJob(
+    vendorId: string,
+    jobNumber: string,
+    dateRequested: Date,
+    customerContactPhone: string
+  ): void {
+    const jobDetail: JobDetailInterface = {
+      vendorId: vendorId,
+      jobNumber: jobNumber,
+      dateRequested: dateRequested,
+      customerContactPhone: customerContactPhone
+    };
+    this._claimService.setJobDetail(jobDetail);
+    const modalRef: NgbModalRef = this._modalService.open(DiagnosisSelectModalComponent);
+    modalRef.result.then((formType: string) => {
+      if (formType) {
+        this._router.navigate([
+          '/account/claim/diagnosis',
+          formType
+        ]).then(() => {
+          window.scroll(0, 0);
         });
       }
     });
@@ -115,11 +147,11 @@ export class ClaimTableComponent implements OnInit {
     return jobStatus === JobStatus.authorized
       ? LinkText.complete
       : jobStatus === JobStatus.wip
-      ? LinkText.authorize
-      : jobStatus === JobStatus.completed
-      ? LinkText.invoiced
-      : jobStatus === JobStatus.pendingAuthorization ?
-      LinkText.authorize : '';
+        ? LinkText.authorize
+        : jobStatus === JobStatus.completed
+          ? LinkText.invoiced
+          : jobStatus === JobStatus.pendingAuthorization ?
+            LinkText.authorize : '';
   }
 
   public onSort(sort: SortEventInterface) {
@@ -148,15 +180,15 @@ export class ClaimTableComponent implements OnInit {
     }
   }
 
-  private _sendToPortal(authPortal: any, url: string): void {
-    authPortal.location.href = url;
+  private _sendToPortal(url: string): void {
+    this._windowRefService.window.open(url, '_blank');
   }
 
   private _getPageSize(claimsAmount: number): number {
     return claimsAmount > 150 ? 20 : 10;
   }
 
-  private _compareString (v1?: string, v2?: string) {
+  private _compareString(v1?: string, v2?: string) {
     return (v1 < v2) ? -1 : (v1 > v2) ? 1 : 0;
   }
 }

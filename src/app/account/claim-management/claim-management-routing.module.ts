@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component:  ClaimSummaryComponent
+  },
+  {
+    path: 'diagnosis',
+    loadChildren: './diagnosis/diagnosis.module#DiagnosisModule'
   }
 ];
 

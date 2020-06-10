@@ -1,0 +1,46 @@
+<div id="accordion">
+  <div class="card">
+    <div class="card-header" id="cardHeader" (click)="isCollapsed = !isCollapsed" [ngClass]="isCollapsed ? 'collapsed' : 'expanded'">
+      <span class="text-white">{{ headerText }}</span>
+      <span class="text-white align-middle float-right">
+        <i class="fa fa-chevron-up" *ngIf="!isCollapsed" aria-hidden="true"></i>
+        <i class="fa fa-chevron-down" *ngIf="isCollapsed" aria-hidden="true"></i>
+      </span>
+    </div>
+    <div id="collapseBody" class="collapse" [ngbCollapse]="isCollapsed">
+      <div class="card-body mb-1">
+        <div class="container pl-0 pr-0">
+          <div class="row">
+            <div class="col-12 text-uppercase card-sub-header pt-1 pb-1">
+              Job Details
+            </div>
+          </div>
+          <div class="row">
+            <div class="col item-label">
+              Job Number:
+            </div>
+            <div class="col item-data">
+              {{ jobDetail.jobNumber }}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col item-label">
+              Job Date:
+            </div>
+            <div class="col item-data">
+              {{ jobDetail.dateRequested | date: dateFormat }}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col item-label">
+              Contractor Number:
+            </div>
+            <div class="col item-data">
+              {{ contractorPhoneNumber | formatphone }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

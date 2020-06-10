@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, forkJoin } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { Claim } from '../model/claims.model';
 
 import { Subject } from 'rxjs';
@@ -14,7 +14,8 @@ import { ClaimPayloadInterface } from '../interface/claim.payload.interface';
 import { ClaimServiceAbstract } from './abstract/claim.abstract.service';
 import { environment } from 'src/environments/environment';
 import { HttpParamEnum } from 'src/app/shared/enums/http-params.enums';
-import { AssociationEnums } from 'src/app/shared/enums/association.enums';
+import { JobDetailInterface } from './../interface/job-detail.interface';
+import { LocalStorageEnum } from 'src/app/core/enums/local-storage.enums';
 
 @Injectable({
   providedIn: 'root'
@@ -124,4 +125,49 @@ export class ClaimService implements ClaimServiceAbstract {
     errorMessage$.next(error.error.message);
     this._loggerService.error(` unable to get auth portal url <br/> ${error.error.message}`);
   }
+
+  public setJobDetail(jobDetail: JobDetailInterface): void {
+    localStorage.setItem(
+      LocalStorageEnum.JobDetail,
+      JSON.stringify(jobDetail)
+    );
+  }
+
+  public getJobDetail(): JobDetailInterface {
+    return JSON.parse(localStorage.getItem(LocalStorageEnum.JobDetail));
+  }
+
+  public submitDiagnosisForm(
+    companyInfo: string,
+    formType: string,
+    jobDetail: JobDetailInterface,
+    blobData: Blob,
+    isSuccess$: Subject<any>,
+    isError$: Subject<boolean>
+  ): void {
+    const formData = new FormData();
+    formData.append('file', blobData, jobDetail.jobNumber + '.pdf');
+
+    const params: HttpParams = new HttpParams()
+      .set(HttpParamEnum.vendorId, jobDetail.vendorId)
+      .set(HttpParamEnum.companyInfo, companyInfo)
+      .set(HttpParamEnum.docType, formType)
+      .set(HttpParamEnum.jobNumber, jobDetail.jobNumber);
+
+    this._httpClient.post<any>(
+      environment.submitDiagnosisUrl,
+      formData,
+      {
+        params: params
+      }
+    ).subscribe(
+      (response: any) => {
+        isSuccess$.next(response);
+      },
+      (error: HttpErrorResponse) => {
+        isError$.next(true);
+      }
+    );
+  }
+
 }

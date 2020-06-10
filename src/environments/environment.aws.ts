@@ -49,6 +49,7 @@ export const environment = {
   // ClaimService
   claimsUrl: `${baseUrl}services/vendor/purchase-orders`,
   authInoviceUrl: `${baseUrl}services/vendor/geturl`,
+  submitDiagnosisUrl: `${baseUrl}services/vendor/contractor-form`,
 
   // ProfileService
   achDocsUrl: `${baseUrl}services/vendor/ach-info`,
@@ -67,7 +68,7 @@ export const environment = {
   // uploadService
   uploadUrl: `${baseUrl}services/vendor/document-upload`,
 
-  // CalenderService 
+  // CalenderService
   calenderUrl: `${baseUrl}services/vendor/work-calendar`,
   // helpService
   helpUrl: `${baseUrl}contact-us`

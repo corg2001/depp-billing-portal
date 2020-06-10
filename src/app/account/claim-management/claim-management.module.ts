@@ -12,12 +12,15 @@ import { ClaimFactoryService } from './service/factory/claim.factory.service';
 import { ClaimServiceAbstract } from './service/abstract/claim.abstract.service';
 import { ClaimFactoryServiceAbstract } from './service/factory/claim.factory.abstract.service';
 import { ClaimNotificationComponent } from './claim-summary/claim-notification/claim-notification.component';
+import { DiagnosisSelectModalComponent } from './diagnosis/diagnosis-select-modal/diagnosis-select-modal.component';
+
 @NgModule({
   declarations: [
     ClaimSummaryComponent,
     SearchBoxComponent,
     ClaimTableComponent,
-    ClaimNotificationComponent
+    ClaimNotificationComponent,
+    DiagnosisSelectModalComponent
   ],
   imports: [
     CommonModule,
@@ -37,6 +40,9 @@ import { ClaimNotificationComponent } from './claim-summary/claim-notification/c
       provide: ClaimFactoryServiceAbstract,
       useClass: ClaimFactoryService
     }
+  ],
+  entryComponents: [
+    DiagnosisSelectModalComponent
   ]
 })
 export class ClaimManagementModule {}

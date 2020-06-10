@@ -24,21 +24,29 @@
         <td>{{ claim.jobStatus }}</td>
         <td>{{ claim.serviceAddress }}</td>
         <td>{{ claim.customerContactPhone | formatphone }}</td>
+        <td><a class="text-uppercase" (click)="authorizeInvoice(claim.jobNumber, claim.jobStatus, claim.vendorId)">
+            {{ authorizeLinkText(claim.jobStatus) }}
+          </a>
+          <span *ngIf="claim.jobStatus === JobStatus.wip">
+            |
+            <a class="text-uppercase"
+              (click)="diagnoseJob(claim.vendorId, claim.jobNumber, claim.dateRequested, claim.customerContactPhone)">
+              {{ LinkText.diagnosis }}
+            </a>
+          </span>
+        </td>
         <td>
-          <a
-            class="text-uppercase"
-            (click)="authorizeInvoice(claim.jobNumber, claim.vendorId)"
-            >{{ authorizeLinkText(claim.jobStatus) }}</a
-          >
+          <app-loading-spinner
+            [ngClass]="{'show-spinner': loading && isAuthorizing(claim.jobNumber, claim.jobStatus)}"
+            [addPadding]=false
+            *ngIf="loading && isAuthorizing(claim.jobNumber, claim.jobStatus)">
+          </app-loading-spinner>
         </td>
       </tr>
     </tbody>
   </table>
   <div>
-    <ngb-pagination
-      [pageSize]="pageSize"
-      [(page)]="page"
-      [collectionSize]="collectionSize" [maxSize]="10">
+    <ngb-pagination [pageSize]="pageSize" [(page)]="page" [collectionSize]="collectionSize" [maxSize]="10">
     </ngb-pagination>
   </div>
 </ng-container>
