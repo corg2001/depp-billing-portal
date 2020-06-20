@@ -22,3 +22,8 @@ export enum LinkText {
   invoiced = 'Invoice',
   diagnosis = 'Diagnosis'
 }
+
+export enum RevenueOrMaintenceIndicatorEnums{
+  RS = 'RS',
+  PPM = 'PPM'
+}
