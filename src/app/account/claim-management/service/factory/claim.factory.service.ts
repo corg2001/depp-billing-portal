@@ -22,9 +22,7 @@ export class ClaimFactoryService {
         claimPlayload.job_status,
         claimPlayload.service_address,
         claimPlayload.customer_contact_phone,
-        claimPlayload.vendor_id,
-        claimPlayload.is_prepaid_maintenance,
-        claimPlayload.is_rev_share
+        claimPlayload.vendor_id
       );
       claims.push(claim);
     });

@@ -27,6 +27,8 @@ export class ClaimSummaryComponent implements OnInit {
   public partyName: string;
   public isCompleted: boolean;
   public claimsFound: boolean;
+  // tslint:disable-next-line: max-line-length
+  public coronoaVirusMsg: string = `Due to government health and safety directives and other events beyond our control related to COVID-19, we are currently prioritizing high-risk, emergency claims to meet our customers’ needs. If you are not able to self-authorize, please email your diagnosis to replacements@hwahomewarranty.com. Please include the name on the account and a contact number.  We will contact you as soon as possible.  Thank you for being a valued partner.​`;
   public loading: boolean = true;
 
   constructor(

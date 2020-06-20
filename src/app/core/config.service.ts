@@ -66,7 +66,7 @@ export class ConfigService {
   }
 
   public getPartyName(): string {
-    return this._config.partyName ? this._config.partyName : '';
+    return this._config.partyName;
   }
 
   public getcompanyName(): string {
