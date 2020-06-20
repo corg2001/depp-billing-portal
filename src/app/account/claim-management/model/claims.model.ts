@@ -11,8 +11,6 @@ export class Claim implements ClaimInterface {
   private _serviceAddress: string;
   private _customerContactPhone: string;
   private _vendorId: string;
-  private _isPrepaidMaintenance: boolean;
-  private _isRevShare: boolean;
   constructor(
     jobNumber?: string,
     dateRequested?: string,
@@ -22,9 +20,7 @@ export class Claim implements ClaimInterface {
     jobStatus?: JobStatus,
     serviceAddress?: string,
     customerContactPhone?: string,
-    vendorId?: string,
-    isPrepaidMaintenance?: boolean,
-    isRevShare?: boolean
+    vendorId?: string
   ) {
     this._jobNumber = jobNumber;
     this._dateRequested = dateRequested;
@@ -35,8 +31,6 @@ export class Claim implements ClaimInterface {
     this._serviceAddress = serviceAddress;
     this._customerContactPhone = customerContactPhone;
     this._vendorId = vendorId;
-    this._isPrepaidMaintenance = isPrepaidMaintenance;
-    this._isRevShare = isRevShare;
   }
   get jobNumber(): string {
     return this._jobNumber;
@@ -74,14 +68,6 @@ export class Claim implements ClaimInterface {
     return this._vendorId;
   }
 
-  get isPrepaidMaintenance(): boolean {
-    return this._isPrepaidMaintenance;
-  }
-
-  get isRevShare(): boolean {
-    return this._isRevShare;
-  }
-
   set jobNumber(jobNumber: string) {
     this._jobNumber = jobNumber;
   }
@@ -117,14 +103,4 @@ export class Claim implements ClaimInterface {
   set vendorId(vendorId: string) {
     this._vendorId = vendorId;
   }
-
-  set isPrepaidMaintenance(isPrepaidMaintenance: boolean) {
-    this._isPrepaidMaintenance = isPrepaidMaintenance;
-  }
-
-  set isRevShare(isRevShare: boolean) {
-    this._isRevShare = isRevShare;
-  }
-
-  
 }

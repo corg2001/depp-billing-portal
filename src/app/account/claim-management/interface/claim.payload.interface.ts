@@ -14,6 +14,4 @@ export interface ClaimPayloadInterface {
   readonly service_address: string;
   readonly customer_contact_phone: string;
   readonly vendor_id: string;
-  readonly is_prepaid_maintenance: boolean;
-  readonly is_rev_share: boolean;
 }
