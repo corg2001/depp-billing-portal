@@ -2,7 +2,7 @@ export enum JobStatus {
   wip = 'WIP',
   authorized = 'Authorized',
   completed = 'Completed',
-  invoiced = 'Invoice',
+  invoiced = 'Invoiced',
   pendingAuthorization = 'PendingAuthorization'
 }
 export enum ClaimOrderType {
