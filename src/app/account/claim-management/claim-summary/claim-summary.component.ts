@@ -8,6 +8,7 @@ import * as moment from 'moment-timezone';
 import { ConfigService } from 'src/app/core/config.service';
 import { SessionKeys } from 'src/app/shared/enums/session-keys.emums';
 import { Router, RouterEvent, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
+import { JobStatus } from '../model/claims.enums';
 
 @Component({
   selector: 'app-claim-summary',
@@ -56,7 +57,7 @@ export class ClaimSummaryComponent implements OnInit {
         this.claims = this._claimFactoryService.getClaimFromPayload(
           claimPlayod
         );
-        this.claimList$.next(this.claims);
+        this.claimList$.next(this.claims.filter(c => c.jobStatus !== JobStatus.invoiced));
         this.claimsFound = this.claims.length > 0 ? true : false;
       }
     );
