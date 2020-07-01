@@ -52,7 +52,7 @@
                   Rodding?
                 </div>
                 <div class="custom-control custom-radio custom-control-inline">
-                  <input type="radio" class="custom-control-input" name="isRodding" formControlName="isRodding" id="isMaisRoddingYesinLineYes" value="Yes">
+                  <input type="radio" class="custom-control-input" name="isRodding" formControlName="isRodding" id="isRoddingYes" value="Yes">
                   <label class="custom-control-label" for="isRoddingYes">Yes</label>
                 </div>
                 <div class="custom-control custom-radio custom-control-inline">
@@ -328,7 +328,7 @@
       <div class="row border-bottom my-3"></div>
       <app-additional-comments [diagnosisForm]="diagnosisForm"></app-additional-comments>
       <div class="row border-bottom my-3"></div>
-      <button class="btn btn-light text-uppercase" type="submit" [disabled]="!diagnosisForm.valid">Submit Form</button>
+      <button class="btn btn-light text-uppercase" type="submit" [disabled]="isSubmitDisabled()">Submit Form</button>
     </div>
   </form>
 </div>
