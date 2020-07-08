@@ -2,7 +2,7 @@ export enum JobStatus {
   wip = 'WIP',
   authorized = 'Authorized',
   completed = 'Completed',
-  invoiced = 'Invoice',
+  invoiced = 'Invoiced',
   pendingAuthorization = 'PendingAuthorization'
 }
 export enum ClaimOrderType {
@@ -21,4 +21,9 @@ export enum LinkText {
   complete = 'Complete Job',
   invoiced = 'Invoice',
   diagnosis = 'Diagnosis'
+}
+
+export enum RevenueOrMaintenceIndicatorEnums{
+  RS = 'RS',
+  PPM = 'PPM'
 }

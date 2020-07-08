@@ -8,7 +8,6 @@ import { Component, OnInit, Input } from '@angular/core';
 export class LoadingSpinnerComponent implements OnInit {
   @Input() public message?: string;
   @Input() public addPadding = true;
-
   constructor() { }
 
   ngOnInit() {
