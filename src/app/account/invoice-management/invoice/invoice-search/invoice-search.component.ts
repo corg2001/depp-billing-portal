@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { InvoiceService } from '../../service/invoice.service';
@@ -12,24 +12,21 @@ import { NgbDatepicker, NgbDate } from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './invoice-search.component.html',
   styleUrls: ['./invoice-search.component.scss']
 })
-export class InvoiceSearchComponent implements OnInit, OnChanges {
+export class InvoiceSearchComponent implements OnInit {
   @Input() public invoices$: BehaviorSubject<
     InvoiceInterface[]
   > = new BehaviorSubject([]);
+  @Output() doSearch: EventEmitter<FormGroup> = new EventEmitter();
   public invoices: InvoiceInterface[] = [];
   public  model: any;
   public searchForm: FormGroup;
   public datepicker: NgbDatepicker;
-  private invoicesCopy: any;
+  public startDate: string;
 
   constructor(
-    private _fb: FormBuilder,
-    private _invoiceService: InvoiceService
+    private _fb: FormBuilder
   ) {}
 
-  ngOnChanges(): void {
-    this.invoicesCopy = _.clone(this.invoices$.getValue());
-  }
   ngOnInit() {
     this.searchForm = this._fb.group({
       startDate: [''],
@@ -39,18 +36,7 @@ export class InvoiceSearchComponent implements OnInit, OnChanges {
   }
 
   public search(form: FormGroup): void {
-    form.controls.startDate.value ||
-    form.controls.endDate.value ||
-    form.controls.address.value
-      ? this.invoices$.next(
-          this._invoiceService.search(
-            this.invoicesCopy,
-            form.controls.startDate.value,
-            form.controls.endDate.value,
-            form.controls.address.value
-          )
-        )
-      : this.invoices$.next(this.invoicesCopy);
+    this.doSearch.emit(form);
   }
 
   get sf(): any {

@@ -14,11 +14,14 @@ export abstract class InvoiceAsbstractService {
     invoices$: BehaviorSubject<InvoiceInterface[]>,
     completion$: Subject<boolean>,
     error$: Subject<boolean>,
-    errorMessage$?: Subject<string>
+    errorMessage$?: Subject<string>,
+    startDate?: Date,
+    endDate?: Date
   ): void;
 
   abstract getInvoiceParams(
-    date: string
+    startDate: string,
+    endDate?: string
   ): HttpParams;
 
   abstract getInvoiceSuccessHandler(
