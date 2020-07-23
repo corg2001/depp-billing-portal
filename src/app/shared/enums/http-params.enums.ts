@@ -3,6 +3,7 @@ export enum HttpParamEnum {
     companyInfo = 'company_info',
     jobNumber = 'job_number',
     starDate = 'start_date',
+    endDate = 'end_date',
     transactionStartDate = 'transaction_start_date',
     transactionEndDate = 'transaction_end_date',
     yearMonthDayFormat = 'yyyy-mm-dd',
