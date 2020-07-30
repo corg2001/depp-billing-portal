@@ -55,6 +55,7 @@ import { DiagnosisFormComponent } from './diagnosis-form/diagnosis-form.componen
 import { ApplianceFormFactoryAbstract } from '../service/abstract/appliance.form.factory.abstract';
 import { DiagnosisFormFactoryAbstract } from '../service/abstract/diagnosis.form.factory.abstract';
 import { HvacFormFactoryAbstract } from '../service/abstract/hvac.form.factory.abstract';
+import { AdditionalCommentsComponent } from './diagnosis-form/common/additional-comments/additional-comments.component';
 
 @NgModule({
   declarations: [
@@ -95,7 +96,8 @@ import { HvacFormFactoryAbstract } from '../service/abstract/hvac.form.factory.a
     FormElectricalComponent,
     FormExternalComponent,
     FormOtherComponent,
-    DiagnosisSubmitModalComponent
+    DiagnosisSubmitModalComponent,
+    AdditionalCommentsComponent
   ],
   imports: [
     CommonModule,
