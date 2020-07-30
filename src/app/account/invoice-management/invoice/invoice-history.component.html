@@ -2,7 +2,7 @@
   <header>{{ headerText }}</header>
   <app-invoice-search
     [invoices$]="invoices$"
-    *ngIf="!loading"
+    (doSearch)="searchInvoices($event)"
   ></app-invoice-search>
   <app-loading-spinner *ngIf="!completion"></app-loading-spinner>
   <ng-container *ngIf="!loading && isData">

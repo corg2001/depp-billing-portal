@@ -39,12 +39,20 @@ export class InvoiceService implements InvoiceAsbstractService {
     invoices$: BehaviorSubject<InvoiceInterface[]>,
     completion$: Subject<boolean>,
     error$: Subject<boolean>,
-    errorMessage$?: Subject<string>
+    errorMessage$?: Subject<string>,
+    startDate?: Date,
+    endDate?: Date
   ): void {
     // get invoice starting from a year ago
-    const date: string = dateformat(moment().subtract(1, 'y'), HttpParamEnum.yearMonthDayFormat);
+    const startDateValue: string = (startDate == null)
+      ? dateformat(moment().subtract(1, 'y'), HttpParamEnum.yearMonthDayFormat)
+      : dateformat(startDate, HttpParamEnum.yearMonthDayFormat);
+    const endDateValue: string = (endDate == null)
+      ? null
+      : dateformat(endDate, HttpParamEnum.yearMonthDayFormat);
     const params: HttpParams = this.getInvoiceParams(
-      date
+      startDateValue,
+      endDateValue
     );
     this._http
       .get(environment.invoicesUrl, { params })
@@ -62,10 +70,16 @@ export class InvoiceService implements InvoiceAsbstractService {
   }
 
   public getInvoiceParams(
-    date: string
+    startDate: string,
+    endDate?: string
   ): HttpParams {
-    return new HttpParams()
-      .set(HttpParamEnum.starDate, date);
+    let params: HttpParams = new HttpParams()
+      .set(HttpParamEnum.starDate, startDate);
+    if (endDate !== null) {
+      params = params.set(HttpParamEnum.endDate, endDate);
+    }
+
+    return params;
   }
 
   public getInvoiceSuccessHandler(

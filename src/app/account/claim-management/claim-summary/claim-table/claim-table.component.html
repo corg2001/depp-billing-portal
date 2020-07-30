@@ -35,7 +35,6 @@
             </a>
           </span>
         </td>
-        <td class="revenue-maintenance-indicator"> {{ showRevenueAndMaintenaceIndicators(claim) }}</td>
         <td>
           <app-loading-spinner
             [ngClass]="{'show-spinner': loading && isAuthorizing(claim.jobNumber, claim.jobStatus)}"
