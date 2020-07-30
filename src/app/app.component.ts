@@ -24,7 +24,7 @@ export class AppComponent {
       filter(event => event instanceof NavigationEnd)
     );
     navEndEvents.subscribe((event: NavigationEnd) => {
-      gtag('config', environment.analytics.google.brand.hwa, { page_path: event.urlAfterRedirects });
+      // gtag('config', environment.analytics.google.brand.hwa, { page_path: event.urlAfterRedirects });
     });
   }
 
