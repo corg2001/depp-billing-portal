@@ -1,0 +1,16 @@
+<div class="sub-title">
+  Additional Comments
+</div>
+<div [formGroup]="diagnosisForm">
+  <div class="form-row">
+    <div class="form-group col-md-12">
+      <textarea class="form-control" id="additionalComments" formControlName="additionalComments" [maxlength]="maxLength" (keyup)="autoGrow()" #commentsTextArea></textarea>
+      <div>
+        Characters remaining: {{ maxLength - diagnosisForm.get('additionalComments')?.value?.length }}
+      </div>
+      <div class="text-danger" *ngIf="diagnosisForm.get('additionalComments')?.errors?.maxlength">
+        Maximum number of characters is {{ maxLength }}
+      </div>
+    </div>
+  </div>
+</div>

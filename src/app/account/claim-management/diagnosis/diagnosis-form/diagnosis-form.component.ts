@@ -1,7 +1,7 @@
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ConfigService } from './../../../../core/config.service';
 
-import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, Subject } from 'rxjs';
@@ -35,7 +35,8 @@ export class DiagnosisFormComponent extends FormCanDeactivate implements OnInit 
   public formType: string;
   public formLabel: string;
   public jobDetail: JobDetailInterface;
-  public submissionComplete: boolean;
+  public isSubmitting: boolean = false;
+  public submissionComplete$: Subject<boolean> = new Subject<boolean>();
 
   @ViewChild(FormApplianceComponent) applianceForm: BaseDiagnosisFormComponent;
   @ViewChild(FormHvacComponent) hvacForm: BaseDiagnosisFormComponent;
@@ -56,7 +57,6 @@ export class DiagnosisFormComponent extends FormCanDeactivate implements OnInit 
     private _router: Router
   ) {
     super();
-    this.submissionComplete = true;
   }
 
   get form(): BaseDiagnosisFormComponent {
@@ -91,6 +91,10 @@ export class DiagnosisFormComponent extends FormCanDeactivate implements OnInit 
     });
 
     this.formLabel = DiagnosisFormEnum[this.formType];
+
+    this.submissionComplete$.subscribe((complete: boolean) => {
+      this.isSubmitting = !complete;
+    });
   }
 
   public printForm(): void {
@@ -98,15 +102,15 @@ export class DiagnosisFormComponent extends FormCanDeactivate implements OnInit 
   }
 
   public submitForm(diagnosisForm: FormGroup) {
+    this.submissionComplete$.next(false);
+
     const companyInfo: string = this._configService.getCompanyInfo();
     const pdfBlob$: Subject<Blob> = new Subject<Blob>();
     const apiSubmitSuccess$: Subject<any> = new Subject<any>();
     const isError$: Subject<boolean> = new Subject<boolean>();
 
-    this.submissionComplete = false;
-
     apiSubmitSuccess$.subscribe((result: any) => {
-      this.submissionComplete = true;
+      this.submissionComplete$.next(true);
       const submissionModalRef: NgbModalRef = this._modalService.open(
         DiagnosisSubmitModalComponent,
         { centered: true }
@@ -122,7 +126,7 @@ export class DiagnosisFormComponent extends FormCanDeactivate implements OnInit 
     });
 
     isError$.subscribe((result: boolean) => {
-      this.submissionComplete = true;
+      this.submissionComplete$.next(true);
       const submissionModalRef: NgbModalRef = this._modalService.open(
         DiagnosisSubmitModalComponent,
         { centered: true }
