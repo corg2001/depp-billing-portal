@@ -1,6 +1,9 @@
 <div id="claim-summary-container" class="d-flex flex-column">
   <header class="header-txt">Welcome<label *ngIf="partyName !== null">, {{partyName}}</label>
   </header>
+  <div class="alert alert-danger text-danger text-center">
+    Due to government health and safety directives and other events beyond our control related to COVID-19, we are currently prioritizing high-risk, emergency claims to meet our customers’ needs. If you are not able to self-authorize, please email your diagnosis to <a href="mailto:replacements@hwahomewarranty.com">replacements@hwahomewarranty.com</a>. Please include the name on the account and a contact number.  We will contact you as soon as possible.  Thank you for being a valued partner.​
+  </div>
   <app-loading-spinner *ngIf="loading"></app-loading-spinner>
   <div *ngIf="!loading">
     <p class="login-info" *ngIf="lastLoginDate">{{lastLoginDate}}</p>
