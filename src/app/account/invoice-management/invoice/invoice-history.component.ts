@@ -1,3 +1,5 @@
+import { CalendarEnums } from 'src/app/shared/enums/calendar.enums';
+import { FormGroup } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { InvoiceService } from '../service/invoice.service';
 import { Subject, BehaviorSubject } from 'rxjs';
@@ -5,6 +7,8 @@ import { ConfigService } from 'src/app/core/config.service';
 import { InvoiceInterface } from '../interface/invoice.interface';
 import { environment } from 'src/environments/environment';
 import { InvoiceAsbstractService } from '../service/abstract/invoice.asbstract.service';
+import * as moment from 'moment';
+import * as dateFormat from 'dateformat';
 
 @Component({
   selector: 'app-invoice-history',
@@ -37,13 +41,22 @@ export class InvoiceHistoryComponent implements OnInit {
     this.getInvoice(this.invoices$, this.completion$, this.error$, this.errorMessage$);
   }
 
+  public searchInvoices(formGroup: FormGroup): void {
+    const startDate: Date = formGroup.controls.startDate.value;
+    const endDate: Date = formGroup.controls.endDate.value;
+
+    this.getInvoice(this.invoices$, this.completion$, this.error$, this.errorMessage$, startDate, endDate);
+  }
+
   public getInvoice(
     invoices$: BehaviorSubject<InvoiceInterface[]>,
     completion$: Subject<boolean>,
     error$: Subject<boolean>,
     errormessage$: Subject<string>,
+    startDate?: Date,
+    endDate?: Date
   ): void {
-    this._invoiceService.getInvoice(invoices$, completion$, error$, errormessage$);
+    this._invoiceService.getInvoice(invoices$, completion$, error$, errormessage$, startDate, endDate);
 
     invoices$.subscribe((invoicesValue: InvoiceInterface[]) =>  {
       this.invoices = invoicesValue;
