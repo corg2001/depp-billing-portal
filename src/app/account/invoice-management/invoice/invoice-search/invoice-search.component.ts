@@ -1,12 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { InvoiceService } from '../../service/invoice.service';
 import { BehaviorSubject } from 'rxjs';
 import * as _ from 'lodash';
 import { InvoiceInterface } from '../../interface/invoice.interface';
-import { DatepickerViewModel } from '@ng-bootstrap/ng-bootstrap/datepicker/datepicker-view-model';
-import { NgbDatepicker, NgbDate } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDatepicker, NgbDate, NgbCalendar, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-invoice-search',
   templateUrl: './invoice-search.component.html',
@@ -18,14 +15,21 @@ export class InvoiceSearchComponent implements OnInit {
   > = new BehaviorSubject([]);
   @Output() doSearch: EventEmitter<FormGroup> = new EventEmitter();
   public invoices: InvoiceInterface[] = [];
-  public  model: any;
+  public model: any;
   public searchForm: FormGroup;
   public datepicker: NgbDatepicker;
   public startDate: string;
+  public hoveredDate: NgbDate | null = null;
+  public fromDate: NgbDate | null;
+  public toDate: NgbDate | null;
 
   constructor(
-    private _fb: FormBuilder
-  ) {}
+    private _fb: FormBuilder,
+    private calendar: NgbCalendar, public formatter: NgbDateParserFormatter
+  ) {
+    this.fromDate = calendar.getToday();
+    this.toDate = calendar.getNext(calendar.getToday(), 'd', 10);
+  }
 
   ngOnInit() {
     this.searchForm = this._fb.group({
@@ -36,10 +40,41 @@ export class InvoiceSearchComponent implements OnInit {
   }
 
   public search(form: FormGroup): void {
+    const startData: string = `${this.fromDate.year}-${this.fromDate.month}-${this.fromDate.day}`;
+    const endDate: string = `${this.toDate.year}-${this.toDate.month}-${this.toDate.day}`;
+    this.searchForm.controls.startDate.patchValue(startData);
+    this.searchForm.controls.endDate.patchValue(endDate);
     this.doSearch.emit(form);
   }
 
   get sf(): any {
     return this.searchForm.controls;
+  }
+  onDateSelection(date: NgbDate) {
+    if (!this.fromDate && !this.toDate) {
+      this.fromDate = date;
+    } else if (this.fromDate && !this.toDate && date && date.after(this.fromDate)) {
+      this.toDate = date;
+    } else {
+      this.toDate = null;
+      this.fromDate = date;
+    }
+  }
+
+  isHovered(date: NgbDate) {
+    return this.fromDate && !this.toDate && this.hoveredDate && date.after(this.fromDate) && date.before(this.hoveredDate);
+  }
+
+  isInside(date: NgbDate) {
+    return this.toDate && date.after(this.fromDate) && date.before(this.toDate);
+  }
+
+  isRange(date: NgbDate) {
+    return date.equals(this.fromDate) || (this.toDate && date.equals(this.toDate)) || this.isInside(date) || this.isHovered(date);
+  }
+
+  validateInput(currentValue: NgbDate | null, input: string): NgbDate | null {
+    const parsed = this.formatter.parse(input);
+    return parsed && this.calendar.isValid(NgbDate.from(parsed)) ? NgbDate.from(parsed) : currentValue;
   }
 }

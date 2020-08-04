@@ -1,19 +1,38 @@
 <div id="invoice-search-box-container" class="w-100 text-center">
   <form [formGroup]="searchForm" (ngSubmit)="search(searchForm)">
     <div class="d-flex flex-column flex-md-row w-70">
+      <div class="form-group hidden">
+        <div class="input-group">
+          <input name="datepicker" class="form-control" ngbDatepicker #datepicker="ngbDatepicker" 
+            [autoClose]="'outside'" (dateSelect)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t"
+            outsideDays="hidden" [startDate]="fromDate!">
+          <ng-template #t let-date let-focused="focused">
+            <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)"
+              [class.faded]="isHovered(date) || isInside(date)" (mouseenter)="hoveredDate = date"
+              (mouseleave)="hoveredDate = null">
+              {{ date.day }}
+            </span>
+          </ng-template>
+        </div>
+      </div>
       <div class="form-group">
         <div class="input-group">
-
-            <input type="text" id="by-start-date" ngbDatepicker #d="ngbDatepicker" name="by-start-date" class="form-control" placeholder="By Start Date"
-          formControlName="startDate" (click)="d.toggle()"/>
-          <button class="btn datepicker" (click)="d.toggle()" type="button"><i class="fa fa-calendar" aria-hidden="true"></i></button>
+          <input #dpFromDate class="form-control" placeholder="By Start Date"  name="dpFromDate"
+            [value]="formatter.format(fromDate)" (input)="fromDate = validateInput(fromDate, dpFromDate.value)">
+          <div class="input-group-append">
+            <button class="btn datepicker ml-1" (click)="datepicker.toggle()" type="button"><i class="fa fa-calendar"
+              aria-hidden="true"></i></button>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="form-group">
-      <div class="input-group">
-        <input type="text" id="by-end-date"  ngbDatepicker #endDate="ngbDatepicker" name="by-end-date" class="form-control" placeholder="By End Date"
-            formControlName="endDate" (click)="endDate.toggle()" />
-            <button class="btn datepicker"  (click)="endDate.toggle()" type="button"><i class="fa fa-calendar" aria-hidden="true"></i></button>
+      <div class="form-group ml-2">
+        <div class="input-group">
+          <input #dpToDate class="form-control" placeholder="By End Date" name="dpToDate"
+            [value]="formatter.format(toDate)" (input)="toDate = validateInput(toDate, dpToDate.value)">
+          <div class="input-group-append">
+            <button class="btn datepicker ml-1" (click)="datepicker.toggle()" type="button"><i class="fa fa-calendar"
+              aria-hidden="true"></i></button>
+          </div>
         </div>
       </div>
       <!--
