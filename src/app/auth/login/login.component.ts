@@ -44,7 +44,10 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.buildForm();
     this.dataSubject.subscribe((data: any) => {
-      if (data.error.message === this.errorMessage || LoginErrorEnum.credentials) {
+      if (
+        data.error.message === LoginErrorEnum.credentials ||
+        data.error.message === LoginErrorEnum.authorization
+      ) {
         data.error.message = this.errorMessage;
       }
       this.responseErrorMessage = data.error.message;
