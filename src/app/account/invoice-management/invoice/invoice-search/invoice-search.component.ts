@@ -29,8 +29,8 @@ export class InvoiceSearchComponent implements OnInit {
     private calendar: NgbCalendar, public formatter: NgbDateParserFormatter
   ) {
     this.fromDate = calendar.getToday();
-    this.toDate = calendar.getNext(calendar.getToday(), 'd', 60);
-    this.maxDate = calendar.getNext(calendar.getToday(), 'd', 60);
+    this.toDate = calendar.getPrev(calendar.getToday(), 'd', 60);
+    this.maxDate = this.fromDate;
   }
 
   ngOnInit() {
@@ -55,7 +55,7 @@ export class InvoiceSearchComponent implements OnInit {
   onDateSelection(date: NgbDate) {
     if (!this.fromDate && !this.toDate) {
       this.fromDate = date;
-    } else if (this.fromDate && !this.toDate && date && date.after(this.fromDate)) {
+    } else if (this.fromDate && !this.toDate && date && date.before(this.fromDate)) {
       this.toDate = date;
     } else {
       this.toDate = null;
@@ -64,11 +64,11 @@ export class InvoiceSearchComponent implements OnInit {
   }
 
   isHovered(date: NgbDate) {
-    return this.fromDate && !this.toDate && this.hoveredDate && date.after(this.fromDate) && date.before(this.hoveredDate);
+    return this.fromDate && !this.toDate && this.hoveredDate && date.before(this.fromDate) && date.after(this.hoveredDate);
   }
 
   isInside(date: NgbDate) {
-    return this.toDate && date.after(this.fromDate)  && date.before(this.toDate);
+    return this.toDate && date.before(this.fromDate)  && date.after(this.toDate);
   }
 
   isRange(date: NgbDate) {
