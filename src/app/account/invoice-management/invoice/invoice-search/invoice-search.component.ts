@@ -23,6 +23,7 @@ export class InvoiceSearchComponent implements OnInit {
   public fromDate: NgbDate | null;
   public toDate: NgbDate | null;
   public maxDate: NgbDate | null;
+  public minDate: NgbDate | null;
 
   constructor(
     private _fb: FormBuilder,
@@ -55,6 +56,7 @@ export class InvoiceSearchComponent implements OnInit {
   onDateSelection(date: NgbDate) {
     if (!this.fromDate && !this.toDate) {
       this.fromDate = date;
+      this.minDate = this.calendar.getPrev(this.fromDate, 'd', 60);
     } else if (this.fromDate && !this.toDate && date && date.before(this.fromDate)) {
       this.toDate = date;
     } else {

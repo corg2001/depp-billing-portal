@@ -4,7 +4,7 @@
       <div class="form-group hidden">
         <div class="input-group">
           <input name="datepicker" class="form-control" ngbDatepicker #datepicker="ngbDatepicker" 
-            [autoClose]="'outside'" (dateSelect)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t"  [maxDate]="maxDate"
+            [autoClose]="'outside'" (dateSelect)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t"  [maxDate]="maxDate" [minDate]="minDate"
             outsideDays="hidden" [startDate]="fromDate!">
           <ng-template #t let-date let-focused="focused">
             <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)"
@@ -19,7 +19,7 @@
         <div class="input-group">
           <div (click)="datepicker.toggle()">
             <input #dpFromDate class="form-control" placeholder="Select Start Date"  name="dpFromDate"
-            [value]="formatter.format(fromDate)" (input)="fromDate = validateInput(fromDate, dpFromDate.value)"  disabled>
+            [value]="formatter.format(fromDate)" (input)="toDate = validateInput(fromDate, dpFromDate.value)"  disabled>
           </div>
           
           <div class="input-group-append">
@@ -32,7 +32,7 @@
         <div class="input-group">
           <div (click)="datepicker.toggle()">
             <input #dpToDate class="form-control" placeholder="Select End Date" name="dpToDate"
-            [value]="formatter.format(toDate)" (input)="toDate = validateInput(toDate, dpToDate.value)" disabled>
+            [value]="formatter.format(toDate)" (input)="fromDate = validateInput(toDate, dpToDate.value)" disabled>
           </div>
           <div class="input-group-append">
             <button class="btn datepicker ml-1" (click)="datepicker.toggle()" type="button"><i class="fa fa-calendar"
