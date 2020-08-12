@@ -29,9 +29,9 @@ export class InvoiceSearchComponent implements OnInit {
     private _fb: FormBuilder,
     private calendar: NgbCalendar, public formatter: NgbDateParserFormatter
   ) {
-    this.fromDate = calendar.getToday();
-    this.toDate = calendar.getPrev(calendar.getToday(), 'd', 60);
-    this.maxDate = this.fromDate;
+    this.fromDate =  calendar.getPrev(calendar.getToday(), 'd', 60);
+    this.toDate = calendar.getToday();
+    this.maxDate = this.toDate;
   }
 
   ngOnInit() {
@@ -40,6 +40,7 @@ export class InvoiceSearchComponent implements OnInit {
       endDate: [''],
       address: ['']
     });
+
   }
 
   public search(form: FormGroup): void {
@@ -53,11 +54,10 @@ export class InvoiceSearchComponent implements OnInit {
   get sf(): any {
     return this.searchForm.controls;
   }
-  onDateSelection(date: NgbDate) {
+  public onDateSelection(date: NgbDate) {
     if (!this.fromDate && !this.toDate) {
       this.fromDate = date;
-      this.minDate = this.calendar.getPrev(this.fromDate, 'd', 60);
-    } else if (this.fromDate && !this.toDate && date && date.before(this.fromDate)) {
+    } else if (this.fromDate && !this.toDate && date && this.maxAllowDate(date) && date.after(this.fromDate)) {
       this.toDate = date;
     } else {
       this.toDate = null;
@@ -65,20 +65,25 @@ export class InvoiceSearchComponent implements OnInit {
     }
   }
 
-  isHovered(date: NgbDate) {
-    return this.fromDate && !this.toDate && this.hoveredDate && date.before(this.fromDate) && date.after(this.hoveredDate);
+  public isHovered(date: NgbDate) {
+    return this.fromDate && !this.toDate && this.hoveredDate && date.after(this.fromDate)
+      && date.before(this.hoveredDate) && this.maxAllowDate(date);
   }
 
-  isInside(date: NgbDate) {
-    return this.toDate && date.before(this.fromDate)  && date.after(this.toDate);
+  public isInside(date: NgbDate) {
+    return this.toDate && date.after(this.fromDate) && date.before(this.toDate);
   }
 
-  isRange(date: NgbDate) {
+  public isRange(date: NgbDate) {
     return date.equals(this.fromDate) || (this.toDate && date.equals(this.toDate)) || this.isInside(date) || this.isHovered(date);
   }
 
-  validateInput(currentValue: NgbDate | null, input: string): NgbDate | null {
+  public validateInput(currentValue: NgbDate | null, input: string): NgbDate | null {
     const parsed = this.formatter.parse(input);
     return parsed && this.calendar.isValid(NgbDate.from(parsed)) ? NgbDate.from(parsed) : currentValue;
+  }
+
+  public maxAllowDate(date: NgbDate): boolean {
+    return date && !date.after(this.calendar.getNext(this.fromDate, 'd', 60)) && !date.after(this.calendar.getToday());
   }
 }

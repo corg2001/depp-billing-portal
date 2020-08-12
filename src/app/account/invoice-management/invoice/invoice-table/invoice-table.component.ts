@@ -38,12 +38,12 @@ export class InvoiceTableComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.noInfoText = `Invoice information is not available. Please reach out to your Territory Manager for assistance.`;
+    this.noInfoText = `No open invoices in the last 60 days. Select search dates to view past invoices.`;
     this.invoices$.subscribe((invoices: InvoiceInterface[]) => {
       this.invoices = invoices;
       this.invoices = this._filterUnpaidInvoices(invoices);
       this.collectionSize = this.invoices.length;
-      this.infoFound = this._inFound(this.invoices);
+      this.infoFound = this._inFound(invoices);
       this._sortList('claimDate', SortDirectionEnums.Descending);
     });
     this.page = 1;
