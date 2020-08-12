@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
 import { InvoiceAsbstractService } from '../service/abstract/invoice.asbstract.service';
 import * as moment from 'moment';
 import * as dateFormat from 'dateformat';
+import { NgbDate, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-invoice-history',
@@ -27,18 +28,25 @@ export class InvoiceHistoryComponent implements OnInit {
   public isData: boolean = false;
   public noInfoText: string;
   public headerText: string;
+  public fromDate: NgbDate | null;
+  public toDate: NgbDate | null;
 
-  constructor(private _invoiceService: InvoiceAsbstractService, private _configService: ConfigService) {}
+  constructor(private _invoiceService: InvoiceAsbstractService, private _configService: ConfigService, private calendar: NgbCalendar) {
+    this.fromDate =  calendar.getPrev(calendar.getToday(), 'd', 60);
+    this.toDate = calendar.getToday();
+  }
 
   ngOnInit(): void {
     this.init();
   }
 
   public init(): void {
+    const startDate: any = `${this.fromDate.year}-${this.fromDate.month}-${this.fromDate.day}`;
+    const endDate: any = `${this.toDate.year}-${this.toDate.month}-${this.toDate.day}`;
     this.headerText = 'Open Invoice History';
     this._configService.init();
-    this.noInfoText = `Invoice information is not available. Please reach out to your Territory Manager for assistance.`;
-    this.getInvoice(this.invoices$, this.completion$, this.error$, this.errorMessage$);
+    this.noInfoText = `No open invoices in the last 60 days. Select search dates to view past invoices.`;
+    this.getInvoice(this.invoices$, this.completion$, this.error$, this.errorMessage$, startDate, endDate);
   }
 
   public searchInvoices(formGroup: FormGroup): void {

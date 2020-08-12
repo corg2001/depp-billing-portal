@@ -45,7 +45,7 @@ export class InvoiceService implements InvoiceAsbstractService {
   ): void {
     // get invoice starting from a year ago
     const startDateValue: string = (startDate == null)
-      ? dateformat(moment().subtract(1, 'y'), HttpParamEnum.yearMonthDayFormat)
+      ? dateformat(moment(), HttpParamEnum.yearMonthDayFormat)
       : dateformat(startDate, HttpParamEnum.yearMonthDayFormat);
     const endDateValue: string = (endDate == null)
       ? null
