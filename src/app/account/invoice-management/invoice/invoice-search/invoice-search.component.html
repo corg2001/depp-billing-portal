@@ -35,8 +35,8 @@
             [value]="formatter.format(toDate)" (input)="fromDate = validateInput(toDate, dpToDate.value)" disabled>
           </div>
           <div class="input-group-append">
-            <button class="btn datepicker ml-1" (click)="datepicker.toggle()" type="button"><i class="fa fa-calendar"
-              aria-hidden="true"></i></button>
+            <button class="btn datepicker ml-1" (click)="datepicker.toggle()" type="button" ><i class="fa fa-calendar"
+              aria-hidden="true" ></i></button>
           </div>
         </div>
       </div>
@@ -50,7 +50,7 @@
       </div>
       -->
       <div class="form-group">
-        <button type="submit" class="btn btn-secondary">
+        <button type="submit" class="btn btn-secondary" [disabled]="!this.toDate">
           <i class="fa fa-search" aria-hidden="true"></i>
         </button>
       </div>

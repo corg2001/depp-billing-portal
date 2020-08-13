@@ -4,15 +4,16 @@ import { BehaviorSubject } from 'rxjs';
 import * as _ from 'lodash';
 import { InvoiceInterface } from '../../interface/invoice.interface';
 import { NgbDatepicker, NgbDate, NgbCalendar, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
+import { InvoiceAsbstractService } from '../../service/abstract/invoice.asbstract.service';
 @Component({
   selector: 'app-invoice-search',
   templateUrl: './invoice-search.component.html',
   styleUrls: ['./invoice-search.component.scss']
 })
 export class InvoiceSearchComponent implements OnInit {
-  @Input() public invoices$: BehaviorSubject<
-    InvoiceInterface[]
-  > = new BehaviorSubject([]);
+  // @Input() public invoiceData$: BehaviorSubject<
+  //   InvoiceInterface[]
+  // > = new BehaviorSubject([]);
   @Output() doSearch: EventEmitter<FormGroup> = new EventEmitter();
   public invoices: InvoiceInterface[] = [];
   public model: any;
@@ -27,10 +28,12 @@ export class InvoiceSearchComponent implements OnInit {
 
   constructor(
     private _fb: FormBuilder,
-    private calendar: NgbCalendar, public formatter: NgbDateParserFormatter
+    private calendar: NgbCalendar,
+    private invoiceService: InvoiceAsbstractService,
+    public formatter: NgbDateParserFormatter,
   ) {
-    this.fromDate =  calendar.getPrev(calendar.getToday(), 'd', 60);
-    this.toDate = calendar.getToday();
+    this.fromDate = this.invoiceService.fromDate;
+    this.toDate = this.invoiceService.toDate;
     this.maxDate = this.toDate;
   }
 

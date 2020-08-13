@@ -31,9 +31,9 @@ export class InvoiceHistoryComponent implements OnInit {
   public fromDate: NgbDate | null;
   public toDate: NgbDate | null;
 
-  constructor(private _invoiceService: InvoiceAsbstractService, private _configService: ConfigService, private calendar: NgbCalendar) {
-    this.fromDate =  calendar.getPrev(calendar.getToday(), 'd', 60);
-    this.toDate = calendar.getToday();
+  constructor(private _invoiceService: InvoiceAsbstractService, private _configService: ConfigService) { 
+    this.fromDate = this._invoiceService.fromDate;
+    this.toDate = this._invoiceService.toDate;
   }
 
   ngOnInit(): void {
@@ -46,13 +46,12 @@ export class InvoiceHistoryComponent implements OnInit {
     this.headerText = 'Open Invoice History';
     this._configService.init();
     this.noInfoText = `No open invoices in the last 60 days. Select search dates to view past invoices.`;
-    this.getInvoice(this.invoices$, this.completion$, this.error$, this.errorMessage$, startDate, endDate);
+    this.getInvoice(this.invoices$, this.completion$, this.error$, this.errorMessage$);
   }
 
   public searchInvoices(formGroup: FormGroup): void {
     const startDate: Date = formGroup.controls.startDate.value;
     const endDate: Date = formGroup.controls.endDate.value;
-
     this.getInvoice(this.invoices$, this.completion$, this.error$, this.errorMessage$, startDate, endDate);
   }
 
@@ -64,6 +63,7 @@ export class InvoiceHistoryComponent implements OnInit {
     startDate?: Date,
     endDate?: Date
   ): void {
+
     this._invoiceService.getInvoice(invoices$, completion$, error$, errormessage$, startDate, endDate);
 
     invoices$.subscribe((invoicesValue: InvoiceInterface[]) =>  {

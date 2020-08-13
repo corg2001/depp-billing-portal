@@ -19,6 +19,7 @@ import { InvoiceInterface } from '../interface/invoice.interface';
 import { InvoiceAsbstractService } from './abstract/invoice.asbstract.service';
 import * as dateformat from 'dateformat';
 import { CalendarEnums } from 'src/app/shared/enums/calendar.enums';
+import { NgbCalendar, NgbDate } from '@ng-bootstrap/ng-bootstrap';
 
 @Injectable({
   providedIn: 'root'
@@ -26,13 +27,18 @@ import { CalendarEnums } from 'src/app/shared/enums/calendar.enums';
 export class InvoiceService implements InvoiceAsbstractService {
   private _invoice: Invoice[] = [];
   public invoice$: BehaviorSubject<Invoice[]>;
+  public fromDate: NgbDate | null;
+  public toDate: NgbDate | null;
   constructor(
     private _configService: ConfigService,
     private loggerService: LoggerService,
     private _http: HttpClient,
-    private _invoiceFactoryService: InvoiceFactoryService
+    private _invoiceFactoryService: InvoiceFactoryService,
+    private calendar: NgbCalendar
   ) {
     this.invoice$ = new BehaviorSubject(this._invoice);
+    this.fromDate =  calendar.getPrev(calendar.getToday(), 'd', 60);
+    this.toDate = calendar.getToday();
   }
 
   public getInvoice(
@@ -43,12 +49,16 @@ export class InvoiceService implements InvoiceAsbstractService {
     startDate?: Date,
     endDate?: Date
   ): void {
+    const _startDate: any = `${this.fromDate.year}-${this.fromDate.month}-${this.fromDate.day}`;
+    const _endDate: any = `${this.toDate.year}-${this.toDate.month}-${this.toDate.day}`;
     // get invoice starting from a year ago
+    // const startDateValue: string = (startDate == null)
+    //   ? dateformat(moment(), HttpParamEnum.yearMonthDayFormat)
+    //   : dateformat(startDate, HttpParamEnum.yearMonthDayFormat);
     const startDateValue: string = (startDate == null)
-      ? dateformat(moment(), HttpParamEnum.yearMonthDayFormat)
-      : dateformat(startDate, HttpParamEnum.yearMonthDayFormat);
+    ? _startDate : dateformat(startDate, HttpParamEnum.yearMonthDayFormat);
     const endDateValue: string = (endDate == null)
-      ? null
+      ? _endDate
       : dateformat(endDate, HttpParamEnum.yearMonthDayFormat);
     const params: HttpParams = this.getInvoiceParams(
       startDateValue,
