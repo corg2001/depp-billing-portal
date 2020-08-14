@@ -31,7 +31,7 @@ export class InvoiceHistoryComponent implements OnInit {
   public fromDate: NgbDate | null;
   public toDate: NgbDate | null;
 
-  constructor(private _invoiceService: InvoiceAsbstractService, private _configService: ConfigService) { 
+  constructor(private _invoiceService: InvoiceAsbstractService, private _configService: ConfigService) {
     this.fromDate = this._invoiceService.fromDate;
     this.toDate = this._invoiceService.toDate;
   }
@@ -66,7 +66,7 @@ export class InvoiceHistoryComponent implements OnInit {
 
     this._invoiceService.getInvoice(invoices$, completion$, error$, errormessage$, startDate, endDate);
 
-    invoices$.subscribe((invoicesValue: InvoiceInterface[]) =>  {
+    invoices$.subscribe((invoicesValue: InvoiceInterface[]) => {
       this.invoices = invoicesValue;
       this.isLoading();
       this.checkForData();
