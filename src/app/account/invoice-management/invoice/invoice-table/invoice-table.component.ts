@@ -45,7 +45,7 @@ export class InvoiceTableComponent implements OnInit, OnChanges {
     this.infoFound = this.invoiceData.length > 0;
     this.noInfoText = `No open invoices in the last 60 days. Select search dates to view past invoices.`;
     this.page = 1;
-    this.pageSize = 15;
+    this.pageSize = 10;
   }
 
   public modifiedInvoice(): InvoiceInterface[] {
