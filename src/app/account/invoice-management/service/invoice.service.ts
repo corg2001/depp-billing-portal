@@ -51,15 +51,11 @@ export class InvoiceService implements InvoiceAsbstractService {
   ): void {
     const _startDate: any = `${this.fromDate.year}-${this.fromDate.month}-${this.fromDate.day}`;
     const _endDate: any = `${this.toDate.year}-${this.toDate.month}-${this.toDate.day}`;
-    // get invoice starting from a year ago
-    // const startDateValue: string = (startDate == null)
-    //   ? dateformat(moment(), HttpParamEnum.yearMonthDayFormat)
-    //   : dateformat(startDate, HttpParamEnum.yearMonthDayFormat);
     const startDateValue: string = (startDate == null)
-    ? _startDate : dateformat(startDate, HttpParamEnum.yearMonthDayFormat);
+    ? _startDate : startDate;
     const endDateValue: string = (endDate == null)
       ? _endDate
-      : dateformat(endDate, HttpParamEnum.yearMonthDayFormat);
+      : endDate;
     const params: HttpParams = this.getInvoiceParams(
       startDateValue,
       endDateValue
