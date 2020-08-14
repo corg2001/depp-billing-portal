@@ -2,24 +2,29 @@
 #navbarNav {
   background-color: $hwa-color-light-gray;
 }
-.nav-pills {
-  .nav-link {
-    color: $hwa-color-teal;
-    font-family: Roboto;
-    font-size: 1rem;
-    margin-right: 0.625rem;
-    text-decoration: none;
-    &:hover {
-      background-color: $hwa-color-orange;
-      border-radius: 0;
-      color: $white;
-      font-weight: 600; 
+.navbar-collapse {
+  
+  .nav-pills {
+    @media only screen and (max-width: 768px) {
+      flex-direction: column !important;
     }
-    &.active {
-      background-color: $hwa-color-orange;
-      border-radius: 0;
-      font-weight: 600;
+    .nav-link {
+      color: $hwa-color-teal;
+      font-family: Roboto;
+      font-size: 1rem;
+      margin-right: 0.625rem;
+      text-decoration: none;
+      &:hover {
+        background-color: $hwa-color-orange;
+        border-radius: 0;
+        color: $white;
+        font-weight: 600; 
+      }
+      &.active {
+        background-color: $hwa-color-orange;
+        border-radius: 0;
+        font-weight: 600;
+      }
     }
   }
-}
-    
+}  
