@@ -11,9 +11,6 @@ import { InvoiceAsbstractService } from '../../service/abstract/invoice.asbstrac
   styleUrls: ['./invoice-search.component.scss']
 })
 export class InvoiceSearchComponent implements OnInit {
-  // @Input() public invoiceData$: BehaviorSubject<
-  //   InvoiceInterface[]
-  // > = new BehaviorSubject([]);
   @Output() doSearch: EventEmitter<FormGroup> = new EventEmitter();
   public invoices: InvoiceInterface[] = [];
   public model: any;
