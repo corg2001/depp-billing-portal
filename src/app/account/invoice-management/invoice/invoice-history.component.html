@@ -3,7 +3,7 @@
   <app-invoice-search
     (doSearch)="searchInvoices($event)"
   ></app-invoice-search>
-  <app-loading-spinner *ngIf="!completion"></app-loading-spinner>
+  <app-loading-spinner *ngIf="!completion" [message]=loadingMessage></app-loading-spinner>
   <ng-container *ngIf="!loading && isData">
     <app-invoice-table
       [invoiceData]="invoices"

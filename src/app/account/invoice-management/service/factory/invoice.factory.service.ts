@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { InvoicePayloadInterface } from '../../interface/payload/invoice.payload.interface';
 import { InvoiceInterface } from '../../interface/invoice.interface';
 import { InvoiceFactoryAbstractService } from './abstract/invoice.factory.abstract.service';
+import { InvoicPaymentStatusEnum } from '../../model/enums/invoice-payment-status.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +27,6 @@ export class InvoiceFactoryService implements InvoiceFactoryAbstractService {
       };
       invoicesList.push(_invoice);
     });
-    return invoicesList;
+    return invoicesList.filter((invoices: InvoiceInterface) => invoices.invoicePaymentStatus === InvoicPaymentStatusEnum.unpaid);
   }
 }
