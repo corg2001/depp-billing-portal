@@ -35,17 +35,18 @@ export class InvoiceTableComponent implements OnInit, OnChanges {
 
   public ngOnChanges(): void {
     this.invoices = this.invoiceData;
-    this.invoices = this._filterUnpaidInvoices(this.invoices);
+
     this.collectionSize = this.invoices.length;
     this.infoFound = this.invoiceData.length > 0;
     this._sortList('claimDate', SortDirectionEnums.Descending);
   }
   ngOnInit(): void {
     this.invoices = this.invoiceData;
+
     this.infoFound = this.invoiceData.length > 0;
-    this.noInfoText = `No open invoices in the last 60 days. Select search dates to view past invoices.`;
+    this.noInfoText = `No open invoices for the selected timeframe.`;
     this.page = 1;
-    this.pageSize = 10;
+    this.pageSize = 15;
   }
 
   public modifiedInvoice(): InvoiceInterface[] {
@@ -59,6 +60,7 @@ export class InvoiceTableComponent implements OnInit, OnChanges {
     if (!this.headers || !this.infoFound) {
       return;
     }
+
 
     this.headers.forEach(header => {
       if (header.appSortable !== sort.column) {
@@ -99,7 +101,4 @@ export class InvoiceTableComponent implements OnInit, OnChanges {
     return num1 - num2;
   }
 
-  private _filterUnpaidInvoices(invoices: InvoiceInterface[]): InvoiceInterface[] {
-    return invoices.filter((invoice: InvoiceInterface) => invoice.invoicePaymentStatus === InvoicPaymentStatusEnum.unpaid);
-  }
 }

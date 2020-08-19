@@ -30,6 +30,7 @@ export class InvoiceHistoryComponent implements OnInit {
   public headerText: string;
   public fromDate: NgbDate | null;
   public toDate: NgbDate | null;
+  public loadingMessage: string;
 
   constructor(private _invoiceService: InvoiceAsbstractService, private _configService: ConfigService) {
     this.fromDate = this._invoiceService.fromDate;
@@ -37,6 +38,7 @@ export class InvoiceHistoryComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loadingMessage =  `Gathering Invoices ...`;
     this.init();
   }
 
@@ -45,7 +47,7 @@ export class InvoiceHistoryComponent implements OnInit {
     const endDate: any = `${this.toDate.year}-${this.toDate.month}-${this.toDate.day}`;
     this.headerText = 'Open Invoice History';
     this._configService.init();
-    this.noInfoText = `No open invoices in the last 60 days. Select search dates to view past invoices.`;
+    this.noInfoText = `No open invoices for the selected timeframe.`;
     this.getInvoice(this.invoices$, this.completion$, this.error$, this.errorMessage$);
   }
 

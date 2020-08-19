@@ -49,6 +49,7 @@ export class InvoiceService implements InvoiceAsbstractService {
     startDate?: Date,
     endDate?: Date
   ): void {
+    completion$.next(false);
     const _startDate: any = `${this.fromDate.year}-${this.fromDate.month}-${this.fromDate.day}`;
     const _endDate: any = `${this.toDate.year}-${this.toDate.month}-${this.toDate.day}`;
     const startDateValue: string = (startDate == null)
