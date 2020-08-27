@@ -13,6 +13,7 @@ import { LoginErrorEnum } from './model/enums/login-error.enums';
 import { LocalStorageEnum } from 'src/app/core/enums/local-storage.enums';
 import { environment } from 'src/environments/environment';
 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -44,15 +45,9 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.buildForm();
     this.dataSubject.subscribe((data: any) => {
-      if (
-        data.error.message === LoginErrorEnum.credentials ||
-        data.error.message === LoginErrorEnum.authorization
-      ) {
-        data.error.message = this.errorMessage;
-      }
-      this.responseErrorMessage = data.error.message;
+      this.responseErrorMessage = this.getErrorMessage(data.error.message);
     });
-    this.responseSubject.subscribe(this.loginSubscriptionHandler.bind(this));
+    this.responseSubject.subscribe((response: boolean) => this.loginSubscriptionHandler(response));
   }
 
   public buildForm(): void {
@@ -102,5 +97,10 @@ export class LoginComponent implements OnInit {
   public resetResponseError(): void {
     this.responseErrorMessage = '';
     this.showResponseError = false;
+  }
+
+  public getErrorMessage(status: string): string {
+    const value: string = status.toLocaleLowerCase();
+    return value.includes('your account is locked') ? environment.auth.lockedError : environment.auth.loginError;
   }
 }
