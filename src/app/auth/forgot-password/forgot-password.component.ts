@@ -17,7 +17,6 @@ export class ForgotPasswordComponent implements OnInit {
   public isUserFound$: Subject<boolean> = new Subject<boolean>();
   public isUserFound: boolean = false;
   public isSubmitted: boolean = false;
-  public isComplete$: Subject<boolean> = new Subject<boolean>();
   public isLoading: boolean = false;
   public forgotPasswordForm: FormGroup;
   // TODO: get the phone number value from the configuration
@@ -40,7 +39,7 @@ export class ForgotPasswordComponent implements OnInit {
     this.isSubmitted = true;
     this.isLoading = true;
     const userEmail: string = this.forgotPasswordForm.get('userEmail').value;
-    this._authService.requestPassword(this.isComplete$, this.response$, userEmail, this.isUserFound$);
+    this._authService.requestPassword(this.response$, userEmail, this.isUserFound$);
   }
 
   public buildForm(): void {
