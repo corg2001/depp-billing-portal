@@ -40,7 +40,6 @@ export class AuthService {
   }
 
   public requestPassword(
-    isComplete$: Subject<boolean>,
     response$: Subject<string>,
     userEmail: string,
     isUserFound$: Subject<boolean>,
@@ -51,9 +50,9 @@ export class AuthService {
       })
       .subscribe(
         (response: { message: string }) =>
-          this.requestPassWordSuccessHandler(response, response$, isUserFound$),
+          this.requestPassWordSuccessHandler(response$, isUserFound$),
         (error: HttpErrorResponse) =>
-          this.genericFailureHandler(null, error, isUserFound$, response$)
+          this.requestPassWordErrorHandler(response$, isUserFound$)
       );
   }
 
@@ -103,25 +102,30 @@ export class AuthService {
   }
 
   private requestPassWordSuccessHandler(
-    response: {message: string },
-    dataSubject$?: Subject<any>,
+    response$?: Subject<string>,
     isUserFound$?: Subject<boolean>
   ): void {
     isUserFound$.next(true);
-      dataSubject$.next(response.message);
+      response$.next(environment.auth.forgotPassword.success);
+  }
+
+  private requestPassWordErrorHandler(
+    response$?: Subject<any>,
+    isUserFound$?: Subject<boolean>
+  ): void {
+    isUserFound$.next(false);
+      response$.next(environment.auth.forgotPassword.userNotFound);
   }
 
   private genericFailureHandler(
     completion$: Subject<boolean>,
     error: HttpErrorResponse,
-    isUserFound$?: Subject<boolean>,
     response$?: Subject<any>,
   ): void {
     this.httpErrorHandler(error);
     if (completion$) {
       completion$.next(true);
     }
-    isUserFound$.next(false);
     response$.next(error.error);
   }
 
