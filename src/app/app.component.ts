@@ -4,8 +4,8 @@ import { ModalComponent } from './shared/modal/modal.component';
 import { ConfigService } from './core/config.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { DOCUMENT } from '@angular/common';
-declare var gtag: Function;
+import { environment } from '../environments/environment';
+// declare var gtag: Function;
 
 @Component({
   selector: 'app-root',
@@ -16,7 +16,6 @@ export class AppComponent  {
   title = 'testlab-application';
 
   public constructor(
-    @Inject(DOCUMENT) private _document: Document,
     private modalService: NgbModal,
     private configService: ConfigService,
     private _router: Router,
@@ -25,9 +24,9 @@ export class AppComponent  {
     const navEndEvents = _router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     );
-    navEndEvents.subscribe((event: NavigationEnd) => {
-      // gtag('config', environment.analytics.google.brand.hwa, { page_path: event.urlAfterRedirects });
-    });
+    // navEndEvents.subscribe((event: NavigationEnd) => {
+    //   gtag('config', environment.analytics.google.brand.hwa, { page_path: event.urlAfterRedirects });
+    // });
   }
 
   public openModal(content: any): void {
@@ -40,16 +39,4 @@ export class AppComponent  {
     this.modalService.open(ModalComponent);
   }
 
-  // private _removeChatBot(): void {
-  //   this._renderer.removeChild(
-  //     this._document.querySelector('body'),
-  //     this._document.querySelector('div.bcFloat')
-  //   );
-  // }
-
-  // public ngAfterViewInit(): void {
-  //   setTimeout(() => {
-  //     this._removeChatBot();
-  //   }, 5000);
-  // }
 }
