@@ -11,7 +11,7 @@ export const environment = {
   analytics: {
     google: {
       brand: {
-        hwa: ''
+        hwa: 'GTM-TS63H5R'
       }
     }
   },
