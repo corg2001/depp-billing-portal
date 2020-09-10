@@ -5,14 +5,14 @@ import { ConfigService } from './core/config.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { environment } from '../environments/environment';
-// declare var gtag: Function;
+declare var gtag: Function;
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent  {
+export class AppComponent {
   title = 'testlab-application';
 
   public constructor(
@@ -21,12 +21,11 @@ export class AppComponent  {
     private _router: Router,
     private _renderer: Renderer2
   ) {
-    const navEndEvents = _router.events.pipe(
+    _router.events.pipe(
       filter(event => event instanceof NavigationEnd)
-    );
-    // navEndEvents.subscribe((event: NavigationEnd) => {
-    //   gtag('config', environment.analytics.google.brand.hwa, { page_path: event.urlAfterRedirects });
-    // });
+    ).subscribe((event: NavigationEnd) => {
+      gtag('config', environment.analytics.google.brand.hwa, { page_path: event.urlAfterRedirects });
+    });
   }
 
   public openModal(content: any): void {
