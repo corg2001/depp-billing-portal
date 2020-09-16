@@ -3,7 +3,7 @@ import { Component, OnInit, Input, ViewChildren, QueryList } from '@angular/core
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Claim } from '../../model/claims.model';
 import { Subject, BehaviorSubject } from 'rxjs';
-import { JobStatus, LinkText } from '../../model/claims.enums';
+import { JobStatus, LinkText, RevenueOrMaintenceIndicatorEnums } from '../../model/claims.enums';
 import { environment } from 'src/environments/environment';
 import { SortableHeaderDirective } from 'src/app/core/directive/sortable-header.directive';
 import { SortDirectionEnums } from 'src/app/core/enums/sort-direction.enums';
@@ -86,6 +86,10 @@ export class ClaimTableComponent implements OnInit {
       (this.page - 1) * this.pageSize,
       (this.page - 1) * this.pageSize + this.pageSize
     );
+  }
+
+  public showRevenueAndMaintenaceIndicators(claim: Claim): string {
+    return claim.isPrepaidMaintenance ? RevenueOrMaintenceIndicatorEnums.PPM : claim.isRevShare ? RevenueOrMaintenceIndicatorEnums.RS : '';
   }
 
   public authorizeInvoice(jobNumber: string, jobStatus: string, vendorId: string): void {

@@ -95,8 +95,7 @@
             Sign In
           </button>
         </div>
-        <div class="alert alert-danger" role="alert" *ngIf="showResponseError">
-          {{ responseErrorMessage }}
+        <div class="alert alert-danger" role="alert" *ngIf="showResponseError" [innerHTML]="responseErrorMessage">
         </div>
         <div *ngIf="showLoadingSpinner" class="form-group text-center py-1">
           <i class="fa fa-spinner fa-spin fa-2x fa-fw loading-spinner"></i>

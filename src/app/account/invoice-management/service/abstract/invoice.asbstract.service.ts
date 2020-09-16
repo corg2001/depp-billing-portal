@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject, Observable } from 'rxjs';
 import { InvoiceInterface } from '../../interface/invoice.interface';
 import { HttpParams, HttpErrorResponse } from '@angular/common/http';
+import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,8 @@ import { HttpParams, HttpErrorResponse } from '@angular/common/http';
 export abstract class InvoiceAsbstractService {
 
   constructor() { }
+  abstract fromDate: NgbDate | null;
+  abstract toDate: NgbDate | null;
 
   abstract getInvoice(
     invoices$: BehaviorSubject<InvoiceInterface[]>,
@@ -38,7 +41,7 @@ export abstract class InvoiceAsbstractService {
     errorMessage$?: Subject<any>
   ): void;
 
-  abstract  search(
+  abstract search(
     invoices: InvoiceInterface[],
     startDate?: string,
     endDate?: string,

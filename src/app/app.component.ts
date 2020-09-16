@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Renderer2, Inject } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalComponent } from './shared/modal/modal.component';
 import { ConfigService } from './core/config.service';
@@ -19,11 +19,11 @@ export class AppComponent {
     private modalService: NgbModal,
     private configService: ConfigService,
     private _router: Router,
+    private _renderer: Renderer2
   ) {
-    const navEndEvents = _router.events.pipe(
+    _router.events.pipe(
       filter(event => event instanceof NavigationEnd)
-    );
-    navEndEvents.subscribe((event: NavigationEnd) => {
+    ).subscribe((event: NavigationEnd) => {
       gtag('config', environment.analytics.google.brand.hwa, { page_path: event.urlAfterRedirects });
     });
   }
@@ -37,4 +37,5 @@ export class AppComponent {
     console.log('action: opening modal from component');
     this.modalService.open(ModalComponent);
   }
+
 }
