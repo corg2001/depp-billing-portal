@@ -12,38 +12,41 @@ import { AuthService } from '../auth.service';
 })
 export class ForgotPasswordComponent implements OnInit {
 
-  private completionSubject: Subject<boolean> = new Subject<boolean>();
-  public showSuccessMessage: boolean = false;
-
+  private response$: Subject<string> = new Subject<string>();
+  public responseMsg: string = '';
+  public isUserFound$: Subject<boolean> = new Subject<boolean>();
+  public isUserFound: boolean = false;
+  public isSubmitted: boolean = false;
+  public isLoading: boolean = false;
   public forgotPasswordForm: FormGroup;
   // TODO: get the phone number value from the configuration
   // TODO: fix tslint, add global configuration
   public contactPhoneNumber: string = '(888) 492-7359';
 
-  constructor( private _authService: AuthService) { }
+  constructor(private _authService: AuthService) { }
 
   ngOnInit() {
     this.buildForm();
-    this.completionSubject.subscribe((response: boolean) => {
-      if (response ) {
-        this.showSuccessMessage = true;
-        console.log('Action: New Password request has been successfully sent...');
-        return;
-      }
+    this.response$.subscribe((response: string) => {
+      this.responseMsg = response;
+      this.isLoading = false;
     });
+    this.isUserFound$.subscribe((reponse: boolean) => this.isUserFound = reponse);
   }
 
   public forgotPassword(): void {
     console.log('Action: request new password!');
+    this.isSubmitted = true;
+    this.isLoading = true;
     const userEmail: string = this.forgotPasswordForm.get('userEmail').value;
-    this._authService.requestPassword(this.completionSubject, userEmail);
+    this._authService.requestPassword(this.response$, userEmail, this.isUserFound$);
   }
 
   public buildForm(): void {
     console.log('Action: building reset password form ...');
     const userEmail: FormControl = new FormControl('', [Validators.required, Validators.email]);
 
-    this.forgotPasswordForm = new FormGroup( {
+    this.forgotPasswordForm = new FormGroup({
       userEmail
     });
   }

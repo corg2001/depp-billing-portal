@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
 import { InvoiceAsbstractService } from '../service/abstract/invoice.asbstract.service';
 import * as moment from 'moment';
 import * as dateFormat from 'dateformat';
+import { NgbDate, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-invoice-history',
@@ -27,24 +28,32 @@ export class InvoiceHistoryComponent implements OnInit {
   public isData: boolean = false;
   public noInfoText: string;
   public headerText: string;
+  public fromDate: NgbDate | null;
+  public toDate: NgbDate | null;
+  public loadingMessage: string;
 
-  constructor(private _invoiceService: InvoiceAsbstractService, private _configService: ConfigService) {}
+  constructor(private _invoiceService: InvoiceAsbstractService, private _configService: ConfigService) {
+    this.fromDate = this._invoiceService.fromDate;
+    this.toDate = this._invoiceService.toDate;
+  }
 
   ngOnInit(): void {
+    this.loadingMessage =  `Gathering Invoices ...`;
     this.init();
   }
 
   public init(): void {
+    const startDate: any = `${this.fromDate.year}-${this.fromDate.month}-${this.fromDate.day}`;
+    const endDate: any = `${this.toDate.year}-${this.toDate.month}-${this.toDate.day}`;
     this.headerText = 'Open Invoice History';
     this._configService.init();
-    this.noInfoText = `Invoice information is not available. Please reach out to your Territory Manager for assistance.`;
+    this.noInfoText = `No open invoices for the selected timeframe.`;
     this.getInvoice(this.invoices$, this.completion$, this.error$, this.errorMessage$);
   }
 
   public searchInvoices(formGroup: FormGroup): void {
     const startDate: Date = formGroup.controls.startDate.value;
     const endDate: Date = formGroup.controls.endDate.value;
-
     this.getInvoice(this.invoices$, this.completion$, this.error$, this.errorMessage$, startDate, endDate);
   }
 
@@ -56,9 +65,10 @@ export class InvoiceHistoryComponent implements OnInit {
     startDate?: Date,
     endDate?: Date
   ): void {
+
     this._invoiceService.getInvoice(invoices$, completion$, error$, errormessage$, startDate, endDate);
 
-    invoices$.subscribe((invoicesValue: InvoiceInterface[]) =>  {
+    invoices$.subscribe((invoicesValue: InvoiceInterface[]) => {
       this.invoices = invoicesValue;
       this.isLoading();
       this.checkForData();

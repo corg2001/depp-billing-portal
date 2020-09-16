@@ -1,9 +1,5 @@
-import { Component, OnInit, Input, QueryList, ViewChildren } from '@angular/core';
-import { Subject, BehaviorSubject } from 'rxjs';
-import { InvoiceService } from 'src/app/account/invoice-management/service/invoice.service';
-import { Invoice } from '../../model/invoice.model';
+import { Component, OnInit, Input, QueryList, ViewChildren, OnChanges } from '@angular/core';
 import { InvoiceInterface } from '../../interface/invoice.interface';
-import { environment } from 'src/environments/environment';
 import { SortableHeaderDirective } from 'src/app/core/directive/sortable-header.directive';
 import { SortDirectionEnums } from 'src/app/core/enums/sort-direction.enums';
 import { SortEventInterface } from 'src/app/core/interface/sort-event.interface';
@@ -16,8 +12,8 @@ import { InvoicPaymentStatusEnum } from '../../model/enums/invoice-payment-statu
   styleUrls: ['./invoice-table.component.scss']
 })
 
-export class InvoiceTableComponent implements OnInit {
-  @Input() public invoices$: BehaviorSubject<InvoiceInterface[]> = new BehaviorSubject([]);
+export class InvoiceTableComponent implements OnInit, OnChanges {
+  @Input() public invoiceData: InvoiceInterface[];
   @Input() public error: boolean;
   @Input() public completion: boolean;
 
@@ -37,30 +33,34 @@ export class InvoiceTableComponent implements OnInit {
 
   constructor() { }
 
+  public ngOnChanges(): void {
+    this.invoices = this.invoiceData;
+
+    this.collectionSize = this.invoices.length;
+    this.infoFound = this.invoiceData.length > 0;
+    this._sortList('claimDate', SortDirectionEnums.Descending);
+  }
   ngOnInit(): void {
-    this.noInfoText = `Invoice information is not available. Please reach out to your Territory Manager for assistance.`;
-    this.invoices$.subscribe((invoices: InvoiceInterface[]) => {
-      this.invoices = invoices;
-      this.invoices = this._filterUnpaidInvoices(invoices);
-      this.collectionSize = this.invoices.length;
-      this.infoFound = this._inFound(this.invoices);
-      this._sortList('claimDate', SortDirectionEnums.Descending);
-    });
+    this.invoices = this.invoiceData;
+
+    this.infoFound = this.invoiceData.length > 0;
+    this.noInfoText = `No open invoices for the selected timeframe.`;
     this.page = 1;
     this.pageSize = 15;
   }
 
   public modifiedInvoice(): InvoiceInterface[] {
-    return this.invoices.slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
+    return this.invoiceData.slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
   }
   private _inFound(invoices: InvoiceInterface[]): boolean {
-    return invoices.length > 0 ? true : false;
+    return invoices.length > 0;
   }
 
   public onSort(sort: SortEventInterface): void {
     if (!this.headers || !this.infoFound) {
       return;
     }
+
 
     this.headers.forEach(header => {
       if (header.appSortable !== sort.column) {
@@ -88,11 +88,11 @@ export class InvoiceTableComponent implements OnInit {
     }
   }
 
-  private _compareString (v1?: string, v2?: string) {
+  private _compareString(v1?: string, v2?: string) {
     return (v1 < v2) ? -1 : (v1 > v2) ? 1 : 0;
   }
 
-  private _compareMoney (v1: Money, v2: Money): number {
+  private _compareMoney(v1: Money, v2: Money): number {
     let num1: number = 0;
     let num2: number = 0;
     num1 = parseFloat(v1.amount);
@@ -101,7 +101,4 @@ export class InvoiceTableComponent implements OnInit {
     return num1 - num2;
   }
 
-  private _filterUnpaidInvoices(invoices: InvoiceInterface[]): InvoiceInterface[] {
-    return invoices.filter((invoice: InvoiceInterface) => invoice.invoicePaymentStatus === InvoicPaymentStatusEnum.unpaid);
-  }
 }

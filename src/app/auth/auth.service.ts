@@ -18,7 +18,7 @@ export class AuthService {
     private _authService: AuthenticationService,
     private _httpClient: HttpClient,
     private _loggerService: LoggerService
-  ) {}
+  ) { }
 
   public login(
     completionSubject: Subject<boolean>,
@@ -40,18 +40,19 @@ export class AuthService {
   }
 
   public requestPassword(
-    completionSubject: Subject<boolean>,
-    userEmail: string
+    response$: Subject<string>,
+    userEmail: string,
+    isUserFound$: Subject<boolean>,
   ): void {
     this._httpClient
       .post(environment.requestPasswordUrl, {
         username: userEmail
       })
       .subscribe(
-        (response: Observable<HttpResponse<any>>) =>
-          this.genericSuccessHandler(completionSubject, response),
-        (response: Observable<HttpErrorResponse>) =>
-          this.genericFailureHandler(completionSubject, response)
+        (response: { message: string }) =>
+          this.requestPassWordSuccessHandler(response$, isUserFound$),
+        (error: HttpErrorResponse) =>
+          this.requestPassWordErrorHandler(response$, isUserFound$)
       );
   }
 
@@ -64,7 +65,7 @@ export class AuthService {
       (response: Observable<HttpResponse<any>>) => {
         this.genericSuccessHandler(completionSubject, response, dataSubject);
       },
-      (response: Observable<HttpErrorResponse>) => {
+      (response: HttpErrorResponse) => {
         this.genericFailureHandler(completionSubject, response);
       }
     );
@@ -79,29 +80,53 @@ export class AuthService {
       (response: Observable<HttpResponse<any>>) => {
         this.genericSuccessHandler(completionSubject, response, dataSubject);
       },
-      (response: Observable<HttpErrorResponse>) => {
-        this.genericFailureHandler(completionSubject, response);
+      (error: HttpErrorResponse) => {
+        this.genericFailureHandler(completionSubject, error);
       }
     );
   }
 
   private genericSuccessHandler(
-    completionSubject: Subject<boolean>,
-    response: Observable<HttpResponse<any>>,
-    dataSubject?: Subject<any>
+    completion$: Subject<boolean>,
+    response$: Observable<HttpResponse<any>>,
+    dataSubject$?: Subject<any>,
+    isUserFound$?: Subject<boolean>
   ): void {
-    if (dataSubject) {
-      dataSubject.next(response);
+    isUserFound$.next(true);
+    if (dataSubject$) {
+      dataSubject$.next(response$);
     }
-    completionSubject.next(true);
+    if (completion$) {
+      completion$.next(true);
+    }
+  }
+
+  private requestPassWordSuccessHandler(
+    response$?: Subject<string>,
+    isUserFound$?: Subject<boolean>
+  ): void {
+    isUserFound$.next(true);
+      response$.next(environment.auth.forgotPassword.success);
+  }
+
+  private requestPassWordErrorHandler(
+    response$?: Subject<any>,
+    isUserFound$?: Subject<boolean>
+  ): void {
+    isUserFound$.next(false);
+      response$.next(environment.auth.forgotPassword.userNotFound);
   }
 
   private genericFailureHandler(
-    completionSubject: Subject<boolean>,
-    error: Observable<HttpErrorResponse>
+    completion$: Subject<boolean>,
+    error: HttpErrorResponse,
+    response$?: Subject<any>,
   ): void {
     this.httpErrorHandler(error);
-    completionSubject.next(false);
+    if (completion$) {
+      completion$.next(true);
+    }
+    response$.next(error.error);
   }
 
   private loginSuccessHandler(
