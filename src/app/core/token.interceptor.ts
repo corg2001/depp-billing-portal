@@ -13,10 +13,10 @@ export class TokenHttpInterceptor implements HttpInterceptor {
     console.log(`IMPORTANT: http interceptor has been provided! at ${date}`);
   }
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> | null {
     const token: string = this.authService.getToken();
     const newRequest: HttpRequest<any> = req.clone({
-      setHeaders: { 'Authorization': token }
+      setHeaders: { 'Authorization': token ? token : '1a2b3c4d5e6f7h8j90lm1n2o3p4q6r7s8'}
     });
     return next.handle(newRequest);
   }
