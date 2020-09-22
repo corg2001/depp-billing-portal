@@ -1,16 +1,16 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
 import { ConfigService } from 'src/app/core/config.service';
-import { PaymentService } from '../service/payment.service';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { PaymentHistoryInterface } from '../interface/payment-history.interface';
 import { environment } from 'src/environments/environment';
+import { PaymentAbstractService } from '../service/abstract/payment.abstract.service';
 
 @Component({
   selector: 'app-payment',
   templateUrl: './payment.component.html',
   styleUrls: ['./payment.component.scss']
 })
-export class PaymentComponent implements OnInit, OnChanges{
+export class PaymentComponent implements OnInit, OnChanges {
   public headerText: string;
   public paymentHistory$: BehaviorSubject<PaymentHistoryInterface[]> = new BehaviorSubject([]);
   public updatedPaymentHistory$: BehaviorSubject<PaymentHistoryInterface[]> = new BehaviorSubject([]);
@@ -27,8 +27,8 @@ export class PaymentComponent implements OnInit, OnChanges{
   public noInfoText: string;
   constructor(
     private _configService: ConfigService,
-    private _paymentService: PaymentService
-  ) {}
+    private _paymentService: PaymentAbstractService
+  ) { }
 
   ngOnInit() {
     this.init();
@@ -47,7 +47,7 @@ export class PaymentComponent implements OnInit, OnChanges{
   }
 
   public getPaymentHistory(paymentHistory$: BehaviorSubject<PaymentHistoryInterface[]>,
-     completion$: Subject<boolean>, error$: Subject<boolean>, errorMessage$?: Subject<string>): void {
+    completion$: Subject<boolean>, error$: Subject<boolean>, errorMessage$?: Subject<string>): void {
     this._paymentService.getPaymentHistory(
       paymentHistory$,
       completion$,
@@ -84,7 +84,9 @@ export class PaymentComponent implements OnInit, OnChanges{
     }
   }
 
-  updateFromSearch(paymentHistory: PaymentHistoryInterface[]): void {
-    this.updatedPaymentHistory$.next(paymentHistory);
+  public search(data: {startDate: string, endDate: string}): void {
+    const minDate = data.startDate;
+    const maxDate = data.endDate;
+    this.paymentHistory$.next(this._paymentService.search(this.paymentHistory, minDate, maxDate));
   }
 }

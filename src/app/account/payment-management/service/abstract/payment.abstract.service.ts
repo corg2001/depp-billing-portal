@@ -33,8 +33,7 @@ export abstract class PaymentAbstractService {
 
   abstract search(
     paymentHistory: PaymentHistoryInterface[],
-    address?: string,
-    customerName?: string,
-    referenceId?: string
+    minDate?: string,
+    maxDate?: string,
   ): PaymentHistoryInterface[];
 }

@@ -2,35 +2,34 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import * as _ from 'lodash';
-import { InvoiceInterface } from '../../interface/invoice.interface';
+import * as moment from 'moment';
 import { NgbDatepicker, NgbDate, NgbCalendar, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
-import { InvoiceAsbstractService } from '../../service/abstract/invoice.asbstract.service';
 @Component({
-  selector: 'app-invoice-search',
-  templateUrl: './invoice-search.component.html',
-  styleUrls: ['./invoice-search.component.scss']
+  selector: 'app-search',
+  templateUrl: './search.component.html',
+  styleUrls: ['./search.component.scss']
 })
-export class InvoiceSearchComponent implements OnInit {
+export class SearchComponent implements OnInit {
+  @Input() fromDate?: NgbDate;
+  @Input() toDate?: NgbDate;
   @Output() doSearch: EventEmitter<FormGroup> = new EventEmitter();
-  public invoices: InvoiceInterface[] = [];
   public model: any;
   public searchForm: FormGroup;
   public datepicker: NgbDatepicker;
   public startDate: string;
-  public hoveredDate: NgbDate | null = null;
-  public fromDate: NgbDate | null;
-  public toDate: NgbDate | null;
-  public maxDate: NgbDate | null;
-  public minDate: NgbDate | null;
+  public hoveredDate?: NgbDate;
+  public maxDate?: NgbDate;
+  public minDate?: NgbDate;
 
   constructor(
     private _fb: FormBuilder,
-    private calendar: NgbCalendar,
-    private invoiceService: InvoiceAsbstractService,
+    private _calendar: NgbCalendar,
     public formatter: NgbDateParserFormatter,
   ) {
-    this.fromDate = this.invoiceService.fromDate;
-    this.toDate = this.invoiceService.toDate;
+    this.hoveredDate = null;
+    this.fromDate = this.fromDate ? this.fromDate : _calendar.getPrev(_calendar.getToday(), 'd', 60);
+    console.log(_calendar.getPrev(_calendar.getToday(), 'd', 60))
+    this.toDate = this.toDate ? this.toDate : _calendar.getToday();
     this.maxDate = this.toDate;
   }
 
@@ -38,7 +37,7 @@ export class InvoiceSearchComponent implements OnInit {
     this.searchForm = this._fb.group({
       startDate: [''],
       endDate: [''],
-      address: ['']
+
     });
 
   }
@@ -48,6 +47,7 @@ export class InvoiceSearchComponent implements OnInit {
     const endDate: string = `${this.toDate.year}-${this.toDate.month}-${this.toDate.day}`;
     this.searchForm.controls.startDate.patchValue(startData);
     this.searchForm.controls.endDate.patchValue(endDate);
+    console.log(form)
     this.doSearch.emit(form);
   }
 
@@ -80,10 +80,10 @@ export class InvoiceSearchComponent implements OnInit {
 
   public validateInput(currentValue: NgbDate | null, input: string): NgbDate | null {
     const parsed = this.formatter.parse(input);
-    return parsed && this.calendar.isValid(NgbDate.from(parsed)) ? NgbDate.from(parsed) : currentValue;
+    return parsed && this._calendar.isValid(NgbDate.from(parsed)) ? NgbDate.from(parsed) : currentValue;
   }
 
   public maxAllowDate(date: NgbDate): boolean {
-    return date && !date.after(this.calendar.getNext(this.fromDate, 'd', 60)) && !date.after(this.calendar.getToday());
+    return date && !date.after(this._calendar.getNext(this.fromDate, 'd', 60)) && !date.after(this._calendar.getToday());
   }
 }

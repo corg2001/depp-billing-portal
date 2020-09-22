@@ -1,8 +1,6 @@
 <div id="invoices-history-container" class="d-flex flex-column">
   <header>{{ headerText }}</header>
-  <app-invoice-search
-    (doSearch)="searchInvoices($event)"
-  ></app-invoice-search>
+  <app-search [fromDate]="fromDate" [toDate]="toDate" (doSearch)="searchInvoices($event)"></app-search>
   <app-loading-spinner *ngIf="!completion" [message]=loadingMessage></app-loading-spinner>
   <ng-container *ngIf="!loading && isData">
     <app-invoice-table
@@ -11,7 +9,7 @@
       [completion]="completion"
     ></app-invoice-table>
   </ng-container>
-<!-- 
+<!--
   <ng-container *ngIf="(!loading && !isData) || error">
     <div>
       <p>{{ noInfoText }}</p>

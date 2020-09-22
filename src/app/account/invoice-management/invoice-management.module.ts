@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { InvoiceManagementRoutingModule } from './invoice-management-routing.module';
 import { InvoiceHistoryComponent } from './invoice/invoice-history.component';
 import { InvoiceTableComponent } from './invoice/invoice-table/invoice-table.component';
-import { InvoiceSearchComponent } from './invoice/invoice-search/invoice-search.component';
 import { InvoiceService } from './service/invoice.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule, NgbDatepicker, NgbDateAdapter, NgbDateNativeAdapter } from '@ng-bootstrap/ng-bootstrap';
@@ -17,7 +16,6 @@ import { InvoiceFactoryAbstractService } from './service/factory/abstract/invoic
   declarations: [
     InvoiceHistoryComponent,
     InvoiceTableComponent,
-    InvoiceSearchComponent
   ],
   imports: [
     CommonModule,
