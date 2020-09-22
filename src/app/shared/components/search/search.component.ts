@@ -28,7 +28,6 @@ export class SearchComponent implements OnInit {
   ) {
     this.hoveredDate = null;
     this.fromDate = this.fromDate ? this.fromDate : _calendar.getPrev(_calendar.getToday(), 'd', 60);
-    console.log(_calendar.getPrev(_calendar.getToday(), 'd', 60))
     this.toDate = this.toDate ? this.toDate : _calendar.getToday();
     this.maxDate = this.toDate;
   }
@@ -47,7 +46,6 @@ export class SearchComponent implements OnInit {
     const endDate: string = `${this.toDate.year}-${this.toDate.month}-${this.toDate.day}`;
     this.searchForm.controls.startDate.patchValue(startData);
     this.searchForm.controls.endDate.patchValue(endDate);
-    console.log(form)
     this.doSearch.emit(form);
   }
 
