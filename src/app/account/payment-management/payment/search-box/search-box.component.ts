@@ -33,16 +33,16 @@ export class SearchBoxComponent implements OnInit, OnChanges {
     });
   }
 
-  public search(form: FormGroup): void {
-    form.controls.address.value ||
-    form.controls.customerName.value ||
-     form.controls.referenceId.value ?
-    this.updatePaymentHistoryEmitter.emit(this._paymentService.search(this._paymentHistoryCopy,
-      form.controls.address.value,
-      form.controls.customerName.value,
-      form.controls.referenceId.value)) : console.log(this.paymentHistory$.getValue());
-  }
-  
+  // public search(form: FormGroup): void {
+  //   form.controls.address.value ||
+  //   form.controls.customerName.value ||
+  //    form.controls.referenceId.value ?
+  //   this.updatePaymentHistoryEmitter.emit(this._paymentService.search(this._paymentHistoryCopy,
+  //     form.controls.address.value,
+  //     form.controls.customerName.value,
+  //     form.controls.referenceId.value)) : console.log(this.paymentHistory$.getValue());
+  // }
+
 
   get sf(): any {
     return this.searchForm.controls;

@@ -1,3 +1,4 @@
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
@@ -12,6 +13,7 @@ import { FormatPassword } from './pipe/password-format';
 import { FromatLastFour } from './pipe/show-last-four-format';
 import { SortableHeaderDirective } from './../core/directive/sortable-header.directive';
 import { NgxCurrencyModule } from 'ngx-currency';
+import { SearchComponent } from './components/search/search.component';
 
 @NgModule({
   declarations: [
@@ -23,12 +25,15 @@ import { NgxCurrencyModule } from 'ngx-currency';
     FromatLastFour,
     ProgressBarComponent,
     ResultJumbotronComponent,
+    SearchComponent,
     SortableHeaderDirective
   ],
   imports: [
     CommonModule,
     NgbModule,
-    NgxCurrencyModule
+    NgxCurrencyModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   exports: [
     ModalComponent,
@@ -39,6 +44,7 @@ import { NgxCurrencyModule } from 'ngx-currency';
     FromatLastFour,
     ProgressBarComponent,
     ResultJumbotronComponent,
+    SearchComponent,
     SortableHeaderDirective,
     NgxCurrencyModule
   ],

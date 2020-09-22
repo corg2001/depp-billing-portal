@@ -12,6 +12,7 @@ import { PaymentFactoryService } from './factory/payment.factory.service';
 import { PaymentHistoryInterface } from '../interface/payment-history.interface';
 import { VendorInvoiceDetailsInterface } from '../interface/vendor-invoice-details.interface';
 import { PaymentAbstractService } from './abstract/payment.abstract.service';
+import * as moment from 'moment-timezone';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,7 @@ export class PaymentService implements PaymentAbstractService {
     private _http: HttpClient,
     private _configService: ConfigService,
     private _paymentHistoryFactoryService: PaymentFactoryService
-  ) {}
+  ) { }
 
   public getPaymentHistory(
     paymentHistory$: BehaviorSubject<PaymentHistoryInterface[]>,
@@ -72,24 +73,15 @@ export class PaymentService implements PaymentAbstractService {
 
   public search(
     paymentHistory: PaymentHistoryInterface[],
-    address?: string,
-    customerName?: string,
-    referenceId?: string
+    minDate: string,
+    maxDate: string
   ): PaymentHistoryInterface[] {
     return paymentHistory.filter((history: PaymentHistoryInterface) => {
-      history.vendorInvoiceDetails.filter(
-        (vendorInvoiceDetails: VendorInvoiceDetailsInterface) => {
-          const addressInput = address.toLowerCase();
-          const customerNameInput = customerName.toLowerCase();
-          const referenceIdInput = referenceId.toLowerCase();
-         return address
-            ? vendorInvoiceDetails.serviceAddress.includes(addressInput)
-            : customerName
-            ? vendorInvoiceDetails.customerName.includes(customerNameInput)
-            : referenceId
-            ? vendorInvoiceDetails.invoiceId.includes(referenceIdInput) : vendorInvoiceDetails;
+
+      if (moment.utc(history.paymentDate).isAfter(minDate)
+        && moment.utc(history.paymentDate).isBefore(maxDate)) {
+          return history;
         }
-      );
     });
   }
 }
