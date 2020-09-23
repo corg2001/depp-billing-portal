@@ -8,6 +8,7 @@ import { SortableHeaderDirective } from 'src/app/core/directive/sortable-header.
 import { SortDirectionEnums } from 'src/app/core/enums/sort-direction.enums';
 import { SortEventInterface } from 'src/app/core/interface/sort-event.interface';
 import * as Money from 'js-money';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-payment-table',
@@ -17,7 +18,6 @@ import * as Money from 'js-money';
 export class PaymentTableComponent implements OnInit {
   @Input() public paymentHistory$: BehaviorSubject<PaymentHistoryInterface[]> = new BehaviorSubject([]);
   @Input() public updatedPaymentHistory$: BehaviorSubject<PaymentHistoryInterface[]> = new BehaviorSubject([]);
-
   @ViewChild('invoiceModal') public modalHtml: ElementRef;
   @ViewChildren(SortableHeaderDirective) headers: QueryList<SortableHeaderDirective>;
 
@@ -26,20 +26,27 @@ export class PaymentTableComponent implements OnInit {
   public pageSize: number;
   public collectionSize: number = 0;
   public historiesFound: boolean;
+  public noHistoryMsg: string;
   constructor(private _modalService: NgbModal, private _paymentService: PaymentAbstractService) { }
 
   ngOnInit() {
+    this.noHistoryMsg = environment.core.noHistoryMessage;
     this.updatedPaymentHistory$.subscribe((updatedPaymentHistory) => {
       this.paymentHistory = updatedPaymentHistory;
+      this.historiesFound = this._isHistoryFound(updatedPaymentHistory);
     });
     this.paymentHistory$.subscribe((paymenHistory: PaymentHistoryInterface[]) => {
       this.paymentHistory = paymenHistory;
       this.collectionSize = paymenHistory.length;
-      paymenHistory.length > 0 ? this.historiesFound = true : this.historiesFound = false;
+      this.historiesFound = this._isHistoryFound(paymenHistory);
       this._sortList('paymentDate', SortDirectionEnums.Descending);
     });
     this.page = 1;
     this.pageSize = 15;
+  }
+
+  private _isHistoryFound(paymentHistory: PaymentHistoryInterface[]): boolean {
+    return paymentHistory.length > 0;
   }
 
   public viewInvoice(data: PaymentHistoryInterface): void {

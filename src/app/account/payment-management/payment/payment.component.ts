@@ -38,11 +38,9 @@ export class PaymentComponent implements OnInit, OnChanges {
     this.isLoading();
   }
   public init(): void {
-    this.historyMessage = environment.core.noHistoryMessage;
     this.headerText = 'Payment History';
     this._configService.init();
     // tslint:disable-next-line: max-line-length
-    this.noInfoText = `No payment found, check information and try again`;
     this.getPaymentHistory(this.paymentHistory$, this.completion$, this.error$, this.errorMessages$);
   }
 
@@ -87,6 +85,6 @@ export class PaymentComponent implements OnInit, OnChanges {
   public search(data: {startDate: string, endDate: string}): void {
     const minDate = data.startDate;
     const maxDate = data.endDate;
-    this.paymentHistory$.next(this._paymentService.search(this.paymentHistory, minDate, maxDate));
+    this.updatedPaymentHistory$.next(this._paymentService.search(this.paymentHistory, minDate, maxDate));
   }
 }
