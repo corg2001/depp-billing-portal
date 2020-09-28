@@ -68,7 +68,10 @@ export class ClaimService implements ClaimServiceAbstract {
     claimData: Claim[],
     name?: string,
     jobId?: string,
-    address?: string
+    address?: string,
+    jobStatus?: string,
+    type?: string,
+    disposition?: string
   ): Claim[] {
     return claimData.filter((claim: Claim) => {
       const nameInput = name.toLowerCase();
@@ -80,7 +83,13 @@ export class ClaimService implements ClaimServiceAbstract {
           ? claim.jobNumber.toLowerCase().includes(jobIdInput)
           : address
             ? claim.serviceAddress.toLowerCase().includes(addressInput)
-            : claim;
+            : jobStatus
+              ? claim.jobStatus.toLowerCase().includes(jobStatus)
+              : type
+                ? claim.claimType.toLowerCase().includes(type)
+                : disposition
+                  ? claim.claimDisposition.toLowerCase().includes(disposition)
+                  : claim;
     });
   }
 

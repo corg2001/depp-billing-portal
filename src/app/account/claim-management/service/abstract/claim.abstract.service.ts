@@ -33,7 +33,10 @@ export abstract class ClaimServiceAbstract {
     claimData: Claim[],
     name?: string,
     jobId?: string,
-    address?: string
+    address?: string,
+    jobStatus?: string,
+    type?: string,
+    disposition?: string
   ): Claim[];
 
   abstract authInvoiceRedirect(

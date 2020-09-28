@@ -2,10 +2,19 @@
   <form [formGroup]="searchForm" (ngSubmit)="search(searchForm)">
     <div class="d-flex flex-column flex-md-row w-70">
       <div class="form-group">
+        <input type="text" id="by-job-id" name="by-job-id" class="form-control" placeholder="By Job Id" formControlName="jobId"/>
+      </div>
+      <div class="form-group">
+        <input type="text" id="by-type" name="by-type" class="form-control" placeholder="By Type" formControlName="type" />
+      </div>
+      <div class="form-group">
+        <input type="text" id="by-disposition" name="by-disposition" class="form-control" placeholder="By Dsposition" formControlName="disposition" />
+      </div>
+      <div class="form-group">
         <input type="text" id="by-name" name="by-name" class="form-control" placeholder="By name" formControlName="name" />
       </div>
       <div class="form-group">
-        <input type="text" id="by-job-id" name="by-job-id" class="form-control" placeholder="By Job Id" formControlName="jobId"/>
+        <input type="text" id="by-status" name="by-status" class="form-control" placeholder="By Job Status" formControlName="jobStatus" />
       </div>
       <div class="form-group">
         <input type="text" id="by-address" name="by-address" class="form-control" placeholder="By Address" formControlName="address" />
