@@ -24,19 +24,28 @@ export class SearchBoxComponent implements OnInit {
     this.searchForm = this._fb.group({
       name: [''],
       jobId: [''],
-      address: ['']
+      address: [''],
+      jobStatus: [''],
+      type: [''],
+      disposition: ['']
     });
   }
 
   public search(form: FormGroup): void {
     form.controls.name.value ||
     form.controls.jobId.value ||
-    form.controls.address.value
+    form.controls.address.value ||
+    form.controls.jobStatus.value ||
+    form.controls.type.value ||
+    form.controls.disposition.value
       ? this.updatedClaimsEmitter.emit(this._claimService.search(
           this.claimSubject$.getValue(),
           form.controls.name.value,
           form.controls.jobId.value,
-          form.controls.address.value
+          form.controls.address.value,
+          form.controls.jobStatus.value,
+          form.controls.type.value,
+          form.controls.disposition.value
         ))
       : this.updatedClaimsEmitter.emit(this.claimSubject$.getValue());
   }
