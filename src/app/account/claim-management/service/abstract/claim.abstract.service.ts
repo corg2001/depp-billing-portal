@@ -14,32 +14,35 @@ export abstract class ClaimServiceAbstract {
 
   constructor() { }
 
-  abstract getClaims(
+  public abstract getClaims(
     completion$: Subject<boolean>,
     error$: Subject<boolean>,
     claimData: BehaviorSubject<ClaimPayloadInterface[]>
   ): void;
-  abstract getClaimsSuccessHandler(
+
+  public abstract getClaimsSuccessHandler(
     completion$: Subject<boolean>,
     error$: Subject<boolean>,
     claimData$: BehaviorSubject<any>,
     response: ClaimPayloadInterface[]
   ): void;
-  abstract getClaimsFailureHandler(
+
+  public abstract getClaimsFailureHandler(
     completion$: Subject<boolean>,
     error$: Subject<boolean>
   ): void;
-  abstract search(
+
+  public abstract search(
     claimData: Claim[],
     name?: string,
     jobId?: string,
     address?: string,
-    jobStatus?: string,
     type?: string,
-    disposition?: string
+    fromDate?: string,
+    toDate?: string
   ): Claim[];
 
-  abstract authInvoiceRedirect(
+  public abstract authInvoiceRedirect(
     jobNumber: string,
     vendorId: string,
     authorizeUrl$: Subject<string>,
@@ -48,21 +51,21 @@ export abstract class ClaimServiceAbstract {
     errorMessage$: Subject<string>
   ): void;
 
-  abstract getAuthInvoiceParams(
+  public abstract getAuthInvoiceParams(
     vendorId: string,
     jobNumber: string
   ): HttpParams;
 
-  abstract authInvoiceSuccessHandler(data$: BehaviorSubject<any>, completion$: Subject<boolean>,
+  public abstract authInvoiceSuccessHandler(data$: BehaviorSubject<any>, completion$: Subject<boolean>,
     error$: Subject<boolean>, response: any): void;
 
-  abstract authInvoiceErroreHandler(derror$: Subject<boolean>, errorMessage$: Subject<string>, error: any): void;
+  public abstract authInvoiceErroreHandler(derror$: Subject<boolean>, errorMessage$: Subject<string>, error: any): void;
 
-  abstract setJobDetail(jobDetail: JobDetailInterface): void;
+  public abstract setJobDetail(jobDetail: JobDetailInterface): void;
 
-  abstract getJobDetail(): JobDetailInterface;
+  public abstract getJobDetail(): JobDetailInterface;
 
-  abstract submitDiagnosisForm(
+  public abstract submitDiagnosisForm(
     companyInfo: string,
     formType: string,
     jobDetail: JobDetailInterface,
@@ -71,4 +74,9 @@ export abstract class ClaimServiceAbstract {
     isError$: Subject<boolean>
   ): void;
 
+  public abstract getClaimInDateRange(claims: Claim[], fromDate?: string, toDate?: string): Claim[];
+
+  public abstract getClaimsFromDate(fromDate: string, claims: Claim[]): Claim[];
+
+  public abstract getClaimFromToDate(toDate: string, claims: Claim[]): Claim[];
 }

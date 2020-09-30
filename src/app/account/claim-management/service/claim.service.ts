@@ -16,7 +16,8 @@ import { environment } from 'src/environments/environment';
 import { HttpParamEnum } from 'src/app/shared/enums/http-params.enums';
 import { JobDetailInterface } from './../interface/job-detail.interface';
 import { LocalStorageEnum } from 'src/app/core/enums/local-storage.enums';
-
+import * as moment from 'moment-timezone';
+import { NgbCalendar, NgbDate } from '@ng-bootstrap/ng-bootstrap';
 @Injectable({
   providedIn: 'root'
 })
@@ -24,12 +25,18 @@ export class ClaimService implements ClaimServiceAbstract {
   public claims$: BehaviorSubject<Claim[]>;
   public il04_vendorId$: Subject<string> = new Subject<string>();
   public il03_vendorId$: Subject<string> = new Subject<string>();
+  private _defaultFromDate: NgbDate;
+  private _defaultToDate: NgbDate;
 
   constructor(
     private _configService: ConfigService,
     private _httpClient: HttpClient,
-    private _loggerService: LoggerService
-  ) { }
+    private _loggerService: LoggerService,
+    private _calendar: NgbCalendar
+  ) {
+    this._defaultFromDate = _calendar.getPrev(_calendar.getToday(), 'd', 60);
+    this._defaultToDate = _calendar.getToday();
+  }
 
   public getClaims(
     isComplete$: Subject<boolean>,
@@ -69,28 +76,58 @@ export class ClaimService implements ClaimServiceAbstract {
     name?: string,
     jobId?: string,
     address?: string,
-    jobStatus?: string,
     type?: string,
-    disposition?: string
+    fromDate?: string,
+    toDate?: string
   ): Claim[] {
-    return claimData.filter((claim: Claim) => {
+    const claimsInDateRange: Claim[] = fromDate && toDate ?
+      this.getClaimInDateRange(claimData, fromDate, toDate, ) :
+      fromDate ? this.getClaimsFromDate(fromDate, claimData) : toDate ? this.getClaimFromToDate(toDate, claimData) : claimData;
+    return claimsInDateRange.filter((claim: Claim) => {
       const nameInput = name.toLowerCase();
       const jobIdInput = jobId.toLowerCase();
       const addressInput = address.toLowerCase();
-      return name
-        ? claim.customerName.toLowerCase().includes(nameInput)
+
+      const typeInput = type.toLowerCase();
+
+      return type
+        ? claim.claimType.toLowerCase().includes(typeInput)
         : jobId
           ? claim.jobNumber.toLowerCase().includes(jobIdInput)
           : address
             ? claim.serviceAddress.toLowerCase().includes(addressInput)
-            : jobStatus
-              ? claim.jobStatus.toLowerCase().includes(jobStatus)
-              : type
-                ? claim.claimType.toLowerCase().includes(type)
-                : disposition
-                  ? claim.claimDisposition.toLowerCase().includes(disposition)
-                  : claim;
+            : name
+              ? claim.customerName.toLowerCase().includes(nameInput)
+              : claim;
     });
+  }
+  public getClaimInDateRange(claims: Claim[], fromDate?: string, toDate?: string, ): Claim[] {
+    const fromDateToFilter = fromDate ? fromDate : this._getDefaultFromDate(this._defaultFromDate);
+    const toDateToFilter = toDate ? toDate : this._getDefaultToDate(this._defaultToDate);
+    return claims.filter((claim: Claim) => {
+      if (moment.utc(claim.dateRequested).isAfter(fromDateToFilter)
+        && moment.utc(claim.dateRequested).isBefore(toDateToFilter)) {
+        return claim;
+      }
+    });
+  }
+
+  public getClaimsFromDate(fromDate: string, claims: Claim[]): Claim[] {
+    return claims.filter((claim: Claim) => {
+      if (moment.utc(claim.dateRequested).isAfter(fromDate)) {
+        return claim;
+      }
+    });
+
+  }
+
+  public getClaimFromToDate(toDate?: string, claims?: Claim[]): Claim[] {
+    return claims.filter((claim: Claim) => {
+      if (moment.utc(claim.dateRequested).isBefore(toDate)) {
+        return claims;
+      }
+    });
+
   }
 
   public authInvoiceRedirect(
@@ -177,6 +214,14 @@ export class ClaimService implements ClaimServiceAbstract {
         isError$.next(true);
       }
     );
+  }
+
+  private _getDefaultFromDate(fromDate: NgbDate): string {
+    return `${fromDate.year}-${fromDate.month}-${fromDate.day}`;
+  }
+
+  private _getDefaultToDate(toDate: NgbDate): string {
+    return `${toDate.year}-${toDate.month}-${toDate.day}`;
   }
 
 }

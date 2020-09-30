@@ -9,6 +9,7 @@ import { ConfigService } from 'src/app/core/config.service';
 import { SessionKeys } from 'src/app/shared/enums/session-keys.emums';
 import { Router, RouterEvent, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
 import { JobStatus } from '../model/claims.enums';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-claim-summary',
@@ -33,7 +34,7 @@ export class ClaimSummaryComponent implements OnInit {
   public loading: boolean = true;
 
   constructor(
-    private _claimsService: ClaimServiceAbstract,
+    private claimService: ClaimServiceAbstract,
     private _claimFactoryService: ClaimFactoryServiceAbstract,
     private _configService: ConfigService,
     private _router: Router
@@ -49,7 +50,7 @@ export class ClaimSummaryComponent implements OnInit {
     > = new BehaviorSubject([]);
     const error$: Subject<boolean> = new Subject();
     this.partyName = this._configService.getPartyName();
-    this._claimsService.getClaims(
+    this.claimService.getClaims(
       this.completion$,
       error$,
       claimPayload$
@@ -72,8 +73,24 @@ export class ClaimSummaryComponent implements OnInit {
         .format('LLLL')} CST` : this.lastLoginDate = '';
   }
 
-  public search(claims: Claim[]): void {
-    this.searchedClaim$.next(claims);
+  public search(form: FormGroup): void {
+    form.controls.startDate.value ||
+      form.controls.endDate.value ||
+      form.controls.name.value ||
+      form.controls.jobId.value ||
+      form.controls.address.value ||
+      form.controls.type.value
+      ? this.searchedClaim$.next(this.claimService.search(
+        this.claimList$.getValue(),
+        form.controls.name.value,
+        form.controls.jobId.value,
+        form.controls.address.value,
+        form.controls.type.value,
+
+        form.controls.startDate.value,
+        form.controls.endDate.value
+      ))
+      : this.searchedClaim$.next(this.searchedClaim$.getValue());
   }
 
   private _navigationInterceptor(event: RouterEvent): void {

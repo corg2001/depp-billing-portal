@@ -15,10 +15,7 @@
       </div>
       <ng-container *ngIf="isCompleted && claimsFound">
         <div class="search-box">
-          <app-search-box
-            [claimSubject$]="claimList$"
-            (updatedClaimsEmitter)="search($event)"
-          ></app-search-box>
+          <app-search [allowFilter]="true" (doSearch)="search($event)"></app-search>
         </div>
       </ng-container>
       <div>

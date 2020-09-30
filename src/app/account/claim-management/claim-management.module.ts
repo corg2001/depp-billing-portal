@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ClaimManagementRoutingModule } from './claim-management-routing.module';
 import { ClaimSummaryComponent } from './claim-summary/claim-summary.component';
-import { SearchBoxComponent } from './claim-summary/search-box/search-box.component';
 import { ClaimService } from './service/claim.service';
 import { ClaimTableComponent } from './claim-summary/claim-table/claim-table.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -17,7 +16,6 @@ import { DiagnosisSelectModalComponent } from './diagnosis/diagnosis-select-moda
 @NgModule({
   declarations: [
     ClaimSummaryComponent,
-    SearchBoxComponent,
     ClaimTableComponent,
     ClaimNotificationComponent,
     DiagnosisSelectModalComponent
