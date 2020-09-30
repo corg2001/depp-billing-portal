@@ -77,7 +77,8 @@
           <select class="form-control" formControlName="type" id="by-type" name="by-type"
             (change)="updateClaimType($event.target.value)">
             <option value="" disabled selected>Claim Type</option>
-            <option *ngFor="let type of claimTypes" value="{{type}}" selected>{{ type }}
+            <option value="">None</option>
+            <option *ngFor="let type of claimTypes" value="{{ type }}" selected>{{ type }}
             </option>
           </select>
         </div>
