@@ -56,7 +56,7 @@ export class ClaimTableComponent implements OnInit {
   ngOnInit() {
     this.noInfoText = `There are no claims for the selected timeframe`;
     this.claimSubject$.subscribe((claimData: Claim[]) => {
-      this.claims = claimData;
+      this.claims = this._claimService.getClaimInDateRange(claimData);
       this.collectionSize = this.claims.length;
       this.pageSize = this._getPageSize(this.collectionSize);
       this.claims.length > 0
