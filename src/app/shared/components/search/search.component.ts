@@ -1,3 +1,4 @@
+import { ClaimOrderType } from './../../../account/claim-management/model/claims.enums';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
@@ -12,7 +13,9 @@ import { NgbDatepicker, NgbDate, NgbCalendar, NgbDateParserFormatter } from '@ng
 export class SearchComponent implements OnInit {
   @Input() fromDate?: NgbDate;
   @Input() toDate?: NgbDate;
+  @Input() allowFilter?: boolean = false;
   @Output() doSearch: EventEmitter<FormGroup> = new EventEmitter();
+
   public model: any;
   public searchForm: FormGroup;
   public datepicker: NgbDatepicker;
@@ -20,25 +23,40 @@ export class SearchComponent implements OnInit {
   public hoveredDate?: NgbDate;
   public maxDate?: NgbDate;
   public minDate?: NgbDate;
+  public isShowingFilters: boolean;
+  public claimTypes: ClaimOrderType[];
+  public filterMsg: string;
 
   constructor(
     private _fb: FormBuilder,
     private _calendar: NgbCalendar,
     public formatter: NgbDateParserFormatter,
   ) {
+    this.filterMsg = 'Filter within results';
+    this.claimTypes = [ClaimOrderType.repair, ClaimOrderType.replace, ClaimOrderType.surge];
     this.hoveredDate = null;
     this.fromDate = this.fromDate ? this.fromDate : _calendar.getPrev(_calendar.getToday(), 'd', 60);
     this.toDate = this.toDate ? this.toDate : _calendar.getToday();
     this.maxDate = this.toDate;
+    this.isShowingFilters = false;
   }
 
+  public toggleAllowFilter = (): void => {
+    this.isShowingFilters = !this.isShowingFilters;
+  }
   ngOnInit() {
     this.searchForm = this._fb.group({
       startDate: [''],
       endDate: [''],
-
+      name: [''],
+      jobId: [''],
+      address: [''],
+      type: ['']
     });
+  }
 
+  public updateClaimType = (calimValue: string): void => {
+    this.searchForm.controls.type.patchValue(calimValue);
   }
 
   public search(form: FormGroup): void {

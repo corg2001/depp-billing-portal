@@ -10,6 +10,19 @@
 		width: 3.6rem;
 	}
 }
+
+.filter-btn {
+  color: #00849b !important;
+  margin-top: 1rem;
+  text-decoration: underline !important;
+  cursor: pointer;
+  font-weight: bold;
+}
+.filter-msg {
+  color:  #00849b !important;
+  text-align: left;
+  font-weight: bold;
+}
 .form-group.hidden {
 	width: 0;
 	margin: 0;
@@ -37,6 +50,5 @@
   .custom-day.faded {
 
 	background-color: rgba(2, 117, 216, 0.5);
-	
+
   }
-  
