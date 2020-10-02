@@ -80,28 +80,46 @@ export class ClaimService implements ClaimServiceAbstract {
     fromDate?: string,
     toDate?: string
   ): Claim[] {
-    const claimsInDateRange: Claim[] = fromDate && toDate ?
-      this.getClaimInDateRange(claimData, fromDate, toDate, ) :
+    let claimsInDateRange: Claim[] = fromDate && toDate ?
+      this.getClaimInDateRange(claimData, fromDate, toDate) :
       fromDate ? this.getClaimsFromDate(fromDate, claimData) : toDate ? this.getClaimFromToDate(toDate, claimData) : claimData;
-    return claimsInDateRange.filter((claim: Claim) => {
-      const nameInput = name.toLowerCase();
-      const jobIdInput = jobId.toLowerCase();
-      const addressInput = address.toLowerCase();
 
-      const typeInput = type.toLowerCase();
+    if (type) {
+      claimsInDateRange = this._claimsOfType(claimsInDateRange, type);
+    }
 
-      return type
-        ? claim.claimType.toLowerCase().includes(typeInput)
-        : jobId
-          ? claim.jobNumber.toLowerCase().includes(jobIdInput)
-          : address
-            ? claim.serviceAddress.toLowerCase().includes(addressInput)
-            : name
-              ? claim.customerName.toLowerCase().includes(nameInput)
-              : claim;
-    });
+    if (jobId) {
+      claimsInDateRange = this._claimsOfJobId(claimsInDateRange, jobId);
+    }
+
+    if (address) {
+      claimsInDateRange = this._claimsOfAddress(claimsInDateRange, address);
+    }
+
+    if (name) {
+      claimsInDateRange = this._claimsOfCustomerName(claimsInDateRange, name);
+    }
+
+    return claimsInDateRange;
   }
-  public getClaimInDateRange(claims: Claim[], fromDate?: string, toDate?: string, ): Claim[] {
+
+  private _claimsOfType(claims: Claim[], type: string): Claim[] {
+    return claims.filter((claim: Claim) => claim.claimType.toLowerCase().includes(type.toLowerCase()));
+  }
+
+  private _claimsOfJobId(claims: Claim[], jobId?: string): Claim[] {
+    return claims.filter((claim: Claim) => claim.jobNumber.toLowerCase().includes(jobId.toLowerCase()));
+  }
+
+  private _claimsOfAddress(claims: Claim[], address: string): Claim[] {
+    return claims.filter((claim: Claim) => claim.serviceAddress.toLowerCase().includes(address.toLowerCase()));
+  }
+
+  private _claimsOfCustomerName(claims: Claim[], name: string): Claim[] {
+    return claims.filter((claim: Claim) => claim.customerName.toLowerCase().includes(name.toLowerCase()));
+  }
+
+  public getClaimInDateRange(claims: Claim[], fromDate?: string, toDate?: string): Claim[] {
     const fromDateToFilter = fromDate ? fromDate : this._getDefaultFromDate(this._defaultFromDate);
     const toDateToFilter = toDate ? toDate : this._getDefaultToDate(this._defaultToDate);
     return claims.filter((claim: Claim) => {

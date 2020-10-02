@@ -23,7 +23,7 @@ export const environment = {
     customerServiceNumber: '1-888-492-7359',
     email: 'Contractorrelations@mailinator.com',
     achEmail: 'VendorMaster@mailinator.com',
-    noHistoryMessage: 'Greetings, we are working to bring your historical invoice & payment information in the following week.'
+    noHistoryMessage: 'There are no payments for the selected timeframe.'
   },
   auth: {
     forgotPassword: {
