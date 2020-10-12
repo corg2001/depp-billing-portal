@@ -1,9 +1,7 @@
 import { ClaimOrderType } from './../../../account/claim-management/model/claims.enums';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs';
 import * as _ from 'lodash';
-import * as moment from 'moment';
 import { NgbDatepicker, NgbDate, NgbCalendar, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-search',
