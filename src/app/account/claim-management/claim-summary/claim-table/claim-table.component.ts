@@ -1,5 +1,5 @@
 import { Router } from '@angular/router';
-import { Component, OnInit, Input, ViewChildren, QueryList } from '@angular/core';
+import { Component, OnInit, Input, ViewChildren, QueryList, OnChanges } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Claim } from '../../model/claims.model';
 import { Subject, BehaviorSubject } from 'rxjs';
@@ -12,23 +12,25 @@ import { WindowRefAbstract } from 'src/app/core/window-ref.abstract.service';
 import { DiagnosisSelectModalComponent } from '../../diagnosis/diagnosis-select-modal/diagnosis-select-modal.component';
 import { ClaimServiceAbstract } from '../../service/abstract/claim.abstract.service';
 import { JobDetailInterface } from './../../interface/job-detail.interface';
+import { SearchFormValues } from 'src/app/shared/models/search-form-values.interface';
 
 @Component({
   selector: 'app-claim-table',
   templateUrl: './claim-table.component.html',
   styleUrls: ['./claim-table.component.scss']
 })
-export class ClaimTableComponent implements OnInit {
+export class ClaimTableComponent implements OnInit, OnChanges {
   @Input() public claimSubject$?: BehaviorSubject<Claim[]> = new BehaviorSubject([]);
   @Input() public completedSubject$?: BehaviorSubject<boolean> = new BehaviorSubject(false);
   @Input() public searchedClaimSubject$?: BehaviorSubject<
     Claim[]
   > = new BehaviorSubject([]);
   @Input() public error$: Subject<boolean> = new Subject();
-
+  @Input() public searchFormValue?: SearchFormValues;
   @ViewChildren(SortableHeaderDirective) headers: QueryList<SortableHeaderDirective>;
 
   public isError: boolean;
+
   public isCompleted: boolean;
   public claims: Claim[] = [];
   public page: number;
@@ -53,7 +55,11 @@ export class ClaimTableComponent implements OnInit {
     private _router: Router
   ) { }
 
-  ngOnInit() {
+  public ngOnChanges(): void {
+    this.noInfoText = `There are no claims for the selected timeframe ${this.searchFormValue ? this.getStartDateSearched(this.searchFormValue) : null} ${this.searchFormValue ? this.getEndDateSearched(this.searchFormValue) : null}${this.searchFormValue ? this.getNameSearched(this.searchFormValue) : null} ${this.searchFormValue ? this.getJobIdSearched(this.searchFormValue) : null} ${this.searchFormValue ? this.getAddressSearched(this.searchFormValue) : null} ${this.searchFormValue ? this.getClaimTypeSearched(this.searchFormValue) : null}`;
+  }
+
+  public ngOnInit(): void {
     this.noInfoText = `There are no claims for the selected timeframe`;
     this.claimSubject$.subscribe((claimData: Claim[]) => {
       this.claims = this._claimService.getClaimInDateRange(claimData);
@@ -79,6 +85,30 @@ export class ClaimTableComponent implements OnInit {
     });
     this.page = 1;
     this.pageSize = this._getPageSize(this.collectionSize);
+  }
+
+  public getStartDateSearched(formValues: SearchFormValues): string {
+    return formValues.startDate ? `with start date: ${formValues.startDate}` : '';
+  }
+
+  public getEndDateSearched(formValues: SearchFormValues): string {
+    return formValues.endDate ? `and end date: ${formValues.endDate}` : '';
+  }
+
+  public getNameSearched(formValues: SearchFormValues): string {
+    return formValues.name ? `, with the name of: ${formValues.name}` : '';
+  }
+
+  public getJobIdSearched(formValues: SearchFormValues): string {
+    return formValues.jobId ? `and jobId: ${formValues.jobId}` : '';
+  }
+
+  public getAddressSearched(formValues: SearchFormValues): string {
+    return formValues.address ? `and address: ${formValues.address}` : '';
+  }
+
+  public getClaimTypeSearched(formValues: SearchFormValues): string {
+    return formValues.type ? `and claim type of: ${formValues.type}` : '';
   }
 
   public modifiedClaims(): Claim[] {

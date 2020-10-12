@@ -6,8 +6,7 @@
   </div>
   <app-loading-spinner *ngIf="loading"></app-loading-spinner>
   <div *ngIf="!loading">
-    <p class="login-info" *ngIf="lastLoginDate">{{lastLoginDate}}</p>
-    <app-claim-notification [claimSubject$]="claimList$"></app-claim-notification>
+    <app-claim-notification [claimSubject$]="claimList$" [searchedClaims$]="searchedClaim$"></app-claim-notification>
     <div class="claim-summary">
       <div class="activity">
         <span class="sub-title">{{ subTitleText1 }}</span>
@@ -23,6 +22,7 @@
           [claimSubject$]="claimList$"
           [searchedClaimSubject$]="searchedClaim$"
           [completedSubject$]="completion$"
+          [searchFormValue]="searchFormValues"
         ></app-claim-table>
       </div>
     </div>

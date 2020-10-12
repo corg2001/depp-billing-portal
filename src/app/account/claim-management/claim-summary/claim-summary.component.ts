@@ -10,6 +10,7 @@ import { SessionKeys } from 'src/app/shared/enums/session-keys.emums';
 import { Router, RouterEvent, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
 import { JobStatus } from '../model/claims.enums';
 import { FormGroup } from '@angular/forms';
+import { SearchFormValues } from 'src/app/shared/models/search-form-values.interface';
 
 @Component({
   selector: 'app-claim-summary',
@@ -32,7 +33,7 @@ export class ClaimSummaryComponent implements OnInit {
   // tslint:disable-next-line: max-line-length
   public coronoaVirusMsg: string = `Due to government health and safety directives and other events beyond our control related to COVID-19, we are currently prioritizing high-risk, emergency claims to meet our customers’ needs. If you are not able to self-authorize, please email your diagnosis to replacements@hwahomewarranty.com. Please include the name on the account and a contact number.  We will contact you as soon as possible.  Thank you for being a valued partner.​`;
   public loading: boolean = true;
-
+  public searchFormValues: SearchFormValues;
   constructor(
     private claimService: ClaimServiceAbstract,
     private _claimFactoryService: ClaimFactoryServiceAbstract,
@@ -74,6 +75,15 @@ export class ClaimSummaryComponent implements OnInit {
   }
 
   public search(form: FormGroup): void {
+    this.searchFormValues = {
+      address: form.controls.address.value,
+      endDate: form.controls.endDate.value,
+      jobId: form.controls.jobId.value,
+      name: form.controls.name.value,
+      startDate: form.controls.startDate.value,
+      type: form.controls.type.value
+    };
+
     form.controls.startDate.value ||
       form.controls.endDate.value ||
       form.controls.name.value ||
@@ -86,7 +96,6 @@ export class ClaimSummaryComponent implements OnInit {
         form.controls.jobId.value,
         form.controls.address.value,
         form.controls.type.value,
-
         form.controls.startDate.value,
         form.controls.endDate.value
       ))

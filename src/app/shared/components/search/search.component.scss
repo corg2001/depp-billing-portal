@@ -13,7 +13,7 @@
 
 .filter-btn {
   color: #00849b !important;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
   text-decoration: underline !important;
   cursor: pointer;
   font-weight: bold;
@@ -50,5 +50,8 @@
   .custom-day.faded {
 
 	background-color: rgba(2, 117, 216, 0.5);
+  }
 
+  .to-date {
+    margin-right: 1rem;
   }

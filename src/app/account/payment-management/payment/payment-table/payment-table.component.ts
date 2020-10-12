@@ -51,7 +51,7 @@ export class PaymentTableComponent implements OnInit {
 
   public viewInvoice(data: PaymentHistoryInterface): void {
     this._paymentService.setInvoicDetails(data);
-    this._modalService.open(InvoiceModalComponent);
+    this._modalService.open(InvoiceModalComponent, { size: 'lg'});
   }
 
   public modifiedPaymentHistory(): PaymentHistoryInterface[] {
