@@ -42,13 +42,29 @@ export class ClaimService implements ClaimServiceAbstract {
     isComplete$: Subject<boolean>,
     isError$: Subject<boolean>,
     claimData$: BehaviorSubject<ClaimPayloadInterface[]>,
+    startDate?: string,
+    endDate?: string
   ): void {
-    this._httpClient.get<ClaimPayloadInterface[]>(environment.claimsUrl)
+    const rawFromDate: NgbDate = this._calendar.getPrev(this._calendar.getToday(), 'd', 60);
+    const rawEndDate = this._calendar.getToday();
+    const formatedStartDate: string = startDate ? startDate : this.getFormattedDate(rawFromDate);
+    const formatedEndDate: string = endDate ? endDate : this.getFormattedDate(rawEndDate);
+    const params: HttpParams = this.getClaimsParams(formatedStartDate, formatedEndDate);
+
+    this._httpClient.get<ClaimPayloadInterface[]>(environment.claimsUrl, { params })
       .subscribe((data: ClaimPayloadInterface[]) => {
         this.getClaimsSuccessHandler(isComplete$, isError$, claimData$, data);
       }, (error: HttpErrorResponse) => {
         this.getClaimsFailureHandler(isComplete$, isError$);
       });
+  }
+
+  public getFormattedDate(date: NgbDate): string {
+    return `${date.year}-${date.month}-${date.day}`;
+  }
+
+  public getClaimsParams(startDate: string, endDate: string): HttpParams {
+    return new HttpParams().set(HttpParamEnum.starDate, startDate).set(HttpParamEnum.endDate, endDate);
   }
 
   public getClaimsSuccessHandler(

@@ -14,7 +14,9 @@ export abstract class PaymentAbstractService {
     paymentHistory$: BehaviorSubject<PaymentHistoryInterface[]>,
     completion$: Subject<boolean>,
     error$: Subject<boolean>,
-    errorMessage$: Subject<any>
+    errorMessage$: Subject<any>,
+    startDate?: string,
+    endDate?: string
   ): void;
 
   abstract paymentHistorySuccessHandler(

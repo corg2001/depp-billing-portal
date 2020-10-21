@@ -45,12 +45,14 @@ export class PaymentComponent implements OnInit, OnChanges {
   }
 
   public getPaymentHistory(paymentHistory$: BehaviorSubject<PaymentHistoryInterface[]>,
-    completion$: Subject<boolean>, error$: Subject<boolean>, errorMessage$?: Subject<string>): void {
+    completion$: Subject<boolean>, error$: Subject<boolean>, errorMessage$?: Subject<string>, startDate?: string, endDate?: string): void {
     this._paymentService.getPaymentHistory(
       paymentHistory$,
       completion$,
       error$,
-      errorMessage$
+      errorMessage$,
+      startDate,
+      endDate
     );
 
     paymentHistory$.subscribe(
@@ -85,6 +87,7 @@ export class PaymentComponent implements OnInit, OnChanges {
   public search(data: {startDate: string, endDate: string}): void {
     const minDate = data.startDate;
     const maxDate = data.endDate;
-    this.updatedPaymentHistory$.next(this._paymentService.search(this.paymentHistory, minDate, maxDate));
+    this.getPaymentHistory(this.updatedPaymentHistory$, this.completion$, this.error$, this.errorMessages$, minDate, maxDate);
+    // this.updatedPaymentHistory$.next(this._paymentService.search(this.paymentHistory, minDate, maxDate));
   }
 }

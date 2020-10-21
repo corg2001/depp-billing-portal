@@ -17,7 +17,9 @@ export abstract class ClaimServiceAbstract {
   public abstract getClaims(
     completion$: Subject<boolean>,
     error$: Subject<boolean>,
-    claimData: BehaviorSubject<ClaimPayloadInterface[]>
+    claimData: BehaviorSubject<ClaimPayloadInterface[]>,
+    startDate?: string,
+    endDate?: string
   ): void;
 
   public abstract getClaimsSuccessHandler(

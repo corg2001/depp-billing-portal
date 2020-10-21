@@ -18,11 +18,10 @@ import { SearchFormValues } from 'src/app/shared/models/search-form-values.inter
   styleUrls: ['./claim-summary.component.scss']
 })
 export class ClaimSummaryComponent implements OnInit {
-  public searchedClaim$?: BehaviorSubject<Claim[]> = new BehaviorSubject(
-    []
-  );
-  public completion$: Subject<boolean> = new Subject();
+  public searchedClaim$?: BehaviorSubject<Claim[]> = new BehaviorSubject([]);
   public claimList$: BehaviorSubject<Claim[]> = new BehaviorSubject([]);
+  public completion$: Subject<boolean> = new Subject();
+  public error$: Subject<boolean> = new Subject();
   public claims: Claim[] = [];
   public subTitleText1: string = 'My Recent Activity';
   public subTitleText2: string = 'View your claims below';
@@ -46,26 +45,7 @@ export class ClaimSummaryComponent implements OnInit {
   }
 
   ngOnInit() {
-    const claimPayload$: BehaviorSubject<
-      ClaimPayloadInterface[]
-    > = new BehaviorSubject([]);
-    const error$: Subject<boolean> = new Subject();
-    this.partyName = this._configService.getPartyName();
-    this.claimService.getClaims(
-      this.completion$,
-      error$,
-      claimPayload$
-    );
-    claimPayload$.subscribe(
-      (claimPlayod: ClaimPayloadInterface[]) => {
-        this.claims = this._claimFactoryService.getClaimFromPayload(
-          claimPlayod
-        );
-        this.claimList$.next(this.claims.filter(c => c.jobStatus !== JobStatus.invoiced));
-        this.claimsFound = this.claims.length > 0 ? true : false;
-      }
-    );
-
+    this.getClaims(this.claimList$, this.error$, this.completion$)
     this.completion$.subscribe((completed: boolean) => this.isCompleted = completed);
     localStorage.getItem(SessionKeys.last_login) !== undefined
       && localStorage.getItem(SessionKeys.last_login) !== '' ?
@@ -74,7 +54,37 @@ export class ClaimSummaryComponent implements OnInit {
         .format('LLLL')} CST` : this.lastLoginDate = '';
   }
 
+
+  public getClaims(claimList$: BehaviorSubject<Claim[]>, error$: Subject<boolean>,
+    completion$: Subject<boolean>, startDate?: string, endDate?: string): void {
+      this.loading = true;
+    const claimPayload$: BehaviorSubject<
+      ClaimPayloadInterface[]
+    > = new BehaviorSubject([]);
+    this.partyName = this._configService.getPartyName();
+    this.claimService.getClaims(
+      completion$,
+      error$,
+      claimPayload$,
+      startDate,
+      endDate
+    );
+    claimPayload$.subscribe(
+      (claimPlayod: ClaimPayloadInterface[]) => {
+        this.loading = false;
+        this.claims = this._claimFactoryService.getClaimFromPayload(
+          claimPlayod
+        );
+        claimList$.next(this.claims.filter(c => c.jobStatus !== JobStatus.invoiced));
+        this.claimsFound = this.claims.length > 0 ? true : false;
+      }
+    );
+  }
+
   public search(form: FormGroup): void {
+    const startDate: string = form.controls.startDate.value;
+    const endDate: string = form.controls.endDate.value;
+    this.getClaims(this.searchedClaim$, this.error$, this.completion$, startDate, endDate);
     this.searchFormValues = {
       address: form.controls.address.value,
       endDate: form.controls.endDate.value,
@@ -83,23 +93,6 @@ export class ClaimSummaryComponent implements OnInit {
       startDate: form.controls.startDate.value,
       type: form.controls.type.value
     };
-
-    form.controls.startDate.value ||
-      form.controls.endDate.value ||
-      form.controls.name.value ||
-      form.controls.jobId.value ||
-      form.controls.address.value ||
-      form.controls.type.value
-      ? this.searchedClaim$.next(this.claimService.search(
-        this.claimList$.getValue(),
-        form.controls.name.value,
-        form.controls.jobId.value,
-        form.controls.address.value,
-        form.controls.type.value,
-        form.controls.startDate.value,
-        form.controls.endDate.value
-      ))
-      : this.searchedClaim$.next(this.searchedClaim$.getValue());
   }
 
   private _navigationInterceptor(event: RouterEvent): void {

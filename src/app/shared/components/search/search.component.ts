@@ -12,6 +12,7 @@ export class SearchComponent implements OnInit {
   @Input() fromDate?: NgbDate;
   @Input() toDate?: NgbDate;
   @Input() allowFilter?: boolean = false;
+  @Input() searcOnInit?: boolean = false;
   @Output() doSearch: EventEmitter<FormGroup> = new EventEmitter();
 
   public model: any;
@@ -51,6 +52,10 @@ export class SearchComponent implements OnInit {
       address: [''],
       type: ['']
     });
+    if (this.searcOnInit) {
+      this.search(this.searchForm);
+
+    }
   }
 
   public updateClaimType = (calimValue: string): void => {
@@ -58,9 +63,9 @@ export class SearchComponent implements OnInit {
   }
 
   public search(form: FormGroup): void {
-    const startData: string = `${this.fromDate.year}-${this.fromDate.month}-${this.fromDate.day}`;
+    const startDate: string = `${this.fromDate.year}-${this.fromDate.month}-${this.fromDate.day}`;
     const endDate: string = `${this.toDate.year}-${this.toDate.month}-${this.toDate.day}`;
-    this.searchForm.controls.startDate.patchValue(startData);
+    this.searchForm.controls.startDate.patchValue(startDate);
     this.searchForm.controls.endDate.patchValue(endDate);
     this.doSearch.emit(form);
   }

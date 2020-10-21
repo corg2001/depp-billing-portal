@@ -12,11 +12,9 @@
         <span class="sub-title">{{ subTitleText1 }}</span>
         <span class="sub-title2">{{ subTitleText2 }}</span>
       </div>
-      <ng-container *ngIf="isCompleted && claimsFound">
         <div class="search-box">
           <app-search [allowFilter]="true" (doSearch)="search($event)"></app-search>
         </div>
-      </ng-container>
       <div>
         <app-claim-table
           [claimSubject$]="claimList$"

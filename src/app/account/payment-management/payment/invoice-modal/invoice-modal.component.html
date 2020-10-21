@@ -24,8 +24,8 @@
 
       <tbody>
         <tr *ngFor="let invoice of paymentHistory?.vendorInvoiceDetails">
-          <td scope="row">{{ invoice.claimId }}</td>
-          <td scope="row">{{ invoice.claimDate | date }}</td>
+          <td scope="row">{{ invoice.jobId }}</td>
+          <td scope="row">{{ invoice.jobDate | date }}</td>
           <td scope="row">{{ invoice.customerName }}</td>
           <td scope="row">{{ invoice.invoiceId }}</td>
           <td scope="row">{{ invoice.serviceAddress }}</td>
