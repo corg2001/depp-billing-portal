@@ -1,9 +1,6 @@
 <div>
   <header>{{ headerText }}</header>
-  <app-search *ngIf="!loading" (doSearch)="search($event.value)"></app-search>
-  <app-loading-spinner *ngIf="loading && !error"></app-loading-spinner>
-  <ng-container *ngIf="!loading">
-    <p>{{ historyMessage }}</p>
-    <app-payment-table [paymentHistory$]="paymentHistory$" [updatedPaymentHistory$]="updatedPaymentHistory$"></app-payment-table>
-  </ng-container>
+  <app-search (doSearch)="search($event.value)"></app-search>
+  <app-payment-table [paymentHistory$]="paymentHistory$" [updatedPaymentHistory$]="updatedPaymentHistory$"
+    [isCompleted]="completion"></app-payment-table>
 </div>

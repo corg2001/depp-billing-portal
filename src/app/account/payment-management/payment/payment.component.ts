@@ -17,8 +17,6 @@ export class PaymentComponent implements OnInit, OnChanges {
   public completion$: Subject<boolean> = new Subject();
   public error$: Subject<boolean> = new Subject();
   public errorMessages$: Subject<string> = new Subject();
-  public historyMessage: string;
-
   public paymentHistory: PaymentHistoryInterface[];
   public completion: boolean = false;
   public error: boolean = false;
@@ -73,7 +71,8 @@ export class PaymentComponent implements OnInit, OnChanges {
   }
 
   public isLoading(): void {
-    this.completion === true ? (this.loading = false) : (this.loading = true);
+    this.loading = this.completion === true ? true : false;
+    // this.completion === true ? (this.loading = false) : (this.loading = true);
   }
 
   public checkIsData() {
@@ -85,6 +84,7 @@ export class PaymentComponent implements OnInit, OnChanges {
   }
 
   public search(data: {startDate: string, endDate: string}): void {
+    this.completion = false;
     const minDate = data.startDate;
     const maxDate = data.endDate;
     this.getPaymentHistory(this.updatedPaymentHistory$, this.completion$, this.error$, this.errorMessages$, minDate, maxDate);

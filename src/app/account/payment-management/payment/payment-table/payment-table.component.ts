@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, ElementRef, QueryList, ViewChildren } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef, QueryList, ViewChildren, OnChanges, SimpleChanges } from '@angular/core';
 import { PaymentHistoryInterface } from '../../interface/payment-history.interface';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BehaviorSubject } from 'rxjs';
@@ -15,9 +15,10 @@ import { environment } from 'src/environments/environment';
   templateUrl: './payment-table.component.html',
   styleUrls: ['./payment-table.component.scss']
 })
-export class PaymentTableComponent implements OnInit {
+export class PaymentTableComponent implements OnInit, OnChanges {
   @Input() public paymentHistory$: BehaviorSubject<PaymentHistoryInterface[]> = new BehaviorSubject([]);
   @Input() public updatedPaymentHistory$: BehaviorSubject<PaymentHistoryInterface[]> = new BehaviorSubject([]);
+  @Input() public isCompleted: boolean = false;
   @ViewChild('invoiceModal') public modalHtml: ElementRef;
   @ViewChildren(SortableHeaderDirective) headers: QueryList<SortableHeaderDirective>;
 
@@ -25,20 +26,25 @@ export class PaymentTableComponent implements OnInit {
   public page: number;
   public pageSize: number;
   public collectionSize: number = 0;
-  public historiesFound: boolean;
+  public hasHistories: boolean;
   public noHistoryMsg: string;
   constructor(private _modalService: NgbModal, private _paymentService: PaymentAbstractService) { }
+
+  public ngOnChanges(change: SimpleChanges): void {
+    console.log(change)
+  }
 
   ngOnInit() {
     this.noHistoryMsg = environment.core.noHistoryMessage;
     this.updatedPaymentHistory$.subscribe((updatedPaymentHistory) => {
       this.paymentHistory = updatedPaymentHistory;
-      this.historiesFound = this._isHistoryFound(updatedPaymentHistory);
+      this.hasHistories = this._isHistoryFound(updatedPaymentHistory);
+      this._sortList('paymentDate', SortDirectionEnums.Descending);
     });
     this.paymentHistory$.subscribe((paymenHistory: PaymentHistoryInterface[]) => {
       this.paymentHistory = paymenHistory;
       this.collectionSize = paymenHistory.length;
-      this.historiesFound = this._isHistoryFound(paymenHistory);
+      this.hasHistories = this._isHistoryFound(paymenHistory);
       this._sortList('paymentDate', SortDirectionEnums.Descending);
     });
     this.page = 1;
@@ -59,7 +65,7 @@ export class PaymentTableComponent implements OnInit {
   }
 
   public onSort(sort: SortEventInterface): void {
-    if (!this.headers || !this.historiesFound) {
+    if (!this.headers || !this.hasHistories) {
       return;
     }
 
