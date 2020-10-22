@@ -1,5 +1,5 @@
 import { Router } from '@angular/router';
-import { Component, OnInit, Input, ViewChildren, QueryList, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, ViewChildren, QueryList, OnChanges, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Claim } from '../../model/claims.model';
 import { Subject, BehaviorSubject } from 'rxjs';
@@ -30,7 +30,6 @@ export class ClaimTableComponent implements OnInit, OnChanges {
   @ViewChildren(SortableHeaderDirective) headers: QueryList<SortableHeaderDirective>;
 
   public isError: boolean;
-
   public isCompleted: boolean;
   public claims: Claim[] = [];
   public page: number;
@@ -55,7 +54,10 @@ export class ClaimTableComponent implements OnInit, OnChanges {
     private _router: Router
   ) { }
 
-  public ngOnChanges(): void {
+  public ngOnChanges(change: SimpleChanges): void {
+    if (change) {
+      this.isCompleted = false;
+    }
     this.noInfoText = `There are no claims for the selected timeframe ${this.searchFormValue ? this.getStartDateSearched(this.searchFormValue) : null} ${this.searchFormValue ? this.getEndDateSearched(this.searchFormValue) : null}${this.searchFormValue ? this.getNameSearched(this.searchFormValue) : null} ${this.searchFormValue ? this.getJobIdSearched(this.searchFormValue) : null} ${this.searchFormValue ? this.getAddressSearched(this.searchFormValue) : null} ${this.searchFormValue ? this.getClaimTypeSearched(this.searchFormValue) : null}`;
   }
 

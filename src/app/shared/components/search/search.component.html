@@ -18,7 +18,7 @@
       <div class="form-group">
         <div class="input-group">
           <div (click)="datepicker.toggle()">
-            <input #dpFromDate class="form-control" placeholder="Select Start Date" name="dpFromDate"
+            <input #dpFromDate class="form-control calender-input" placeholder="Select Start Date" name="dpFromDate"
               [value]="formatter.format(fromDate)" (input)="toDate = validateInput(fromDate, dpFromDate.value)"
               disabled>
           </div>
@@ -32,7 +32,7 @@
       <div class="form-group ml-2">
         <div class="input-group">
           <div class="to-date">
-            <input #dpToDate class="form-control" placeholder="Select End Date" name="dpToDate"
+            <input #dpToDate class="form-control calender-input" placeholder="Select End Date" name="dpToDate"
               [value]="formatter.format(toDate)" (input)="fromDate = validateInput(toDate, dpToDate.value)" disabled>
           </div>
           <div class="form-group">

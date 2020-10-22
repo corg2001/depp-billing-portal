@@ -44,7 +44,7 @@ export class ClaimSummaryComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+ public ngOnInit() {
     this.getClaims(this.claimList$, this.error$, this.completion$)
     this.completion$.subscribe((completed: boolean) => this.isCompleted = completed);
     localStorage.getItem(SessionKeys.last_login) !== undefined
