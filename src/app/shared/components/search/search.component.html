@@ -62,20 +62,20 @@
       <p class="filter-msg">{{ filterMsg }}:</p>
       <div class="d-flex flex-column flex-md-row w-70">
         <div class="form-group">
-          <input (blur)="search(searchForm)" type="text" id="by-name" name="by-name" class="form-control" placeholder="By name"
+          <input (blur)="filter(searchForm)" type="text" id="by-name" name="by-name" class="form-control" placeholder="By name"
             formControlName="name" />
         </div>
         <div class="form-group">
-          <input (blur)="search(searchForm)" type="text" id="by-job-id" name="by-job-id" class="form-control" placeholder="By Job Id"
+          <input (blur)="filter(searchForm)" type="text" id="by-job-id" name="by-job-id" class="form-control" placeholder="By Job Id"
             formControlName="jobId" />
         </div>
         <div class="form-group">
-          <input (blur)="search(searchForm)" type="text" id="by-address" name="by-address" class="form-control" placeholder="By Address"
+          <input (blur)="filter(searchForm)" type="text" id="by-address" name="by-address" class="form-control" placeholder="By Address"
             formControlName="address" />
         </div>
         <div class="form-group">
           <select class="form-control" formControlName="type" id="by-type" name="by-type"
-            (change)="updateClaimType($event.target.value); search(searchForm)">
+            (change)="updateClaimType($event.target.value); filter(searchForm)">
             <option value="" disabled selected>Claim Type</option>
             <option value="">None</option>
             <option *ngFor="let type of claimTypes" value="{{ type }}" selected>{{ type }}

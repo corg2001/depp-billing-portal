@@ -14,6 +14,7 @@ export class SearchComponent implements OnInit {
   @Input() allowFilter?: boolean = false;
   @Input() searcOnInit?: boolean = false;
   @Output() doSearch: EventEmitter<FormGroup> = new EventEmitter();
+  @Output() doFilter: EventEmitter<FormGroup> = new EventEmitter();
 
   public model: any;
   public searchForm: FormGroup;
@@ -67,7 +68,15 @@ export class SearchComponent implements OnInit {
     const endDate: string = `${this.toDate.year}-${this.toDate.month}-${this.toDate.day}`;
     this.searchForm.controls.startDate.patchValue(startDate);
     this.searchForm.controls.endDate.patchValue(endDate);
+    this.clearFilter();
     this.doSearch.emit(form);
+  }
+
+  private clearFilter(): void {
+    this.searchForm.controls.address.reset();
+    this.searchForm.controls.name.reset();
+    this.searchForm.controls.type.reset();
+    this.searchForm.controls.jobId.reset();
   }
 
   get sf(): any {
@@ -82,6 +91,10 @@ export class SearchComponent implements OnInit {
       this.toDate = null;
       this.fromDate = date;
     }
+  }
+
+  public filter(form: FormGroup): void {
+    this.doFilter.emit(form);
   }
 
   public isHovered(date: NgbDate) {
