@@ -59,6 +59,16 @@ export class ClaimService implements ClaimServiceAbstract {
       });
   }
 
+  public getEndDate(): string {
+    return this.getFormattedDate(this._defaultToDate);
+  }
+
+  public getStartDate(): string {
+    return this.getFormattedDate(this._defaultFromDate);
+  }
+
+
+
   public getFormattedDate(date: NgbDate): string {
     return `${date.year}-${date.month}-${date.day}`;
   }
@@ -87,7 +97,7 @@ export class ClaimService implements ClaimServiceAbstract {
     error$.next(true);
   }
 
-  public search(
+  public filter(
     claimData: Claim[],
     name?: string,
     jobId?: string,

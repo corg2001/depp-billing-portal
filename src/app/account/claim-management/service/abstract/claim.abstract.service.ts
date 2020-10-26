@@ -34,7 +34,7 @@ export abstract class ClaimServiceAbstract {
     error$: Subject<boolean>
   ): void;
 
-  public abstract search(
+  public abstract filter(
     claimData: Claim[],
     name?: string,
     jobId?: string,
@@ -52,6 +52,9 @@ export abstract class ClaimServiceAbstract {
     error$: Subject<boolean>,
     errorMessage$: Subject<string>
   ): void;
+
+  public abstract getStartDate(): string;
+  public abstract getEndDate(): string;
 
   public abstract getAuthInvoiceParams(
     vendorId: string,

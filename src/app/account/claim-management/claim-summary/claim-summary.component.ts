@@ -44,7 +44,8 @@ export class ClaimSummaryComponent implements OnInit {
     });
   }
 
- public ngOnInit() {
+  public ngOnInit() {
+    this.initSearchedValues();
     this.getClaims(this.claimList$, this.error$, this.completion$)
     this.completion$.subscribe((completed: boolean) => this.isCompleted = completed);
     localStorage.getItem(SessionKeys.last_login) !== undefined
@@ -54,10 +55,17 @@ export class ClaimSummaryComponent implements OnInit {
         .format('LLLL')} CST` : this.lastLoginDate = '';
   }
 
+  public initSearchedValues(): void {
+    this.searchFormValues = {
+      startDate: this.claimService.getStartDate(),
+      endDate: this.claimService.getEndDate()
+    };
+  }
+
 
   public getClaims(claimList$: BehaviorSubject<Claim[]>, error$: Subject<boolean>,
     completion$: Subject<boolean>, startDate?: string, endDate?: string): void {
-      this.loading = true;
+    this.loading = true;
     const claimPayload$: BehaviorSubject<
       ClaimPayloadInterface[]
     > = new BehaviorSubject([]);
@@ -82,6 +90,7 @@ export class ClaimSummaryComponent implements OnInit {
   }
 
   public search(form: FormGroup): void {
+    this.completion$.next(false);
     const startDate: string = form.controls.startDate.value;
     const endDate: string = form.controls.endDate.value;
     this.getClaims(this.searchedClaim$, this.error$, this.completion$, startDate, endDate);
@@ -93,6 +102,36 @@ export class ClaimSummaryComponent implements OnInit {
       startDate: form.controls.startDate.value,
       type: form.controls.type.value
     };
+  }
+
+  public filter(form: FormGroup): void {
+    this.completion$.next(false);
+    this.searchFormValues = {
+      address: form.controls.address.value,
+      endDate: form.controls.endDate.value,
+      jobId: form.controls.jobId.value,
+      name: form.controls.name.value,
+      startDate: form.controls.startDate.value,
+      type: form.controls.type.value
+    };
+
+    form.controls.startDate.value ||
+      form.controls.endDate.value ||
+      form.controls.name.value ||
+      form.controls.jobId.value ||
+      form.controls.address.value ||
+      form.controls.type.value
+      ? this.searchedClaim$.next(this.claimService.filter(
+        this.claimList$.getValue(),
+        form.controls.name.value,
+        form.controls.jobId.value,
+        form.controls.address.value,
+        form.controls.type.value,
+        form.controls.startDate.value,
+        form.controls.endDate.value
+      ))
+      : this.searchedClaim$.next(this.searchedClaim$.getValue());
+      this.completion$.next(true)
   }
 
   private _navigationInterceptor(event: RouterEvent): void {

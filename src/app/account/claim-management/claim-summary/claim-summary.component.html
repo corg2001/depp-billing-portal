@@ -13,7 +13,7 @@
         <span class="sub-title2">{{ subTitleText2 }}</span>
       </div>
         <div class="search-box">
-          <app-search [allowFilter]="true" (doSearch)="search($event)"></app-search>
+          <app-search [allowFilter]="true" (doSearch)="search($event)" (doFilter)="filter($event)"></app-search>
         </div>
       <div>
         <app-claim-table
