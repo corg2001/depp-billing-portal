@@ -131,7 +131,7 @@ export class ClaimSummaryComponent implements OnInit {
         form.controls.endDate.value
       ))
       : this.searchedClaim$.next(this.searchedClaim$.getValue());
-      this.completion$.next(true)
+      this.completion$.next(true);
   }
 
   private _navigationInterceptor(event: RouterEvent): void {
