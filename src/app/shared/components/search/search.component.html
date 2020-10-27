@@ -1,5 +1,5 @@
 <div id="invoice-search-box-container" class="w-100 text-center">
-  <form [formGroup]="searchForm" (ngSubmit)="search(searchForm)">
+  <form [formGroup]="searchForm" (keydown.enter)="$event.preventDefault()">
     <div class="d-flex flex-column flex-md-row w-70">
       <div class="form-group hidden">
         <div class="input-group">
@@ -18,9 +18,9 @@
       <div class="form-group">
         <div class="input-group">
           <div (click)="datepicker.toggle()">
-            <input #dpFromDate class="form-control calendar-input-from" placeholder="Select Start Date" name="dpFromDate"
-              [value]="formatter.format(fromDate)" (input)="toDate = validateInput(fromDate, dpFromDate.value)"
-              disabled>
+            <input #dpFromDate class="form-control calendar-input-from" placeholder="Select Start Date"
+              name="dpFromDate" [value]="formatter.format(fromDate)"
+              (input)="toDate = validateInput(fromDate, dpFromDate.value)" disabled>
           </div>
 
           <!-- <div class="input-group-append">
@@ -36,7 +36,7 @@
               [value]="formatter.format(toDate)" (input)="fromDate = validateInput(toDate, dpToDate.value)" disabled>
           </div>
           <div class="form-group">
-            <button type="submit" class="btn btn-secondary" [disabled]="!this.toDate">
+            <button type="submit" class="btn btn-secondary" [disabled]="!this.toDate" (click)="search(searchForm)">
               <i class="fa fa-search" aria-hidden="true"></i>
             </button>
           </div>
@@ -45,33 +45,31 @@
                 aria-hidden="true"></i></button>
           </div>
           <a class="filter-btn" *ngIf="allowFilter" (click)="toggleAllowFilter()">Filter</a>
-      </div>
-      <!--
+        </div>
+        <!--
       This functionality will be disabled till AX provides support for this search
       <div class="form-group">
         <input type="text" id="by-invoice-address" name="by-invoice-address" class="form-control"
           placeholder="By Address" formControlName="address" />
       </div>
       -->
-
-
-
+      </div>
     </div>
-    </div>
+
     <ng-container *ngIf='isShowingFilters'>
       <p class="filter-msg">{{ filterMsg }}:</p>
       <div class="d-flex flex-column flex-md-row w-70">
         <div class="form-group">
-          <input (blur)="filter(searchForm)" type="text" id="by-name" name="by-name" class="form-control" placeholder="By name"
-            formControlName="name" />
+          <input (blur)="filter(searchForm)" type="text" id="by-name" name="by-name" class="form-control"
+            placeholder="By name" formControlName="name" />
         </div>
         <div class="form-group">
-          <input (blur)="filter(searchForm)" type="text" id="by-job-id" name="by-job-id" class="form-control" placeholder="By Job Id"
-            formControlName="jobId" />
+          <input (blur)="filter(searchForm)" type="text" id="by-job-id" name="by-job-id" class="form-control"
+            placeholder="By Job Id" formControlName="jobId" />
         </div>
         <div class="form-group">
-          <input (blur)="filter(searchForm)" type="text" id="by-address" name="by-address" class="form-control" placeholder="By Address"
-            formControlName="address" />
+          <input (blur)="filter(searchForm)" type="text" id="by-address" name="by-address" class="form-control"
+            placeholder="By Address" formControlName="address" />
         </div>
         <div class="form-group">
           <select class="form-control" formControlName="type" id="by-type" name="by-type"
