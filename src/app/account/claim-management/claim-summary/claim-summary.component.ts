@@ -94,6 +94,7 @@ export class ClaimSummaryComponent implements OnInit {
     const startDate: string = form.controls.startDate.value;
     const endDate: string = form.controls.endDate.value;
     this.getClaims(this.searchedClaim$, this.error$, this.completion$, startDate, endDate);
+    this.getClaims(this.claimList$, this.error$, this.completion$, startDate, endDate);
     this.searchFormValues = {
       address: form.controls.address.value,
       endDate: form.controls.endDate.value,
@@ -114,10 +115,7 @@ export class ClaimSummaryComponent implements OnInit {
       startDate: form.controls.startDate.value,
       type: form.controls.type.value
     };
-
-    form.controls.startDate.value ||
-      form.controls.endDate.value ||
-      form.controls.name.value ||
+    form.controls.name.value ||
       form.controls.jobId.value ||
       form.controls.address.value ||
       form.controls.type.value
@@ -130,8 +128,8 @@ export class ClaimSummaryComponent implements OnInit {
         form.controls.startDate.value,
         form.controls.endDate.value
       ))
-      : this.searchedClaim$.next(this.searchedClaim$.getValue());
-      this.completion$.next(true);
+      : this.searchedClaim$.next(this.claimList$.getValue());
+    this.completion$.next(true);
   }
 
   private _navigationInterceptor(event: RouterEvent): void {

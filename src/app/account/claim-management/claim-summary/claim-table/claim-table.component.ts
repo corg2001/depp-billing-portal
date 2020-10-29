@@ -67,7 +67,7 @@ export class ClaimTableComponent implements OnInit, OnChanges {
       this.claims.length > 0
         ? (this.claimsFound = true)
         : (this.claimsFound = false);
-      this._sortList('dateRequested', SortDirectionEnums.Descending);
+      this._sortList('dateRequested', SortDirectionEnums.Descending, this.claims);
     });
 
     this.completedSubject$.subscribe((completed: boolean) => {
@@ -80,6 +80,7 @@ export class ClaimTableComponent implements OnInit, OnChanges {
       this.claims.length > 0
         ? (this.claimsFound = true)
         : (this.claimsFound = false);
+      this._sortList('dateRequested', SortDirectionEnums.Descending, this.claims);
       this.pageSize = this._getPageSize(this.collectionSize);
     });
     this.page = 1;
@@ -87,7 +88,7 @@ export class ClaimTableComponent implements OnInit, OnChanges {
   }
 
   public get noClaimsMsg(): string {
-    return  this.noInfoText = `There are no claims for the selected timeframe ${this.searchFormValue ? this.getStartDateSearched(this.searchFormValue) : null} ${this.searchFormValue ? this.getEndDateSearched(this.searchFormValue) : null}${this.searchFormValue ? this.getNameSearched(this.searchFormValue) : null} ${this.searchFormValue ? this.getJobIdSearched(this.searchFormValue) : null} ${this.searchFormValue ? this.getAddressSearched(this.searchFormValue) : null} ${this.searchFormValue ? this.getClaimTypeSearched(this.searchFormValue) : null}`;
+    return this.noInfoText = `There are no claims for the selected timeframe ${this.searchFormValue ? this.getStartDateSearched(this.searchFormValue) : null} ${this.searchFormValue ? this.getEndDateSearched(this.searchFormValue) : null}${this.searchFormValue ? this.getNameSearched(this.searchFormValue) : null} ${this.searchFormValue ? this.getJobIdSearched(this.searchFormValue) : null} ${this.searchFormValue ? this.getAddressSearched(this.searchFormValue) : null} ${this.searchFormValue ? this.getClaimTypeSearched(this.searchFormValue) : null}`;
   }
 
   public getStartDateSearched(formValues: SearchFormValues): string {
@@ -191,7 +192,7 @@ export class ClaimTableComponent implements OnInit, OnChanges {
             LinkText.authorize : '';
   }
 
-  public onSort(sort: SortEventInterface) {
+  public onSort(sort: SortEventInterface, claimList: Claim[]) {
     if (!this.headers || !this.claimsFound) {
       return;
     }
@@ -202,15 +203,16 @@ export class ClaimTableComponent implements OnInit, OnChanges {
       }
     });
 
-    this._sortList(sort.column, sort.direction);
+    this._sortList(sort.column, sort.direction, claimList);
   }
 
   private _sortList(
     column: string,
-    direction: string
+    direction: string,
+    claimList: Claim[]
   ): void {
     if (direction !== SortDirectionEnums.None && column !== '') {
-      this.claims = this.claims.sort((a: Claim, b: Claim) => {
+      claimList = claimList.sort((a: Claim, b: Claim) => {
         const result = this._compareString(`${a[column]}`, `${b[column]}`);
         return direction === SortDirectionEnums.Ascending ? result : -result;
       });
