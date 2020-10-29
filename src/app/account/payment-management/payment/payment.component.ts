@@ -4,6 +4,8 @@ import { Subject, BehaviorSubject } from 'rxjs';
 import { PaymentHistoryInterface } from '../interface/payment-history.interface';
 import { environment } from 'src/environments/environment';
 import { PaymentAbstractService } from '../service/abstract/payment.abstract.service';
+import { SearchFormValues } from 'src/app/shared/models/search-form-values.interface';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-payment',
@@ -23,6 +25,7 @@ export class PaymentComponent implements OnInit, OnChanges {
   public isData: boolean = false;
   public loading: boolean = true;
   public noInfoText: string;
+  public searchFormValues: SearchFormValues;
   constructor(
     private _configService: ConfigService,
     private _paymentService: PaymentAbstractService
@@ -83,10 +86,14 @@ export class PaymentComponent implements OnInit, OnChanges {
     }
   }
 
-  public search(data: {startDate: string, endDate: string}): void {
+  public search(data: { startDate: string, endDate: string }): void {
     this.completion = false;
     const minDate = data.startDate;
     const maxDate = data.endDate;
+    this.searchFormValues = {
+      startDate: data.startDate,
+      endDate: data.endDate
+    }
     this.getPaymentHistory(this.updatedPaymentHistory$, this.completion$, this.error$, this.errorMessages$, minDate, maxDate);
     // this.updatedPaymentHistory$.next(this._paymentService.search(this.paymentHistory, minDate, maxDate));
   }

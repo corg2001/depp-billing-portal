@@ -1,6 +1,6 @@
 <div>
   <header>{{ headerText }}</header>
-  <app-search (doSearch)="search($event.value)"></app-search>
-  <app-payment-table [paymentHistory$]="paymentHistory$" [updatedPaymentHistory$]="updatedPaymentHistory$"
+  <app-search (doSearch)="search($event.value)" ></app-search>
+  <app-payment-table [paymentHistory$]="paymentHistory$" [updatedPaymentHistory$]="updatedPaymentHistory$" [searchFormValue]="searchFormValues"
     [isCompleted]="completion"></app-payment-table>
 </div>

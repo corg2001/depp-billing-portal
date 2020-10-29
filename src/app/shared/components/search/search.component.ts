@@ -1,6 +1,6 @@
 import { ClaimOrderType } from './../../../account/claim-management/model/claims.enums';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, AbstractControl } from '@angular/forms';
 import * as _ from 'lodash';
 import { NgbDatepicker, NgbDate, NgbCalendar, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 @Component({
@@ -33,7 +33,7 @@ export class SearchComponent implements OnInit {
     public formatter: NgbDateParserFormatter,
   ) {
     this.filterMsg = 'Filter within results';
-    this.claimTypes = [ClaimOrderType.repair, ClaimOrderType.replace, ClaimOrderType.surge];
+    this.claimTypes = [ClaimOrderType.repair, ClaimOrderType.replace, ClaimOrderType.maintenance];
     this.hoveredDate = null;
     this.fromDate = this.fromDate ? this.fromDate : _calendar.getPrev(_calendar.getToday(), 'd', 60);
     this.toDate = this.toDate ? this.toDate : _calendar.getToday();
@@ -46,12 +46,12 @@ export class SearchComponent implements OnInit {
   }
   ngOnInit() {
     this.searchForm = this._fb.group({
-      startDate: [''],
-      endDate: [''],
-      name: [''],
-      jobId: [''],
-      address: [''],
-      type: ['']
+      startDate: [null],
+      endDate: [null],
+      name: [null],
+      jobId: [null],
+      address: [null],
+      type: 'Claim Type'
     });
     if (this.searcOnInit) {
       this.search(this.searchForm);
@@ -60,7 +60,7 @@ export class SearchComponent implements OnInit {
   }
 
   public updateClaimType = (calimValue: string): void => {
-    this.searchForm.controls.type.patchValue(calimValue);
+    this.searchForm.controls.type.setValue(calimValue, { onlySelf: true });
   }
 
   public search(form: FormGroup): void {
@@ -75,7 +75,7 @@ export class SearchComponent implements OnInit {
   private clearFilter(): void {
     this.searchForm.controls.address.reset();
     this.searchForm.controls.name.reset();
-    this.searchForm.controls.type.reset();
+    this.searchForm.controls.type.setValue('Claim Type');
     this.searchForm.controls.jobId.reset();
   }
 
@@ -94,7 +94,17 @@ export class SearchComponent implements OnInit {
   }
 
   public filter(form: FormGroup): void {
+    this._checkFormValue(form.controls.address);
+    this._checkFormValue(form.controls.name);
+    this._checkFormValue(form.controls.jobId);
+    this._checkFormValue(form.controls.type);
     this.doFilter.emit(form);
+  }
+
+  private _checkFormValue(formControl: AbstractControl): void {
+    if (formControl.value === '') {
+      formControl.patchValue(null);
+    }
   }
 
   public isHovered(date: NgbDate) {

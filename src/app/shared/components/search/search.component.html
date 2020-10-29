@@ -57,30 +57,36 @@
     </div>
 
     <ng-container *ngIf='isShowingFilters'>
-      <p class="filter-msg">{{ filterMsg }}:</p>
-      <div class="d-flex flex-column flex-md-row w-70">
-        <div class="form-group">
-          <input (blur)="filter(searchForm)" type="text" id="by-name" name="by-name" class="form-control"
-            placeholder="By name" formControlName="name" />
-        </div>
-        <div class="form-group">
-          <input (blur)="filter(searchForm)" type="text" id="by-job-id" name="by-job-id" class="form-control"
-            placeholder="By Job Id" formControlName="jobId" />
-        </div>
-        <div class="form-group">
-          <input (blur)="filter(searchForm)" type="text" id="by-address" name="by-address" class="form-control"
-            placeholder="By Address" formControlName="address" />
-        </div>
-        <div class="form-group">
-          <select class="form-control" formControlName="type" id="by-type" name="by-type"
-            (change)="updateClaimType($event.target.value); filter(searchForm)">
-            <option value="" disabled selected>Claim Type</option>
-            <option value="">None</option>
-            <option *ngFor="let type of claimTypes" value="{{ type }}" selected>{{ type }}
-            </option>
-          </select>
+      <div class="wrapper">
+        <p class="filter-msg">{{ filterMsg }}:</p>
+        <div class="d-flex flex-column flex-md-row w-70">
+          <div class="form-group">
+            <input type="text" id="by-name" name="by-name" class="form-control"
+              placeholder="By name" formControlName="name" />
+          </div>
+          <div class="form-group">
+            <input type="text" id="by-job-id" name="by-job-id" class="form-control"
+              placeholder="By Job Id" formControlName="jobId" />
+          </div>
+          <div class="form-group">
+            <input type="text" id="by-address" name="by-address" class="form-control"
+              placeholder="By Address" formControlName="address" />
+          </div>
+          <div class="form-group">
+            <select class="form-control" formControlName="type" id="by-type" name="by-type"
+              (change)="updateClaimType($event.target.value)">
+              <option [ngValue]="" disabled selected>Claim Type</option>
+              <option [ngValue]="">None</option>
+              <option *ngFor="let type of claimTypes" value="{{ type }}" selected>{{ type }}
+              </option>
+            </select>
+          </div>
+          <button class="btn btn-info" (click)="filter(searchForm)">
+            <i class="fa fa-search" aria-hidden="true"> Search Within Results</i>
+          </button>
         </div>
       </div>
+
     </ng-container>
   </form>
 </div>

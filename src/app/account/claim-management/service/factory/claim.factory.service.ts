@@ -15,7 +15,7 @@ export class ClaimFactoryService {
     claim_playload.forEach((claimPlayload: ClaimPayloadInterface) => {
       const claim: Claim = new Claim(
         claimPlayload.job_number,
-        claimPlayload.date_requested,
+        claimPlayload.date_assigned,
         claimPlayload.claim_type,
         claimPlayload.claim_disposition,
         claimPlayload.customer_name,

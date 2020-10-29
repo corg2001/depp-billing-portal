@@ -10,6 +10,11 @@
 		width: 3.6rem;
 	}
 }
+.wrapper {
+  border-top: 1px solid #c8c8c8;
+  padding-top: 1rem;
+  max-width: 75%;
+}
 
 .filter-btn {
   color: #00849b !important;
@@ -55,9 +60,20 @@
   .to-date {
     margin-right: 1rem;
   }
+
   .calendar-input-from {
     &:hover {
       cursor: pointer;
     }
-
   }
+
+  .btn-info {
+    background-color: #c8c8c8 !important;
+    border-color: #c8c8c8 !important;
+    height: 3.5rem;
+    color: #505050 !important
+  }
+.options {
+  text-transform: capitalize;
+}
+
