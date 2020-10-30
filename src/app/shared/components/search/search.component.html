@@ -77,7 +77,7 @@
               (change)="updateClaimType($event.target.value)">
               <option [ngValue]="" disabled selected>Claim Type</option>
               <option [ngValue]="">None</option>
-              <option *ngFor="let type of claimTypes" value="{{ type }}" selected>{{ type }}
+              <option *ngFor="let type of claimTypes" value="{{ type }}">{{ type }}
               </option>
             </select>
           </div>
