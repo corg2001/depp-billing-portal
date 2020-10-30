@@ -110,7 +110,7 @@ export class ClaimService implements ClaimServiceAbstract {
       this.getClaimInDateRange(claimData, fromDate, toDate) :
       fromDate ? this.getClaimsFromDate(fromDate, claimData) : toDate ? this.getClaimFromToDate(toDate, claimData) : claimData;
 
-    if (type) {
+    if (type && type !== 'None' && type !== 'Claim Type' ) {
       claimsInDateRange = this._claimsOfType(claimsInDateRange, type);
     }
 
