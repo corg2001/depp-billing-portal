@@ -65,10 +65,6 @@ export class PaymentTableComponent implements OnInit, OnChanges {
     return formValues.endDate ? `and end date: ${formValues.endDate}` : '';
   }
 
-  public getNameSearched(formValues: SearchFormValues): string {
-    return formValues.name ? `, with the name of: ${formValues.name}` : '';
-  }
-
   private _isHistoryFound(paymentHistory: PaymentHistoryInterface[]): boolean {
     return paymentHistory.length > 0;
   }

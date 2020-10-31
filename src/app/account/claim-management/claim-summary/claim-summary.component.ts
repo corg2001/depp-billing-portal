@@ -93,15 +93,16 @@ export class ClaimSummaryComponent implements OnInit {
     this.completion$.next(false);
     const startDate: string = form.controls.startDate.value;
     const endDate: string = form.controls.endDate.value;
-    this.getClaims(this.searchedClaim$, this.error$, this.completion$, startDate, endDate);
+    // this.getClaims(this.searchedClaim$, this.error$, this.completion$, startDate, endDate);
     this.getClaims(this.claimList$, this.error$, this.completion$, startDate, endDate);
+      this.getClaims(this.searchedClaim$, this.error$, this.completion$, startDate, endDate);
     this.searchFormValues = {
-      address: form.controls.address.value,
+      address: null,
       endDate: form.controls.endDate.value,
-      jobId: form.controls.jobId.value,
-      name: form.controls.name.value,
+      jobId: null,
+      name: null,
       startDate: form.controls.startDate.value,
-      type: form.controls.type.value
+      type: null
     };
   }
 
