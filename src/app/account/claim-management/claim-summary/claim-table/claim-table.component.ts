@@ -55,13 +55,14 @@ export class ClaimTableComponent implements OnInit, OnChanges {
   ) { }
 
   public ngOnChanges(change: SimpleChanges): void {
+
     this.noInfoText = this.noClaimsMsg;
   }
 
   public ngOnInit(): void {
     this.noInfoText = this.noClaimsMsg;
     this.claimSubject$.subscribe((claimData: Claim[]) => {
-      this.claims = this._claimService.getClaimInDateRange(claimData);
+      this.claims = claimData;
       this.collectionSize = this.claims.length;
       this.pageSize = this._getPageSize(this.collectionSize);
       this.claims.length > 0
@@ -88,7 +89,7 @@ export class ClaimTableComponent implements OnInit, OnChanges {
   }
 
   public get noClaimsMsg(): string {
-    return this.noInfoText = `There are no claims for the selected timeframe ${this.searchFormValue ? this.getStartDateSearched(this.searchFormValue) : null} ${this.searchFormValue ? this.getEndDateSearched(this.searchFormValue) : null}${this.searchFormValue ? this.getNameSearched(this.searchFormValue) : null} ${this.searchFormValue ? this.getJobIdSearched(this.searchFormValue) : null} ${this.searchFormValue ? this.getAddressSearched(this.searchFormValue) : null} ${this.searchFormValue ? this.getClaimTypeSearched(this.searchFormValue) : null}`;
+    return this.noInfoText = `There are no claims for the selected timeframe ${this.searchFormValue ? this.getStartDateSearched(this.searchFormValue) : null} ${this.searchFormValue ? this.getEndDateSearched(this.searchFormValue) : null}${this.searchFormValue ? this.getNameSearched(this.searchFormValue) : null} ${this.searchFormValue ? this.getJobIdSearched(this.searchFormValue) : null} ${this.searchFormValue ? this.getAddressSearched(this.searchFormValue) : null} ${this.searchFormValue ? this.getClaimTypeSearched(this.searchFormValue) : null}.`;
   }
 
   public getStartDateSearched(formValues: SearchFormValues): string {
@@ -158,13 +159,13 @@ export class ClaimTableComponent implements OnInit, OnChanges {
   public diagnoseJob(
     vendorId: string,
     jobNumber: string,
-    dateRequested: Date,
+    dateAssigned: Date,
     customerContactPhone: string
   ): void {
     const jobDetail: JobDetailInterface = {
       vendorId: vendorId,
       jobNumber: jobNumber,
-      dateRequested: dateRequested,
+      dateAssigned: dateAssigned,
       customerContactPhone: customerContactPhone
     };
     this._claimService.setJobDetail(jobDetail);

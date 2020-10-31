@@ -149,8 +149,8 @@ export class ClaimService implements ClaimServiceAbstract {
     const fromDateToFilter = fromDate ? fromDate : this._getDefaultFromDate(this._defaultFromDate);
     const toDateToFilter = toDate ? toDate : this._getDefaultToDate(this._defaultToDate);
     return claims.filter((claim: Claim) => {
-      if (moment.utc(claim.dateRequested).isAfter(fromDateToFilter)
-        && moment.utc(claim.dateRequested).isBefore(toDateToFilter)) {
+      if (moment.utc(claim.dateAssigned).isAfter(fromDateToFilter)
+        && moment.utc(claim.dateAssigned).isBefore(toDateToFilter)) {
         return claim;
       }
     });
@@ -158,7 +158,7 @@ export class ClaimService implements ClaimServiceAbstract {
 
   public getClaimsFromDate(fromDate: string, claims: Claim[]): Claim[] {
     return claims.filter((claim: Claim) => {
-      if (moment.utc(claim.dateRequested).isAfter(fromDate)) {
+      if (moment.utc(claim.dateAssigned).isAfter(fromDate)) {
         return claim;
       }
     });
@@ -167,7 +167,7 @@ export class ClaimService implements ClaimServiceAbstract {
 
   public getClaimFromToDate(toDate?: string, claims?: Claim[]): Claim[] {
     return claims.filter((claim: Claim) => {
-      if (moment.utc(claim.dateRequested).isBefore(toDate)) {
+      if (moment.utc(claim.dateAssigned).isBefore(toDate)) {
         return claims;
       }
     });

@@ -42,7 +42,7 @@ export class Claim implements ClaimInterface {
     return this._jobNumber;
   }
 
-  get dateRequested(): string {
+  get dateAssigned(): string {
     return this._dateAssigned;
   }
 
@@ -86,7 +86,7 @@ export class Claim implements ClaimInterface {
     this._jobNumber = jobNumber;
   }
 
-  set dateRequested(dateRequested: string) {
+  set dateAssigned(dateRequested: string) {
     this._dateAssigned = dateRequested;
   }
 
