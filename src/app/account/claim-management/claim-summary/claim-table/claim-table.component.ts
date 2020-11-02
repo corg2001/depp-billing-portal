@@ -46,6 +46,7 @@ export class ClaimTableComponent implements OnInit, OnChanges {
   public noInfoText: string;
   public JobStatus = JobStatus;
   public LinkText = LinkText;
+  public loadingMsg = 'Gathering Claims ...';
 
   constructor(
     private _claimService: ClaimServiceAbstract,
@@ -113,7 +114,7 @@ export class ClaimTableComponent implements OnInit, OnChanges {
   }
 
   public getClaimTypeSearched(formValues: SearchFormValues): string {
-    return formValues.type ? `and claim type of: ${formValues.type}` : '';
+    return formValues.type && formValues.type !== 'None' && formValues.type !== 'Claim Type' ? `and claim type of: ${formValues.type}` : '';
   }
 
   public modifiedClaims(): Claim[] {

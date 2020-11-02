@@ -8,6 +8,8 @@ import { HttpParams, HttpErrorResponse } from '@angular/common/http';
 })
 export abstract class PaymentAbstractService {
   public paymentHistory: PaymentHistoryInterface;
+  public defaultPaymentStartDate: string;
+  public defualyPaymentEndDate: string;
 
   abstract setInvoicDetails(data: PaymentHistoryInterface): void;
   abstract getPaymentHistory(

@@ -1,4 +1,4 @@
-<app-loading-spinner *ngIf="!isCompleted"></app-loading-spinner>
+<app-loading-spinner *ngIf="!isCompleted" [message]="loadingMsg"></app-loading-spinner>
 <ng-container *ngIf="isCompleted && hasHistories">
   <table class="table table-striped">
     <thead>

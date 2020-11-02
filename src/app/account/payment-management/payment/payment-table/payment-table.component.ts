@@ -10,6 +10,7 @@ import { SortEventInterface } from 'src/app/core/interface/sort-event.interface'
 import * as Money from 'js-money';
 import { environment } from 'src/environments/environment';
 import { SearchFormValues } from 'src/app/shared/models/search-form-values.interface';
+import { isType } from '@angular/core/src/type';
 
 @Component({
   selector: 'app-payment-table',
@@ -30,14 +31,15 @@ export class PaymentTableComponent implements OnInit, OnChanges {
   public collectionSize: number = 0;
   public hasHistories: boolean;
   public noHistoryMsg: string;
+  public loadingMsg = 'Gathering Payments ...';
   constructor(private _modalService: NgbModal, private _paymentService: PaymentAbstractService) { }
 
-  public ngOnChanges(change: SimpleChanges): void {
-    this.noHistoryMsg = this.noPaymentsMsg;
+  public ngOnChanges(changes: SimpleChanges): void {
+    console.log( this.searchFormValue);
+    this.searchFormValue === undefined ? this.noHistoryMsg = this.defaultNoPaymentsMsg : this.noHistoryMsg = this.noPaymentsFromSearchMsg;
   }
 
   ngOnInit() {
-
     this.updatedPaymentHistory$.subscribe((updatedPaymentHistory) => {
       this.paymentHistory = updatedPaymentHistory;
       this.hasHistories = this._isHistoryFound(updatedPaymentHistory);
@@ -53,16 +55,20 @@ export class PaymentTableComponent implements OnInit, OnChanges {
     this.pageSize = 15;
   }
 
-  public get noPaymentsMsg(): string {
-    return this.noHistoryMsg = `No payments in the selected timeframe ${this.searchFormValue ? this.getStartDateSearched(this.searchFormValue) : null} ${this.searchFormValue ? this.getEndDateSearched(this.searchFormValue) : null}.`;
+  public get defaultNoPaymentsMsg(): string {
+    return `No payments in the selected timeframe with start date: ${this._paymentService.defaultPaymentStartDate} and end date : ${this._paymentService.defualyPaymentEndDate}.`;
+  }
+
+  public get noPaymentsFromSearchMsg(): string {
+    return this.noHistoryMsg = `No payments in the selected timeframe ${this.searchFormValue ? this.getStartDateSearched(this.searchFormValue) : ''} ${this.searchFormValue ? this.getEndDateSearched(this.searchFormValue) : ''}.`;
   }
 
   public getStartDateSearched(formValues: SearchFormValues): string {
-    return formValues.startDate ? `with start date: ${formValues.startDate}` : '';
+    return `with start date: ${formValues.startDate}`;
   }
 
   public getEndDateSearched(formValues: SearchFormValues): string {
-    return formValues.endDate ? `and end date: ${formValues.endDate}` : '';
+    return `and end date: ${formValues.endDate}`;
   }
 
   private _isHistoryFound(paymentHistory: PaymentHistoryInterface[]): boolean {

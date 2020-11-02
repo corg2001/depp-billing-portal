@@ -70,10 +70,39 @@
   .btn-info {
     background-color: #c8c8c8 !important;
     border-color: #c8c8c8 !important;
-    height: 3.5rem;
-    color: #505050 !important
+    height: calc(2.25rem + 2px);
+    color: #505050 !important;
+    font-size: .7rem;
+    @media only screen and (min-width: 1229px) {
+      height: 3.5rem;
+      font-size: 1rem;
+    }
+    @media only screen and (min-width: 990px) {
+      width: 10rem;
+    }
+
   }
 .options {
   text-transform: capitalize;
+}
+
+.filter-options {
+  display: flex;
+  flex-direction: column;
+  @media only screen and (min-width: 1229px) {
+    flex-direction: row;
+  }
+}
+
+select {
+  @media only screen and (min-width: 990px) {
+    width: 10rem;
+  }
+
+  @media only screen and (min-width: 1229px) {
+    font-size: 1rem;
+
+
+  }
 }
 
