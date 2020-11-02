@@ -20,6 +20,8 @@ import { NgbCalendar, NgbDate } from '@ng-bootstrap/ng-bootstrap';
 })
 export class PaymentService implements PaymentAbstractService {
   public paymentHistory: PaymentHistoryInterface;
+  public defaultPaymentStartDate: string;
+  public defualyPaymentEndDate: string;
   constructor(
     private _http: HttpClient,
     private _configService: ConfigService,
@@ -41,6 +43,8 @@ export class PaymentService implements PaymentAbstractService {
     const formatedStartDate: string = startDate ? startDate : this.getFormattedDate(rawFromDate);
     const formatedEndDate: string = endDate ? endDate : this.getFormattedDate(rawEndDate);
     const params = this.getPaymenHistoryParams(formatedStartDate, formatedEndDate);
+    this.defaultPaymentStartDate = formatedStartDate;
+    this.defualyPaymentEndDate = formatedEndDate;
     this._http
       .get(environment.payementHistoryUrl, { params })
       .subscribe((response: any) => {
