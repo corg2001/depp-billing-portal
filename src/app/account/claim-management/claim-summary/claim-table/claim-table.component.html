@@ -1,23 +1,23 @@
-<app-loading-spinner *ngIf="!isCompleted"></app-loading-spinner>
+<app-loading-spinner *ngIf="!isCompleted" [message]="loadingMsg"></app-loading-spinner>
 <ng-container *ngIf="isCompleted && claimsFound">
   <table class="table table-striped">
     <thead>
       <tr>
-        <th scope="col" appSortable="jobNumber" (sort)="onSort($event)">Job ID</th>
-        <th scope="col" appSortable="dateRequested" (sort)="onSort($event)">Date</th>
-        <th scope="col" appSortable="claimType" (sort)="onSort($event)">Claim Order Type</th>
-        <th scope="col" appSortable="claimDisposition" (sort)="onSort($event)">Claim Disposition</th>
-        <th scope="col" appSortable="customerName" (sort)="onSort($event)">Name</th>
-        <th scope="col" appSortable="jobStatus" (sort)="onSort($event)">Job Status</th>
-        <th scope="col" appSortable="serviceAddress" (sort)="onSort($event)">Service Address</th>
-        <th scope="col" appSortable="customerContactPhone" (sort)="onSort($event)">Best Contact Number</th>
+        <th scope="col" appSortable="jobNumber" (sort)="onSort($event, modifiedClaims())">Job ID</th>
+        <th scope="col" appSortable="dateRequested" (sort)="onSort($event, modifiedClaims())">Date Assigned</th>
+        <th scope="col" appSortable="claimType" (sort)="onSort($event, modifiedClaims())">Claim Order Type</th>
+        <th scope="col" appSortable="claimDisposition" (sort)="onSort($event, modifiedClaims())">Claim Disposition</th>
+        <th scope="col" appSortable="customerName" (sort)="onSort($event, modifiedClaims())">Name</th>
+        <th scope="col" appSortable="jobStatus" (sort)="onSort($event, modifiedClaims())">Job Status</th>
+        <th scope="col" appSortable="serviceAddress" (sort)="onSort($event, modifiedClaims())">Service Address</th>
+        <th scope="col" appSortable="customerContactPhone" (sort)="onSort($event, modifiedClaims())">Best Contact Number</th>
         <th></th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let claim of modifiedClaims()" class="small">
         <td scope="row">{{ claim.jobNumber }}</td>
-        <td scope="row">{{ claim.dateRequested | date }}</td>
+        <td scope="row">{{ claim.dateAssigned | date }}</td>
         <td>{{ claim.claimType }}</td>
         <td>{{ claim.claimDisposition }}</td>
         <td>{{ claim.customerName }}</td>
@@ -30,7 +30,7 @@
           <span *ngIf="claim.jobStatus === JobStatus.wip">
             |
             <a class="text-uppercase"
-              (click)="diagnoseJob(claim.vendorId, claim.jobNumber, claim.dateRequested, claim.customerContactPhone)">
+              (click)="diagnoseJob(claim.vendorId, claim.jobNumber, claim.dateAssigned, claim.customerContactPhone)">
               {{ LinkText.diagnosis }}
             </a>
           </span>
@@ -53,6 +53,7 @@
 </ng-container>
 <ng-container *ngIf="isCompleted && !claimsFound || isError">
   <div>
-    <p>{{ noInfoText }} </p>
+
+    <p class="no-info-text">{{ noInfoText }} </p>
   </div>
 </ng-container>

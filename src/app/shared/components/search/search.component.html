@@ -1,0 +1,92 @@
+<div id="invoice-search-box-container" class="w-100 text-center">
+  <form [formGroup]="searchForm" (keydown.enter)="$event.preventDefault()">
+    <div class="d-flex flex-column flex-md-row w-70">
+      <div class="form-group hidden">
+        <div class="input-group">
+          <input name="datepicker" class="form-control" ngbDatepicker #datepicker="ngbDatepicker"
+            [autoClose]="'outside'" (dateSelect)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t"
+            [maxDate]="maxDate" [minDate]="minDate" outsideDays="hidden" [startDate]="fromDate!">
+          <ng-template #t let-date let-focused="focused">
+            <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)"
+              [class.faded]="isHovered(date) || isInside(date)" (mouseenter)="hoveredDate = date"
+              (mouseleave)="hoveredDate = null">
+              {{ date.day }}
+            </span>
+          </ng-template>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+          <div (click)="datepicker.toggle()">
+            <input #dpFromDate class="form-control calendar-input-from" placeholder="Select Start Date"
+              name="dpFromDate" [value]="formatter.format(fromDate)"
+              (input)="toDate = validateInput(fromDate, dpFromDate.value)" disabled>
+          </div>
+
+          <!-- <div class="input-group-append">
+            <button class="btn datepicker ml-1" (click)="datepicker.toggle()" type="button"><i class="fa fa-calendar"
+              aria-hidden="true"></i></button>
+          </div> -->
+        </div>
+      </div>
+      <div class="form-group ml-2">
+        <div class="input-group">
+          <div class="to-date">
+            <input #dpToDate class="form-control calendar-input-to" placeholder="Select End Date" name="dpToDate"
+              [value]="formatter.format(toDate)" (input)="fromDate = validateInput(toDate, dpToDate.value)" disabled>
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-secondary" [disabled]="!this.toDate" (click)="search(searchForm)">
+              <i class="fa fa-search" aria-hidden="true"></i>
+            </button>
+          </div>
+          <div class="input-group-append">
+            <button class="btn datepicker" (click)="datepicker.toggle()" type="button"><i class="fa fa-calendar"
+                aria-hidden="true"></i></button>
+          </div>
+          <a class="filter-btn" *ngIf="allowFilter" (click)="toggleAllowFilter()">Filter</a>
+        </div>
+        <!--
+      This functionality will be disabled till AX provides support for this search
+      <div class="form-group">
+        <input type="text" id="by-invoice-address" name="by-invoice-address" class="form-control"
+          placeholder="By Address" formControlName="address" />
+      </div>
+      -->
+      </div>
+    </div>
+
+    <ng-container *ngIf='isShowingFilters'>
+      <div class="wrapper">
+        <p class="filter-msg">{{ filterMsg }}:</p>
+        <div class="d-flex flex-md-column flex-lg-row w-70">
+          <div class="form-group">
+            <input type="text" id="by-name" name="by-name" class="form-control"
+              placeholder="By name" formControlName="name" />
+          </div>
+          <div class="form-group">
+            <input type="text" id="by-job-id" name="by-job-id" class="form-control"
+              placeholder="By Job Id" formControlName="jobId" />
+          </div>
+          <div class="form-group">
+            <input type="text" id="by-address" name="by-address" class="form-control"
+              placeholder="By Address" formControlName="address" />
+          </div>
+          <div class="form-group ">
+            <select class="form-control" formControlName="type" id="by-type" name="by-type"
+              (change)="updateClaimType($event.target.value)">
+              <option [ngValue]="" disabled selected>Claim Type</option>
+              <option [ngValue]="">None</option>
+              <option *ngFor="let type of claimTypes" value="{{ type }}">{{ type }}
+              </option>
+            </select>
+          </div>
+          <button class="btn btn-info" (click)="filter(searchForm)">
+            <i class="fa fa-search" aria-hidden="true"> Search Within Results</i>
+          </button>
+        </div>
+      </div>
+
+    </ng-container>
+  </form>
+</div>

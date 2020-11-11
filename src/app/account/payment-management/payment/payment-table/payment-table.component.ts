@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, ElementRef, QueryList, ViewChildren } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef, QueryList, ViewChildren, OnChanges, SimpleChanges } from '@angular/core';
 import { PaymentHistoryInterface } from '../../interface/payment-history.interface';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BehaviorSubject } from 'rxjs';
@@ -8,16 +8,20 @@ import { SortableHeaderDirective } from 'src/app/core/directive/sortable-header.
 import { SortDirectionEnums } from 'src/app/core/enums/sort-direction.enums';
 import { SortEventInterface } from 'src/app/core/interface/sort-event.interface';
 import * as Money from 'js-money';
+import { environment } from 'src/environments/environment';
+import { SearchFormValues } from 'src/app/shared/models/search-form-values.interface';
+import { isType } from '@angular/core/src/type';
 
 @Component({
   selector: 'app-payment-table',
   templateUrl: './payment-table.component.html',
   styleUrls: ['./payment-table.component.scss']
 })
-export class PaymentTableComponent implements OnInit {
+export class PaymentTableComponent implements OnInit, OnChanges {
   @Input() public paymentHistory$: BehaviorSubject<PaymentHistoryInterface[]> = new BehaviorSubject([]);
   @Input() public updatedPaymentHistory$: BehaviorSubject<PaymentHistoryInterface[]> = new BehaviorSubject([]);
-
+  @Input() public isCompleted: boolean = false;
+  @Input() public searchFormValue?: SearchFormValues;
   @ViewChild('invoiceModal') public modalHtml: ElementRef;
   @ViewChildren(SortableHeaderDirective) headers: QueryList<SortableHeaderDirective>;
 
@@ -25,26 +29,55 @@ export class PaymentTableComponent implements OnInit {
   public page: number;
   public pageSize: number;
   public collectionSize: number = 0;
-  public historiesFound: boolean;
+  public hasHistories: boolean;
+  public noHistoryMsg: string;
+  public loadingMsg = 'Gathering Payments ...';
   constructor(private _modalService: NgbModal, private _paymentService: PaymentAbstractService) { }
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    console.log( this.searchFormValue);
+    this.searchFormValue === undefined ? this.noHistoryMsg = this.defaultNoPaymentsMsg : this.noHistoryMsg = this.noPaymentsFromSearchMsg;
+  }
 
   ngOnInit() {
     this.updatedPaymentHistory$.subscribe((updatedPaymentHistory) => {
       this.paymentHistory = updatedPaymentHistory;
+      this.hasHistories = this._isHistoryFound(updatedPaymentHistory);
+      this._sortList('paymentDate', SortDirectionEnums.Descending);
     });
     this.paymentHistory$.subscribe((paymenHistory: PaymentHistoryInterface[]) => {
       this.paymentHistory = paymenHistory;
       this.collectionSize = paymenHistory.length;
-      paymenHistory.length > 0 ? this.historiesFound = true : this.historiesFound = false;
+      this.hasHistories = this._isHistoryFound(paymenHistory);
       this._sortList('paymentDate', SortDirectionEnums.Descending);
     });
     this.page = 1;
     this.pageSize = 15;
   }
 
+  public get defaultNoPaymentsMsg(): string {
+    return `No payments in the selected timeframe with start date: ${this._paymentService.defaultPaymentStartDate} and end date : ${this._paymentService.defualyPaymentEndDate}.`;
+  }
+
+  public get noPaymentsFromSearchMsg(): string {
+    return this.noHistoryMsg = `No payments in the selected timeframe ${this.searchFormValue ? this.getStartDateSearched(this.searchFormValue) : ''} ${this.searchFormValue ? this.getEndDateSearched(this.searchFormValue) : ''}.`;
+  }
+
+  public getStartDateSearched(formValues: SearchFormValues): string {
+    return `with start date: ${formValues.startDate}`;
+  }
+
+  public getEndDateSearched(formValues: SearchFormValues): string {
+    return `and end date: ${formValues.endDate}`;
+  }
+
+  private _isHistoryFound(paymentHistory: PaymentHistoryInterface[]): boolean {
+    return paymentHistory.length > 0;
+  }
+
   public viewInvoice(data: PaymentHistoryInterface): void {
     this._paymentService.setInvoicDetails(data);
-    this._modalService.open(InvoiceModalComponent);
+    this._modalService.open(InvoiceModalComponent, { size: 'lg'});
   }
 
   public modifiedPaymentHistory(): PaymentHistoryInterface[] {
@@ -52,7 +85,7 @@ export class PaymentTableComponent implements OnInit {
   }
 
   public onSort(sort: SortEventInterface): void {
-    if (!this.headers || !this.historiesFound) {
+    if (!this.headers || !this.hasHistories) {
       return;
     }
 

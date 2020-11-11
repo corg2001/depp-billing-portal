@@ -1,31 +1,36 @@
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col" appSortable="paymentDate" (sort)="onSort($event)">Payment Date</th>
-      <th scope="col" appSortable="paymentReferenceNo" (sort)="onSort($event)">Reference ID</th>
-      <th scope="col" appSortable="paymentMethod" (sort)="onSort($event)">Payment Type</th>
-      <th scope="col" appSortable="paymentAmount" (sort)="onSort($event)">Payment Amount</th>
-      <th scope="col"></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let payment of modifiedPaymentHistory()">
-      <td scope="row">{{ payment.paymentDate | date }}</td>
-      <td scope="row">{{ payment.paymentReferenceNo }}</td>
-      <td scope="row">{{ payment.paymentMethod }}</td>
-      <td scope="row">{{ payment.paymentAmount.amount | formatmoney }}</td>
-      <td scope="row">
-        <button (click)="viewInvoice(payment)" class="btn">
-          View Invoices
-        </button>
-      </td>
+<app-loading-spinner *ngIf="!isCompleted" [message]="loadingMsg"></app-loading-spinner>
+<ng-container *ngIf="isCompleted && hasHistories">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col" appSortable="paymentDate" (sort)="onSort($event)">Payment Date</th>
+        <th scope="col" appSortable="paymentReferenceNo" (sort)="onSort($event)">Reference ID</th>
+        <th scope="col" appSortable="paymentMethod" (sort)="onSort($event)">Payment Type</th>
+        <th scope="col" appSortable="paymentAmount" (sort)="onSort($event)">Payment Amount</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let payment of modifiedPaymentHistory()">
+        <td scope="row">{{ payment.paymentDate | date }}</td>
+        <td scope="row">{{ payment.paymentReferenceNo }}</td>
+        <td scope="row">{{ payment.paymentMethod }}</td>
+        <td scope="row">{{ payment.paymentAmount.amount | formatmoney }}</td>
+        <td scope="row">
+          <button (click)="viewInvoice(payment)" class="btn">
+            View Invoices
+          </button>
+        </td>
 
-    </tr>
-  </tbody>
-</table>
-<ngb-pagination
-  [pageSize]="pageSize"
-  [(page)]="page"
-  [collectionSize]="collectionSize"
-  [maxSize]="10">
-</ngb-pagination>
+      </tr>
+    </tbody>
+  </table>
+  <ngb-pagination [pageSize]="pageSize" [(page)]="page" [collectionSize]="collectionSize" [maxSize]="10">
+  </ngb-pagination>
+</ng-container>
+
+<ng-container *ngIf="isCompleted && !hasHistories">
+  <div>
+    <p class="no-history">{{ noHistoryMsg }}</p>
+  </div>
+</ng-container>

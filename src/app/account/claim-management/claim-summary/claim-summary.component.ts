@@ -9,6 +9,8 @@ import { ConfigService } from 'src/app/core/config.service';
 import { SessionKeys } from 'src/app/shared/enums/session-keys.emums';
 import { Router, RouterEvent, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
 import { JobStatus } from '../model/claims.enums';
+import { FormGroup } from '@angular/forms';
+import { SearchFormValues } from 'src/app/shared/models/search-form-values.interface';
 
 @Component({
   selector: 'app-claim-summary',
@@ -16,11 +18,10 @@ import { JobStatus } from '../model/claims.enums';
   styleUrls: ['./claim-summary.component.scss']
 })
 export class ClaimSummaryComponent implements OnInit {
-  public searchedClaim$?: BehaviorSubject<Claim[]> = new BehaviorSubject(
-    []
-  );
-  public completion$: Subject<boolean> = new Subject();
+  public searchedClaim$?: BehaviorSubject<Claim[]> = new BehaviorSubject([]);
   public claimList$: BehaviorSubject<Claim[]> = new BehaviorSubject([]);
+  public completion$: Subject<boolean> = new Subject();
+  public error$: Subject<boolean> = new Subject();
   public claims: Claim[] = [];
   public subTitleText1: string = 'My Recent Activity';
   public subTitleText2: string = 'View your claims below';
@@ -31,9 +32,9 @@ export class ClaimSummaryComponent implements OnInit {
   // tslint:disable-next-line: max-line-length
   public coronoaVirusMsg: string = `Due to government health and safety directives and other events beyond our control related to COVID-19, we are currently prioritizing high-risk, emergency claims to meet our customers’ needs. If you are not able to self-authorize, please email your diagnosis to replacements@hwahomewarranty.com. Please include the name on the account and a contact number.  We will contact you as soon as possible.  Thank you for being a valued partner.​`;
   public loading: boolean = true;
-
+  public searchFormValues: SearchFormValues;
   constructor(
-    private _claimsService: ClaimServiceAbstract,
+    private claimService: ClaimServiceAbstract,
     private _claimFactoryService: ClaimFactoryServiceAbstract,
     private _configService: ConfigService,
     private _router: Router
@@ -43,27 +44,9 @@ export class ClaimSummaryComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    const claimPayload$: BehaviorSubject<
-      ClaimPayloadInterface[]
-    > = new BehaviorSubject([]);
-    const error$: Subject<boolean> = new Subject();
-    this.partyName = this._configService.getPartyName();
-    this._claimsService.getClaims(
-      this.completion$,
-      error$,
-      claimPayload$
-    );
-    claimPayload$.subscribe(
-      (claimPlayod: ClaimPayloadInterface[]) => {
-        this.claims = this._claimFactoryService.getClaimFromPayload(
-          claimPlayod
-        );
-        this.claimList$.next(this.claims.filter(c => c.jobStatus !== JobStatus.invoiced));
-        this.claimsFound = this.claims.length > 0 ? true : false;
-      }
-    );
-
+  public ngOnInit() {
+    this.initSearchedValues();
+    this.getClaims(this.claimList$, this.error$, this.completion$)
     this.completion$.subscribe((completed: boolean) => this.isCompleted = completed);
     localStorage.getItem(SessionKeys.last_login) !== undefined
       && localStorage.getItem(SessionKeys.last_login) !== '' ?
@@ -72,8 +55,82 @@ export class ClaimSummaryComponent implements OnInit {
         .format('LLLL')} CST` : this.lastLoginDate = '';
   }
 
-  public search(claims: Claim[]): void {
-    this.searchedClaim$.next(claims);
+  public initSearchedValues(): void {
+    this.searchFormValues = {
+      startDate: this.claimService.getStartDate(),
+      endDate: this.claimService.getEndDate()
+    };
+  }
+
+
+  public getClaims(claimList$: BehaviorSubject<Claim[]>, error$: Subject<boolean>,
+    completion$: Subject<boolean>, startDate?: string, endDate?: string): void {
+    this.loading = true;
+    const claimPayload$: BehaviorSubject<
+      ClaimPayloadInterface[]
+    > = new BehaviorSubject([]);
+    this.partyName = this._configService.getPartyName();
+    this.claimService.getClaims(
+      completion$,
+      error$,
+      claimPayload$,
+      startDate,
+      endDate
+    );
+    claimPayload$.subscribe(
+      (claimPlayod: ClaimPayloadInterface[]) => {
+        this.loading = false;
+        this.claims = this._claimFactoryService.getClaimFromPayload(
+          claimPlayod
+        );
+        claimList$.next(this.claims.filter(c => c.jobStatus !== JobStatus.invoiced));
+        this.claimsFound = this.claims.length > 0 ? true : false;
+      }
+    );
+  }
+
+  public search(form: FormGroup): void {
+    this.completion$.next(false);
+    const startDate: string = form.controls.startDate.value;
+    const endDate: string = form.controls.endDate.value;
+    // this.getClaims(this.searchedClaim$, this.error$, this.completion$, startDate, endDate);
+    this.getClaims(this.claimList$, this.error$, this.completion$, startDate, endDate);
+      this.getClaims(this.searchedClaim$, this.error$, this.completion$, startDate, endDate);
+    this.searchFormValues = {
+      address: null,
+      endDate: form.controls.endDate.value,
+      jobId: null,
+      name: null,
+      startDate: form.controls.startDate.value,
+      type: null
+    };
+  }
+
+  public filter(form: FormGroup): void {
+    this.completion$.next(false);
+    this.searchFormValues = {
+      address: form.controls.address.value,
+      endDate: form.controls.endDate.value,
+      jobId: form.controls.jobId.value,
+      name: form.controls.name.value,
+      startDate: form.controls.startDate.value,
+      type: form.controls.type.value
+    };
+    form.controls.name.value ||
+      form.controls.jobId.value ||
+      form.controls.address.value ||
+      form.controls.type.value
+      ? this.searchedClaim$.next(this.claimService.filter(
+        this.claimList$.getValue(),
+        form.controls.name.value,
+        form.controls.jobId.value,
+        form.controls.address.value,
+        form.controls.type.value,
+        form.controls.startDate.value,
+        form.controls.endDate.value
+      ))
+      : this.searchedClaim$.next(this.claimList$.getValue());
+    this.completion$.next(true);
   }
 
   private _navigationInterceptor(event: RouterEvent): void {
