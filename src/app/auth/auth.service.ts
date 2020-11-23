@@ -63,6 +63,7 @@ export class AuthService {
     // TODO: this uri needs to come from configuration
     this._httpClient.get(environment.termsAndConditionsUrl).subscribe(
       (response: Observable<HttpResponse<any>>) => {
+
         this.genericSuccessHandler(completionSubject, response, dataSubject);
       },
       (response: HttpErrorResponse) => {
@@ -105,6 +106,7 @@ export class AuthService {
     response$?: Subject<string>,
     isUserFound$?: Subject<boolean>
   ): void {
+    sessionStorage.removeItem('compromised-login');
     isUserFound$.next(true);
       response$.next(environment.auth.forgotPassword.success);
   }
