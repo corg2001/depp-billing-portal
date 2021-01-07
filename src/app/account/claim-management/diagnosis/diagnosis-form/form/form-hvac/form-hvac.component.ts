@@ -1,5 +1,5 @@
 import { BaseDiagnosisFormComponent } from '../../base-diagnosis-form/base-diagnosis-form.component';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { DiagnosisFormFactoryAbstract } from '../../../../service/abstract/diagnosis.form.factory.abstract';
 import { HvacFormFactoryAbstract } from '../../../../service/abstract/hvac.form.factory.abstract';
@@ -12,7 +12,8 @@ import { HvacFormFactoryAbstract } from '../../../../service/abstract/hvac.form.
 })
 export class FormHvacComponent extends BaseDiagnosisFormComponent implements OnInit {
   @Input() public formLabel: string;
-
+  @ViewChild('commentsTextArea', { read: ElementRef }) textArea: ElementRef;
+  public maxLength: number = 3000;
   constructor(
     protected _formBuilder: FormBuilder,
     protected _hvacFormFactory: HvacFormFactoryAbstract,
@@ -41,4 +42,12 @@ export class FormHvacComponent extends BaseDiagnosisFormComponent implements OnI
       additionalComments: new FormControl()
     });
   }
+
+  public autoGrow(): void {
+    const textArea: any = this.textArea.nativeElement;
+    textArea.style.overflow = 'hidden';
+    textArea.style.height = '0px';
+    textArea.style.height = textArea.scrollHeight + 'px';
+  }
+
 }
