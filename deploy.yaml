@@ -4,7 +4,7 @@ Parameters:
   Environment:
     Type: String
     Description: Environment identifier suffix, will be appended to resource identifiers
-    AllowedValues: [prod, stg]
+    AllowedValues: [prod, stg, hf1]
   Version:
     Type: String
     Description: Application version
@@ -37,6 +37,9 @@ Mappings:
     stg:
       Id: vpc-c2c029ba
       Subnets: [subnet-3757ff53, subnet-e124f0ce]
+    hf1:
+      Id: vpc-c2c029ba
+      Subnets: [subnet-06508073e2c60adbd, subnet-0c31424a485adce45]
   EnvironmentTaskMap:
     prod:
       Cpu: 512
@@ -44,6 +47,11 @@ Mappings:
       ContainerMemory: 1024
       Desired: 2
     stg:
+      Cpu: 256
+      TaskMemory: 0.5GB
+      ContainerMemory: 512
+      Desired: 2
+    hf1:
       Cpu: 256
       TaskMemory: 0.5GB
       ContainerMemory: 512
