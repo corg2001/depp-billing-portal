@@ -2,23 +2,23 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 import * as moment from 'moment';
-const env: string = 'qa2';
-const baseUrl: string = `https://unify-hwa-contractor-api-${env}.engine.host/`;
-const custumerPortalUrl: string = `https://unify-hwa-portal-${env}.engine.host`;
-const realtorPortalUrl: string = `https://unify-hwa-realtor-portal-${env}.engine.host`;
+const baseUrl: string = `https://hwa-contractor-api-stg.digitaltest.directenergy.net/`;
+const custumerPortalUrl: string = `https://hwa-customer-portal-stg.digitaltest.directenergy.net/`;
+const realtorPortalUrl: string = `https://hwa-realtor-portal-stg.digitaltest.directenergy.net/`;
 export const environment = {
   production: false,
   analytics: {
     google: {
       brand: {
-        hwa: 'GTM-TS63H5R'
+        hwa: 'UA-827840-1'
       }
     }
   },
+  name: 'stg',
   core: {
     brandId: 'HWA',
     brandFriendlyName: 'HWA',
-    copyrightNotice: `&copy; ${moment().format('YYYY')} HOME WARRANTY OF AMERICA. Inc. Home Warranty Information:`,
+    opyrightNotice: `&copy; ${moment().format('YYYY')} HOME WARRANTY OF AMERICA. Inc. Home Warranty Information:`,
     pageTitle: 'HWA - Home Warranty of America',
     customerServiceNumber: '1-888-492-7359',
     email: 'Contractorrelations@mailinator.com',
@@ -27,13 +27,14 @@ export const environment = {
   },
   auth: {
     forgotPassword: {
-      userNotFound: 'Apologies, we can’t find a username under that email address. Please check the email address used to create online account. ' +  'For further assistance, You can email us at <a href="mailto:acctmgr@hwahomewarranty.com.com">acctmgr@hwahomewarranty.com.com</a>, ' +
+      userNotFound: 'Apologies, we can’t find a username under that email address. Please check the email address used to create online account. ' +
+      'For further assistance, You can email us at <a href="mailto:acctmgr@hwahomewarranty.com.com">acctmgr@hwahomewarranty.com.com</a>,' +
         'or call (888) 492-7359 option 4',
       success: 'We have sent you a password reset link to the email address on file.  If it does not arrive in the next 10 minutes - please check your spam folder. ' +
         'For further assistance, you can email us at <a href="mailto:acctmgr@hwahomewarranty.com.com">acctmgr@hwahomewarranty.com.com</a>, or call (888) 492-7359 option 4'
     },
-    loginError: 'We apologize you are having difficulty logging into our portal.  Please try again or select "Forgot Password" to reset.  For further assistance, you can email us at <a href="mailto:acctmgr@hwahomewarranty.com.com">acctmgr@hwahomewarranty.com.com</a>, or call (888) 492-7359 option 4 to direct over to our department.',
-    lockedError: 'Your account is locked after multiple attempts. Please select “Forgot Password” to reset your password and unlock your account. For further assistance, email us at <a href="mailto:acctmgr@hwahomewarranty.com.com">acctmgr@hwahomewarranty.com.com</a>, or call (888) 492-7359 option 4.'
+    loginError: 'We apologize you are having difficulty logging into our portal.  Please try again or select "Forgot Password" to reset.  For further assistance, you can email us at acctmgr@hwahomewarranty.com, or call (888) 492-7359 option 4 to direct over to our department.',
+    lockedError: 'Your account is locked after multiple attempts. Please select “Forgot Password” to reset your password and unlock your account. For further assistance, email us at acctmgr@hwahomewarranty.com, or call (888) 492-7359 option 4.'
   },
   forms: {
     ach_form_path: '../assets/forms/centrica_vendor_Information_form.pdf'
@@ -51,6 +52,7 @@ export const environment = {
 
   // EnrollService
   enrollUrl: `${baseUrl}lead-generation`,
+  partyDetails: `${baseUrl}party/`,
 
   // PartyService
   partyDetailsUrl: `${baseUrl}services/party`,
@@ -78,7 +80,7 @@ export const environment = {
 
   // CalenderService
   calenderUrl: `${baseUrl}services/vendor/work-calendar`,
-  // HelpService
+  // helpService
   helpUrl: `${baseUrl}contact-us`
 };
 

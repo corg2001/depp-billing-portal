@@ -7,4 +7,6 @@ export interface VendorInvoiceDetailsPayloadInterface {
     readonly invoice_amount: Money;
     readonly invoice_id: string;
     readonly service_address?: string;
+    readonly job_id?: string;
+    readonly job_date: string;
 }

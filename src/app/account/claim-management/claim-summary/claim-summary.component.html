@@ -6,26 +6,21 @@
   </div>
   <app-loading-spinner *ngIf="loading"></app-loading-spinner>
   <div *ngIf="!loading">
-    <p class="login-info" *ngIf="lastLoginDate">{{lastLoginDate}}</p>
-    <app-claim-notification [claimSubject$]="claimList$"></app-claim-notification>
+    <app-claim-notification [claimSubject$]="claimList$" [searchedClaims$]="searchedClaim$"></app-claim-notification>
     <div class="claim-summary">
       <div class="activity">
         <span class="sub-title">{{ subTitleText1 }}</span>
         <span class="sub-title2">{{ subTitleText2 }}</span>
       </div>
-      <ng-container *ngIf="isCompleted && claimsFound">
         <div class="search-box">
-          <app-search-box
-            [claimSubject$]="claimList$"
-            (updatedClaimsEmitter)="search($event)"
-          ></app-search-box>
+          <app-search [allowFilter]="true" (doSearch)="search($event)" (doFilter)="filter($event)"></app-search>
         </div>
-      </ng-container>
       <div>
         <app-claim-table
           [claimSubject$]="claimList$"
           [searchedClaimSubject$]="searchedClaim$"
           [completedSubject$]="completion$"
+          [searchFormValue]="searchFormValues"
         ></app-claim-table>
       </div>
     </div>

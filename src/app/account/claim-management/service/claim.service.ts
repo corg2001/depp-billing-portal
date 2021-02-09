@@ -16,7 +16,8 @@ import { environment } from 'src/environments/environment';
 import { HttpParamEnum } from 'src/app/shared/enums/http-params.enums';
 import { JobDetailInterface } from './../interface/job-detail.interface';
 import { LocalStorageEnum } from 'src/app/core/enums/local-storage.enums';
-
+import * as moment from 'moment-timezone';
+import { NgbCalendar, NgbDate } from '@ng-bootstrap/ng-bootstrap';
 @Injectable({
   providedIn: 'root'
 })
@@ -24,24 +25,56 @@ export class ClaimService implements ClaimServiceAbstract {
   public claims$: BehaviorSubject<Claim[]>;
   public il04_vendorId$: Subject<string> = new Subject<string>();
   public il03_vendorId$: Subject<string> = new Subject<string>();
+  private _defaultFromDate: NgbDate;
+  private _defaultToDate: NgbDate;
 
   constructor(
     private _configService: ConfigService,
     private _httpClient: HttpClient,
-    private _loggerService: LoggerService
-  ) { }
+    private _loggerService: LoggerService,
+    private _calendar: NgbCalendar
+  ) {
+    this._defaultFromDate = _calendar.getPrev(_calendar.getToday(), 'd', 60);
+    this._defaultToDate = _calendar.getToday();
+  }
 
   public getClaims(
     isComplete$: Subject<boolean>,
     isError$: Subject<boolean>,
     claimData$: BehaviorSubject<ClaimPayloadInterface[]>,
+    startDate?: string,
+    endDate?: string
   ): void {
-    this._httpClient.get<ClaimPayloadInterface[]>(environment.claimsUrl)
+    const rawFromDate: NgbDate = this._calendar.getPrev(this._calendar.getToday(), 'd', 60);
+    const rawEndDate = this._calendar.getToday();
+    const formatedStartDate: string = startDate ? startDate : this.getFormattedDate(rawFromDate);
+    const formatedEndDate: string = endDate ? endDate : this.getFormattedDate(rawEndDate);
+    const params: HttpParams = this.getClaimsParams(formatedStartDate, formatedEndDate);
+
+    this._httpClient.get<ClaimPayloadInterface[]>(environment.claimsUrl, { params })
       .subscribe((data: ClaimPayloadInterface[]) => {
         this.getClaimsSuccessHandler(isComplete$, isError$, claimData$, data);
       }, (error: HttpErrorResponse) => {
         this.getClaimsFailureHandler(isComplete$, isError$);
       });
+  }
+
+  public getEndDate(): string {
+    return this.getFormattedDate(this._defaultToDate);
+  }
+
+  public getStartDate(): string {
+    return this.getFormattedDate(this._defaultFromDate);
+  }
+
+
+
+  public getFormattedDate(date: NgbDate): string {
+    return `${date.year}-${date.month}-${date.day}`;
+  }
+
+  public getClaimsParams(startDate: string, endDate: string): HttpParams {
+    return new HttpParams().set(HttpParamEnum.starDate, startDate).set(HttpParamEnum.endDate, endDate);
   }
 
   public getClaimsSuccessHandler(
@@ -64,24 +97,81 @@ export class ClaimService implements ClaimServiceAbstract {
     error$.next(true);
   }
 
-  public search(
+  public filter(
     claimData: Claim[],
     name?: string,
     jobId?: string,
-    address?: string
+    address?: string,
+    type?: string,
+    fromDate?: string,
+    toDate?: string
   ): Claim[] {
-    return claimData.filter((claim: Claim) => {
-      const nameInput = name.toLowerCase();
-      const jobIdInput = jobId.toLowerCase();
-      const addressInput = address.toLowerCase();
-      return name
-        ? claim.customerName.toLowerCase().includes(nameInput)
-        : jobId
-          ? claim.jobNumber.toLowerCase().includes(jobIdInput)
-          : address
-            ? claim.serviceAddress.toLowerCase().includes(addressInput)
-            : claim;
+    let claimsInDateRange: Claim[] = fromDate && toDate ?
+      this.getClaimInDateRange(claimData, fromDate, toDate) :
+      fromDate ? this.getClaimsFromDate(fromDate, claimData) : toDate ? this.getClaimFromToDate(toDate, claimData) : claimData;
+
+    if (type && type !== 'None' && type !== 'Claim Type' ) {
+      claimsInDateRange = this._claimsOfType(claimsInDateRange, type);
+    }
+
+    if (jobId) {
+      claimsInDateRange = this._claimsOfJobId(claimsInDateRange, jobId);
+    }
+
+    if (address) {
+      claimsInDateRange = this._claimsOfAddress(claimsInDateRange, address);
+    }
+
+    if (name) {
+      claimsInDateRange = this._claimsOfCustomerName(claimsInDateRange, name);
+    }
+
+    return claimsInDateRange;
+  }
+
+  private _claimsOfType(claims: Claim[], type: string): Claim[] {
+    return claims.filter((claim: Claim) => claim.claimType.toLowerCase().includes(type.toLowerCase()));
+  }
+
+  private _claimsOfJobId(claims: Claim[], jobId?: string): Claim[] {
+    return claims.filter((claim: Claim) => claim.jobNumber.toLowerCase().includes(jobId.toLowerCase()));
+  }
+
+  private _claimsOfAddress(claims: Claim[], address: string): Claim[] {
+    return claims.filter((claim: Claim) => claim.serviceAddress.toLowerCase().includes(address.toLowerCase()));
+  }
+
+  private _claimsOfCustomerName(claims: Claim[], name: string): Claim[] {
+    return claims.filter((claim: Claim) => claim.customerName.toLowerCase().includes(name.toLowerCase()));
+  }
+
+  public getClaimInDateRange(claims: Claim[], fromDate?: string, toDate?: string): Claim[] {
+    const fromDateToFilter = fromDate ? fromDate : this._getDefaultFromDate(this._defaultFromDate);
+    const toDateToFilter = toDate ? toDate : this._getDefaultToDate(this._defaultToDate);
+    return claims.filter((claim: Claim) => {
+      if (moment.utc(claim.dateAssigned).isAfter(fromDateToFilter)
+        && moment.utc(claim.dateAssigned).isBefore(toDateToFilter)) {
+        return claim;
+      }
     });
+  }
+
+  public getClaimsFromDate(fromDate: string, claims: Claim[]): Claim[] {
+    return claims.filter((claim: Claim) => {
+      if (moment.utc(claim.dateAssigned).isAfter(fromDate)) {
+        return claim;
+      }
+    });
+
+  }
+
+  public getClaimFromToDate(toDate?: string, claims?: Claim[]): Claim[] {
+    return claims.filter((claim: Claim) => {
+      if (moment.utc(claim.dateAssigned).isBefore(toDate)) {
+        return claims;
+      }
+    });
+
   }
 
   public authInvoiceRedirect(
@@ -168,6 +258,14 @@ export class ClaimService implements ClaimServiceAbstract {
         isError$.next(true);
       }
     );
+  }
+
+  private _getDefaultFromDate(fromDate: NgbDate): string {
+    return `${fromDate.year}-${fromDate.month}-${fromDate.day}`;
+  }
+
+  private _getDefaultToDate(toDate: NgbDate): string {
+    return `${toDate.year}-${toDate.month}-${toDate.day}`;
   }
 
 }

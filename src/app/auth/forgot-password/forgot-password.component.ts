@@ -19,6 +19,10 @@ export class ForgotPasswordComponent implements OnInit {
   public isSubmitted: boolean = false;
   public isLoading: boolean = false;
   public forgotPasswordForm: FormGroup;
+  public isCompromised: boolean = false;
+  public compromisedMsg: string = `<p>We recently experienced a security breach with one of our third-party vendors which may have impacted the password for your online manager.</p>
+    <p>For security purposes, please change your password.</p>`;
+
   // TODO: get the phone number value from the configuration
   // TODO: fix tslint, add global configuration
   public contactPhoneNumber: string = '(888) 492-7359';
@@ -26,6 +30,7 @@ export class ForgotPasswordComponent implements OnInit {
   constructor(private _authService: AuthService) { }
 
   ngOnInit() {
+    this.isCompromised = sessionStorage.getItem('compromised-login') === 'true';
     this.buildForm();
     this.response$.subscribe((response: string) => {
       this.responseMsg = response;

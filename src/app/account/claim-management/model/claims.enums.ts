@@ -8,7 +8,8 @@ export enum JobStatus {
 export enum ClaimOrderType {
   replace = 'Replacement',
   repair = 'Repair',
-  surge = 'Surge'
+  surge = 'Surge',
+  maintenance = 'Maintenance'
 }
 export enum ClaimDisposition {
   recall = 'Recall',

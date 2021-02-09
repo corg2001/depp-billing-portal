@@ -1,3 +1,4 @@
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
@@ -45,6 +46,10 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.buildForm();
     this.dataSubject.subscribe((data: any) => {
+      if (data.error.message.includes('compromised')) {
+          sessionStorage.setItem('compromised-login', 'true');
+          this._router.navigate(['/auth/forgot-password']);
+        }
       this.responseErrorMessage = this.getErrorMessage(data.error.message);
     });
     this.responseSubject.subscribe((response: boolean) => this.loginSubscriptionHandler(response));

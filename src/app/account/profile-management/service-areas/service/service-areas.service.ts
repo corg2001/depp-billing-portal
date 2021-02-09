@@ -40,7 +40,7 @@ export class ServiceAreasService implements ServiceAreasAbstractService {
           completion$,
           error$,
           data
-        ); 
+        );
       },
       (error: any) => {
         this.serviceAreasErrorHandler(
@@ -93,32 +93,33 @@ export class ServiceAreasService implements ServiceAreasAbstractService {
     zipcode?: string,
     skillType?: string
   ): ServiceAreaDetailsInterface[] {
-    return zipcode ? this.searchZipCodes(serviceAreaDetails, zipcode)
-     : skillType ? this.searchSkillType(serviceAreaDetails, skillType) : serviceAreaDetails;
+    const _serviceAreas: ServiceAreaDetailsInterface[] = [];
+    serviceAreaDetails.forEach((serviceAreaDetail: ServiceAreaDetailsInterface) => {
+      if (this.doesZipCodeMatch(serviceAreaDetail, zipcode) && this.doesSkillTypeMatch(serviceAreaDetail, skillType)) {
+        _serviceAreas.push(serviceAreaDetail);
+      }
+    });
+
+    return _serviceAreas;
   }
 
-  public searchZipCodes(serviceAreaDetails: ServiceAreaDetailsInterface[],
-    zipcode?: string): ServiceAreaDetailsInterface[] {
-      const _serviceAreas: ServiceAreaDetailsInterface[] = [];
-      const zipcodeInput = zipcode.toLowerCase();
-      serviceAreaDetails.forEach((serviceAreaDetail: ServiceAreaDetailsInterface) => {
-        if (serviceAreaDetail.zip.toLowerCase().includes(zipcodeInput) || serviceAreaDetail.zip.toLowerCase() === zipcode) {
-          _serviceAreas.push(serviceAreaDetail);
-        }
-      });
-      return _serviceAreas;
+  public doesZipCodeMatch(_serviceArea: ServiceAreaDetailsInterface, zipCode?: string): boolean {
+    if (!zipCode) {
+      return true;
     }
 
-    public searchSkillType(serviceAreaDetails: ServiceAreaDetailsInterface[],
-      skillType?: string) {
-        const _ServicesAreas: ServiceAreaDetailsInterface[] = [];
-        const skillTypeInput = skillType.toLowerCase();
-        serviceAreaDetails.forEach((serviceAreaDetail: ServiceAreaDetailsInterface) => {
-          if (serviceAreaDetail.skillType.toLowerCase().includes(skillTypeInput)
-          || serviceAreaDetail.skillType.toLowerCase() === skillTypeInput) {
-            _ServicesAreas.push(serviceAreaDetail);
-          }
-        });
-        return _ServicesAreas;
-      }
+    return _serviceArea.zip.toLowerCase().includes(zipCode.toLowerCase())
+    ? true
+    : false;
+  }
+
+  public doesSkillTypeMatch(_serviceArea: ServiceAreaDetailsInterface, skillType?: string): boolean {
+    if (!skillType) {
+      return true;
+    }
+
+    return _serviceArea.skillType.toLowerCase().includes(skillType.toLowerCase())
+    ? true
+    : false;
+  }
 }
