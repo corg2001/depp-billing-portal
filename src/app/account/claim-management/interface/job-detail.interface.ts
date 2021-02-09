@@ -1,6 +1,6 @@
 export interface JobDetailInterface {
   readonly vendorId: string;
   readonly jobNumber: string;
-  readonly dateRequested: Date;
+  readonly dateAssigned: Date;
   readonly customerContactPhone: string;
 }

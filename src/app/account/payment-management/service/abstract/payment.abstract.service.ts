@@ -8,13 +8,17 @@ import { HttpParams, HttpErrorResponse } from '@angular/common/http';
 })
 export abstract class PaymentAbstractService {
   public paymentHistory: PaymentHistoryInterface;
+  public defaultPaymentStartDate: string;
+  public defualyPaymentEndDate: string;
 
   abstract setInvoicDetails(data: PaymentHistoryInterface): void;
   abstract getPaymentHistory(
     paymentHistory$: BehaviorSubject<PaymentHistoryInterface[]>,
     completion$: Subject<boolean>,
     error$: Subject<boolean>,
-    errorMessage$: Subject<any>
+    errorMessage$: Subject<any>,
+    startDate?: string,
+    endDate?: string
   ): void;
 
   abstract paymentHistorySuccessHandler(
@@ -33,8 +37,7 @@ export abstract class PaymentAbstractService {
 
   abstract search(
     paymentHistory: PaymentHistoryInterface[],
-    address?: string,
-    customerName?: string,
-    referenceId?: string
+    minDate?: string,
+    maxDate?: string,
   ): PaymentHistoryInterface[];
 }

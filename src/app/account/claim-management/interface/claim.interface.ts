@@ -2,7 +2,7 @@ import { JobStatus, ClaimOrderType, ClaimDisposition } from '../model/claims.enu
 
 export interface ClaimInterface {
   readonly jobNumber: string;
-  readonly dateRequested: string;
+  readonly dateAssigned: string;
   readonly claimType: ClaimOrderType;
   readonly claimDisposition: ClaimDisposition;
   readonly customerName: string;

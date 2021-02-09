@@ -3,7 +3,7 @@ import { JobStatus, ClaimOrderType, ClaimDisposition } from './claims.enums';
 
 export class Claim implements ClaimInterface {
   private _jobNumber: string;
-  private _dateRequested: string;
+  private _dateAssigned: string;
   private _claimType: ClaimOrderType;
   private _claimDisposition: ClaimDisposition;
   private _customerName: string;
@@ -15,7 +15,7 @@ export class Claim implements ClaimInterface {
   private _isRevShare: boolean;
   constructor(
     jobNumber?: string,
-    dateRequested?: string,
+    dateAssigned?: string,
     claimType?: ClaimOrderType,
     claimDisposition?: ClaimDisposition,
     customerName?: string,
@@ -27,7 +27,7 @@ export class Claim implements ClaimInterface {
     isRevShare?: boolean
   ) {
     this._jobNumber = jobNumber;
-    this._dateRequested = dateRequested;
+    this._dateAssigned = dateAssigned;
     this._claimType = claimType;
     this._claimDisposition = claimDisposition;
     this._customerName = customerName;
@@ -42,8 +42,8 @@ export class Claim implements ClaimInterface {
     return this._jobNumber;
   }
 
-  get dateRequested(): string {
-    return this._dateRequested;
+  get dateAssigned(): string {
+    return this._dateAssigned;
   }
 
   get claimType(): ClaimOrderType {
@@ -86,8 +86,8 @@ export class Claim implements ClaimInterface {
     this._jobNumber = jobNumber;
   }
 
-  set dateRequested(dateRequested: string) {
-    this._dateRequested = dateRequested;
+  set dateAssigned(dateRequested: string) {
+    this._dateAssigned = dateRequested;
   }
 
   set claimType(claimType: ClaimOrderType) {

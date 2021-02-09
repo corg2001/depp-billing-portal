@@ -6,7 +6,7 @@ import {
 
 export interface ClaimPayloadInterface {
   readonly job_number: string;
-  readonly date_requested: string;
+  readonly date_assigned: string;
   readonly claim_type: ClaimOrderType;
   readonly claim_disposition: ClaimDisposition;
   readonly customer_name: string;

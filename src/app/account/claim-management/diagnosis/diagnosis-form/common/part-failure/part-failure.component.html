@@ -1,54 +1,59 @@
 <div class="sub-title">
-  Diagnosis
+    Diagnosis
 </div>
 <div [formGroup]="diagnosisForm">
-  <div formGroupName="partFailureInfo">
-    <div formArrayName="items">
-      <div *ngFor="let item of items.controls; let i = index">
-        <div [formGroupName]="i">
-          <div class="row border-bottom my-2" *ngIf="i !== 0"></div>
-          <div class="d-flex flex-row-reverse" *ngIf="i !== 0">
-            <div (click)="removeItem(i)">
-              <button type="button" class="btn-remove-item">
+    <div formGroupName="partFailureInfo">
+        <div formArrayName="items">
+            <div *ngFor="let item of items.controls; let i = index">
+                <div [formGroupName]="i">
+                    <div class="row border-bottom my-2" *ngIf="i !== 0"></div>
+                    <div class="d-flex flex-row-reverse" *ngIf="i !== 0">
+                        <div (click)="removeItem(i)">
+                            <button type="button" class="btn-remove-item">
                 <i class="fa fa-window-close fa-2x" aria-hidden="true"></i>
               </button>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-6">
-              <label for="partName">What part failed?</label>
-              <input type="text" class="form-control" id="partName" formControlName="partName">
-            </div>
-            <div class="form-group col-md-6">
-              <label for="failure">Failure to part:</label>
-              <input type="text" class="form-control" id="failure" formControlName="failure">
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-6">
-              <label for="cause">Cause of Failure:</label>
-              <select class="form-control" id="cause" formControlName="cause">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="partName">What part failed?</label>
+                            <input type="text" class="form-control" id="partName" formControlName="partName">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="failure">Failure to part:</label>
+                            <input type="text" class="form-control" id="failure" formControlName="failure">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="cause">Cause of Failure:</label>
+                            <select class="form-control" id="cause" formControlName="cause">
                 <option [ngValue]="null" selected disabled>Select a cause of failure</option>
-                <option *ngFor="let failureCause of keys(failureCauses)"
-                value="{{ failureCauses[failureCause] }}">
-                {{ failureCauses[failureCause] }}
+                <option *ngFor="let failureCause of keys(failureCauses)" value="{{ failureCauses[failureCause] }}">
+                  {{ failureCauses[failureCause] }}
                 </option>
               </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="comments">Other comments (if needed):</label>
+                            <textarea class="form-control" id="comments" formControlName="comments" [maxlength]="maxLength" (keyup)="autoGrow()" #commentsTextArea></textarea>
+                            <!-- <div>
+                Characters remaining: {{ maxLength - diagnosisForm.get('comments')?.value?.length }}
+              </div>
+              <div class="text-danger" *ngIf="diagnosisForm.get('comments')?.errors?.maxlength">
+                Maximum number of characters is {{ maxLength }}
+              </div> -->
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="form-group col-md-6">
-              <label for="comments">Other comments (if needed):</label>
-              <input type="text" class="form-control" id="comments" formControlName="comments">
-            </div>
-          </div>
         </div>
-      </div>
-    </div>
-    <div class="add-another" (click)="addPartFailure()">
-      <button type="button" class="btn-add-another">
+        <div class="add-another" (click)="addPartFailure()">
+            <button type="button" class="btn-add-another">
         <i class="fa fa-plus-circle fa-2x" aria-hidden="true"></i>
       </button>
-      <span class="label-add-another">Add another part</span>
+            <span class="label-add-another">Add another part</span>
+        </div>
     </div>
-  </div>
 
 </div>

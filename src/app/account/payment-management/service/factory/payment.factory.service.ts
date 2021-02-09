@@ -27,8 +27,10 @@ export class PaymentFactoryService {
       };
       paymentHistoryPayload.vendor_invoice_details.forEach((venderInvoiceDetailsPayload: VendorInvoiceDetailsPayloadInterface) => {
         vendorInvoiceDetails = {
-          claimDate: venderInvoiceDetailsPayload.claim_date,
           claimId: venderInvoiceDetailsPayload.claim_id,
+          claimDate: venderInvoiceDetailsPayload.claim_date,
+          jobDate: venderInvoiceDetailsPayload.job_date,
+          jobId: venderInvoiceDetailsPayload.job_id,
           customerName: venderInvoiceDetailsPayload.customer_name,
           invoiceAmount: venderInvoiceDetailsPayload.invoice_amount,
           invoiceId: venderInvoiceDetailsPayload.invoice_id,

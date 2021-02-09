@@ -2,7 +2,7 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 import * as moment from 'moment';
-const env: string = 'qa2';
+const env: string = 'qa7';
 const baseUrl: string = `https://hwa-contractor-api-${env}.nahdigitalitdev.cloud.centricaplc.com/`;
 const custumerPortalUrl: string = `https://hwa-customer-${env}.nahdigitalitdev.cloud.centricaplc.com`;
 const realtorPortalUrl: string = `https://hwa-realtor-${env}.nahdigitalitdev.cloud.centricaplc.com/`;
@@ -24,7 +24,7 @@ export const environment = {
     customerServiceNumber: '1-888-492-7359',
     email: 'Contractorrelations@mailinator.com',
     achEmail: 'VendorMaster@mailinator.com',
-    noHistoryMessage: 'Greetings, we are working to bring your historical invoice & payment information in the following week.'
+    noHistoryMessage: 'There are no payments for the selected timeframe.'
   },
   auth: {
     forgotPassword: {

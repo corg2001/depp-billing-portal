@@ -1,34 +1,35 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
 import { ConfigService } from 'src/app/core/config.service';
-import { PaymentService } from '../service/payment.service';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { PaymentHistoryInterface } from '../interface/payment-history.interface';
 import { environment } from 'src/environments/environment';
+import { PaymentAbstractService } from '../service/abstract/payment.abstract.service';
+import { SearchFormValues } from 'src/app/shared/models/search-form-values.interface';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-payment',
   templateUrl: './payment.component.html',
   styleUrls: ['./payment.component.scss']
 })
-export class PaymentComponent implements OnInit, OnChanges{
+export class PaymentComponent implements OnInit, OnChanges {
   public headerText: string;
   public paymentHistory$: BehaviorSubject<PaymentHistoryInterface[]> = new BehaviorSubject([]);
   public updatedPaymentHistory$: BehaviorSubject<PaymentHistoryInterface[]> = new BehaviorSubject([]);
   public completion$: Subject<boolean> = new Subject();
   public error$: Subject<boolean> = new Subject();
   public errorMessages$: Subject<string> = new Subject();
-  public historyMessage: string;
-
   public paymentHistory: PaymentHistoryInterface[];
   public completion: boolean = false;
   public error: boolean = false;
   public isData: boolean = false;
   public loading: boolean = true;
   public noInfoText: string;
+  public searchFormValues: SearchFormValues;
   constructor(
     private _configService: ConfigService,
-    private _paymentService: PaymentService
-  ) {}
+    private _paymentService: PaymentAbstractService
+  ) { }
 
   ngOnInit() {
     this.init();
@@ -38,21 +39,21 @@ export class PaymentComponent implements OnInit, OnChanges{
     this.isLoading();
   }
   public init(): void {
-    this.historyMessage = environment.core.noHistoryMessage;
     this.headerText = 'Payment History';
     this._configService.init();
     // tslint:disable-next-line: max-line-length
-    this.noInfoText = `No payment found, check information and try again`;
     this.getPaymentHistory(this.paymentHistory$, this.completion$, this.error$, this.errorMessages$);
   }
 
   public getPaymentHistory(paymentHistory$: BehaviorSubject<PaymentHistoryInterface[]>,
-     completion$: Subject<boolean>, error$: Subject<boolean>, errorMessage$?: Subject<string>): void {
+    completion$: Subject<boolean>, error$: Subject<boolean>, errorMessage$?: Subject<string>, startDate?: string, endDate?: string): void {
     this._paymentService.getPaymentHistory(
       paymentHistory$,
       completion$,
       error$,
-      errorMessage$
+      errorMessage$,
+      startDate,
+      endDate
     );
 
     paymentHistory$.subscribe(
@@ -73,7 +74,8 @@ export class PaymentComponent implements OnInit, OnChanges{
   }
 
   public isLoading(): void {
-    this.completion === true ? (this.loading = false) : (this.loading = true);
+    this.loading = this.completion === true ? true : false;
+    // this.completion === true ? (this.loading = false) : (this.loading = true);
   }
 
   public checkIsData() {
@@ -84,7 +86,15 @@ export class PaymentComponent implements OnInit, OnChanges{
     }
   }
 
-  updateFromSearch(paymentHistory: PaymentHistoryInterface[]): void {
-    this.updatedPaymentHistory$.next(paymentHistory);
+  public search(data: { startDate: string, endDate: string }): void {
+    this.completion = false;
+    const minDate = data.startDate;
+    const maxDate = data.endDate;
+    this.searchFormValues = {
+      startDate: data.startDate,
+      endDate: data.endDate
+    }
+    this.getPaymentHistory(this.updatedPaymentHistory$, this.completion$, this.error$, this.errorMessages$, minDate, maxDate);
+    // this.updatedPaymentHistory$.next(this._paymentService.search(this.paymentHistory, minDate, maxDate));
   }
 }
