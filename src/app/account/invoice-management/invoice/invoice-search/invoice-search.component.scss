@@ -1,0 +1,42 @@
+@media (min-width: 76.8rem) {
+	.form-group {
+		margin-right: 1rem;
+	}
+	.form-control {
+		height: calc(1.5em + 2rem + .2rem);
+	}
+	.btn-secondary {
+		height: 3.6rem;
+		width: 3.6rem;
+	}
+}
+.form-group.hidden {
+	width: 0;
+	margin: 0;
+	border: none;
+	padding: 0;
+  }
+  .custom-day {
+	text-align: center;
+	padding: 0.185rem 0.25rem;
+	display: inline-block;
+	height: 2rem;
+	width: 2rem;
+	color: grey;
+  }
+  .custom-day.focused {
+	background-color: #e6e6e6;
+  }
+  .custom-day.range {
+	color: green;
+  }
+  .custom-day.range, .custom-day:hover {
+	background-color: rgb(2, 117, 216);
+	color: white;
+  }
+  .custom-day.faded {
+
+	background-color: rgba(2, 117, 216, 0.5);
+	
+  }
+  
