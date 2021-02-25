@@ -74,7 +74,8 @@ export abstract class ClaimServiceAbstract {
     companyInfo: string,
     formType: string,
     jobDetail: JobDetailInterface,
-    blobData: Blob,
+    //blobData: Blob,
+    diagnosisFormData : string,
     isSuccess$: Subject<any>,
     isError$: Subject<boolean>
   ): void;

@@ -69,7 +69,7 @@ export class DiagnosisFormComponent extends FormCanDeactivate implements OnInit 
         return this.plumbingForm;
       case 'poolSpaSaltwater':
         return this.poolSpaSaltwaterForm;
-      case 'waterHeaterForm':
+      case 'waterHeater':
         return this.waterHeaterForm;
       case 'wellPumpSeptic':
         return this.wellPumpSeptic;
@@ -89,7 +89,6 @@ export class DiagnosisFormComponent extends FormCanDeactivate implements OnInit 
       this.formType = params.params.formType;
       this.jobDetail = this._claimService.getJobDetail();
     });
-
     this.formLabel = DiagnosisFormEnum[this.formType];
 
     this.submissionComplete$.subscribe((complete: boolean) => {
@@ -115,7 +114,6 @@ export class DiagnosisFormComponent extends FormCanDeactivate implements OnInit 
         DiagnosisSubmitModalComponent,
         { centered: true }
       );
-
       submissionModalRef.componentInstance.success = true;
       this.form.diagnosisForm.reset();
       this._router.navigate([
@@ -135,18 +133,27 @@ export class DiagnosisFormComponent extends FormCanDeactivate implements OnInit 
       submissionModalRef.componentInstance.success = false;
     });
 
-    pdfBlob$.subscribe((docBlob: Blob) => {
-      this._claimService.submitDiagnosisForm(
-        companyInfo,
-        this.formType,
-        this.jobDetail,
-        docBlob,
-        apiSubmitSuccess$,
-        isError$
-      );
-    });
+    // pdfBlob$.subscribe((docBlob: Blob) => {
+    //   this._claimService.submitDiagnosisForm(
+    //     companyInfo,
+    //     this.formType,
+    //     this.jobDetail,
+    //     docBlob,
+    //     apiSubmitSuccess$,
+    //     isError$
+    //   );
+    // });
 
-    this._pdfService.documentElementToPdfBlob(document, 'content', pdfBlob$, isError$);
+    // this._pdfService.documentElementToPdfBlob(document, 'content', pdfBlob$, isError$);
+
+    this._claimService.submitDiagnosisForm(
+      companyInfo,
+      this.formType,
+      this.jobDetail,
+      JSON.stringify(diagnosisForm.getRawValue()),
+      apiSubmitSuccess$,
+      isError$
+    );  
   }
 
 }
