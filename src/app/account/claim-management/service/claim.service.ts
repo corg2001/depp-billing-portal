@@ -14,10 +14,11 @@ import { ClaimPayloadInterface } from '../interface/claim.payload.interface';
 import { ClaimServiceAbstract } from './abstract/claim.abstract.service';
 import { environment } from 'src/environments/environment';
 import { HttpParamEnum } from 'src/app/shared/enums/http-params.enums';
-import { JobDetailInterface } from './../interface/job-detail.interface';
+import { JobDetailInterface, DiagnosisRequest  } from './../interface/job-detail.interface';
 import { LocalStorageEnum } from 'src/app/core/enums/local-storage.enums';
 import * as moment from 'moment-timezone';
 import { NgbCalendar, NgbDate } from '@ng-bootstrap/ng-bootstrap';
+import { CompanyInfoPayloadInterface } from 'src/app/core/interface/payload/company-info.payload.interface';
 @Injectable({
   providedIn: 'root'
 })
@@ -27,6 +28,8 @@ export class ClaimService implements ClaimServiceAbstract {
   public il03_vendorId$: Subject<string> = new Subject<string>();
   private _defaultFromDate: NgbDate;
   private _defaultToDate: NgbDate;
+  private diagnosisRequest : DiagnosisRequest;
+  private company_info : CompanyInfoPayloadInterface;
 
   constructor(
     private _configService: ConfigService,
@@ -231,12 +234,14 @@ export class ClaimService implements ClaimServiceAbstract {
     companyInfo: string,
     formType: string,
     jobDetail: JobDetailInterface,
-    blobData: Blob,
+    //blobData: Blob,
+    diagnosisFormData : string,
     isSuccess$: Subject<any>,
     isError$: Subject<boolean>
   ): void {
-    const formData = new FormData();
-    formData.append('file', blobData, jobDetail.jobNumber + '.pdf');
+    // const formData = new FormData();
+    // formData.append('file', blobData, jobDetail.jobNumber + '.pdf');
+    this.company_info = JSON.parse(sessionStorage.getItem('company_info'));
 
     const params: HttpParams = new HttpParams()
       .set(HttpParamEnum.vendorId, jobDetail.vendorId)
@@ -244,9 +249,20 @@ export class ClaimService implements ClaimServiceAbstract {
       .set(HttpParamEnum.docType, formType)
       .set(HttpParamEnum.jobNumber, jobDetail.jobNumber);
 
+      this.diagnosisRequest = {
+        job_number:jobDetail.jobNumber,
+        type: formType, 
+        company_id: this.company_info.company_id,
+        vendor_id:jobDetail.vendorId,
+        company_info:this.company_info,
+        dateAssigned: jobDetail.dateAssigned,
+        contractorPhoneNumber : this._configService.getPhoneNumber(),
+        data : diagnosisFormData,
+      }
+        
     this._httpClient.post<any>(
       environment.submitDiagnosisUrl,
-      formData,
+      this.diagnosisRequest,
       {
         params: params
       }
