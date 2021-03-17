@@ -11,11 +11,13 @@ import { SharedModule } from '../../shared/shared.module';
 import { InvoiceAsbstractService } from './service/abstract/invoice.asbstract.service';
 import { InvoiceFactoryService } from './service/factory/invoice.factory.service';
 import { InvoiceFactoryAbstractService } from './service/factory/abstract/invoice.factory.abstract.service';
+import { InvoiceSearchComponent } from './invoice/invoice-search/invoice-search.component';
 
 @NgModule({
   declarations: [
     InvoiceHistoryComponent,
     InvoiceTableComponent,
+    InvoiceSearchComponent
   ],
   imports: [
     CommonModule,
