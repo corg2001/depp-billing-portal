@@ -3,6 +3,7 @@ import { Observable, Subject, Subscriber } from 'rxjs';
 import {
   HttpClient,
   HttpErrorResponse,
+  HttpHeaders,
   HttpResponse
 } from '@angular/common/http';
 
@@ -36,11 +37,14 @@ export class PartyService {
   }
 
   private getPartyDetails(subscription: Subscriber<boolean>): any {
-    this._http.get(environment.partyDetailsUrl).subscribe(
+    const headers = new HttpHeaders().set('Authorization', localStorage.getItem(LocalStorageEnum.Token))
+    this._http.get(environment.partyDetailsUrl, {headers}).subscribe(
       (responseData: PartyDetailsPayloadInterface) => {
         this.getPartyDetailsSuccessHandler(subscription, responseData);
-        if(responseData.associations._association.length > 0)
-          sessionStorage.setItem('company_info',JSON.stringify(responseData.associations._association[0].company_info));
+        if (responseData.associations._association.length > 0) {
+          sessionStorage.setItem('company_info', JSON.stringify(responseData.associations._association[0].company_info));
+        }
+
       },
       (responseError: Observable<HttpErrorResponse>) => {
         this.getPartyDetailsFailureHandler(subscription, responseError);
