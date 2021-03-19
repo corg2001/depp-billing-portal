@@ -32,7 +32,6 @@ export class InvoiceHistoryComponent implements OnInit {
   public toDate: NgbDate | null;
   public loadingMessage: string;
 
-
   constructor(private _invoiceService: InvoiceAsbstractService, private _configService: ConfigService) {
     this.fromDate = this._invoiceService.fromDate;
     this.toDate = this._invoiceService.toDate;
