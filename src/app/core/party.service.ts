@@ -3,6 +3,7 @@ import { Observable, Subject, Subscriber } from 'rxjs';
 import {
   HttpClient,
   HttpErrorResponse,
+  HttpResponse
 } from '@angular/common/http';
 
 // development artifacts
@@ -38,10 +39,8 @@ export class PartyService {
     this._http.get(environment.partyDetailsUrl).subscribe(
       (responseData: PartyDetailsPayloadInterface) => {
         this.getPartyDetailsSuccessHandler(subscription, responseData);
-        if (responseData.associations._association.length > 0) {
-          sessionStorage.setItem('company_info', JSON.stringify(responseData.associations._association[0].company_info));
-        }
-
+        if(responseData.associations._association.length > 0)
+          sessionStorage.setItem('company_info',JSON.stringify(responseData.associations._association[0].company_info));
       },
       (responseError: Observable<HttpErrorResponse>) => {
         this.getPartyDetailsFailureHandler(subscription, responseError);

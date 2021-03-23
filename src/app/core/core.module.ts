@@ -31,6 +31,7 @@ import { WindowRefService } from './window-ref.service';
     ModalService,
     NotificationService,
     PartyService,
+
     { provide: HTTP_INTERCEPTORS, useClass: TokenHttpInterceptor, multi: true },
     { provide: WindowRefAbstract, useClass: WindowRefService}
   ]
