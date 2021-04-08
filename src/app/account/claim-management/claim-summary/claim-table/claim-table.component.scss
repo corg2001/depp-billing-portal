@@ -1,36 +1,32 @@
 @import "../../../../../assets/styles/contractor-layout-styles.scss";
-select {
-    padding: 1rem;
-    border: solid $hwa-color-teal 0.1rem;
-}
 
+select {
+  padding: 1rem;
+  border: solid $hwa-color-teal 0.1rem;
+}
 a {
-    color: $hwa-color-orange!important;
-    &:hover {
-        cursor: pointer;
-        text-decoration: underline !important;
-    }
+  color: $hwa-color-orange!important;
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline !important;
+  }
 }
 
 td {
-    text-align: left;
+  text-align: left;
 }
-
 th {
-    color: $hwa-color-teal;
-    text-align: left;
+  color: $hwa-color-teal;
+  text-align: left;
 }
-
 .show-spinner {
-    transition: all 0.5s ease;
+  transition: all 0.5s ease;
 }
-
 .revenue-maintenance-indicator {
-    color: $hwa-color-dark-blue;
-    text-transform: uppercase;
+  color: $hwa-color-dark-blue;
+  text-transform: uppercase;
 }
-
 .no-info-text {
-    font-weight: bold;
-    margin-left: 1rem;
+  font-weight: bold;
+  margin-left: 1rem;
 }
