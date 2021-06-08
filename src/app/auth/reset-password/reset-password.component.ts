@@ -11,6 +11,7 @@ import {
 import { AuthService } from '../auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, Subscription } from 'rxjs';
+import { NgPasswordRulesService} from 'ng-password-helper';
 
 function ValidateEmail(c: FormControl): any {
   // TODO: Implement a real validation for password match
@@ -36,12 +37,14 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
   public successMsg: string;
   public showErrorMsg: boolean = false;
   public showSuccessMsg: boolean = false;
+  public newPassword: string;
 
   constructor(
     private _authService: AuthService,
     private _formBuilder: FormBuilder,
     private _activeRoute: ActivatedRoute,
-    private _route: Router
+    private _route: Router,
+    public ngPasswordRulesService: NgPasswordRulesService
   ) {}
 
   ngOnInit() {
@@ -51,7 +54,10 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
   public buildForm(): void {
     this.resetForm = this._formBuilder.group(
       {
-        newPassword: ['', Validators.required],
+        newPassword: [  '', [
+        this.passwordHelper.bind(this),
+        Validators.required,
+        Validators.pattern('(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,32}')]],
         confirmPassword: ['', Validators.required]
       },
       { validators: this._matchPassowrds }
@@ -60,6 +66,10 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
 
   public get rf(): any {
     return this.resetForm.controls;
+  }
+
+  public passwordHelper(control: FormControl): any {
+      return this.ngPasswordRulesService.validPassword(control);
   }
 
   public resetPassword(): void {
@@ -114,6 +124,15 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
       this.showSuccessMsg = false;
       this.errorMsg = error.error.message;
     });
+  }
+
+   public passwordContainSpace(): boolean {
+    this.newPassword = this.resetForm.get('newPassword').value;
+    if (this.newPassword && this.newPassword.indexOf(' ') >= 0) {
+      return  true;
+    }
+
+    return false;
   }
 
 // will have to get the token from the link in email if broweser is refreshed
