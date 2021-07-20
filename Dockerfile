@@ -1,4 +1,4 @@
-FROM nginx:alpine
+FROM 457289674159.dkr.ecr.us-east-1.amazonaws.com/nginx-alpine:latest
 
 LABEL Name="unify-contractor-portal Docker Image"
 LABEL Version="1.0.0"
