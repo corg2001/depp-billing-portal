@@ -40,7 +40,6 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   public forgotPassword(): void {
-    console.log('Action: request new password!');
     this.isSubmitted = true;
     this.isLoading = true;
     const userEmail: string = this.forgotPasswordForm.get('userEmail').value;
