@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.buildForm();
     this.dataSubject.subscribe((data: any) => {
-      if (data.error.message.includes('compromised')) {
+      if (data.error.message && data.error.message.includes('compromised')) {
           sessionStorage.setItem('compromised-login', 'true');
           this._router.navigate(['/auth/forgot-password']);
         }
@@ -105,7 +105,7 @@ export class LoginComponent implements OnInit {
   }
 
   public getErrorMessage(status: string): string {
-    const value: string = status.toLocaleLowerCase();
+    const value: string = status ? status.toLocaleLowerCase() : '';
     return value.includes('your account is locked') ? environment.auth.lockedError : environment.auth.loginError;
   }
 }
