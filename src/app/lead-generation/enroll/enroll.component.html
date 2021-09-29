@@ -1,6 +1,6 @@
 <div id="lead-generation-container">
   <div id="header" class="text-center mb-4">
-    <div class="page-title">Become an DEPP Contractor</div>
+    <div class="page-title">Become a DEPP Contractor</div>
   </div>
   <div id="body" class="small" *ngIf="!showConfirmationMessage">
     <form id="lead-form" [formGroup]="enrollForm" (ngSubmit)="submit(enrollForm)">
@@ -94,7 +94,7 @@
             />
           </div>
         </div>
-      </div> 
+      </div>
       <div id="third-group">
         <div class="form-group">
           <input
@@ -166,13 +166,13 @@
         </div>
       </div>
     </form>
-    
+
   </div>
   <div id="confirmationMessage">
     <div id="response-message" *ngIf="showConfirmationMessage" class="confrimation-message">
       <div class="title">Thank you for contacting us!</div>
       <div class="body">
-        Someone will contact you soon to provide next steps. If you have any questions or inquiries please contact Contractor Relations at <span class="contact-number">1-888-492-7359.</span> 
+        Someone will contact you soon to provide next steps. If you have any questions or inquiries please contact Contractor Relations at <span class="contact-number">1-888-492-7359.</span>
       </div>
       <div class="text-center small mt-2"><a routerLink="/auth/login">Go back to login</a></div>
     </div>
