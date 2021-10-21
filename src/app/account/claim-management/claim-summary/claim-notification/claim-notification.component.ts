@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Claim } from '../../model/claims.model';
@@ -13,7 +14,8 @@ export class ClaimNotificationComponent implements OnInit {
   @Input() public claimSubject$: BehaviorSubject<Claim[]> = new BehaviorSubject([]);
   @Input() public searchedClaims$: BehaviorSubject<Claim[]> = new BehaviorSubject([]);
   public wipClaims: number = 0;
-  constructor(private _claimService: ClaimServiceAbstract) { }
+  constructor(private _claimService: ClaimServiceAbstract,
+    private _router: Router) { }
 
   ngOnInit() {
     this.getClaims();
@@ -39,6 +41,14 @@ export class ClaimNotificationComponent implements OnInit {
       if (claim.jobStatus === JobStatus.wip) {
         this.wipClaims++;
       }
+    });
+  }
+
+  public sendToInfoPage(): void {
+    this._router.navigate([
+      '/account/claim/info'
+    ]).then(() => {
+      window.scroll(0, 0);
     });
   }
 }

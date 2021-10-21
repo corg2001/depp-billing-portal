@@ -2,11 +2,16 @@
   <div class="public-container p-3">
     <div id="public-content" class="d-flex flex-column flex-md-row">
       <div class="content-box my-auto">
-
-        <div class="text-center">
-          <img src="{{ appLogo}}" alt="{{ logoAltText }}" class="app-logo" />
+    <ng-container *ngIf="showHwaDeppLogo()">
+        <div  class="text-center">
+          <img src="{{ appLogo }}" alt="{{ logoAltText }}" class="app-logo" />
         </div>
-
+      </ng-container>
+      <ng-container *ngIf="showDeppLogo()">
+        <div class="text-center">
+          <img src="{{ appDEPPLogo }}" alt="{{ logoAltText }}" class="app-logo" />
+        </div>
+      </ng-container>
       </div>
       <div class="content-box">
         <router-outlet></router-outlet>

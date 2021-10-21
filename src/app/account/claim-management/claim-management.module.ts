@@ -12,13 +12,15 @@ import { ClaimServiceAbstract } from './service/abstract/claim.abstract.service'
 import { ClaimFactoryServiceAbstract } from './service/factory/claim.factory.abstract.service';
 import { ClaimNotificationComponent } from './claim-summary/claim-notification/claim-notification.component';
 import { DiagnosisSelectModalComponent } from './diagnosis/diagnosis-select-modal/diagnosis-select-modal.component';
+import { ClaimInfoComponent } from './claim-summary/claim-info/claim-info.component';
 
 @NgModule({
   declarations: [
     ClaimSummaryComponent,
     ClaimTableComponent,
     ClaimNotificationComponent,
-    DiagnosisSelectModalComponent
+    DiagnosisSelectModalComponent,
+    ClaimInfoComponent
   ],
   imports: [
     CommonModule,
