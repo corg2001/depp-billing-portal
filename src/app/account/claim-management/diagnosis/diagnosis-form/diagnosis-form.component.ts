@@ -101,6 +101,8 @@ export class DiagnosisFormComponent extends FormCanDeactivate implements OnInit 
   }
 
   public submitForm(diagnosisForm: FormGroup) {
+    //
+    // this._modalService.open()
     this.submissionComplete$.next(false);
 
     const companyInfo: string = this._configService.getCompanyInfo();
@@ -153,7 +155,7 @@ export class DiagnosisFormComponent extends FormCanDeactivate implements OnInit 
       JSON.stringify(diagnosisForm.getRawValue()),
       apiSubmitSuccess$,
       isError$
-    );  
+    );
   }
 
 }

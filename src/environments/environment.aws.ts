@@ -7,6 +7,7 @@ const baseUrl: string = `https://hwa-contractor-api-${env}.digitaltest.directene
 const custumerPortalUrl: string = `https://hwa-customer-${env}.digitaltest.directenergy.net/`;
 const realtorPortalUrl: string = `https://hwa-realtor-${env}.digitaltest.directenergy.net/`;
 export const environment = {
+  aspirePhase4releaseDate: '10-21-2021',
   production: false,
   analytics: {
     google: {
