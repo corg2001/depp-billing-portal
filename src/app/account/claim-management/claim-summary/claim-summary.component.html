@@ -5,20 +5,22 @@
   <div *ngIf="!loading">
     <app-claim-notification [claimSubject$]="claimList$" [searchedClaims$]="searchedClaim$"></app-claim-notification>
     <div class="claim-summary">
+      <div class="alert alert-info mt-4" role="alert">
+        <strong>For claims opened prior to October 22, 2021, please submit all invoices within 30 days of completing the
+          work.</strong> AIG will be servicing the majority of claims after October 22, 2021.<br />
+        As of November 22, 2021, you will no longer be able to submit diagnosis forms electronically, and the forms will
+        no longer be available online. <a routerLink="/account/service-changes">Learn more about this transition</a>.
+      </div>
       <div class="activity">
         <span class="sub-title">{{ subTitleText1 }}</span>
         <span class="sub-title2">{{ subTitleText2 }}</span>
       </div>
-        <div class="search-box">
-          <app-search [allowFilter]="true" (doSearch)="search($event)" (doFilter)="filter($event)"></app-search>
-        </div>
+      <div class="search-box">
+        <app-search [allowFilter]="true" (doSearch)="search($event)" (doFilter)="filter($event)"></app-search>
+      </div>
       <div>
-        <app-claim-table
-          [claimSubject$]="claimList$"
-          [searchedClaimSubject$]="searchedClaim$"
-          [completedSubject$]="completion$"
-          [searchFormValue]="searchFormValues"
-        ></app-claim-table>
+        <app-claim-table [claimSubject$]="claimList$" [searchedClaimSubject$]="searchedClaim$"
+          [completedSubject$]="completion$" [searchFormValue]="searchFormValues"></app-claim-table>
       </div>
     </div>
   </div>
