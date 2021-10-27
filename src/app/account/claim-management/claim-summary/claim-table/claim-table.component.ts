@@ -13,7 +13,8 @@ import { DiagnosisSelectModalComponent } from '../../diagnosis/diagnosis-select-
 import { ClaimServiceAbstract } from '../../service/abstract/claim.abstract.service';
 import { JobDetailInterface } from './../../interface/job-detail.interface';
 import { SearchFormValues } from 'src/app/shared/models/search-form-values.interface';
-
+import { DiagnosisDisableModalComponent } from '../../diagnosis/diagnosis-disable-modal/diagnosis-disable-modal.component';
+import * as moment from 'moment';
 @Component({
   selector: 'app-claim-table',
   templateUrl: './claim-table.component.html',
@@ -158,29 +159,16 @@ export class ClaimTableComponent implements OnInit, OnChanges {
     return this.authorizingJobNumber === jobNumber && this.authorizingJobStatus === jobStatus;
   }
   public diagnoseJob(
-    vendorId: string,
-    jobNumber: string,
-    dateAssigned: Date,
-    customerContactPhone: string
   ): void {
-    const jobDetail: JobDetailInterface = {
-      vendorId: vendorId,
-      jobNumber: jobNumber,
-      dateAssigned: dateAssigned,
-      customerContactPhone: customerContactPhone
-    };
-    this._claimService.setJobDetail(jobDetail);
-    const modalRef: NgbModalRef = this._modalService.open(DiagnosisSelectModalComponent);
-    modalRef.result.then((formType: string) => {
-      if (formType) {
-        this._router.navigate([
-          '/account/claim/diagnosis',
-          formType
-        ]).then(() => {
-          window.scroll(0, 0);
-        });
-      }
-    });
+    if (!this.isDiagnosisFormEnabled()) {
+      return;
+    }
+    this._modalService.open(DiagnosisDisableModalComponent, { centered: true });
+  }
+
+  public isDiagnosisFormEnabled(): boolean {
+    const launchDate = (moment(environment.aspirePhase4releaseDate));
+    return launchDate > moment().add(1, 'M');
   }
 
   public authorizeLinkText(jobStatus: JobStatus): string {

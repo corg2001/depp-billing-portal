@@ -97,7 +97,7 @@ import { AdditionalCommentsComponent } from './diagnosis-form/common/additional-
     FormExternalComponent,
     FormOtherComponent,
     DiagnosisSubmitModalComponent,
-    AdditionalCommentsComponent
+    AdditionalCommentsComponent,
   ],
   imports: [
     CommonModule,
@@ -128,7 +128,7 @@ import { AdditionalCommentsComponent } from './diagnosis-form/common/additional-
     PdfService
   ],
   entryComponents: [
-    DiagnosisSubmitModalComponent
+    DiagnosisSubmitModalComponent,
   ]
 })
 export class DiagnosisModule { }
