@@ -1,30 +1,16 @@
 @import '../../../assets/styles/contractor-layout-styles.scss';
 
-.help-container {
-  .form-group {
-    width: 100%;
-  }
-  input[type="text"] {
-    height: 3.125rem;
-  }
-  input[type="email"] {
-    height: 3.125rem;
-  }
-  button[type="submit"] {
-    height: 2.875rem;
-  }
+.service-change-container {
+  display: flex;
+  flex-direction: column;
 
-  select {
-    height: 3.125rem;
-  }
-  .preferredmethod {
-    width: 25%;
-  }
+  align-items: center;
+  margin: 1rem 0px;
+}
 
-  .header-txt {
-    font-weight: 300;
-    font-size: 1.875rem;
-    color: $hwa-color-teal;
-  }
-
+.sub-header-txt {
+  font-weight: 300;
+  font-size: 1.5rem;
+  color: $hwa-color-teal;
+  margin: 1rem 0px;
 }
