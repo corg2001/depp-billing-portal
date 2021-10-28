@@ -14,6 +14,7 @@ export class ConfigService {
 
   constructor(private loggerService: LoggerService) {
     this.loggerService.important('config service has been provided');
+    this.init();
   }
 
   public init(): void {

@@ -14,7 +14,6 @@ import { FromatLastFour } from './pipe/show-last-four-format';
 import { SortableHeaderDirective } from './../core/directive/sortable-header.directive';
 import { NgxCurrencyModule } from 'ngx-currency';
 import { SearchComponent } from './components/search/search.component';
-import { ServiceChangesComponent } from './components/service-changes/service-changes.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +27,6 @@ import { ServiceChangesComponent } from './components/service-changes/service-ch
     ResultJumbotronComponent,
     SearchComponent,
     SortableHeaderDirective,
-    ServiceChangesComponent
   ],
   imports: [
     CommonModule,
@@ -48,8 +46,7 @@ import { ServiceChangesComponent } from './components/service-changes/service-ch
     ResultJumbotronComponent,
     SearchComponent,
     SortableHeaderDirective,
-    NgxCurrencyModule,
-    ServiceChangesComponent
+    NgxCurrencyModule
   ],
   entryComponents: [ModalComponent, ProgressBarComponent],
 
