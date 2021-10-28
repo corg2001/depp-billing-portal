@@ -4,7 +4,6 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Claim } from '../../model/claims.model';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { JobStatus, LinkText, RevenueOrMaintenceIndicatorEnums } from '../../model/claims.enums';
-import { environment } from 'src/environments/environment';
 import { SortableHeaderDirective } from 'src/app/core/directive/sortable-header.directive';
 import { SortDirectionEnums } from 'src/app/core/enums/sort-direction.enums';
 import { SortEventInterface } from 'src/app/core/interface/sort-event.interface';
@@ -13,8 +12,6 @@ import { DiagnosisSelectModalComponent } from '../../diagnosis/diagnosis-select-
 import { ClaimServiceAbstract } from '../../service/abstract/claim.abstract.service';
 import { JobDetailInterface } from './../../interface/job-detail.interface';
 import { SearchFormValues } from 'src/app/shared/models/search-form-values.interface';
-import { DiagnosisDisableModalComponent } from '../../diagnosis/diagnosis-disable-modal/diagnosis-disable-modal.component';
-import * as moment from 'moment';
 @Component({
   selector: 'app-claim-table',
   templateUrl: './claim-table.component.html',
@@ -158,17 +155,30 @@ export class ClaimTableComponent implements OnInit, OnChanges {
   public isAuthorizing(jobNumber: string, jobStatus: string): boolean {
     return this.authorizingJobNumber === jobNumber && this.authorizingJobStatus === jobStatus;
   }
-  public diagnoseJob(
-  ): void {
-    if (!this.isDiagnosisFormEnabled()) {
-      return;
-    }
-    this._modalService.open(DiagnosisDisableModalComponent, { centered: true });
-  }
+  public diagnoseJob(vendorId: string,
+    jobNumber: string,
+    dateAssigned: Date,
+    customerContactPhone: string
 
-  public isDiagnosisFormEnabled(): boolean {
-    const launchDate = (moment(environment.aspirePhase4releaseDate));
-    return launchDate > moment().add(1, 'M');
+  ): void {
+    const jobDetail: JobDetailInterface = {
+      vendorId: vendorId,
+      jobNumber: jobNumber,
+      dateAssigned: dateAssigned,
+      customerContactPhone: customerContactPhone
+    };
+    this._claimService.setJobDetail(jobDetail);
+    const modalRef: NgbModalRef = this._modalService.open(DiagnosisSelectModalComponent);
+    modalRef.result.then((formType: string) => {
+      if (formType) {
+        this._router.navigate([
+          '/account/claim/diagnosis',
+          formType
+        ]).then(() => {
+          window.scroll(0, 0);
+        });
+      }
+    });
   }
 
   public authorizeLinkText(jobStatus: JobStatus): string {

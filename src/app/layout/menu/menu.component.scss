@@ -3,7 +3,7 @@
   background-color: $hwa-color-light-gray;
 }
 .navbar-collapse {
-  
+
   .nav-pills {
     @media only screen and (max-width: 768px) {
       flex-direction: column !important;
@@ -18,13 +18,14 @@
         background-color: $hwa-color-orange;
         border-radius: 0;
         color: $white;
-        font-weight: 600; 
+        font-weight: 600;
       }
       &.active {
         background-color: $hwa-color-orange;
         border-radius: 0;
         font-weight: 600;
+        color: #fff;
       }
     }
   }
-}  
+}

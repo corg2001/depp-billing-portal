@@ -6,7 +6,6 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthGuard } from './auth.guard';
 import { PartyResolverService } from './party-resolver.service';
 import {HelpComponent} from './help/help.component';
-import { ServiceChangesComponent } from '../shared/components/service-changes/service-changes.component';
 
 const routes: Routes = [
   {
@@ -34,10 +33,6 @@ const routes: Routes = [
       {
         path: 'payments',
         loadChildren: './payment-management/payment-management.module#PaymentManagementModule'
-      },
-      {
-        path: 'service-changes',
-        component: ServiceChangesComponent
       },
       {
         path: '',

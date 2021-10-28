@@ -30,8 +30,8 @@
           </a>
           <span *ngIf="claim.jobStatus === JobStatus.wip">
             |
-            <span class="text-uppercase diagnosis" [ngClass]="{'disabled': isDiagnosisFormEnabled() === false}"
-              (click)="diagnoseJob()">
+            <span class="text-uppercase diagnosis"
+              (click)="diagnoseJob(claim.vendorId, claim.jobNumber, claim.dateAssigned, claim.customerContactPhone)">
               {{ LinkText.diagnosis }}
             </span>
           </span>

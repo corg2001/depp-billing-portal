@@ -18,12 +18,6 @@ select {
     text-decoration: underline !important;
   }
 }
-.disabled {
-  &:hover {
-    cursor: not-allowed;
-}
-  }
-
 
 td {
   text-align: left;
