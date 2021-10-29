@@ -85,6 +85,7 @@ export class DiagnosisFormComponent extends FormCanDeactivate implements OnInit 
   }
 
   ngOnInit() {
+    this._configService.init();
     this._params$ = this._activeRoute.paramMap.subscribe((params: any) => {
       this.formType = params.params.formType;
       this.jobDetail = this._claimService.getJobDetail();
