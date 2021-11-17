@@ -3,9 +3,16 @@
 select {
   padding: 1rem;
   border: solid $hwa-color-teal 0.1rem;
-}
-a {
+} span {
   color: $hwa-color-orange!important;
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline !important;
+  }
+}
+.diagnosis {
+  color: $hwa-color-orange !important;
+
   &:hover {
     cursor: pointer;
     text-decoration: underline !important;

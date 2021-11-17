@@ -4,7 +4,6 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Claim } from '../../model/claims.model';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { JobStatus, LinkText, RevenueOrMaintenceIndicatorEnums } from '../../model/claims.enums';
-import { environment } from 'src/environments/environment';
 import { SortableHeaderDirective } from 'src/app/core/directive/sortable-header.directive';
 import { SortDirectionEnums } from 'src/app/core/enums/sort-direction.enums';
 import { SortEventInterface } from 'src/app/core/interface/sort-event.interface';
@@ -13,7 +12,6 @@ import { DiagnosisSelectModalComponent } from '../../diagnosis/diagnosis-select-
 import { ClaimServiceAbstract } from '../../service/abstract/claim.abstract.service';
 import { JobDetailInterface } from './../../interface/job-detail.interface';
 import { SearchFormValues } from 'src/app/shared/models/search-form-values.interface';
-
 @Component({
   selector: 'app-claim-table',
   templateUrl: './claim-table.component.html',
@@ -157,11 +155,11 @@ export class ClaimTableComponent implements OnInit, OnChanges {
   public isAuthorizing(jobNumber: string, jobStatus: string): boolean {
     return this.authorizingJobNumber === jobNumber && this.authorizingJobStatus === jobStatus;
   }
-  public diagnoseJob(
-    vendorId: string,
+  public diagnoseJob(vendorId: string,
     jobNumber: string,
     dateAssigned: Date,
     customerContactPhone: string
+
   ): void {
     const jobDetail: JobDetailInterface = {
       vendorId: vendorId,

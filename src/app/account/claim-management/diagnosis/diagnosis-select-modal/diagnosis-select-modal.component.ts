@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DiagnosisFormEnum } from './../../model/diagnosis.enums';
-
+import { DiagnosisDisableModalComponent } from '../../diagnosis/diagnosis-disable-modal/diagnosis-disable-modal.component';
+import { environment } from 'src/environments/environment';
+import * as moment from 'moment';
 @Component({
   selector: 'app-diagnosis-select-modal',
   templateUrl: './diagnosis-select-modal.component.html',
@@ -17,8 +19,9 @@ export class DiagnosisSelectModalComponent implements OnInit {
 
   constructor(
     private _activeModalService: NgbActiveModal,
-    private _formBuilder: FormBuilder
-  ) {}
+    private _formBuilder: FormBuilder,
+    private _modalService: NgbModal,
+  ) { }
 
   ngOnInit() {
     this.diagnosisForm = this._createForm();
@@ -30,11 +33,22 @@ export class DiagnosisSelectModalComponent implements OnInit {
     });
   }
 
-  public openDiagnosisForm(form: FormGroup): void {
-    this._activeModalService.close(this.diagnosisForm.get('formType').value);
+  public openDiagnosisForm(): void {
+
+    if (this.isDiagnosisFormEnabled()) {
+      this._activeModalService.close(this.diagnosisForm.get('formType').value);
+      return;
+    }
+    this._modalService.open(DiagnosisDisableModalComponent, { centered: true });
   }
 
   public close(): void {
     this._activeModalService.close(null);
+  }
+
+  public isDiagnosisFormEnabled(): boolean {
+    const launchDate = (moment(environment.aspirePhase4releaseDate));
+    // return launchDate < moment().add(1, 'M');
+    return launchDate  === moment();
   }
 }

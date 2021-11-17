@@ -26,7 +26,7 @@ import { SearchComponent } from './components/search/search.component';
     ProgressBarComponent,
     ResultJumbotronComponent,
     SearchComponent,
-    SortableHeaderDirective
+    SortableHeaderDirective,
   ],
   imports: [
     CommonModule,

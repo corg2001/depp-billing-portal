@@ -14,6 +14,7 @@ export class ConfigService {
 
   constructor(private loggerService: LoggerService) {
     this.loggerService.important('config service has been provided');
+
   }
 
   public init(): void {
@@ -145,7 +146,8 @@ export class ConfigService {
   }
 
   private _getPhoneNumberFromSession(): string {
-    return localStorage.getItem(LocalStorageEnum.PhoneNumber);
+    const phoneNumber = localStorage.getItem(LocalStorageEnum.PhoneNumber);
+    return phoneNumber ? phoneNumber : '';
   }
 
   private _getBusinessAddress1FromSession(): string {

@@ -1,0 +1,9 @@
+.modal-body {
+  display: flex;
+  justify-content: center;
+  padding: 3rem;
+  @media only screen and (min-width: 768px) {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+}
