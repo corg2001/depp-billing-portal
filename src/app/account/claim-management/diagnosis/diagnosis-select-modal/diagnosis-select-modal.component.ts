@@ -47,7 +47,6 @@ export class DiagnosisSelectModalComponent implements OnInit {
   }
 
   public isDiagnosisFormEnabled(): boolean {
-    const launchDate = (moment(environment.aspirePhase4releaseDate));
-    return launchDate < moment().add(1, 'M');
+    return false;
   }
 }
