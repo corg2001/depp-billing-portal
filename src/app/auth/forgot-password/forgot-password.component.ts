@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, Validator } from '@angular/forms';
 import { Subject } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 // Development Artifacts
 import { AuthService } from '../auth.service';
@@ -25,7 +26,7 @@ export class ForgotPasswordComponent implements OnInit {
 
   // TODO: get the phone number value from the configuration
   // TODO: fix tslint, add global configuration
-  public contactPhoneNumber: string = '(888) 492-7359';
+  public contactPhoneNumber: string = environment.core.customerServiceNumber;
 
   constructor(private _authService: AuthService) { }
 
