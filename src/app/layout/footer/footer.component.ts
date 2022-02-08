@@ -1,24 +1,26 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
+import { TermsOfUseComponent } from '../../auth/terms-of-use/terms-of-use.component';
+import { PrivacyPolicyComponent } from '../../auth/privacy-policy/privacy-policy.component';
 import { SocialMediaEnum } from '../../core/enums/social-media.enums';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html',
-  styleUrls: ['./footer.component.scss']
+  styleUrls: ['./footer.component.scss'],
 })
 export class FooterComponent implements OnInit {
   public socialMediaLinks = SocialMediaEnum;
   public yearToDate: string;
   public footerMessage: string;
-  constructor() { }
+  public termsOfUseUrl = environment.legalTerms.termsOfUse;
+  public privacyPolicyUrl = environment.legalTerms.privacyPolicy;
+  constructor() {}
 
   ngOnInit() {
     this.yearToDate = moment().format('YYYY');
-    this.footerMessage = `${this.yearToDate} HOME WARRANTY OF AMERICA, Inc. Home Warranty
-    Information: HWA offers comprehensive home warranty plans at great value with easy,
-    reliable solutions for unexpected problems. An HWA Home Warranty protects you from
-    the expenses of repairs or replacements of major mechanical systems and
-    appliances that break down due to normal wear and tear during the coverage term.`;
+    this.footerMessage = `${this.yearToDate} Direct Energy. All rights reserved.`;
   }
 }

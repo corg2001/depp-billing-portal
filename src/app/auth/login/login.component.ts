@@ -1,22 +1,20 @@
-import { HttpErrorResponse, HttpResponse } from "@angular/common/http";
-import { Component, OnInit } from "@angular/core";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { Subject } from "rxjs";
-import { Router } from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subject } from 'rxjs';
+import { Router } from '@angular/router';
 
 // Development Artifacts
-import { AuthService } from "../auth.service";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { PrivacyPolicyComponent } from "../privacy-policy/privacy-policy.component";
-import { TermsOfUseComponent } from "../terms-of-use/terms-of-use.component";
-import { LoginErrorEnum } from "./model/enums/login-error.enums";
-import { LocalStorageEnum } from "src/app/core/enums/local-storage.enums";
-import { environment } from "src/environments/environment";
+import { AuthService } from '../auth.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { PrivacyPolicyComponent } from '../privacy-policy/privacy-policy.component';
+import { TermsOfUseComponent } from '../terms-of-use/terms-of-use.component';
+import { LocalStorageEnum } from 'src/app/core/enums/local-storage.enums';
+import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: "app-login",
-  templateUrl: "./login.component.html",
-  styleUrls: ["./login.component.scss"],
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
   public responseSubject: Subject<boolean> = new Subject<boolean>();
@@ -25,6 +23,8 @@ export class LoginComponent implements OnInit {
   public showLoadingSpinner: boolean = false;
   public showResponseError: boolean = false;
   public responseErrorMessage: string;
+  public termsOfUseUrl = environment.legalTerms.termsOfUse;
+  public privacyPolicyUrl = environment.legalTerms.privacyPolicy;
   private errorMessage: string =
     // tslint:disable-next-line: max-line-length
     `Sign in failed. Please re-enter your password to try again. If you need help, give Contractor Relations a call at ${environment.core.customerServiceNumber}.`;
@@ -43,9 +43,9 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.buildForm();
     this.dataSubject.subscribe((data: any) => {
-      if (data.error.message && data.error.message.includes("compromised")) {
-        sessionStorage.setItem("compromised-login", "true");
-        this._router.navigate(["/auth/forgot-password"]);
+      if (data.error.message && data.error.message.includes('compromised')) {
+        sessionStorage.setItem('compromised-login', 'true');
+        this._router.navigate(['/auth/forgot-password']);
       }
       this.responseErrorMessage = this.getErrorMessage(data.error.message);
     });
@@ -55,11 +55,11 @@ export class LoginComponent implements OnInit {
   }
 
   public buildForm(): void {
-    const userName: FormControl = new FormControl("", [
+    const userName: FormControl = new FormControl('', [
       Validators.required,
       Validators.email,
     ]);
-    const userPassword: FormControl = new FormControl("", Validators.required);
+    const userPassword: FormControl = new FormControl('', Validators.required);
 
     this.loginForm = new FormGroup({
       userName,
@@ -73,12 +73,12 @@ export class LoginComponent implements OnInit {
       this.showResponseError = true;
       return;
     }
-    this._router.navigate(["/account"]);
+    this._router.navigate(['/account']);
   }
 
   public login(): void {
-    const username: string = this.loginForm.get("userName").value.trim();
-    const password: string = this.loginForm.get("userPassword").value.trim();
+    const username: string = this.loginForm.get('userName').value.trim();
+    const password: string = this.loginForm.get('userPassword').value.trim();
     this._authService.login(
       this.responseSubject,
       this.dataSubject,
@@ -99,13 +99,13 @@ export class LoginComponent implements OnInit {
   }
 
   public resetResponseError(): void {
-    this.responseErrorMessage = "";
+    this.responseErrorMessage = '';
     this.showResponseError = false;
   }
 
   public getErrorMessage(status: string): string {
-    const value: string = status ? status.toLocaleLowerCase() : "";
-    return value.includes("your account is locked")
+    const value: string = status ? status.toLocaleLowerCase() : '';
+    return value.includes('your account is locked')
       ? environment.auth.lockedError
       : environment.auth.loginError;
   }
