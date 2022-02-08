@@ -38,6 +38,10 @@ export const environment = {
   siblingPortals: {
     customer: `${custumerPortalUrl}`,
   },
+  legalTerms: {
+    termsOfUse: 'https://www.directenergyprotects.com/terms-of-use',
+    privacyPolicy: 'https://www.directenergyprotects.com/privacy-policy'
+  },
   // auth service
   loginUrl: `${baseUrl}authentication/passport/login`,
   requestPasswordUrl: `${baseUrl}authentication/passport/forgot-password`,

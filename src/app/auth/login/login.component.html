@@ -6,45 +6,74 @@
     <div class="login-form">
       <form [formGroup]="loginForm" (ngSubmit)="login()">
         <div class="form-group" (click)="resetResponseError()">
-          <input type="email" id="username" class="form-control" alt="email" placeholder="Email Address"
-            formControlName="userName" required />
+          <input
+            type="email"
+            id="username"
+            class="form-control"
+            alt="email"
+            placeholder="Email Address"
+            formControlName="userName"
+            required
+          />
           <div class="errors pt-1">
-            <div *ngIf="
+            <div
+              *ngIf="
                 !loginForm.get('userName').valid &&
                 (loginForm.get('userName').dirty ||
                   loginForm.get('userName').touched)
-              " class="text-danger small">
+              "
+              class="text-danger small"
+            >
               Please enter a valid email address.
             </div>
           </div>
         </div>
         <div class="form-group" (click)="resetResponseError()">
-          <input type="password" id="password" class="form-control" alt="password" placeholder="Password"
-            formControlName="userPassword" required />
+          <input
+            type="password"
+            id="password"
+            class="form-control"
+            alt="password"
+            placeholder="Password"
+            formControlName="userPassword"
+            required
+          />
           <div class="errors pt-1">
-            <div class="text-danger small" *ngIf="
+            <div
+              class="text-danger small"
+              *ngIf="
                 !loginForm.get('userPassword').valid &&
                 (loginForm.get('userPassword').dirty ||
                   loginForm.get('userPassword').touched)
-              ">
+              "
+            >
               Please enter a valid password.
             </div>
           </div>
         </div>
         <div class="form-group small text-muted">
           By clicking "Sign In", you agree to the
-          <a [routerLink]="" (click)="openTermsConditionsModal()">Terms of Use</a>
+          <a [href]="termsOfUseUrl" target="_blank">Terms of Use</a>
           and
-          <a [routerLink]="" (click)="openPrivacyPolicyModal()">Privacy Policy</a>
+          <a [href]="privacyPolicyUrl" target="_blank">Privacy Policy</a>
           .
         </div>
         <div class="form-group text-center py-1">
-          <button type="submit" id="form-submit-button" class="btn btn-submit-large" [disabled]="!loginForm.valid">
+          <button
+            type="submit"
+            id="form-submit-button"
+            class="btn btn-submit-large"
+            [disabled]="!loginForm.valid"
+          >
             Sign In
           </button>
         </div>
-        <div class="alert alert-danger" role="alert" *ngIf="showResponseError" [innerHTML]="responseErrorMessage">
-        </div>
+        <div
+          class="alert alert-danger"
+          role="alert"
+          *ngIf="showResponseError"
+          [innerHTML]="responseErrorMessage"
+        ></div>
         <div *ngIf="showLoadingSpinner" class="form-group text-center py-1">
           <i class="fa fa-spinner fa-spin fa-2x fa-fw loading-spinner"></i>
           <span class="sr-only">Loading...</span>
@@ -55,7 +84,11 @@
       <div><a routerLink="/auth/forgot-password">Forgot your password?</a></div>
       <div>
         Interested in becoming a DEPP technician?
-        <a href="https://billing.directenergyprotects.com/enroll" target="_blank">Click Here</a>
+        <a
+          href="https://billing.directenergyprotects.com/enroll"
+          target="_blank"
+          >Click Here</a
+        >
       </div>
     </div>
   </div>
