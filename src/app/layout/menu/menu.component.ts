@@ -29,11 +29,7 @@ export class MenuComponent implements OnInit {
       path: '/account/profile',
       desc: 'My Profile'
     },
-    {
-      label: 'Help',
-      path: '/account/help',
-      desc: ''
-    }
+
   ];
 
   constructor() { }
