@@ -6,9 +6,11 @@ enum FooterLinks {
   news = 'https://www.hwahomewarranty.com/news',
   policy = 'https://www.hwahomewarranty.com/privacy',
   terms = 'https://www.hwahomewarranty.com/terms-of-use',
-  contact = 'https://www.hwahomewarranty.com/contact-us',
+  contact = 'https://www.directenergyprotects.com/contact-us',
   faqs = 'https://www.hwahomewarranty.com/homeowners/frequently-asked-questions'
 }
+
+
 
 @Component({
   selector: 'app-footer-links',
