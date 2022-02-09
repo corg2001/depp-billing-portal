@@ -15,4 +15,42 @@
   font-family: Roboto;
   font-size: 0.875rem;
   font-weight: 300;
+  .text-muted {
+    color: #6c757d;
+  }
+  .copyright,
+  .footnote,
+  .legal-terms {
+    text-align: center;
+    width: 100%;
+  }
+
+  .copyright {
+    font-size: 0.9rem;
+  }
+
+  .footnote,
+  .legal-terms {
+    font-size: 0.8rem;
+  }
+
+  .footnote {
+    margin-bottom: 0.7rem;
+    margin-top: 0.4rem;
+  }
+
+  .legal-terms-link {
+    color: #005776 !important;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  .legal-terms span {
+    display: inline-block;
+  }
+
+  .policy-link-separator {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+  }
 }

@@ -1,6 +1,4 @@
-@import  "../../../assets/styles/contractor-layout-styles";
-
-
+@import "../../../assets/styles/contractor-layout-styles";
 
 .button-sign-out {
   cursor: pointer;
@@ -16,7 +14,6 @@
   margin: 0 auto;
 }
 
-
 #app-header {
   border-bottom: 0.1rem solid $secondary;
   margin-bottom: 1rem;
@@ -28,9 +25,8 @@
 }
 
 .header-logo {
-  width: 20%;
+  width: 60%;
 }
-
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
