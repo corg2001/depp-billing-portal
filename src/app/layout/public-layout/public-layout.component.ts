@@ -22,6 +22,6 @@ export class PublicLayoutComponent implements OnInit {
   }
 
   public showDeppLogo(): boolean {
-    return this.url === "/enroll";
+    return this.url === "/enroll" || this.url === "/auth/forgot-password";
   }
 }
