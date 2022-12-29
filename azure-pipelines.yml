@@ -1,0 +1,264 @@
+trigger:
+  batch: true
+
+variables:
+  isQa1Branch: $[eq(variables['Build.SourceBranch'], 'refs/heads/qa1')]
+  isQa2Branch: $[eq(variables['Build.SourceBranch'], 'refs/heads/qa2')]
+  isQa3Branch: $[eq(variables['Build.SourceBranch'], 'refs/heads/qa3')]
+  isMasterBranch: $[eq(variables['Build.SourceBranch'], 'refs/heads/master')]
+  sonarCloudProjectKey: CentricaEngineeringServicesNA_depp-billing-portal
+  nodeVersion: '8.17.0'
+  awsRegion: us-east-1
+  awsCredentialsDev: services-hp-prd-aws-dev
+  awsCredentialsStage: services-hp-prd-aws-stage
+  awsCredentialsProd: services-hp-prd-aws-prod
+  devBucket: nrg-nrgp-oam-dev-static-assets20221215183903377400000001
+  devDistribution: E2JLHNWE2WMS09
+  devConfig: depp-billing-portal-dev.ts
+  devArtifact: depp-billing-portal-dev
+  stageBucket: nrg-nrgp-oam-stage-static-assets20230110204625718700000001
+  stageDistribution: E2EON3QIOYR7KG
+  stageConfig: depp-billing-portal-stage.ts
+  stageArtifact: depp-billing-portal-stage
+  prodBucket: nrg-nrgp-oam-prod-static-assets20230127154237725400000001
+  prodDistribution: E19IN3TKYES2EB
+  prodConfig: depp-billing-portal-prod.ts
+  prodArtifact: depp-billing-portal-prod
+
+resources:
+  repositories:
+  - repository: configuration
+    name: unify-configs
+    type: git
+    ref: master
+
+stages:
+# Disabled due to line limit exceeded for the company license
+# - stage: SonarCloudScan
+#   jobs:
+#   - job: SonarCloudScan
+#     pool:
+#       vmImage: ubuntu-20.04
+#     steps:
+#     - task: SonarCloudPrepare@1
+#       displayName: Prepare for the SonarCloud analysis
+#       inputs:
+#         SonarCloud: 'services-sonar-cloud'
+#         organization: 'centricaengineeringservicesna'
+#         scannerMode: 'CLI'
+#         configMode: 'file'
+#         extraProperties: |
+#           sonar.pullrequest.vsts.instanceUrl=$(System.CollectionUri)
+#           sonar.pullrequest.vsts.project=$(System.TeamProject)
+#           sonar.pullrequest.vsts.repository=$(Build.Repository.Name)
+#           sonar.projectName=$(Build.Repository.Name)
+#           sonar.projectKey=$(sonarCloudProjectKey)
+#     - task: SonarCloudAnalyze@1
+#       displayName: Analyze source code with the SonarCloud
+#     - task: SonarCloudPublish@1
+#       displayName: Publish SonarCloud analysis results
+#       inputs:
+#         pollingTimeoutSec: 300
+- stage: BuildDev
+  condition: eq(variables.isMasterBranch, true)
+  # condition: and(succeeded('SonarCloudScan'), eq(variables.isMasterBranch, true))
+  # dependsOn:
+  # - SonarCloudScan
+  jobs:
+  - job: BuildDev
+    pool:
+      vmImage: ubuntu-20.04
+    steps:
+    - checkout: self
+    - checkout: configuration
+    - task: NodeTool@0
+      displayName: 'Install NodeJS version $(nodeVersion)'
+      inputs:
+        versionSpec: $(nodeVersion)
+    - script: |
+        cp $(Agent.BuildDirectory)/s/unify-configs/$(devConfig) src/environments/environment.prod.ts
+        npm install
+        ./node_modules/.bin/ng build --prod --aot --build-optimizer
+      workingDirectory: $(Agent.BuildDirectory)/s/depp-billing-portal
+      displayName: Building dev portal
+    - task: CopyFiles@2
+      inputs:
+        sourceFolder: $(Agent.BuildDirectory)/s/depp-billing-portal/dist/hwa-contractor
+        targetFolder: $(Build.ArtifactStagingDirectory)/$(devArtifact)
+      displayName: Copy Dev package
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: $(Build.ArtifactStagingDirectory)/$(devArtifact)
+        artifactName: $(devArtifact)
+      displayName: Publish Dev artifact
+- stage: DeployDev
+  condition: and(succeeded('BuildDev'), eq(variables.isMasterBranch, true))
+  dependsOn:
+  # - SonarCloudScan
+  - BuildDev
+  jobs:
+  - deployment: DeployDev
+    pool:
+      vmImage: ubuntu-20.04
+    environment: homeprotection-dev
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              artifact: $(devArtifact)
+              targetPath: $(Build.ArtifactStagingDirectory)/$(devArtifact)
+            displayName: Download Dev artifact
+          - task: S3Upload@1
+            inputs:
+              awsCredentials: $(awsCredentialsDev)
+              regionName: $(awsRegion)
+              bucketName: $(devBucket)
+              targetFolder: $(devArtifact)
+              sourceFolder: $(Build.ArtifactStagingDirectory)/$(devArtifact)
+            displayName: Upload to Dev S3 bucket
+          - task: AWSCLI@1
+            displayName: Trigger cache invalidation for the Dev instance
+            inputs:
+              awsCredentials: $(awsCredentialsDev)
+              regionName: $(awsRegion)
+              awsCommand: cloudfront
+              awsSubCommand: create-invalidation
+              awsArguments: "--distribution-id $(devDistribution) --paths \"/*\""
+- stage: BuildStage
+  condition: eq(variables.isMasterBranch, true)
+  # condition: and(succeeded('SonarCloudScan'), eq(variables.isMasterBranch, true))
+  # dependsOn:
+  # - SonarCloudScan
+  jobs:
+  - job: BuildStage
+    pool:
+      vmImage: ubuntu-20.04
+    steps:
+    - checkout: self
+    - checkout: configuration
+    - task: NodeTool@0
+      displayName: 'Install NodeJS version $(nodeVersion)'
+      inputs:
+        versionSpec: $(nodeVersion)
+    - script: |
+        cp $(Agent.BuildDirectory)/s/unify-configs/$(stageConfig) src/environments/environment.prod.ts
+        npm install
+        ./node_modules/.bin/ng build --prod --aot --build-optimizer
+      workingDirectory: $(Agent.BuildDirectory)/s/depp-billing-portal
+      displayName: Building stage portal
+    - task: CopyFiles@2
+      inputs:
+        sourceFolder: $(Agent.BuildDirectory)/s/depp-billing-portal/dist/hwa-contractor
+        targetFolder: $(Build.ArtifactStagingDirectory)/$(stageArtifact)
+      displayName: Copy Stage package
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: $(Build.ArtifactStagingDirectory)/$(stageArtifact)
+        artifactName: $(stageArtifact)
+      displayName: Publish Stage artifact
+- stage: DeployStage
+  condition: and(succeeded('BuildStage'), eq(variables.isMasterBranch, true))
+  dependsOn:
+  # - SonarCloudScan
+  - DeployDev
+  - BuildStage
+  jobs:
+  - deployment: DeployStage
+    pool:
+      vmImage: ubuntu-20.04
+    environment: homeprotection-stage
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              artifact: $(stageArtifact)
+              targetPath: $(Build.ArtifactStagingDirectory)/$(stageArtifact)
+            displayName: Download Stage artifact
+          - task: S3Upload@1
+            inputs:
+              awsCredentials: $(awsCredentialsStage)
+              regionName: $(awsRegion)
+              bucketName: $(stageBucket)
+              targetFolder: $(stageArtifact)
+              sourceFolder: $(Build.ArtifactStagingDirectory)/$(stageArtifact)
+            displayName: Upload to Stage S3 bucket
+          - task: AWSCLI@1
+            displayName: Trigger cache invalidation for the Stage instance
+            inputs:
+              awsCredentials: $(awsCredentialsStage)
+              regionName: $(awsRegion)
+              awsCommand: cloudfront
+              awsSubCommand: create-invalidation
+              awsArguments: "--distribution-id $(stageDistribution) --paths \"/*\""
+- stage: BuildProd
+  condition: eq(variables.isMasterBranch, true)
+  # condition: and(succeeded('SonarCloudScan'), eq(variables.isMasterBranch, true))
+  # dependsOn:
+  # - SonarCloudScan
+  jobs:
+  - job: BuildProd
+    pool:
+      vmImage: ubuntu-20.04
+    steps:
+    - checkout: self
+    - checkout: configuration
+    - task: NodeTool@0
+      displayName: 'Install NodeJS version $(nodeVersion)'
+      inputs:
+        versionSpec: $(nodeVersion)
+    - script: |
+        cp $(Agent.BuildDirectory)/s/unify-configs/$(prodConfig) src/environments/environment.prod.ts
+        npm install
+        ./node_modules/.bin/ng build --prod --aot --build-optimizer
+      workingDirectory: $(Agent.BuildDirectory)/s/depp-billing-portal
+      displayName: Building prod portal
+    - task: CopyFiles@2
+      inputs:
+        sourceFolder: $(Agent.BuildDirectory)/s/depp-billing-portal/dist/hwa-contractor
+        targetFolder: $(Build.ArtifactStagingDirectory)/$(prodArtifact)
+      displayName: Copy Prod package
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: $(Build.ArtifactStagingDirectory)/$(prodArtifact)
+        artifactName: $(prodArtifact)
+      displayName: Publish Prod artifact
+- stage: DeployProd
+  condition: and(succeeded('BuildProd'), eq(variables.isMasterBranch, true))
+  dependsOn:
+  # - SonarCloudScan
+  - DeployStage
+  - BuildProd
+  jobs:
+  - deployment: DeployProd
+    pool:
+      vmImage: ubuntu-20.04
+    environment: homeprotection-prod
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              artifact: $(prodArtifact)
+              targetPath: $(Build.ArtifactStagingDirectory)/$(prodArtifact)
+            displayName: Download Prod artifact
+          - task: S3Upload@1
+            inputs:
+              awsCredentials: $(awsCredentialsProd)
+              regionName: $(awsRegion)
+              bucketName: $(prodBucket)
+              targetFolder: $(prodArtifact)
+              sourceFolder: $(Build.ArtifactStagingDirectory)/$(prodArtifact)
+            displayName: Upload to Prod S3 bucket
+          - task: AWSCLI@1
+            displayName: Trigger cache invalidation for the Prod instance
+            inputs:
+              awsCredentials: $(awsCredentialsProd)
+              regionName: $(awsRegion)
+              awsCommand: cloudfront
+              awsSubCommand: create-invalidation
+              awsArguments: "--distribution-id $(prodDistribution) --paths \"/*\""
