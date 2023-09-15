@@ -3,8 +3,6 @@ trigger:
 
 variables:
   isQa1Branch: $[eq(variables['Build.SourceBranch'], 'refs/heads/qa1')]
-  isQa2Branch: $[eq(variables['Build.SourceBranch'], 'refs/heads/qa2')]
-  isQa3Branch: $[eq(variables['Build.SourceBranch'], 'refs/heads/qa3')]
   isMasterBranch: $[eq(variables['Build.SourceBranch'], 'refs/heads/master')]
   sonarCloudProjectKey: CentricaEngineeringServicesNA_depp-billing-portal
   nodeVersion: '8.17.0'
@@ -12,6 +10,10 @@ variables:
   awsCredentialsDev: services-hp-prd-aws-dev
   awsCredentialsStage: services-hp-prd-aws-stage
   awsCredentialsProd: services-hp-prd-aws-prod
+  qa1Bucket: nrg-nrgp-oam-dev-static-assets20221215183903377400000001
+  qa1Distribution: E1A3M7TZDZQ2TL
+  qa1Config: depp-billing-portal-qa1.ts
+  qa1Artifact: depp-billing-portal-qa1
   devBucket: nrg-nrgp-oam-dev-static-assets20221215183903377400000001
   devDistribution: E2JLHNWE2WMS09
   devConfig: depp-billing-portal-dev.ts
@@ -59,6 +61,73 @@ stages:
 #       displayName: Publish SonarCloud analysis results
 #       inputs:
 #         pollingTimeoutSec: 300
+- stage: BuildQa1
+  condition: eq(variables.isQa1Branch, true)
+  # condition: and(succeeded('SonarCloudScan'), eq(variables.isQa1Branch, true))
+  # dependsOn:
+  # - SonarCloudScan
+  jobs:
+  - job: BuildQa1
+    pool:
+      vmImage: ubuntu-20.04
+    steps:
+    - checkout: self
+    - checkout: configuration
+    - task: NodeTool@0
+      displayName: 'Install NodeJS version $(nodeVersion)'
+      inputs:
+        versionSpec: $(nodeVersion)
+    - script: |
+        cp $(Agent.BuildDirectory)/s/unify-configs/$(qa1Config) src/environments/environment.prod.ts
+        npm install
+        ./node_modules/.bin/ng build --prod --aot --build-optimizer
+      workingDirectory: $(Agent.BuildDirectory)/s/depp-billing-portal
+      displayName: Building qa1 portal
+    - task: CopyFiles@2
+      inputs:
+        sourceFolder: $(Agent.BuildDirectory)/s/depp-billing-portal/dist/hwa-contractor
+        targetFolder: $(Build.ArtifactStagingDirectory)/$(qa1Artifact)
+      displayName: Copy Qa1 package
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: $(Build.ArtifactStagingDirectory)/$(qa1Artifact)
+        artifactName: $(qa1Artifact)
+      displayName: Publish Qa1 artifact
+- stage: DeployQa1
+  condition: and(succeeded('BuildQa1'), eq(variables.isQa1Branch, true))
+  dependsOn:
+  # - SonarCloudScan
+  - BuildQa1
+  jobs:
+  - deployment: DeployQa1
+    pool:
+      vmImage: ubuntu-20.04
+    environment: homeprotection-dev
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              artifact: $(qa1Artifact)
+              targetPath: $(Build.ArtifactStagingDirectory)/$(qa1Artifact)
+            displayName: Download Qa1 artifact
+          - task: S3Upload@1
+            inputs:
+              awsCredentials: $(awsCredentialsDev)
+              regionName: $(awsRegion)
+              bucketName: $(devBucket)
+              targetFolder: $(qa1Artifact)
+              sourceFolder: $(Build.ArtifactStagingDirectory)/$(qa1Artifact)
+            displayName: Upload to Qa1 S3 bucket
+          - task: AWSCLI@1
+            displayName: Trigger cache invalidation for the Qa1 instance
+            inputs:
+              awsCredentials: $(awsCredentialsDev)
+              regionName: $(awsRegion)
+              awsCommand: cloudfront
+              awsSubCommand: create-invalidation
+              awsArguments: "--distribution-id $(qa1Distribution) --paths \"/*\""
 - stage: BuildDev
   condition: eq(variables.isMasterBranch, true)
   # condition: and(succeeded('SonarCloudScan'), eq(variables.isMasterBranch, true))
