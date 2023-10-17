@@ -41,8 +41,8 @@ export const environment = {
     realtor: `${realtorPortalUrl}`
   },
   legalTerms: {
-    termsOfUse: 'https://www.directenergyprotects.com/terms-of-use',
-    privacyPolicy: 'https://www.directenergyprotects.com/privacy-policy'
+    termsOfUse: 'https://nrgp-customer-elearning-prod.s3.amazonaws.com/NRGP_TEMP_CSTC_CvgSmryTnCs_2022.05.01.pdf',
+    privacyPolicy: 'https://nrgp-customer-elearning-prod.s3.amazonaws.com/NRG+Protects+Policy_June+2022_clean.pdf'
   },
   // auth service
   loginUrl: `${baseUrl}authentication/passport/login`,
