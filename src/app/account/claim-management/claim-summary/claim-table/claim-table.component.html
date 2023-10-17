@@ -28,14 +28,6 @@
         <td><a class="text-uppercase diagnosis" (click)="authorizeInvoice(claim.jobNumber, claim.jobStatus, claim.vendorId)">
             {{ authorizeLinkText(claim.jobStatus) }}
           </a>
-          <span *ngIf="claim.jobStatus === JobStatus.wip">
-            |
-            <span class="text-uppercase diagnosis"
-              (click)="diagnoseJob(claim.vendorId, claim.jobNumber, claim.dateAssigned, claim.customerContactPhone)">
-              {{ LinkText.diagnosis }}
-            </span>
-          </span>
-
         </td>
         <td class="revenue-maintenance-indicator"> {{ showRevenueAndMaintenaceIndicators(claim) }}</td>
         <td>
