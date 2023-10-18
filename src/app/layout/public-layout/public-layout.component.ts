@@ -7,8 +7,8 @@ import { Router } from "@angular/router";
   styleUrls: ["./public-layout.component.scss"],
 })
 export class PublicLayoutComponent implements OnInit {
-  public appLogo = "../../../assets/images/DEPP-Logo-Stacked.svg";
-  public appDEPPLogo = "../../../assets/images/DEPP-Logo-Stacked.svg";
+  public appLogo = "../../../assets/images/header-logo.svg";
+  public appDEPPLogo = "../../../assets/images/header-logo.svg";
   public logoAltText = "HWA - Home Warranty Of America";
   public url: string;
 
