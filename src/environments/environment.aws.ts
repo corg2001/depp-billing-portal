@@ -20,7 +20,7 @@ export const environment = {
     copyrightNotice: `&copy; ${moment().format('YYYY')} Direct Energy:`,
     pageTitle: 'Direct Energy Protection Plans - Billing Portal',
     customerServiceNumber: '1-855-334-3577',
-    email: 'Contractorrelations@mailinator.com',
+    email: 'service@nrgprotects.com',
     achEmail: 'VendorMaster@mailinator.com',
     noHistoryMessage: 'There are no payments for the selected timeframe.'
   },

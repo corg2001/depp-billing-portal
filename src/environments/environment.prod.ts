@@ -18,7 +18,7 @@ export const environment = {
     copyrightNotice: `&copy; ${moment().format('YYYY')} HOME WARRANTY OF AMERICA. Inc. Home Warranty Information:`,
     pageTitle: 'DEPP -Direct Energy Protection Plans',
     customerServiceNumber: '1-888-492-7359',
-    email: 'Contractorrelations@mailinator.com',
+    email: 'service@nrgprotects.com',
     achEmail: 'VendorMaster@mailinator.com',
     noHistoryMessage: 'There are no payments for the selected timeframe.'
   },

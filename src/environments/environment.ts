@@ -7,12 +7,12 @@ const baseUrl: string = `https://depp-billing-api-dev.homeprotection-dev.nrgdigi
 const custumerPortalUrl: string = `https://account.hwahomewarranty.com`;
 const realtorPortalUrl: string = `https://realtor.hwahomewarranty.com`;
 export const environment = {
-aspirePhase4releaseDate: '10-21-2021',
+  aspirePhase4releaseDate: '10-21-2021',
   production: true,
   analytics: {
     google: {
       brand: {
-        hwa:'GTM-N739Z7C'
+        hwa: 'GTM-N739Z7C'
       }
     }
   },
@@ -33,7 +33,7 @@ aspirePhase4releaseDate: '10-21-2021',
     copyrightNotice: `&copy; 2022 Direct Energy:`,
     pageTitle: 'Direct Energy Protection Plans - Billing Portal',
     customerServiceNumber: '1-855-334-3577',
-    email: '',
+    email: 'service@nrgprotects.com',
     achEmail: 'Info@hwahomewarranty.com',
     noHistoryMessage: 'There are no payments for the selected timeframe.'
   },
@@ -57,7 +57,7 @@ aspirePhase4releaseDate: '10-21-2021',
   siblingPortals: {
     customer: `${custumerPortalUrl}`,
   },
-   legalTerms: {
+  legalTerms: {
     termsOfUse: 'https://nrgp-customer-elearning-prod.s3.amazonaws.com/NRGP_TEMP_CSTC_CvgSmryTnCs_2022.05.01.pdf',
     privacyPolicy: 'https://nrgp-customer-elearning-prod.s3.amazonaws.com/NRG+Protects+Policy_June+2022_clean.pdf'
   },
