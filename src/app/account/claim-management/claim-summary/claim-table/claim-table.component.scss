@@ -4,14 +4,14 @@ select {
   padding: 1rem;
   border: solid $hwa-color-teal 0.1rem;
 } span {
-  color: $hwa-color-orange!important;
+  color: $color-poppy!important;
   &:hover {
     cursor: pointer;
     text-decoration: underline !important;
   }
 }
 .diagnosis {
-  color: $hwa-color-orange !important;
+  color: $color-poppy !important;
 
   &:hover {
     cursor: pointer;
