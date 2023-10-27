@@ -3,6 +3,7 @@
   <table class="table table-striped">
     <thead>
       <tr>
+        <th scope="col" appSortable="claimId" (sort)="onSort($event, modifiedClaims())">Claim ID</th>
         <th scope="col" appSortable="jobNumber" (sort)="onSort($event, modifiedClaims())">Job ID</th>
         <th scope="col" appSortable="dateRequested" (sort)="onSort($event, modifiedClaims())">Date Assigned</th>
         <th scope="col" appSortable="claimType" (sort)="onSort($event, modifiedClaims())">Claim Order Type</th>
@@ -17,6 +18,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let claim of modifiedClaims()" class="small">
+        <td scope="row">{{ claim.claimId }}</td>
         <td scope="row">{{ claim.jobNumber }}</td>
         <td scope="row">{{ claim.dateAssigned | date }}</td>
         <td>{{ claim.claimType }}</td>
