@@ -14,6 +14,7 @@ import { FromatLastFour } from './pipe/show-last-four-format';
 import { SortableHeaderDirective } from './../core/directive/sortable-header.directive';
 import { NgxCurrencyModule } from 'ngx-currency';
 import { SearchComponent } from './components/search/search.component';
+import { ExportExcelService } from './service/export-excel.service';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,6 @@ import { SearchComponent } from './components/search/search.component';
   ],
   entryComponents: [ModalComponent, ProgressBarComponent],
 
-  providers: [UploadService]
+  providers: [UploadService,ExportExcelService]
 })
 export class SharedModule {}

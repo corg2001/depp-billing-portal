@@ -5,6 +5,7 @@ import { SortDirectionEnums } from 'src/app/core/enums/sort-direction.enums';
 import { SortEventInterface } from 'src/app/core/interface/sort-event.interface';
 import * as Money from 'js-money';
 import { InvoicPaymentStatusEnum } from '../../model/enums/invoice-payment-status.enum';
+import { ExportExcelService } from 'src/app/shared/service/export-excel.service';
 
 @Component({
   selector: 'app-invoice-table',
@@ -31,7 +32,7 @@ export class InvoiceTableComponent implements OnInit, OnChanges {
   // public completionSubject: Subject<boolean> = new Subject();
   // public loading: boolean = true;
 
-  constructor() { }
+  constructor(private exportExcelService: ExportExcelService) { }
 
   public ngOnChanges(): void {
     this.invoices = this.invoiceData;
@@ -101,4 +102,7 @@ export class InvoiceTableComponent implements OnInit, OnChanges {
     return num1 - num2;
   }
 
+  public exportExcelFile() {
+    this.exportExcelService.exportExcelFile(this.invoices,'open_invoices')
+  }
 }
