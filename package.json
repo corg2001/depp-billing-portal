@@ -27,6 +27,7 @@
     "bootstrap": "4.2.1",
     "core-js": "^2.6.11",
     "dateformat": "3.0.3",
+    "file-saver": "^2.0.5",
     "font-awesome": "^4.7.0",
     "html2canvas": "1.0.0-rc.1",
     "jquery": "3.3.1",
