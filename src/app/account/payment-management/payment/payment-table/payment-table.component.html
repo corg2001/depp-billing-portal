@@ -1,5 +1,6 @@
 <app-loading-spinner *ngIf="!isCompleted" [message]="loadingMsg"></app-loading-spinner>
 <ng-container *ngIf="isCompleted && hasHistories">
+  <button type="button" class="btn btn-primary export" (click)="exportExcelFile()">Export</button>
   <table class="table table-striped">
     <thead>
       <tr>
