@@ -10,6 +10,7 @@ import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { ModalComponent } from './shared/modal/modal.component';
 import { TestComponent } from './test/test.component';
+import { IdleTimeComponent } from './shared/components/idle-time/idle-time.component';
 @NgModule({
   declarations: [AppComponent, TestComponent],
   imports: [
@@ -21,7 +22,7 @@ import { TestComponent } from './test/test.component';
     HttpClientModule,
   ],
   providers: [],
-  entryComponents: [ModalComponent],
+  entryComponents: [ModalComponent, IdleTimeComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

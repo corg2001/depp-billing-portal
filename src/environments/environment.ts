@@ -35,7 +35,8 @@ export const environment = {
     customerServiceNumber: '1-855-334-3577',
     email: 'service@nrgprotects.com',
     achEmail: 'Info@hwahomewarranty.com',
-    noHistoryMessage: 'There are no payments for the selected timeframe.'
+    noHistoryMessage: 'There are no payments for the selected timeframe.',
+    idleTimeout: { timeoutSeconds: 870 },
   },
   auth: {
     forgotPassword: {
