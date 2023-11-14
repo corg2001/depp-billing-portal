@@ -15,6 +15,7 @@ import { SortableHeaderDirective } from './../core/directive/sortable-header.dir
 import { NgxCurrencyModule } from 'ngx-currency';
 import { SearchComponent } from './components/search/search.component';
 import { ExportExcelService } from './service/export-excel.service';
+import { IdleTimeComponent } from './components/idle-time/idle-time.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { ExportExcelService } from './service/export-excel.service';
     ResultJumbotronComponent,
     SearchComponent,
     SortableHeaderDirective,
+    IdleTimeComponent
   ],
   imports: [
     CommonModule,
@@ -47,7 +49,8 @@ import { ExportExcelService } from './service/export-excel.service';
     ResultJumbotronComponent,
     SearchComponent,
     SortableHeaderDirective,
-    NgxCurrencyModule
+    NgxCurrencyModule,
+    IdleTimeComponent
   ],
   entryComponents: [ModalComponent, ProgressBarComponent],
 
