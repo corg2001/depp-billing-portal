@@ -2,6 +2,7 @@ trigger:
   batch: true
 
 variables:
+  isHf1Branch: $[eq(variables['Build.SourceBranch'], 'refs/heads/hf1')]
   isQa1Branch: $[eq(variables['Build.SourceBranch'], 'refs/heads/qa1')]
   isMasterBranch: $[eq(variables['Build.SourceBranch'], 'refs/heads/master')]
   sonarCloudProjectKey: CentricaEngineeringServicesNA_depp-billing-portal
@@ -14,6 +15,10 @@ variables:
   qa1Distribution: E1A3M7TZDZQ2TL
   qa1Config: depp-billing-portal-qa1.ts
   qa1Artifact: depp-billing-portal-qa1
+  hf1Bucket: nrg-nrgp-oam-dev-static-assets20221215183903377400000001
+  hf1Distribution: E2T7LTQIRL7895
+  hf1Config: depp-billing-portal-hf1.ts
+  hf1Artifact: depp-billing-portal-hf1
   devBucket: nrg-nrgp-oam-dev-static-assets20221215183903377400000001
   devDistribution: E2JLHNWE2WMS09
   devConfig: depp-billing-portal-dev.ts
@@ -128,6 +133,73 @@ stages:
               awsCommand: cloudfront
               awsSubCommand: create-invalidation
               awsArguments: "--distribution-id $(qa1Distribution) --paths \"/*\""
+- stage: BuildHf1
+  condition: eq(variables.isHf1Branch, true)
+  # condition: and(succeeded('SonarCloudScan'), eq(variables.isHf1Branch, true))
+  # dependsOn:
+  # - SonarCloudScan
+  jobs:
+  - job: BuildHf1
+    pool:
+      vmImage: ubuntu-20.04
+    steps:
+    - checkout: self
+    - checkout: configuration
+    - task: NodeTool@0
+      displayName: 'Install NodeJS version $(nodeVersion)'
+      inputs:
+        versionSpec: $(nodeVersion)
+    - script: |
+        cp $(Agent.BuildDirectory)/s/unify-configs/$(hf1Config) src/environments/environment.prod.ts
+        npm install
+        ./node_modules/.bin/ng build --prod --aot --build-optimizer
+      workingDirectory: $(Agent.BuildDirectory)/s/depp-billing-portal
+      displayName: Building hf1 portal
+    - task: CopyFiles@2
+      inputs:
+        sourceFolder: $(Agent.BuildDirectory)/s/depp-billing-portal/dist/hwa-contractor
+        targetFolder: $(Build.ArtifactStagingDirectory)/$(hf1Artifact)
+      displayName: Copy Hf1 package
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: $(Build.ArtifactStagingDirectory)/$(hf1Artifact)
+        artifactName: $(hf1Artifact)
+      displayName: Publish Hf1 artifact
+- stage: DeployHf1
+  condition: and(succeeded('BuildHf1'), eq(variables.isHf1Branch, true))
+  dependsOn:
+  # - SonarCloudScan
+  - BuildHf1
+  jobs:
+  - deployment: DeployHf1
+    pool:
+      vmImage: ubuntu-20.04
+    environment: homeprotection-dev
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              artifact: $(hf1Artifact)
+              targetPath: $(Build.ArtifactStagingDirectory)/$(hf1Artifact)
+            displayName: Download Hf1 artifact
+          - task: S3Upload@1
+            inputs:
+              awsCredentials: $(awsCredentialsDev)
+              regionName: $(awsRegion)
+              bucketName: $(devBucket)
+              targetFolder: $(hf1Artifact)
+              sourceFolder: $(Build.ArtifactStagingDirectory)/$(hf1Artifact)
+            displayName: Upload to Hf1 S3 bucket
+          - task: AWSCLI@1
+            displayName: Trigger cache invalidation for the Hf1 instance
+            inputs:
+              awsCredentials: $(awsCredentialsDev)
+              regionName: $(awsRegion)
+              awsCommand: cloudfront
+              awsSubCommand: create-invalidation
+              awsArguments: "--distribution-id $(hf1Distribution) --paths \"/*\""
 - stage: BuildDev
   condition: eq(variables.isMasterBranch, true)
   # condition: and(succeeded('SonarCloudScan'), eq(variables.isMasterBranch, true))
