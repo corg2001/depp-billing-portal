@@ -5,12 +5,14 @@ import { ConfigInterface } from './interface/config.interface';
 import { AddressInterface } from './interface/address.interface';
 import { CompanyInfoPayloadInterface } from './interface/payload/company-info.payload.interface';
 import { AssociationPayloadInterface } from './interface/payload/association.payload.interface';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConfigService {
   private _config: ConfigInterface;
+  public resetIdleTime$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(private loggerService: LoggerService) {
     this.loggerService.important('config service has been provided');

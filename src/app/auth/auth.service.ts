@@ -4,7 +4,7 @@ import {
   HttpErrorResponse,
   HttpResponse
 } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { AuthenticationService } from '../core/authentication.service';
 import { LoginResponsePayload } from './login-response-payload';
 import { LoggerService } from '../core/logger.service';
@@ -108,7 +108,7 @@ export class AuthService {
   ): void {
     sessionStorage.removeItem('compromised-login');
     isUserFound$.next(true);
-      response$.next(environment.auth.forgotPassword.success);
+    response$.next(environment.auth.forgotPassword.success);
   }
 
   private requestPassWordErrorHandler(
@@ -116,7 +116,7 @@ export class AuthService {
     isUserFound$?: Subject<boolean>
   ): void {
     isUserFound$.next(false);
-      response$.next(environment.auth.forgotPassword.userNotFound);
+    response$.next(environment.auth.forgotPassword.userNotFound);
   }
 
   private genericFailureHandler(
@@ -141,8 +141,10 @@ export class AuthService {
       this.httpErrorHandler('InternalError: Unable to create session ...');
       dataSubject.next(response);
       completionSubject.next(false);
+      this._authService.isLoggedIn$.next(false);
     }
     completionSubject.next(true);
+    this._authService.isLoggedIn$.next(true);
   }
 
   private loginFailureHandler(
@@ -153,6 +155,7 @@ export class AuthService {
     this.httpErrorHandler(response);
     dataSubject.next(response);
     completionSubject.next(false);
+    this._authService.isLoggedIn$.next(false);
   }
 
   private httpErrorHandler(response: any): any {

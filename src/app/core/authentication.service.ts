@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { LoggerService } from './logger.service';
 
 // TODO: move it into it's own file
@@ -14,7 +14,7 @@ enum SessionKeys {
   providedIn: 'root'
 })
 export class AuthenticationService {
-
+  public isLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   constructor(private loggerService: LoggerService) {
     this.loggerService.important('authentication service loaded');
   }

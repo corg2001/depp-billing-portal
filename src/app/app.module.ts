@@ -13,6 +13,7 @@ import { ModalComponent } from './shared/modal/modal.component';
 import { TestComponent } from './test/test.component';
 import {MaintenanceInterceptor} from './core/maintenance.interceptor.service';
 import {MaintenanceService} from './core/maintenance.service'
+import { IdleTimeComponent } from './shared/components/idle-time/idle-time.component';
 @NgModule({
   declarations: [AppComponent, TestComponent],
   imports: [
@@ -30,8 +31,8 @@ import {MaintenanceService} from './core/maintenance.service'
       multi: true
     },
     MaintenanceService
-  ],
-  entryComponents: [ModalComponent],
+  ],  
+  entryComponents: [ModalComponent, IdleTimeComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

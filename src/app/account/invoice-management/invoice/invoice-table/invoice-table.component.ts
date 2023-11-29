@@ -4,7 +4,8 @@ import { SortableHeaderDirective } from 'src/app/core/directive/sortable-header.
 import { SortDirectionEnums } from 'src/app/core/enums/sort-direction.enums';
 import { SortEventInterface } from 'src/app/core/interface/sort-event.interface';
 import * as Money from 'js-money';
-import { InvoicPaymentStatusEnum } from '../../model/enums/invoice-payment-status.enum';
+import { ExportExcelService } from 'src/app/shared/service/export-excel.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-invoice-table',
@@ -16,6 +17,7 @@ export class InvoiceTableComponent implements OnInit, OnChanges {
   @Input() public invoiceData: InvoiceInterface[];
   @Input() public error: boolean;
   @Input() public completion: boolean;
+  public exportJSON: any[] = [];
 
   @ViewChildren(SortableHeaderDirective) headers: QueryList<SortableHeaderDirective>;
 
@@ -31,7 +33,7 @@ export class InvoiceTableComponent implements OnInit, OnChanges {
   // public completionSubject: Subject<boolean> = new Subject();
   // public loading: boolean = true;
 
-  constructor() { }
+  constructor(private exportExcelService: ExportExcelService) { }
 
   public ngOnChanges(): void {
     this.invoices = this.invoiceData;
@@ -39,6 +41,19 @@ export class InvoiceTableComponent implements OnInit, OnChanges {
     this.collectionSize = this.invoices.length;
     this.infoFound = this.invoiceData.length > 0;
     this._sortList('claimDate', SortDirectionEnums.Descending);
+
+    this.exportJSON = [];
+    this.invoices.forEach((invoice: InvoiceInterface) => {
+      this.exportJSON.push({
+        'Claim ID': invoice.claimId,
+        'Claim Date': moment(invoice.claimDate).format("MMM Do YY"),
+        'Homeowner Name': invoice.customerName,
+        'Service Address': invoice.serviceAddress,
+        'Invoice No.': invoice.invoiceId,
+        'Invoice Date': moment(invoice.invoiceDate).format("MMM Do YY"),
+        'Amount': '$' + invoice.invoiceAmount.amount / 100 + '.00'
+      })
+    })
   }
   ngOnInit(): void {
     this.invoices = this.invoiceData;
@@ -101,4 +116,7 @@ export class InvoiceTableComponent implements OnInit, OnChanges {
     return num1 - num2;
   }
 
+  public exportExcelFile() {
+    this.exportExcelService.exportJsonAsExcelFile(this.exportJSON, 'open_invoices')
+  }
 }
