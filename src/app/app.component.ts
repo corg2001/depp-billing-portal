@@ -1,10 +1,12 @@
+import { Component, OnInit, Renderer2, Inject } from '@angular/core';
+import { ModalComponent } from './shared/modal/modal.component';
 import { AuthenticationService } from './core/authentication.service';
-import { Component, Renderer2, Inject } from '@angular/core';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { ConfigService } from './core/config.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { environment } from '../environments/environment';
+import {MaintenanceService} from './core/maintenance.service';
 import { IdleTimeComponent } from './shared/components/idle-time/idle-time.component';
 declare var gtag: Function;
 
@@ -13,12 +15,14 @@ declare var gtag: Function;
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'testlab-application';
   public idleSession: any;
 
   public constructor(
     private modalService: NgbModal,
+    private configService: ConfigService,
+    private _maintenance: MaintenanceService,
     private _configService: ConfigService,
     private _authenticationService: AuthenticationService,
     private _router: Router,
@@ -48,6 +52,14 @@ export class AppComponent {
     });
   }
 
+  ngOnInit() {
+    const brand = environment.core.brandId.toLowerCase();
+    this._maintenance.checkMaintenance().then((value: boolean) => {
+      if (value) {
+        window.location.href = `/assets/maintenance-page/${brand}/maintenance-page.html`;
+      }
+    }); 
+  }
   private _createIdleSession(): any {
     let ngbModalOptions: NgbModalOptions = {
       backdrop: 'static',
