@@ -9,6 +9,7 @@ import { AuthenticationService } from '../core/authentication.service';
 import { LoginResponsePayload } from './login-response-payload';
 import { LoggerService } from '../core/logger.service';
 import { environment } from 'src/environments/environment';
+import { IAuthorizedUser } from '../shared/models/interface/authorized-user.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -196,4 +197,26 @@ export class AuthService {
     success$.next(false);
     response$.next(error);
   }
+
+  private _authUser: IAuthorizedUser = {
+    AuthenticationResult: {
+      AccessToken: '',
+      ExpiresIn: 0,
+      IdToken: '',
+      RefreshToken: '',
+      TokenType: ''
+    },
+    ChallengeParameters: {}
+  }
+  private _authUser$: BehaviorSubject<IAuthorizedUser> = new BehaviorSubject<
+    IAuthorizedUser
+  >(this._authUser);
+
+  public getUser$(): BehaviorSubject<IAuthorizedUser> {
+    return this._authUser$;
+  }
+
+  public setUser(user: IAuthorizedUser): void {
+    this._authUser$.next(user);
+  }F
 }

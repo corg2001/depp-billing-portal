@@ -79,7 +79,12 @@ export const environment = {
   // CalenderService
   calenderUrl: `${baseUrl}services/vendor/work-calendar`,
   // HelpService
-  helpUrl: `${baseUrl}contact-us`
+  helpUrl: `${baseUrl}contact-us`,
+  cognito: {
+    loginURL: 'https://cognito-idp.us-east-1.amazonaws.com/',
+    clientId: '6of13902q7it0d824q45difaik',
+    authFlow: 'USER_PASSWORD_AUTH'
+  }
 };
 
 /*
