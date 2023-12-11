@@ -103,8 +103,14 @@ export const environment = {
   cognito: {
     loginURL: 'https://cognito-idp.us-east-1.amazonaws.com/',
     clientId: '6of13902q7it0d824q45difaik',
-    authFlow: 'USER_PASSWORD_AUTH'
-  }
+    authFlow: 'USER_PASSWORD_AUTH',
+    // Configcat
+
+  },
+  configcat: {
+    key: 'o3_aCPwOlUOJ0ST5qznskQ/ulyGF3MlI0u81lFK8oAJxg',
+    maintenance: 'ENABLE_MAINTENANCE_MODE__DEPP_BILLING_PORTAL'
+  },
 };
 
 /*
