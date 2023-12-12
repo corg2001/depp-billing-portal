@@ -25,7 +25,7 @@ export const environment = {
   auth: {
     forgotPassword: {
       userNotFound: 'Apologies, we can’t find a username under that email address. Please check the email address used to create online account. ' +
-      'For further assistance, You can call (855) 334-3577',
+        'For further assistance, You can call (855) 334-3577',
       success: 'We have sent you a password reset link to the email address on file.  If it does not arrive in the next 10 minutes - please check your spam folder. ' +
         'For further assistance, You can call (855) 334-3577'
     },
@@ -79,7 +79,12 @@ export const environment = {
   // CalenderService
   calenderUrl: `${baseUrl}services/vendor/work-calendar`,
   // HelpService
-  helpUrl: `${baseUrl}contact-us`
+  helpUrl: `${baseUrl}contact-us`,
+  // Configcat
+  configcat: {
+    key: 'o3_aCPwOlUOJ0ST5qznskQ/ulyGF3MlI0u81lFK8oAJxg',
+    maintenance: 'ENABLE_MAINTENANCE_MODE__DEPP_BILL'
+  }
 };
 
 /*

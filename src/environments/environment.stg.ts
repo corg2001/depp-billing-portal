@@ -82,7 +82,12 @@ export const environment = {
   // CalenderService
   calenderUrl: `${baseUrl}services/vendor/work-calendar`,
   // helpService
-  helpUrl: `${baseUrl}contact-us`
+  helpUrl: `${baseUrl}contact-us`,
+  // Configcat
+  configcat: {
+    key: 'o3_aCPwOlUOJ0ST5qznskQ/ulyGF3MlI0u81lFK8oAJxg',
+    maintenance: 'ENABLE_MAINTENANCE_MODE__DEPP_BILL'
+  }
 };
 
 /*
