@@ -25,7 +25,7 @@ export const environment = {
   auth: {
     forgotPassword: {
       userNotFound: 'Apologies, we can’t find a username under that email address. Please check the email address used to create online account. ' +
-      'For further assistance, You can call (855) 334-3577',
+        'For further assistance, You can call (855) 334-3577',
       success: 'We have sent you a password reset link to the email address on file.  If it does not arrive in the next 10 minutes - please check your spam folder. ' +
         'For further assistance, You can call (855) 334-3577'
     },
@@ -82,8 +82,13 @@ export const environment = {
   helpUrl: `${baseUrl}contact-us`,
   cognito: {
     loginURL: 'https://cognito-idp.us-east-1.amazonaws.com/',
-    clientId: '6of13902q7it0d824q45difaik',
+    clientId: '1dqk3e9jtk8euo3574q3oi9k0d',
     authFlow: 'USER_PASSWORD_AUTH'
+  },
+  // Configcat
+  configcat: {
+    key: 'o3_aCPwOlUOJ0ST5qznskQ/ulyGF3MlI0u81lFK8oAJxg',
+    maintenance: 'ENABLE_MAINTENANCE_MODE__DEPP_BILL'
   }
 };
 

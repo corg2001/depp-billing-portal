@@ -109,8 +109,8 @@ export const environment = {
   },
   configcat: {
     key: 'o3_aCPwOlUOJ0ST5qznskQ/ulyGF3MlI0u81lFK8oAJxg',
-    maintenance: 'ENABLE_MAINTENANCE_MODE__DEPP_BILLING_PORTAL'
-  },
+    maintenance: 'ENABLE_MAINTENANCE_MODE__DEPP_BILL'
+  }
 };
 
 /*
