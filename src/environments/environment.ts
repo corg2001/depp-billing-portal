@@ -36,7 +36,7 @@ export const environment = {
     email: 'service@nrgprotects.com',
     achEmail: 'Info@hwahomewarranty.com',
     noHistoryMessage: 'There are no payments for the selected timeframe.',
-    idleTimeout: { timeoutSeconds: 1 },
+    idleTimeout: { timeoutSeconds: 870 },
   },
   auth: {
     forgotPassword: {
@@ -102,7 +102,7 @@ export const environment = {
   helpUrl: `${baseUrl}contact-us`,
   cognito: {
     loginURL: 'https://cognito-idp.us-east-1.amazonaws.com/',
-    clientId: '6of13902q7it0d824q45difaik',
+    clientId: '1dqk3e9jtk8euo3574q3oi9k0d',
     authFlow: 'USER_PASSWORD_AUTH',
     // Configcat
 

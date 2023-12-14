@@ -71,6 +71,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
+
   public loginSubscriptionHandler(response: boolean): void {
     if (!response) {
       this.showLoadingSpinner = false;
@@ -93,7 +94,11 @@ export class LoginComponent implements OnInit {
         this._authService.setUser(loginResponse);
         sessionStorage.setItem(SessionKeys.Authorization, JSON.stringify(loginResponse));
         sessionStorage.setItem(SessionKeys.UserName, credentials.username);
-        // this._getPartyDetails();
+        this._authService.loginSuccessHandler(
+          this.responseSubject,
+          this.dataSubject,
+          loginResponse
+        )
       },
       error: (error) => {
         if (error) {
@@ -104,13 +109,7 @@ export class LoginComponent implements OnInit {
           error = error.error.message;
         }
       },
-    })
-    this._authService.login(
-      this.responseSubject,
-      this.dataSubject,
-      username,
-      password
-    );
+    });
 
     localStorage.setItem(LocalStorageEnum.UserName, username);
     this.showLoadingSpinner = true;

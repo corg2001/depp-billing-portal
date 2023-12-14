@@ -10,6 +10,7 @@ import { LoginResponsePayload } from './login-response-payload';
 import { LoggerService } from '../core/logger.service';
 import { environment } from 'src/environments/environment';
 import { IAuthorizedUser } from '../shared/models/interface/authorized-user.interface';
+import { ICognitoLoginResponse } from '../shared/models/interface/cognito.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -20,25 +21,6 @@ export class AuthService {
     private _httpClient: HttpClient,
     private _loggerService: LoggerService
   ) { }
-
-  public login(
-    completionSubject: Subject<boolean>,
-    dataSubject: Subject<any>,
-    username: string,
-    password: string
-  ): void {
-    this._httpClient
-      .post(environment.loginUrl, {
-        username,
-        password
-      })
-      .subscribe(
-        (response: Observable<HttpResponse<LoginResponsePayload>>) =>
-          this.loginSuccessHandler(completionSubject, dataSubject, response),
-        (response: Observable<HttpErrorResponse>) =>
-          this.loginFailureHandler(completionSubject, dataSubject, response)
-      );
-  }
 
   public requestPassword(
     response$: Subject<string>,
@@ -132,10 +114,10 @@ export class AuthService {
     response$.next(error.error);
   }
 
-  private loginSuccessHandler(
+  public loginSuccessHandler(
     completionSubject: Subject<boolean>,
     dataSubject: Subject<any>,
-    response: Observable<HttpResponse<LoginResponsePayload>>
+    response: ICognitoLoginResponse
   ): void {
     if (!this._authService.newSession(response)) {
       // TODO: do a better management of errors
