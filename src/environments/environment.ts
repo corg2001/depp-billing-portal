@@ -100,8 +100,13 @@ export const environment = {
   calenderUrl: `${baseUrl}services/vendor/work-calendar`,
   // HelpService
   helpUrl: `${baseUrl}contact-us`,
+  cognito: {
+    loginURL: 'https://cognito-idp.us-east-1.amazonaws.com/',
+    clientId: '1dqk3e9jtk8euo3574q3oi9k0d',
+    authFlow: 'USER_PASSWORD_AUTH',
+    // Configcat
 
-  // Configcat
+  },
   configcat: {
     key: 'o3_aCPwOlUOJ0ST5qznskQ/ulyGF3MlI0u81lFK8oAJxg',
     maintenance: 'ENABLE_MAINTENANCE_MODE__DEPP_BILL'
