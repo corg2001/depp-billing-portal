@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { LoggerService } from './logger.service';
-import { ICognitoLoginResponse } from '../shared/models/interface/cognito.interface';
 
 // TODO: move it into it's own file
 enum SessionKeys {
@@ -25,13 +24,13 @@ export class AuthenticationService {
     !localStorage.getItem(SessionKeys.token) ? completionSubject.next(true) : completionSubject.next(false);
   }
 
-  public newSession(data: ICognitoLoginResponse): boolean {
-    const date: Date =  new Date();
-    const token: string = data.AuthenticationResult.IdToken ? data.AuthenticationResult.IdToken : '';
-    if (!token) {
+  public newSession(data: any): boolean  {
+    const token: string = data.token ? data.token.trim() : '';
+    const lastLogin: string = data.last_login ? data.last_login.trim() : '';
+    if (!token && !lastLogin) {
       return false;
     }
-    return this.createSession(token, `${date}`);
+    return this.createSession(token, lastLogin);
   }
 
   public isLoggedIn(): boolean {

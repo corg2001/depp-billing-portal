@@ -9,8 +9,6 @@ import { AuthenticationService } from '../core/authentication.service';
 import { LoginResponsePayload } from './login-response-payload';
 import { LoggerService } from '../core/logger.service';
 import { environment } from 'src/environments/environment';
-import { IAuthorizedUser } from '../shared/models/interface/authorized-user.interface';
-import { ICognitoLoginResponse } from '../shared/models/interface/cognito.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +19,25 @@ export class AuthService {
     private _httpClient: HttpClient,
     private _loggerService: LoggerService
   ) { }
+
+  public login(
+    completionSubject: Subject<boolean>,
+    dataSubject: Subject<any>,
+    username: string,
+    password: string
+  ): void {
+    this._httpClient
+      .post(environment.loginUrl, {
+        username,
+        password
+      })
+      .subscribe(
+        (response: Observable<HttpResponse<LoginResponsePayload>>) =>
+          this.loginSuccessHandler(completionSubject, dataSubject, response),
+        (response: Observable<HttpErrorResponse>) =>
+          this.loginFailureHandler(completionSubject, dataSubject, response)
+      );
+  }
 
   public requestPassword(
     response$: Subject<string>,
@@ -114,10 +131,10 @@ export class AuthService {
     response$.next(error.error);
   }
 
-  public loginSuccessHandler(
+  private loginSuccessHandler(
     completionSubject: Subject<boolean>,
     dataSubject: Subject<any>,
-    response: ICognitoLoginResponse
+    response: Observable<HttpResponse<LoginResponsePayload>>
   ): void {
     if (!this._authService.newSession(response)) {
       // TODO: do a better management of errors
@@ -179,26 +196,4 @@ export class AuthService {
     success$.next(false);
     response$.next(error);
   }
-
-  private _authUser: IAuthorizedUser = {
-    AuthenticationResult: {
-      AccessToken: '',
-      ExpiresIn: 0,
-      IdToken: '',
-      RefreshToken: '',
-      TokenType: ''
-    },
-    ChallengeParameters: {}
-  }
-  private _authUser$: BehaviorSubject<IAuthorizedUser> = new BehaviorSubject<
-    IAuthorizedUser
-  >(this._authUser);
-
-  public getUser$(): BehaviorSubject<IAuthorizedUser> {
-    return this._authUser$;
-  }
-
-  public setUser(user: IAuthorizedUser): void {
-    this._authUser$.next(user);
-  }F
 }
