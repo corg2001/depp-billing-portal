@@ -1,35 +1,56 @@
-import * as moment from 'moment';
-const env: string = 'qa3';
-const baseUrl: string = `https://hwa-contractor-api-${env}.digitaltest.directenergy.net/`;
-const custumerPortalUrl: string = `https://depp-portal-${env}.digitaltest.directenergy.net/`;
+// This file can be replaced during build by using the `fileReplacements` array.
+// `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
+// The list of file replacements can be found in `angular.json`.
+
+const env: string = 'prod';
+const baseUrl: string = `https://depp-billing-api-dev.homeprotection-dev.nrgdigitalawscloud.com/`;
+const custumerPortalUrl: string = `https://account.hwahomewarranty.com`;
+const realtorPortalUrl: string = `https://realtor.hwahomewarranty.com`;
 export const environment = {
   aspirePhase4releaseDate: '10-21-2021',
-  production: false,
+  production: true,
   analytics: {
     google: {
       brand: {
-        hwa: 'GTM-TS63H5R'
+        hwa: 'GTM-N739Z7C'
       }
     }
   },
   core: {
+    maintenance: {
+      active: false,
+      endDateMonth: '',
+      endDateDay: '',
+      endDateYear: '',
+      title: 'Website under maintenance...',
+      email: 'info@hwahomewarranty.com',
+      firstSentence: `We are currently updating our site to give you a better experience. Our systems will be back online`,
+      secondSentence: 'We apologize for any inconvenience.',
+      thirdSentence: 'In the meantime, if you need to reach us, please call 1.888.492.7359 or email us at'
+    },
     brandId: 'DEPP',
     brandFriendlyName: 'DEPP',
-    copyrightNotice: `&copy; ${moment().format('YYYY')} Direct Energy:`,
+    copyrightNotice: `&copy; 2022 Direct Energy:`,
     pageTitle: 'Direct Energy Protection Plans - Billing Portal',
     customerServiceNumber: '1-855-334-3577',
-    email: 'Contractorrelations@mailinator.com',
-    achEmail: 'VendorMaster@mailinator.com',
-    noHistoryMessage: 'There are no payments for the selected timeframe.'
+    email: 'service@nrgprotects.com',
+    achEmail: 'Info@hwahomewarranty.com',
+    noHistoryMessage: 'There are no payments for the selected timeframe.',
+    idleTimeout: { timeoutSeconds: 870 },
   },
   auth: {
     forgotPassword: {
-      userNotFound: 'Apologies, we can’t find a username under that email address. Please check the email address used to create online account. ' +  'For further assistance, You can call (855) 334-3577',
-      success: 'We have sent you a password reset link to the email address on file.  If it does not arrive in the next 10 minutes - please check your spam folder. ' +
+      userNotFound:
+        `Apologies, we cant find a username under that email address. Please check the email address used to create online account. ' +
+        'For further assistance, You can call (855) 334-3577`,
+      success:
+        'We have sent you a password reset link to the email address on file. If it does not arrive in the next 10 minutes - please check your spam folder. ' +
         'For further assistance, You can call (855) 334-3577'
     },
-    loginError: 'We apologize you are having difficulty logging into our portal.  Please try again or select "Forgot Password" to reset.  For further assistance, You can call (855) 334-3577 to direct over to our department.',
-    lockedError: 'Your account is locked after multiple attempts. Please select “Forgot Password” to reset your password and unlock your account. For further assistance, email us at <a href="mailto:acctmgr@hwahomewarranty.com.com">acctmgr@hwahomewarranty.com.com</a>, or call (888) 492-7359 option 4.'
+    loginError:
+      `We apologize you are having difficulty logging into our portal. Please try again or select the 'Forgot your Password?' link below to reset. For further assistance, please call (855) 334-3577.`,
+    lockedError:
+      `Your account is locked after multiple attempts. Please select the 'Forgot your Password?' link below to reset your password and unlock your account. For further assistance, please call (855) 334-3577.`
   },
   forms: {
     ach_form_path: '../assets/forms/centrica_vendor_Information_form.pdf'
@@ -38,8 +59,8 @@ export const environment = {
     customer: `${custumerPortalUrl}`,
   },
   legalTerms: {
-    termsOfUse: 'https://www.directenergyprotects.com/terms-of-use',
-    privacyPolicy: 'https://www.directenergyprotects.com/privacy-policy'
+    termsOfUse: 'https://nrgp-customer-elearning-prod.s3.amazonaws.com/NRGP_TEMP_CSTC_CvgSmryTnCs_2022.05.01.pdf',
+    privacyPolicy: 'https://nrgp-customer-elearning-prod.s3.amazonaws.com/NRG+Protects+Policy_June+2022_clean.pdf'
   },
   // auth service
   loginUrl: `${baseUrl}authentication/passport/login`,
@@ -78,7 +99,18 @@ export const environment = {
   // CalenderService
   calenderUrl: `${baseUrl}services/vendor/work-calendar`,
   // HelpService
-  helpUrl: `${baseUrl}contact-us`
+  helpUrl: `${baseUrl}contact-us`,
+  cognito: {
+    loginURL: 'https://cognito-idp.us-east-1.amazonaws.com/',
+    clientId: '1dqk3e9jtk8euo3574q3oi9k0d',
+    authFlow: 'USER_PASSWORD_AUTH',
+    // Configcat
+
+  },
+  configcat: {
+    key: 'o3_aCPwOlUOJ0ST5qznskQ/ulyGF3MlI0u81lFK8oAJxg',
+    maintenance: 'ENABLE_MAINTENANCE_MODE__DEPP_BILL'
+  }
 };
 
 /*

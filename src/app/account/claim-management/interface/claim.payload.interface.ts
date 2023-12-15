@@ -5,6 +5,7 @@ import {
 } from '../model/claims.enums';
 
 export interface ClaimPayloadInterface {
+  readonly claim_id: string;
   readonly job_number: string;
   readonly date_assigned: string;
   readonly claim_type: ClaimOrderType;

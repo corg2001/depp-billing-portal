@@ -20,14 +20,14 @@ export const environment = {
     copyrightNotice: `&copy; ${moment().format('YYYY')} Direct Energy:`,
     pageTitle: 'Direct Energy Protection Plans - Billing Portal',
     customerServiceNumber: '1-855-334-3577',
-    email: 'Contractorrelations@mailinator.com',
+    email: 'service@nrgprotects.com',
     achEmail: 'VendorMaster@mailinator.com',
     noHistoryMessage: 'There are no payments for the selected timeframe.'
   },
   auth: {
     forgotPassword: {
       userNotFound: 'Apologies, we can’t find a username under that email address. Please check the email address used to create online account. ' +
-      'For further assistance, You can call (855) 334-3577',
+        'For further assistance, You can call (855) 334-3577',
       success: 'We have sent you a password reset link to the email address on file.  If it does not arrive in the next 10 minutes - please check your spam folder. ' +
         'For further assistance, You can call (855) 334-3577'
     },
@@ -42,8 +42,8 @@ export const environment = {
     realtor: `${realtorPortalUrl}`
   },
   legalTerms: {
-    termsOfUse: 'https://www.directenergyprotects.com/terms-of-use',
-    privacyPolicy: 'https://www.directenergyprotects.com/privacy-policy'
+    termsOfUse: 'https://nrgp-customer-elearning-prod.s3.amazonaws.com/NRGP_TEMP_CSTC_CvgSmryTnCs_2022.05.01.pdf',
+    privacyPolicy: 'https://nrgp-customer-elearning-prod.s3.amazonaws.com/NRG+Protects+Policy_June+2022_clean.pdf'
   },
   // auth service
   loginUrl: `${baseUrl}authentication/passport/login`,
@@ -83,7 +83,12 @@ export const environment = {
   // CalenderService
   calenderUrl: `${baseUrl}services/vendor/work-calendar`,
   // helpService
-  helpUrl: `${baseUrl}contact-us`
+  helpUrl: `${baseUrl}contact-us`,
+  // Configcat
+  configcat: {
+    key: 'o3_aCPwOlUOJ0ST5qznskQ/ulyGF3MlI0u81lFK8oAJxg',
+    maintenance: 'ENABLE_MAINTENANCE_MODE__DEPP_BILL'
+  }
 };
 
 /*

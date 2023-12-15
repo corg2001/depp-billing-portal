@@ -13,7 +13,8 @@ export class ClaimFactoryService {
   public getClaimFromPayload(claim_playload: ClaimPayloadInterface[]): Claim[] {
     const claims: Claim[] = [];
     claim_playload.forEach((claimPlayload: ClaimPayloadInterface) => {
-      const claim: Claim = new Claim(
+      const claim: Claim = new Claim( 
+        claimPlayload.claim_id,
         claimPlayload.job_number,
         claimPlayload.date_assigned,
         claimPlayload.claim_type,

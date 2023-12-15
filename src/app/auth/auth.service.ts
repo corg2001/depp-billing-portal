@@ -4,11 +4,13 @@ import {
   HttpErrorResponse,
   HttpResponse
 } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { AuthenticationService } from '../core/authentication.service';
 import { LoginResponsePayload } from './login-response-payload';
 import { LoggerService } from '../core/logger.service';
 import { environment } from 'src/environments/environment';
+import { IAuthorizedUser } from '../shared/models/interface/authorized-user.interface';
+import { ICognitoLoginResponse } from '../shared/models/interface/cognito.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -19,25 +21,6 @@ export class AuthService {
     private _httpClient: HttpClient,
     private _loggerService: LoggerService
   ) { }
-
-  public login(
-    completionSubject: Subject<boolean>,
-    dataSubject: Subject<any>,
-    username: string,
-    password: string
-  ): void {
-    this._httpClient
-      .post(environment.loginUrl, {
-        username,
-        password
-      })
-      .subscribe(
-        (response: Observable<HttpResponse<LoginResponsePayload>>) =>
-          this.loginSuccessHandler(completionSubject, dataSubject, response),
-        (response: Observable<HttpErrorResponse>) =>
-          this.loginFailureHandler(completionSubject, dataSubject, response)
-      );
-  }
 
   public requestPassword(
     response$: Subject<string>,
@@ -108,7 +91,7 @@ export class AuthService {
   ): void {
     sessionStorage.removeItem('compromised-login');
     isUserFound$.next(true);
-      response$.next(environment.auth.forgotPassword.success);
+    response$.next(environment.auth.forgotPassword.success);
   }
 
   private requestPassWordErrorHandler(
@@ -116,7 +99,7 @@ export class AuthService {
     isUserFound$?: Subject<boolean>
   ): void {
     isUserFound$.next(false);
-      response$.next(environment.auth.forgotPassword.userNotFound);
+    response$.next(environment.auth.forgotPassword.userNotFound);
   }
 
   private genericFailureHandler(
@@ -131,18 +114,20 @@ export class AuthService {
     response$.next(error.error);
   }
 
-  private loginSuccessHandler(
+  public loginSuccessHandler(
     completionSubject: Subject<boolean>,
     dataSubject: Subject<any>,
-    response: Observable<HttpResponse<LoginResponsePayload>>
+    response: ICognitoLoginResponse
   ): void {
     if (!this._authService.newSession(response)) {
       // TODO: do a better management of errors
       this.httpErrorHandler('InternalError: Unable to create session ...');
       dataSubject.next(response);
       completionSubject.next(false);
+      this._authService.isLoggedIn$.next(false);
     }
     completionSubject.next(true);
+    this._authService.isLoggedIn$.next(true);
   }
 
   private loginFailureHandler(
@@ -153,6 +138,7 @@ export class AuthService {
     this.httpErrorHandler(response);
     dataSubject.next(response);
     completionSubject.next(false);
+    this._authService.isLoggedIn$.next(false);
   }
 
   private httpErrorHandler(response: any): any {
@@ -193,4 +179,26 @@ export class AuthService {
     success$.next(false);
     response$.next(error);
   }
+
+  private _authUser: IAuthorizedUser = {
+    AuthenticationResult: {
+      AccessToken: '',
+      ExpiresIn: 0,
+      IdToken: '',
+      RefreshToken: '',
+      TokenType: ''
+    },
+    ChallengeParameters: {}
+  }
+  private _authUser$: BehaviorSubject<IAuthorizedUser> = new BehaviorSubject<
+    IAuthorizedUser
+  >(this._authUser);
+
+  public getUser$(): BehaviorSubject<IAuthorizedUser> {
+    return this._authUser$;
+  }
+
+  public setUser(user: IAuthorizedUser): void {
+    this._authUser$.next(user);
+  }F
 }

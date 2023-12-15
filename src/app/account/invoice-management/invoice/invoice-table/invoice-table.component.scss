@@ -4,12 +4,19 @@ select {
   padding: 1rem;
   border: solid #00849b .1rem;
 }
+
 .noInfo {
   margin: 3rem 0;
 }
+
 td {
   text-align: left;
 }
+
 th {
   text-align: left;
+}
+
+.export {
+  margin-bottom: 10px;
 }

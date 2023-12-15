@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
-import { TermsOfUseComponent } from '../../auth/terms-of-use/terms-of-use.component';
-import { PrivacyPolicyComponent } from '../../auth/privacy-policy/privacy-policy.component';
 import { SocialMediaEnum } from '../../core/enums/social-media.enums';
 import { environment } from 'src/environments/environment';
 
@@ -21,6 +18,6 @@ export class FooterComponent implements OnInit {
 
   ngOnInit() {
     this.yearToDate = moment().format('YYYY');
-    this.footerMessage = `${this.yearToDate} Direct Energy. All rights reserved.`;
+    this.footerMessage = `${this.yearToDate} NRG Protects Inc. All Rights Reserved.`;
   }
 }

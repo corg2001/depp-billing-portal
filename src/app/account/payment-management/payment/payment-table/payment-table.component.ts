@@ -8,9 +8,9 @@ import { SortableHeaderDirective } from 'src/app/core/directive/sortable-header.
 import { SortDirectionEnums } from 'src/app/core/enums/sort-direction.enums';
 import { SortEventInterface } from 'src/app/core/interface/sort-event.interface';
 import * as Money from 'js-money';
-import { environment } from 'src/environments/environment';
 import { SearchFormValues } from 'src/app/shared/models/search-form-values.interface';
-import { isType } from '@angular/core/src/type';
+import { ExportExcelService } from 'src/app/shared/service/export-excel.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-payment-table',
@@ -24,6 +24,7 @@ export class PaymentTableComponent implements OnInit, OnChanges {
   @Input() public searchFormValue?: SearchFormValues;
   @ViewChild('invoiceModal') public modalHtml: ElementRef;
   @ViewChildren(SortableHeaderDirective) headers: QueryList<SortableHeaderDirective>;
+  public exportJSON: any[] = [];
 
   public paymentHistory: PaymentHistoryInterface[] = [];
   public page: number;
@@ -32,10 +33,9 @@ export class PaymentTableComponent implements OnInit, OnChanges {
   public hasHistories: boolean;
   public noHistoryMsg: string;
   public loadingMsg = 'Gathering Payments ...';
-  constructor(private _modalService: NgbModal, private _paymentService: PaymentAbstractService) { }
+  constructor(private _modalService: NgbModal, private _paymentService: PaymentAbstractService, private exportExcelService: ExportExcelService) { }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    console.log( this.searchFormValue);
     this.searchFormValue === undefined ? this.noHistoryMsg = this.defaultNoPaymentsMsg : this.noHistoryMsg = this.noPaymentsFromSearchMsg;
   }
 
@@ -44,12 +44,14 @@ export class PaymentTableComponent implements OnInit, OnChanges {
       this.paymentHistory = updatedPaymentHistory;
       this.hasHistories = this._isHistoryFound(updatedPaymentHistory);
       this._sortList('paymentDate', SortDirectionEnums.Descending);
+      this.createExportJSON();
     });
     this.paymentHistory$.subscribe((paymenHistory: PaymentHistoryInterface[]) => {
       this.paymentHistory = paymenHistory;
       this.collectionSize = paymenHistory.length;
       this.hasHistories = this._isHistoryFound(paymenHistory);
       this._sortList('paymentDate', SortDirectionEnums.Descending);
+      this.createExportJSON();
     });
     this.page = 1;
     this.pageSize = 15;
@@ -77,7 +79,7 @@ export class PaymentTableComponent implements OnInit, OnChanges {
 
   public viewInvoice(data: PaymentHistoryInterface): void {
     this._paymentService.setInvoicDetails(data);
-    this._modalService.open(InvoiceModalComponent, { size: 'lg'});
+    this._modalService.open(InvoiceModalComponent, { size: 'lg' });
   }
 
   public modifiedPaymentHistory(): PaymentHistoryInterface[] {
@@ -115,16 +117,33 @@ export class PaymentTableComponent implements OnInit, OnChanges {
     }
   }
 
-  private _compareString (v1?: string, v2?: string) {
+  private _compareString(v1?: string, v2?: string) {
     return (v1 < v2) ? -1 : (v1 > v2) ? 1 : 0;
   }
 
-  private _compareMoney (v1: Money, v2: Money): number {
+  private _compareMoney(v1: Money, v2: Money): number {
     let num1: number = 0;
     let num2: number = 0;
     num1 = parseFloat(v1.amount);
     num2 = parseFloat(v2.amount);
 
     return num1 - num2;
+  }
+
+  public createExportJSON() {
+
+    this.exportJSON = [];
+    this.paymentHistory.forEach((payment: PaymentHistoryInterface) => {
+      this.exportJSON.push({
+        'Payment Date': moment(payment.paymentDate).format("MMM Do YY"),
+        'Reference ID': payment.paymentReferenceNo,
+        'Payment Type': payment.paymentMethod,
+        'Payment Amount': '$' + payment.paymentAmount.amount / 100 + '.00'
+      })
+    });
+  }
+
+  public exportExcelFile() {
+    this.exportExcelService.exportJsonAsExcelFile(this.exportJSON, 'payment_history')
   }
 }

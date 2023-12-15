@@ -2,6 +2,7 @@ import { ClaimInterface } from '../interface/claim.interface';
 import { JobStatus, ClaimOrderType, ClaimDisposition } from './claims.enums';
 
 export class Claim implements ClaimInterface {
+  private _claimId: string;
   private _jobNumber: string;
   private _dateAssigned: string;
   private _claimType: ClaimOrderType;
@@ -14,6 +15,7 @@ export class Claim implements ClaimInterface {
   private _isPrepaidMaintenance: boolean;
   private _isRevShare: boolean;
   constructor(
+    claimId?: string,
     jobNumber?: string,
     dateAssigned?: string,
     claimType?: ClaimOrderType,
@@ -26,6 +28,7 @@ export class Claim implements ClaimInterface {
     isPrepaidMaintenance?: boolean,
     isRevShare?: boolean
   ) {
+    this._claimId = claimId;
     this._jobNumber = jobNumber;
     this._dateAssigned = dateAssigned;
     this._claimType = claimType;
@@ -38,6 +41,11 @@ export class Claim implements ClaimInterface {
     this._isPrepaidMaintenance = isPrepaidMaintenance;
     this._isRevShare = isRevShare;
   }
+
+  get claimId(): string {
+    return this._claimId;
+  }
+
   get jobNumber(): string {
     return this._jobNumber;
   }
@@ -51,7 +59,7 @@ export class Claim implements ClaimInterface {
   }
 
   get claimDisposition(): ClaimDisposition {
-      return this._claimDisposition;
+    return this._claimDisposition;
   }
 
   get customerName(): string {
@@ -82,6 +90,10 @@ export class Claim implements ClaimInterface {
     return this._isRevShare;
   }
 
+  set claimId(claimId: string) {
+    this._claimId = claimId;
+  }
+
   set jobNumber(jobNumber: string) {
     this._jobNumber = jobNumber;
   }
@@ -95,7 +107,7 @@ export class Claim implements ClaimInterface {
   }
 
   set claimDisposition(claimDisposition: ClaimDisposition) {
-      this._claimDisposition = claimDisposition;
+    this._claimDisposition = claimDisposition;
   }
 
   set customerName(name: string) {
