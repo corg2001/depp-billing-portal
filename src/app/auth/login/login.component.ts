@@ -10,9 +10,6 @@ import { PrivacyPolicyComponent } from '../privacy-policy/privacy-policy.compone
 import { TermsOfUseComponent } from '../terms-of-use/terms-of-use.component';
 import { LocalStorageEnum } from 'src/app/core/enums/local-storage.enums';
 import { environment } from 'src/environments/environment';
-import { CognitoService } from '../cognito.service';
-import { ICognitoLoginResponse } from 'src/app/shared/models/interface/cognito.interface';
-import { SessionKeys } from 'src/app/shared/enums/session-keys.emums';
 
 @Component({
   selector: 'app-login',
@@ -40,9 +37,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private _authService: AuthService,
     private _ngbModalService: NgbModal,
-    private _router: Router,
-    private _cognitoService: CognitoService,
-  ) { }
+    private _router: Router
+  ) {}
 
   ngOnInit() {
     this.buildForm();
@@ -71,7 +67,6 @@ export class LoginComponent implements OnInit {
     });
   }
 
-
   public loginSubscriptionHandler(response: boolean): void {
     if (!response) {
       this.showLoadingSpinner = false;
@@ -84,32 +79,12 @@ export class LoginComponent implements OnInit {
   public login(): void {
     const username: string = this.loginForm.get('userName').value.trim();
     const password: string = this.loginForm.get('userPassword').value.trim();
-    let credentials = {
-      password,
+    this._authService.login(
+      this.responseSubject,
+      this.dataSubject,
       username,
-    }
-    this._cognitoService.login(credentials).subscribe({
-      next: (loginResponse: ICognitoLoginResponse) => {
-        this.errorMessage = '';
-        this._authService.setUser(loginResponse);
-        sessionStorage.setItem(SessionKeys.Authorization, JSON.stringify(loginResponse));
-        sessionStorage.setItem(SessionKeys.UserName, credentials.username);
-        this._authService.loginSuccessHandler(
-          this.responseSubject,
-          this.dataSubject,
-          loginResponse
-        )
-      },
-      error: (error) => {
-        if (error) {
-          this.showLoadingSpinner = false;
-          this.errorMessage =
-            'The email address or password you entered is incorrect. Please re-enter your login information.';
-        } else {
-          error = error.error.message;
-        }
-      },
-    });
+      password
+    );
 
     localStorage.setItem(LocalStorageEnum.UserName, username);
     this.showLoadingSpinner = true;
