@@ -148,12 +148,13 @@ export class AuthService {
 
   public resetPassword(
     token: string,
+    username: string,
     password: string,
     success$: Subject<boolean>,
     response$?: Subject<any>
   ): void {
     this._httpClient
-      .post(environment.resetPasswordUrl, { token, password })
+      .post(environment.resetPasswordUrl, { token, username, password })
       .subscribe(
         (response: Observable<HttpResponse<any>>) =>
           this._resetPasswordSuccessHandler(success$, response, response$),
@@ -200,5 +201,5 @@ export class AuthService {
 
   public setUser(user: IAuthorizedUser): void {
     this._authUser$.next(user);
-  }F
+  } F
 }
