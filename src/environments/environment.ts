@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 const env: string = 'prod';
-const baseUrl: string = `https://depp-billing-api-dev.homeprotection-dev.nrgdigitalawscloud.com/`;
+const baseUrl: string = `https://depp-billing-api-qa1.homeprotection-dev.nrgdigitalawscloud.com/`;
 const custumerPortalUrl: string = `https://account.hwahomewarranty.com`;
 const realtorPortalUrl: string = `https://realtor.hwahomewarranty.com`;
 export const environment = {

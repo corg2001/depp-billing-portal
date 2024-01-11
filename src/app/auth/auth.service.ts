@@ -10,6 +10,17 @@ import { LoginResponsePayload } from './login-response-payload';
 import { LoggerService } from '../core/logger.service';
 import { environment } from 'src/environments/environment';
 
+export interface IAuthorizedUser {
+  AuthenticationResult: {
+    AccessToken: string;
+    ExpiresIn: number;
+    IdToken: string;
+    RefreshToken: string;
+    TokenType: string;
+  };
+  ChallengeParameters: any;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -165,12 +176,13 @@ export class AuthService {
 
   public resetPassword(
     token: string,
+    username: string,
     password: string,
     success$: Subject<boolean>,
     response$?: Subject<any>
   ): void {
     this._httpClient
-      .post(environment.resetPasswordUrl, { token, password })
+      .post(environment.resetPasswordUrl, { token, username, password })
       .subscribe(
         (response: Observable<HttpResponse<any>>) =>
           this._resetPasswordSuccessHandler(success$, response, response$),
@@ -195,5 +207,26 @@ export class AuthService {
   ) {
     success$.next(false);
     response$.next(error);
+  }
+  private _authUser: IAuthorizedUser = {
+    AuthenticationResult: {
+      AccessToken: '',
+      ExpiresIn: 0,
+      IdToken: '',
+      RefreshToken: '',
+      TokenType: ''
+    },
+    ChallengeParameters: {}
+  }
+  private _authUser$: BehaviorSubject<IAuthorizedUser> = new BehaviorSubject<
+    IAuthorizedUser
+  >(this._authUser);
+
+  public getUser$(): BehaviorSubject<IAuthorizedUser> {
+    return this._authUser$;
+  }
+
+  public setUser(user: IAuthorizedUser): void {
+    this._authUser$.next(user);
   }
 }

@@ -11,7 +11,7 @@ import {
 import { AuthService } from '../auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, Subscription } from 'rxjs';
-import { NgPasswordRulesService} from 'ng-password-helper';
+import { NgPasswordRulesService } from 'ng-password-helper';
 
 function ValidateEmail(c: FormControl): any {
   // TODO: Implement a real validation for password match
@@ -45,7 +45,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
     private _activeRoute: ActivatedRoute,
     private _route: Router,
     public ngPasswordRulesService: NgPasswordRulesService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.buildForm();
@@ -54,10 +54,10 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
   public buildForm(): void {
     this.resetForm = this._formBuilder.group(
       {
-        newPassword: [  '', [
-        this.passwordHelper.bind(this),
-        Validators.required,
-        Validators.pattern('(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,32}')]],
+        newPassword: ['', [
+          this.passwordHelper.bind(this),
+          Validators.required,
+          Validators.pattern('(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,32}')]],
         confirmPassword: ['', Validators.required]
       },
       { validators: this._matchPassowrds }
@@ -69,18 +69,21 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
   }
 
   public passwordHelper(control: FormControl): any {
-      return this.ngPasswordRulesService.validPassword(control);
+    return this.ngPasswordRulesService.validPassword(control);
   }
 
   public resetPassword(): void {
     const isSuccesFul$: Subject<boolean> = new Subject();
     const response$: Subject<any> = new Subject();
     let restToken: string;
+    let username: string;
     this.resetParms$ = this._activeRoute.paramMap.subscribe((params: any) => {
       restToken = params.params.restToken;
+      username = params.params.username;
       const newPassword: string = this.resetForm.get('newPassword').value;
       this._authService.resetPassword(
         restToken,
+        username,
         newPassword,
         isSuccesFul$,
         response$
@@ -126,16 +129,16 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
     });
   }
 
-   public passwordContainSpace(): boolean {
+  public passwordContainSpace(): boolean {
     this.newPassword = this.resetForm.get('newPassword').value;
     if (this.newPassword && this.newPassword.indexOf(' ') >= 0) {
-      return  true;
+      return true;
     }
 
     return false;
   }
 
-// will have to get the token from the link in email if broweser is refreshed
+  // will have to get the token from the link in email if broweser is refreshed
   ngOnDestroy(): void {
     this.resetParms$.unsubscribe();
   }
