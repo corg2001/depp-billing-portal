@@ -9,18 +9,8 @@ import { AuthenticationService } from '../core/authentication.service';
 import { LoginResponsePayload } from './login-response-payload';
 import { LoggerService } from '../core/logger.service';
 import { environment } from 'src/environments/environment';
-
-export interface IAuthorizedUser {
-  AuthenticationResult: {
-    AccessToken: string;
-    ExpiresIn: number;
-    IdToken: string;
-    RefreshToken: string;
-    TokenType: string;
-  };
-  ChallengeParameters: any;
-}
-
+import { IAuthorizedUser } from '../shared/models/interface/authorized-user.interface';
+import { ICognitoLoginResponse } from '../shared/models/interface/cognito.interface';
 @Injectable({
   providedIn: 'root'
 })
@@ -31,24 +21,7 @@ export class AuthService {
     private _loggerService: LoggerService
   ) { }
 
-  public login(
-    completionSubject: Subject<boolean>,
-    dataSubject: Subject<any>,
-    username: string,
-    password: string
-  ): void {
-    this._httpClient
-      .post(environment.loginUrl, {
-        username,
-        password
-      })
-      .subscribe(
-        (response: Observable<HttpResponse<LoginResponsePayload>>) =>
-          this.loginSuccessHandler(completionSubject, dataSubject, response),
-        (response: Observable<HttpErrorResponse>) =>
-          this.loginFailureHandler(completionSubject, dataSubject, response)
-      );
-  }
+
 
   public requestPassword(
     response$: Subject<string>,
@@ -142,10 +115,10 @@ export class AuthService {
     response$.next(error.error);
   }
 
-  private loginSuccessHandler(
+  public loginSuccessHandler(
     completionSubject: Subject<boolean>,
     dataSubject: Subject<any>,
-    response: Observable<HttpResponse<LoginResponsePayload>>
+    response: ICognitoLoginResponse
   ): void {
     if (!this._authService.newSession(response)) {
       // TODO: do a better management of errors
@@ -208,6 +181,7 @@ export class AuthService {
     success$.next(false);
     response$.next(error);
   }
+
   private _authUser: IAuthorizedUser = {
     AuthenticationResult: {
       AccessToken: '',
