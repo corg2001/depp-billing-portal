@@ -7,5 +7,6 @@ export enum HttpParamEnum {
     transactionStartDate = 'transaction_start_date',
     transactionEndDate = 'transaction_end_date',
     yearMonthDayFormat = 'yyyy-mm-dd',
-    docType = 'type'
+    docType = 'type',
+    partyId='party_id',
 }

@@ -6,6 +6,11 @@ const env: string = 'prod';
 const baseUrl: string = `https://depp-billing-api-qa1.homeprotection-dev.nrgdigitalawscloud.com/`;
 const custumerPortalUrl: string = `https://account.hwahomewarranty.com`;
 const realtorPortalUrl: string = `https://realtor.hwahomewarranty.com`;
+
+const customerApisBaseUri = `https://svcsapimt03.nrgenergy.com/CustomerApis/v1/`;
+const unauthEnrollmentApisBaseUri = `https://svcsapimt03.nrgenergy.com/UnauthEnrollmentApis/v1/`;
+const vendorApisBaseUri = `https://svcsapimt03.nrgenergy.com/VendorApis/v1/`;
+
 export const environment = {
   aspirePhase4releaseDate: '10-21-2021',
   production: true,
@@ -62,6 +67,10 @@ export const environment = {
     termsOfUse: 'https://nrgp-customer-elearning-prod.s3.amazonaws.com/NRGP_TEMP_CSTC_CvgSmryTnCs_2022.05.01.pdf',
     privacyPolicy: 'https://nrgp-customer-elearning-prod.s3.amazonaws.com/NRG+Protects+Policy_June+2022_clean.pdf'
   },
+  configcat: {
+    key: 'o3_aCPwOlUOJ0ST5qznskQ/ulyGF3MlI0u81lFK8oAJxg',
+    maintenance: 'ENABLE_MAINTENANCE_MODE__DEPP_BILL'
+  },
   // auth service
   loginUrl: `${baseUrl}authentication/passport/login`,
   requestPasswordUrl: `${baseUrl}authentication/passport/forgot-password`,
@@ -73,9 +82,9 @@ export const environment = {
   enrollUrl: `${baseUrl}lead-generation`,
 
   // PartyService
-  partyDetailsUrl: `${baseUrl}services/party`,
+  partyDetailsUrl: `${customerApisBaseUri}GetPartyDetails`,
   // ClaimService
-  claimsUrl: `${baseUrl}services/vendor/purchase-orders`,
+  claimsUrl: `${vendorApisBaseUri}GetVendorPurchaseOrders`,
   authInoviceUrl: `${baseUrl}services/vendor/geturl`,
   submitDiagnosisUrl: `${baseUrl}services/vendor/contractor-form`,
 
@@ -91,7 +100,7 @@ export const environment = {
   // PaymentServoce
   payementHistoryUrl: `${baseUrl}services/vendor/payments-history`,
   // InvoiceService
-  invoicesUrl: `${baseUrl}services/vendor/invoices`,
+  invoicesUrl: `${vendorApisBaseUri}GetVendorInvoices`,
 
   // uploadService
   uploadUrl: `${baseUrl}services/vendor/document-upload`,
@@ -103,13 +112,12 @@ export const environment = {
   cognito: {
     loginURL: 'https://cognito-idp.us-east-1.amazonaws.com/',
     clientId: '1dqk3e9jtk8euo3574q3oi9k0d',
-    authFlow: 'USER_PASSWORD_AUTH',
-    // Configcat
-
+    authFlow: 'USER_PASSWORD_AUTH'
   },
-  configcat: {
-    key: 'o3_aCPwOlUOJ0ST5qznskQ/ulyGF3MlI0u81lFK8oAJxg',
-    maintenance: 'ENABLE_MAINTENANCE_MODE__DEPP_BILL'
+  subscriptionkeys:{
+    customerapis:'1cb165d2ce334b20ac4a2af1508c7010',
+    vendorapis:'b55fef4464ce474bbfa3dd0e1bc395f0',
+    unauthenrollmentapis:'8ef58170a1a64e96802462f5ac82c782'
   }
 };
 

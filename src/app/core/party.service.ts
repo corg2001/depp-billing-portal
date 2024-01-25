@@ -14,7 +14,7 @@ import { environment } from 'src/environments/environment';
 import { PartyDetailsPayloadInterface } from './interface/payload/party-details.payload.interface';
 import { AssociationPayloadInterface } from './interface/payload/association.payload.interface';
 import { LocalStorageEnum } from './enums/local-storage.enums';
-
+import { jwtDecode } from 'jwt-decode';
 
 
 @Injectable({
@@ -36,7 +36,12 @@ export class PartyService {
   }
 
   private getPartyDetails(subscription: Subscriber<boolean>): any {
-    this._http.get(environment.partyDetailsUrl).subscribe(
+    const party_id = (jwtDecode(this.authService.getToken())['custom:party_id']);
+    const postBody = {
+      party_id
+    };
+    sessionStorage.setItem('party_id', party_id);
+    this._http.post(environment.partyDetailsUrl,postBody).subscribe(
       (responseData: PartyDetailsPayloadInterface) => {
         this.getPartyDetailsSuccessHandler(subscription, responseData);
         if (responseData.associations._association.length > 0)

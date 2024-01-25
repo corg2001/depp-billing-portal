@@ -37,7 +37,7 @@ export class InvoiceService implements InvoiceAsbstractService {
     private calendar: NgbCalendar
   ) {
     this.invoice$ = new BehaviorSubject(this._invoice);
-    this.fromDate =  calendar.getPrev(calendar.getToday(), 'd', 60);
+    this.fromDate = calendar.getPrev(calendar.getToday(), 'd', 60);
     this.toDate = calendar.getToday();
   }
 
@@ -53,13 +53,19 @@ export class InvoiceService implements InvoiceAsbstractService {
     const _startDate: any = `${this.fromDate.year}-${this.fromDate.month}-${this.fromDate.day}`;
     const _endDate: any = `${this.toDate.year}-${this.toDate.month}-${this.toDate.day}`;
     const startDateValue: string = (startDate == null)
-    ? _startDate : startDate;
+      ? _startDate : startDate;
     const endDateValue: string = (endDate == null)
       ? _endDate
       : endDate;
+    const partyId = sessionStorage.getItem('party_id');
+
+    const companyInfo = btoa(sessionStorage.getItem('company_info'));
+
     const params: HttpParams = this.getInvoiceParams(
       startDateValue,
-      endDateValue
+      endDateValue,
+      partyId,
+      companyInfo
     );
     this._http
       .get(environment.invoicesUrl, { params })
@@ -78,14 +84,17 @@ export class InvoiceService implements InvoiceAsbstractService {
 
   public getInvoiceParams(
     startDate: string,
-    endDate?: string
+    endDate?: string,
+    partyId?: string,
+    companyInfo?: string
   ): HttpParams {
     let params: HttpParams = new HttpParams()
       .set(HttpParamEnum.starDate, startDate);
     if (endDate !== null) {
       params = params.set(HttpParamEnum.endDate, endDate);
     }
-
+    params = params.set(HttpParamEnum.partyId, partyId);
+    params = params.set(HttpParamEnum.companyInfo, companyInfo);
     return params;
   }
 
@@ -126,20 +135,20 @@ export class InvoiceService implements InvoiceAsbstractService {
       const _invoiceDate: string = this._formatDateMoment(invoice.invoiceDate);
       const _serviceAddress = serviceAddress.toLowerCase();
       return startDate && endDate && serviceAddress
-        ? _startDate  <= _invoiceDate && _endDate >= _invoiceDate && invoice.serviceAddress.toLowerCase().includes(_serviceAddress)
+        ? _startDate <= _invoiceDate && _endDate >= _invoiceDate && invoice.serviceAddress.toLowerCase().includes(_serviceAddress)
         : startDate && endDate
-        ? (_startDate <= _invoiceDate &&  _endDate >= _invoiceDate) || _startDate === _invoiceDate && _endDate === _invoiceDate
-        : startDate && _serviceAddress
-        ?  _startDate <= _invoiceDate  && invoice.serviceAddress.toLowerCase().includes(_serviceAddress)
-        : endDate && _serviceAddress
-        ?  _endDate >= _invoiceDate  && invoice.serviceAddress.toLowerCase().includes(_serviceAddress)
-        : startDate
-        ?  _startDate <= _invoiceDate
-        : endDate
-        ? _endDate >= _invoiceDate
-        : serviceAddress
-        ? invoice.serviceAddress.toLowerCase().includes(_serviceAddress)
-        : invoice;
+          ? (_startDate <= _invoiceDate && _endDate >= _invoiceDate) || _startDate === _invoiceDate && _endDate === _invoiceDate
+          : startDate && _serviceAddress
+            ? _startDate <= _invoiceDate && invoice.serviceAddress.toLowerCase().includes(_serviceAddress)
+            : endDate && _serviceAddress
+              ? _endDate >= _invoiceDate && invoice.serviceAddress.toLowerCase().includes(_serviceAddress)
+              : startDate
+                ? _startDate <= _invoiceDate
+                : endDate
+                  ? _endDate >= _invoiceDate
+                  : serviceAddress
+                    ? invoice.serviceAddress.toLowerCase().includes(_serviceAddress)
+                    : invoice;
     });
   }
 
