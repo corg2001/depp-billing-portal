@@ -14,11 +14,11 @@ import { ClaimPayloadInterface } from '../interface/claim.payload.interface';
 import { ClaimServiceAbstract } from './abstract/claim.abstract.service';
 import { environment } from 'src/environments/environment';
 import { HttpParamEnum } from 'src/app/shared/enums/http-params.enums';
-import { JobDetailInterface, DiagnosisRequest  } from './../interface/job-detail.interface';
+import { JobDetailInterface, DiagnosisRequest } from './../interface/job-detail.interface';
 import { LocalStorageEnum } from 'src/app/core/enums/local-storage.enums';
 import * as moment from 'moment-timezone';
 import { NgbCalendar, NgbDate } from '@ng-bootstrap/ng-bootstrap';
-import { CompanyInfoPayloadInterface } from 'src/app/core/interface/payload/company-info.payload.interface';
+import { CompanyInfoPayloadInterface } from 'src/app/core/interface/payload/company-info.payload.interface';
 @Injectable({
   providedIn: 'root'
 })
@@ -28,8 +28,8 @@ export class ClaimService implements ClaimServiceAbstract {
   public il03_vendorId$: Subject<string> = new Subject<string>();
   private _defaultFromDate: NgbDate;
   private _defaultToDate: NgbDate;
-  private diagnosisRequest : DiagnosisRequest;
-  private company_info : CompanyInfoPayloadInterface;
+  private diagnosisRequest: DiagnosisRequest;
+  private company_info: CompanyInfoPayloadInterface;
 
   constructor(
     private _configService: ConfigService,
@@ -53,8 +53,14 @@ export class ClaimService implements ClaimServiceAbstract {
     const formatedStartDate: string = startDate ? startDate : this.getFormattedDate(rawFromDate);
     const formatedEndDate: string = endDate ? endDate : this.getFormattedDate(rawEndDate);
     const params: HttpParams = this.getClaimsParams(formatedStartDate, formatedEndDate);
+    const postBody = {
+      startDate: formatedStartDate,
+      endDate: formatedEndDate,
+      partyId: sessionStorage.getItem('party_id'),
+      companies: JSON.parse(sessionStorage.getItem('company_info'))
+    };
 
-    this._httpClient.get<ClaimPayloadInterface[]>(environment.claimsUrl, { params })
+    this._httpClient.post<ClaimPayloadInterface[]>(environment.claimsUrl, postBody)
       .subscribe((data: ClaimPayloadInterface[]) => {
         this.getClaimsSuccessHandler(isComplete$, isError$, claimData$, data);
       }, (error: HttpErrorResponse) => {
@@ -113,7 +119,7 @@ export class ClaimService implements ClaimServiceAbstract {
       this.getClaimInDateRange(claimData, fromDate, toDate) :
       fromDate ? this.getClaimsFromDate(fromDate, claimData) : toDate ? this.getClaimFromToDate(toDate, claimData) : claimData;
 
-    if (type && type !== 'None' && type !== 'Claim Type' ) {
+    if (type && type !== 'None' && type !== 'Claim Type') {
       claimsInDateRange = this._claimsOfType(claimsInDateRange, type);
     }
 
@@ -235,13 +241,13 @@ export class ClaimService implements ClaimServiceAbstract {
     formType: string,
     jobDetail: JobDetailInterface,
     //blobData: Blob,
-    diagnosisFormData : string,
+    diagnosisFormData: string,
     isSuccess$: Subject<any>,
     isError$: Subject<boolean>
   ): void {
     // const formData = new FormData();
     // formData.append('file', blobData, jobDetail.jobNumber + '.pdf');
-    this.company_info = JSON.parse(sessionStorage.getItem('company_info'));
+    this.company_info = JSON.parse(sessionStorage.getItem('company_info'));
 
     const params: HttpParams = new HttpParams()
       .set(HttpParamEnum.vendorId, jobDetail.vendorId)
@@ -249,17 +255,17 @@ export class ClaimService implements ClaimServiceAbstract {
       .set(HttpParamEnum.docType, formType)
       .set(HttpParamEnum.jobNumber, jobDetail.jobNumber);
 
-      this.diagnosisRequest = {
-        job_number:jobDetail.jobNumber,
-        type: formType, 
-        company_id: this.company_info.company_id,
-        vendor_id:jobDetail.vendorId,
-        company_info:this.company_info,
-        dateAssigned: jobDetail.dateAssigned,
-        contractorPhoneNumber : this._configService.getPhoneNumber(),
-        data : diagnosisFormData,
-      }
-        
+    this.diagnosisRequest = {
+      job_number: jobDetail.jobNumber,
+      type: formType,
+      company_id: this.company_info.company_id,
+      vendor_id: jobDetail.vendorId,
+      company_info: this.company_info,
+      dateAssigned: jobDetail.dateAssigned,
+      contractorPhoneNumber: this._configService.getPhoneNumber(),
+      data: diagnosisFormData,
+    }
+
     this._httpClient.post<any>(
       environment.submitDiagnosisUrl,
       this.diagnosisRequest,

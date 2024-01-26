@@ -98,7 +98,7 @@ export const environment = {
   serviceAreasUrl: `${baseUrl}services/vendor/service-areas`,
 
   // PaymentServoce
-  payementHistoryUrl: `${baseUrl}services/vendor/payments-history`,
+  payementHistoryUrl: `${vendorApisBaseUri}GetVendorPaymentsHistory`,
   // InvoiceService
   invoicesUrl: `${vendorApisBaseUri}GetVendorInvoices`,
 
@@ -114,10 +114,10 @@ export const environment = {
     clientId: '1dqk3e9jtk8euo3574q3oi9k0d',
     authFlow: 'USER_PASSWORD_AUTH'
   },
-  subscriptionkeys:{
-    customerapis:'1cb165d2ce334b20ac4a2af1508c7010',
-    vendorapis:'b55fef4464ce474bbfa3dd0e1bc395f0',
-    unauthenrollmentapis:'8ef58170a1a64e96802462f5ac82c782'
+  subscriptionkeys: {
+    customerapis: '1cb165d2ce334b20ac4a2af1508c7010',
+    vendorapis: 'b55fef4464ce474bbfa3dd0e1bc395f0',
+    unauthenrollmentapis: '8ef58170a1a64e96802462f5ac82c782'
   }
 };
 

@@ -43,8 +43,12 @@ export class PartyService {
     sessionStorage.setItem('party_id', party_id);
     this._http.post(environment.partyDetailsUrl,postBody).subscribe(
       (responseData: PartyDetailsPayloadInterface) => {
+        if(responseData.associations._association.length === 0 || responseData.associations._association[0].account_information.account_type.toLowerCase() !== "vendor" || responseData.associations._association[0].account_information.segment_id.length > 0){
+          this.logoutService.logout();
+          alert("User doesn't have access for this application & group.");
+        }
         this.getPartyDetailsSuccessHandler(subscription, responseData);
-        if (responseData.associations._association.length > 0)
+        if (responseData.associations._association.length > 0)       
           sessionStorage.setItem('company_info', JSON.stringify(responseData.associations._association[0].company_info));
       },
       (responseError: Observable<HttpErrorResponse>) => {
