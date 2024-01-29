@@ -186,7 +186,7 @@ export class PartyService {
   ): void {
     localStorage.setItem(
       LocalStorageEnum.CompanyName,
-      partyDetails.party_name_details.organization_name
+      partyDetails.party_name_details.organization_name.name
     );
   }
   private _setLocalPhoneNumber(

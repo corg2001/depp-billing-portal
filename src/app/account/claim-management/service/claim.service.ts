@@ -57,7 +57,7 @@ export class ClaimService implements ClaimServiceAbstract {
       startDate: formatedStartDate,
       endDate: formatedEndDate,
       partyId: sessionStorage.getItem('party_id'),
-      companies: JSON.parse(sessionStorage.getItem('company_info'))
+      company_info: JSON.parse(sessionStorage.getItem('company_info'))
     };
 
     this._httpClient.post<ClaimPayloadInterface[]>(environment.claimsUrl, postBody)
@@ -191,7 +191,7 @@ export class ClaimService implements ClaimServiceAbstract {
     error$: Subject<boolean>,
     errorMessage$: Subject<string>
   ): void {
-    const params: HttpParams = this.getAuthInvoiceParams(vendorId, jobNumber);
+    const params: HttpParams = this.getAuthInvoiceParams(vendorId, jobNumber);    
     this._httpClient.get(environment.authInoviceUrl, { params }).subscribe(
       (data: any) => {
         this.authInvoiceSuccessHandler(data$, completion$, error$, data);

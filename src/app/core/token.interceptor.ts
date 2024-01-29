@@ -18,26 +18,26 @@ export class TokenHttpInterceptor implements HttpInterceptor {
     const token: string = this.authService.getToken();
 
     const newRequest: HttpRequest<any> = req.clone({
-      setHeaders: { 'Authorization': token ? 'Bearer ' + token : '1a2b3c4d5e6f7h8j90lm1n2o3p4q6r7s8' }
+      setHeaders: { 'Authorization': token ? token : '1a2b3c4d5e6f7h8j90lm1n2o3p4q6r7s8' }
     });
 
     if (newRequest.url.toLowerCase().indexOf('customerapis') > -1) {
       const newAuthReq1: HttpRequest<any> = newRequest.clone({
-        setHeaders: { "Ocp-Apim-Subscription-Key": environment.subscriptionkeys.customerapis },
+        setHeaders: { 'Authorization': token ? 'Bearer ' + token : '1a2b3c4d5e6f7h8j90lm1n2o3p4q6r7s8', "Ocp-Apim-Subscription-Key": environment.subscriptionkeys.customerapis },
       });
       return next.handle(newAuthReq1);
     }
 
     if (newRequest.url.toLowerCase().indexOf('vendorapis') > -1) {
       const newAuthReq3: HttpRequest<any> = newRequest.clone({
-        setHeaders: { "Ocp-Apim-Subscription-Key": environment.subscriptionkeys.vendorapis },
+        setHeaders: { 'Authorization': token ? 'Bearer ' + token : '1a2b3c4d5e6f7h8j90lm1n2o3p4q6r7s8', "Ocp-Apim-Subscription-Key": environment.subscriptionkeys.vendorapis },
       });
       return next.handle(newAuthReq3);
     }
 
     if (newRequest.url.toLowerCase().indexOf('unauthenrollmentapis') > -1) {
       const newAuthReq2: HttpRequest<any> = newRequest.clone({
-        setHeaders: { "Ocp-Apim-Subscription-Key": environment.subscriptionkeys.unauthenrollmentapis },
+        setHeaders: { 'Authorization': token ? 'Bearer ' + token : '1a2b3c4d5e6f7h8j90lm1n2o3p4q6r7s8', "Ocp-Apim-Subscription-Key": environment.subscriptionkeys.unauthenrollmentapis },
       });
       return next.handle(newAuthReq2);
     }

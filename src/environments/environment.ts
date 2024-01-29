@@ -89,13 +89,13 @@ export const environment = {
   submitDiagnosisUrl: `${baseUrl}services/vendor/contractor-form`,
 
   // ProfileService
-  achDocsUrl: `${baseUrl}services/vendor/ach-info`,
+  achDocsUrl: `${vendorApisBaseUri}GetVendorACHInfo`,
 
   // AgreedRatesService
-  agreedRatesUrl: `${baseUrl}services/vendor/agreed-rate`,
+  agreedRatesUrl: `${vendorApisBaseUri}GetVendorAgreedRate`,
 
   // ServiceAreasService
-  serviceAreasUrl: `${baseUrl}services/vendor/service-areas`,
+  serviceAreasUrl: `${vendorApisBaseUri}GetVendorServiceAreasDetails`,
 
   // PaymentServoce
   payementHistoryUrl: `${vendorApisBaseUri}GetVendorPaymentsHistory`,
@@ -103,10 +103,10 @@ export const environment = {
   invoicesUrl: `${vendorApisBaseUri}GetVendorInvoices`,
 
   // uploadService
-  uploadUrl: `${baseUrl}services/vendor/document-upload`,
+  uploadUrl: `${vendorApisBaseUri}UploadFile`,
 
   // CalenderService
-  calenderUrl: `${baseUrl}services/vendor/work-calendar`,
+  calenderUrl: `${vendorApisBaseUri}GetVendorWorkCalendar`,
   // HelpService
   helpUrl: `${baseUrl}contact-us`,
   cognito: {

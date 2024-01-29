@@ -58,14 +58,14 @@ export class ProfileComponent implements OnInit {
     this._configService.init();
     this.name = this._configService.getPartyName();
     this.item = this.profileManagementTypes.BusinessInfo;
-    this.getachDocs();
-    this.getAgreedRatesInfo();
-    this.getServiceAreas(
-      this.serviceAreas$,
-      this.serviceAreasCompletion$,
-      this.serviceAreasError$,
-      this.serviceAreasErrorMessage$
-    );
+    //this.getachDocs();
+   // this.getAgreedRatesInfo();
+    // this.getServiceAreas(
+    //   this.serviceAreas$,
+    //   this.serviceAreasCompletion$,
+    //   this.serviceAreasError$,
+    //   this.serviceAreasErrorMessage$
+    // );
   }
 
   public gotoSections(item: string) {
