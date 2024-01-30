@@ -58,6 +58,8 @@ export class ProfileComponent implements OnInit {
     this._configService.init();
     this.name = this._configService.getPartyName();
     this.item = this.profileManagementTypes.BusinessInfo;
+    
+    //TODO - We may required below content in the future.
     //this.getachDocs();
    // this.getAgreedRatesInfo();
     // this.getServiceAreas(
