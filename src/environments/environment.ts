@@ -5,10 +5,7 @@
 const env: string = 'prod';
 const baseUrl: string = `https://depp-billing-api-qa1.homeprotection-dev.nrgdigitalawscloud.com/`;
 const custumerPortalUrl: string = `https://account.hwahomewarranty.com`;
-const realtorPortalUrl: string = `https://realtor.hwahomewarranty.com`;
-
 const customerApisBaseUri = `https://svcsapimt03.nrgenergy.com/CustomerApis/v1/`;
-const unauthEnrollmentApisBaseUri = `https://svcsapimt03.nrgenergy.com/UnauthEnrollmentApis/v1/`;
 const vendorApisBaseUri = `https://svcsapimt03.nrgenergy.com/VendorApis/v1/`;
 
 export const environment = {
