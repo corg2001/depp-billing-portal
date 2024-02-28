@@ -41,6 +41,10 @@ export class InvoiceService implements InvoiceAsbstractService {
     this.toDate = calendar.getToday();
   }
 
+  public getClaimsParams(startDate: any, endDate: any): HttpParams {
+    return new HttpParams().set(HttpParamEnum.starDate, startDate).set(HttpParamEnum.endDate, endDate);
+  }
+
   public getInvoice(
     invoices$: BehaviorSubject<InvoiceInterface[]>,
     completion$: Subject<boolean>,
@@ -50,25 +54,20 @@ export class InvoiceService implements InvoiceAsbstractService {
     endDate?: Date
   ): void {
     completion$.next(false);
-    const _startDate: any = `${this.fromDate.year}-${this.fromDate.month}-${this.fromDate.day}`;
-    const _endDate: any = `${this.toDate.year}-${this.toDate.month}-${this.toDate.day}`;
-    const startDateValue: string = (startDate == null)
-      ? _startDate : startDate;
-    const endDateValue: string = (endDate == null)
-      ? _endDate
-      : endDate;
-    const partyId = sessionStorage.getItem('party_id');
-
-    const companyInfo = btoa(sessionStorage.getItem('company_info'));
-
-    const params: HttpParams = this.getInvoiceParams(
-      startDateValue,
-      endDateValue,
-      partyId,
-      companyInfo
-    );
+    const rawFromDate: NgbDate = this.calendar.getPrev(this.calendar.getToday(), 'd', 60);
+    const rawEndDate = this.calendar.getToday();
+    const formatedStartDate = startDate ? startDate : this.getFormattedDate(rawFromDate);
+    const formatedEndDate = endDate ? endDate : this.getFormattedDate(rawEndDate);
+    const params: HttpParams = this.getClaimsParams(formatedStartDate, formatedEndDate);
+    const postBody = {
+      startDate: formatedStartDate,
+      endDate: formatedEndDate,
+      partyId: sessionStorage.getItem('party_id'),
+      companies: JSON.parse(sessionStorage.getItem('companies'))
+    };
+    console.log(params)
     this._http
-      .get(environment.invoicesUrl, { params })
+      .post(environment.invoicesUrl,  postBody )
       .subscribe(
         (response: any) =>
           this.getInvoiceSuccessHandler(
@@ -96,6 +95,11 @@ export class InvoiceService implements InvoiceAsbstractService {
     params = params.set(HttpParamEnum.partyId, partyId);
     params = params.set(HttpParamEnum.companyInfo, companyInfo);
     return params;
+  }
+
+  
+  public getFormattedDate(date: NgbDate): string {
+    return `${date.year}-${date.month}-${date.day}`;
   }
 
   public getInvoiceSuccessHandler(

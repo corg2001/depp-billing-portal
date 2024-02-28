@@ -48,11 +48,18 @@ export class PaymentService implements PaymentAbstractService {
     const params = this.getPaymenHistoryParams(formatedStartDate, formatedEndDate, partyId, companyInfo);
 
 
+    const postBody = {
+      startDate: formatedStartDate,
+      endDate: formatedEndDate,
+      partyId: sessionStorage.getItem('party_id'),
+      companies: JSON.parse(sessionStorage.getItem('companies'))
+    };
+
 
     this.defaultPaymentStartDate = formatedStartDate;
     this.defualyPaymentEndDate = formatedEndDate;
     this._http
-      .get(environment.payementHistoryUrl, { params })
+      .post(environment.payementHistoryUrl, postBody)
       .subscribe((response: any) => {
         this.paymentHistorySuccessHandler(
           paymentHistory$,
