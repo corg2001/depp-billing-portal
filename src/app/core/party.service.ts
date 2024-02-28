@@ -50,6 +50,7 @@ export class PartyService {
         this.getPartyDetailsSuccessHandler(subscription, responseData);
         if (responseData.associations._association.length > 0)       
           sessionStorage.setItem('company_info', JSON.stringify(responseData.associations._association[0].company_info));
+          sessionStorage.setItem('companies',  JSON.stringify(responseData.associations._association));
       },
       (responseError: Observable<HttpErrorResponse>) => {
         this.getPartyDetailsFailureHandler(subscription, responseError);

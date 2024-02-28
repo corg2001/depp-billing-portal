@@ -57,7 +57,7 @@ export class ClaimService implements ClaimServiceAbstract {
       startDate: formatedStartDate,
       endDate: formatedEndDate,
       partyId: sessionStorage.getItem('party_id'),
-      company_info: JSON.parse(sessionStorage.getItem('company_info'))
+      companies: JSON.parse(sessionStorage.getItem('companies'))
     };
 
     this._httpClient.post<ClaimPayloadInterface[]>(environment.claimsUrl, postBody)
