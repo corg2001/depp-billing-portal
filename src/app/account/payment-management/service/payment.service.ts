@@ -42,11 +42,24 @@ export class PaymentService implements PaymentAbstractService {
     const rawEndDate = this._calendar.getToday();
     const formatedStartDate: string = startDate ? startDate : this.getFormattedDate(rawFromDate);
     const formatedEndDate: string = endDate ? endDate : this.getFormattedDate(rawEndDate);
-    const params = this.getPaymenHistoryParams(formatedStartDate, formatedEndDate);
+
+    const partyId = sessionStorage.getItem('party_id');
+    const companyInfo = btoa(sessionStorage.getItem('company_info'));
+    const params = this.getPaymenHistoryParams(formatedStartDate, formatedEndDate, partyId, companyInfo);
+
+
+    const postBody = {
+      startDate: formatedStartDate,
+      endDate: formatedEndDate,
+      partyId: sessionStorage.getItem('party_id'),
+      companies: JSON.parse(sessionStorage.getItem('companies'))
+    };
+
+
     this.defaultPaymentStartDate = formatedStartDate;
     this.defualyPaymentEndDate = formatedEndDate;
     this._http
-      .get(environment.payementHistoryUrl, { params })
+      .post(environment.payementHistoryUrl, postBody)
       .subscribe((response: any) => {
         this.paymentHistorySuccessHandler(
           paymentHistory$,
@@ -61,8 +74,8 @@ export class PaymentService implements PaymentAbstractService {
     return `${date.year}-${date.month}-${date.day}`;
   }
 
-  public getPaymenHistoryParams(startDate: string, endDate: string): HttpParams {
-    return new HttpParams().set(HttpParamEnum.starDate, startDate).set(HttpParamEnum.endDate, endDate);
+  public getPaymenHistoryParams(startDate: string, endDate: string, partyId: string, companyInfo: string): HttpParams {
+    return new HttpParams().set(HttpParamEnum.starDate, startDate).set(HttpParamEnum.endDate, endDate).set(HttpParamEnum.partyId, partyId).set(HttpParamEnum.companyInfo, companyInfo);
   }
 
   public paymentHistorySuccessHandler(

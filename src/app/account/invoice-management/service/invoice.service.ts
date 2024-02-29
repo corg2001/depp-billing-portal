@@ -37,8 +37,12 @@ export class InvoiceService implements InvoiceAsbstractService {
     private calendar: NgbCalendar
   ) {
     this.invoice$ = new BehaviorSubject(this._invoice);
-    this.fromDate =  calendar.getPrev(calendar.getToday(), 'd', 60);
+    this.fromDate = calendar.getPrev(calendar.getToday(), 'd', 60);
     this.toDate = calendar.getToday();
+  }
+
+  public getClaimsParams(startDate: any, endDate: any): HttpParams {
+    return new HttpParams().set(HttpParamEnum.starDate, startDate).set(HttpParamEnum.endDate, endDate);
   }
 
   public getInvoice(
@@ -50,19 +54,20 @@ export class InvoiceService implements InvoiceAsbstractService {
     endDate?: Date
   ): void {
     completion$.next(false);
-    const _startDate: any = `${this.fromDate.year}-${this.fromDate.month}-${this.fromDate.day}`;
-    const _endDate: any = `${this.toDate.year}-${this.toDate.month}-${this.toDate.day}`;
-    const startDateValue: string = (startDate == null)
-    ? _startDate : startDate;
-    const endDateValue: string = (endDate == null)
-      ? _endDate
-      : endDate;
-    const params: HttpParams = this.getInvoiceParams(
-      startDateValue,
-      endDateValue
-    );
+    const rawFromDate: NgbDate = this.calendar.getPrev(this.calendar.getToday(), 'd', 60);
+    const rawEndDate = this.calendar.getToday();
+    const formatedStartDate = startDate ? startDate : this.getFormattedDate(rawFromDate);
+    const formatedEndDate = endDate ? endDate : this.getFormattedDate(rawEndDate);
+    const params: HttpParams = this.getClaimsParams(formatedStartDate, formatedEndDate);
+    const postBody = {
+      startDate: formatedStartDate,
+      endDate: formatedEndDate,
+      partyId: sessionStorage.getItem('party_id'),
+      companies: JSON.parse(sessionStorage.getItem('companies'))
+    };
+    console.log(params)
     this._http
-      .get(environment.invoicesUrl, { params })
+      .post(environment.invoicesUrl,  postBody )
       .subscribe(
         (response: any) =>
           this.getInvoiceSuccessHandler(
@@ -78,15 +83,23 @@ export class InvoiceService implements InvoiceAsbstractService {
 
   public getInvoiceParams(
     startDate: string,
-    endDate?: string
+    endDate?: string,
+    partyId?: string,
+    companyInfo?: string
   ): HttpParams {
     let params: HttpParams = new HttpParams()
       .set(HttpParamEnum.starDate, startDate);
     if (endDate !== null) {
       params = params.set(HttpParamEnum.endDate, endDate);
     }
-
+    params = params.set(HttpParamEnum.partyId, partyId);
+    params = params.set(HttpParamEnum.companyInfo, companyInfo);
     return params;
+  }
+
+  
+  public getFormattedDate(date: NgbDate): string {
+    return `${date.year}-${date.month}-${date.day}`;
   }
 
   public getInvoiceSuccessHandler(
@@ -126,20 +139,20 @@ export class InvoiceService implements InvoiceAsbstractService {
       const _invoiceDate: string = this._formatDateMoment(invoice.invoiceDate);
       const _serviceAddress = serviceAddress.toLowerCase();
       return startDate && endDate && serviceAddress
-        ? _startDate  <= _invoiceDate && _endDate >= _invoiceDate && invoice.serviceAddress.toLowerCase().includes(_serviceAddress)
+        ? _startDate <= _invoiceDate && _endDate >= _invoiceDate && invoice.serviceAddress.toLowerCase().includes(_serviceAddress)
         : startDate && endDate
-        ? (_startDate <= _invoiceDate &&  _endDate >= _invoiceDate) || _startDate === _invoiceDate && _endDate === _invoiceDate
-        : startDate && _serviceAddress
-        ?  _startDate <= _invoiceDate  && invoice.serviceAddress.toLowerCase().includes(_serviceAddress)
-        : endDate && _serviceAddress
-        ?  _endDate >= _invoiceDate  && invoice.serviceAddress.toLowerCase().includes(_serviceAddress)
-        : startDate
-        ?  _startDate <= _invoiceDate
-        : endDate
-        ? _endDate >= _invoiceDate
-        : serviceAddress
-        ? invoice.serviceAddress.toLowerCase().includes(_serviceAddress)
-        : invoice;
+          ? (_startDate <= _invoiceDate && _endDate >= _invoiceDate) || _startDate === _invoiceDate && _endDate === _invoiceDate
+          : startDate && _serviceAddress
+            ? _startDate <= _invoiceDate && invoice.serviceAddress.toLowerCase().includes(_serviceAddress)
+            : endDate && _serviceAddress
+              ? _endDate >= _invoiceDate && invoice.serviceAddress.toLowerCase().includes(_serviceAddress)
+              : startDate
+                ? _startDate <= _invoiceDate
+                : endDate
+                  ? _endDate >= _invoiceDate
+                  : serviceAddress
+                    ? invoice.serviceAddress.toLowerCase().includes(_serviceAddress)
+                    : invoice;
     });
   }
 
