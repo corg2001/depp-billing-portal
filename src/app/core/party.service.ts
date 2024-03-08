@@ -376,10 +376,16 @@ export class PartyService {
   }
 
   private _setLocalPartyName(partyDetails: PartyDetailsPayloadInterface): void {
+    let name: string;
+    if(partyDetails.party_name_details.person_name.last_name) {
+      name = `${partyDetails.party_name_details.person_name.last_name},
+      ${partyDetails.party_name_details.person_name.first_name}`
+    } else {
+      name = `${partyDetails.party_name_details.organization_name.name}`;
+    }
     localStorage.setItem(
       LocalStorageEnum.PartyName,
-      `${partyDetails.party_name_details.person_name.last_name},
-      ${partyDetails.party_name_details.person_name.first_name}`
+      name
     );
   }
   private set _hasMultiAssociations(value: boolean) {
