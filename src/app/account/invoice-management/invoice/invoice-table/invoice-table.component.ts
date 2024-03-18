@@ -51,7 +51,7 @@ export class InvoiceTableComponent implements OnInit, OnChanges {
         'Service Address': invoice.serviceAddress,
         'Invoice No.': invoice.invoiceId,
         'Invoice Date': moment(invoice.invoiceDate).format("MMM Do YY"),
-        'Amount': '$' + invoice.invoiceAmount.amount / 100 + '.00'
+        'Amount': '$' + invoice.invoiceAmount.amount.toFixed(2)
       })
     })
   }

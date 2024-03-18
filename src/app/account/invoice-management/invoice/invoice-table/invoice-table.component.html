@@ -20,7 +20,7 @@
         <td scope="row">{{ invoice?.serviceAddress }}</td>
         <td scope="row">{{ invoice?.invoiceId }}</td>
         <td scope="row">{{ invoice?.invoiceDate | date }}</td>
-        <td scope="row">{{ invoice?.invoiceAmount.amount | formatmoney }}</td>
+        <td scope="row">${{ invoice?.invoiceAmount.amount.toFixed(2) }}</td>
       </tr>
     </tbody>
   </table>
