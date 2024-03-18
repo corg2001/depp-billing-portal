@@ -6,6 +6,7 @@ import { SortEventInterface } from 'src/app/core/interface/sort-event.interface'
 import * as Money from 'js-money';
 import { ExportExcelService } from 'src/app/shared/service/export-excel.service';
 import * as moment from 'moment';
+import { formatCurrency } from '@angular/common';
 
 @Component({
   selector: 'app-invoice-table',
@@ -51,7 +52,7 @@ export class InvoiceTableComponent implements OnInit, OnChanges {
         'Service Address': invoice.serviceAddress,
         'Invoice No.': invoice.invoiceId,
         'Invoice Date': moment(invoice.invoiceDate).format("MMM Do YY"),
-        'Amount': '$' + Number(invoice.invoiceAmount.amount).toLocaleString('en-US')
+        'Amount': '$' + formatCurrency(invoice.invoiceAmount.amount, 'en-US', '$', 'USD', '1.2-2')
       })
     })
   }
