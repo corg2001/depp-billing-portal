@@ -138,11 +138,14 @@ export class PaymentTableComponent implements OnInit, OnChanges {
         'Payment Date': moment(payment.paymentDate).format("MMM Do YY"),
         'Reference ID': payment.paymentReferenceNo,
         'Payment Type': payment.paymentMethod,
-        'Payment Amount': '$' + payment.paymentAmount.amount / 100 + '.00'
+        'Payment Amount': '$' + payment.paymentAmount.amount.toFixed(2)
       })
     });
   }
 
+  public amountFormat(){
+
+  }
   public exportExcelFile() {
     this.exportExcelService.exportJsonAsExcelFile(this.exportJSON, 'payment_history')
   }
