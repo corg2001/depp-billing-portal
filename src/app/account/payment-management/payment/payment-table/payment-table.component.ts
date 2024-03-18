@@ -143,9 +143,6 @@ export class PaymentTableComponent implements OnInit, OnChanges {
     });
   }
 
-  public amountFormat(){
-
-  }
   public exportExcelFile() {
     this.exportExcelService.exportJsonAsExcelFile(this.exportJSON, 'payment_history')
   }
