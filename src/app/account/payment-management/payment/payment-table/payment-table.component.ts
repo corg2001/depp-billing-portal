@@ -11,6 +11,7 @@ import * as Money from 'js-money';
 import { SearchFormValues } from 'src/app/shared/models/search-form-values.interface';
 import { ExportExcelService } from 'src/app/shared/service/export-excel.service';
 import * as moment from 'moment';
+import { formatCurrency } from '@angular/common';
 
 @Component({
   selector: 'app-payment-table',
@@ -138,7 +139,7 @@ export class PaymentTableComponent implements OnInit, OnChanges {
         'Payment Date': moment(payment.paymentDate).format("MMM Do YY"),
         'Reference ID': payment.paymentReferenceNo,
         'Payment Type': payment.paymentMethod,
-        'Payment Amount': '$' + payment.paymentAmount.amount.toFixed(2)
+        'Payment Amount': formatCurrency(payment.paymentAmount.amount, 'en-US', '$', 'USD', '1.2-2')
       })
     });
   }
