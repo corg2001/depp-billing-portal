@@ -30,7 +30,7 @@
           <td scope="row">{{ invoice.invoiceId }}</td>
           <td scope="row">{{ invoice.serviceAddress }}</td>
           <td scope="row">
-            {{ invoice.invoiceAmount.amount | formatmoney }}
+            {{ invoice.invoiceAmount.amount | currency }}
           </td>
         </tr>
       </tbody>
