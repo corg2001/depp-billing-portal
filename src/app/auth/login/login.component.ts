@@ -50,8 +50,8 @@ export class LoginComponent implements OnInit {
         sessionStorage.setItem('compromised-login', 'true');
         this._router.navigate(['/auth/forgot-password']);
         this.showResponseError = true;
+        this.responseErrorMessage = this.getErrorMessage(data.error.message);
       }
-      this.responseErrorMessage = this.getErrorMessage(data.error.message);
     });
     this.responseSubject.subscribe((response: boolean) =>
       this.loginSubscriptionHandler(response)
