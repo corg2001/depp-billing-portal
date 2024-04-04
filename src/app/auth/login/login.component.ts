@@ -10,7 +10,7 @@ import { PrivacyPolicyComponent } from '../privacy-policy/privacy-policy.compone
 import { TermsOfUseComponent } from '../terms-of-use/terms-of-use.component';
 import { LocalStorageEnum } from 'src/app/core/enums/local-storage.enums';
 import { environment } from 'src/environments/environment';
-import {CognitoService } from '../cognito.service';
+import { CognitoService } from '../cognito.service';
 import { ICognitoLoginResponse } from 'src/app/shared/models/interface/cognito.interface';
 import { SessionKeys } from 'src/app/shared/enums/session-keys.emums';
 @Component({
@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
     private _ngbModalService: NgbModal,
     private _router: Router,
     private _cognitoService: CognitoService,
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.buildForm();
@@ -49,8 +49,9 @@ export class LoginComponent implements OnInit {
       if (data.error.message && data.error.message.includes('compromised')) {
         sessionStorage.setItem('compromised-login', 'true');
         this._router.navigate(['/auth/forgot-password']);
+        this.showResponseError = true;
+        this.responseErrorMessage = this.getErrorMessage(data.error.message);
       }
-      this.responseErrorMessage = this.getErrorMessage(data.error.message);
     });
     this.responseSubject.subscribe((response: boolean) =>
       this.loginSubscriptionHandler(response)
@@ -99,12 +100,13 @@ export class LoginComponent implements OnInit {
         )
       },
       error: (error) => {
+        this.showResponseError = true;
         if (error) {
           this.showLoadingSpinner = false;
-          this.errorMessage =
-            'The email address or password you entered is incorrect. Please re-enter your login information.';
+          this.responseErrorMessage =
+            'The email address or password you entered is incorrect. Please re-enter your login information or email service@nrgprotects.com for any further assistance.';
         } else {
-          error = error.error.message;
+          this.responseErrorMessage = error.error.message;
         }
       },
     });
