@@ -81,7 +81,7 @@ export class ClaimSummaryComponent implements OnInit {
         this.claims = this._claimFactoryService.getClaimFromPayload(
           claimPlayod
         );
-        claimList$.next(this.claims.filter(c => c.jobStatus !== JobStatus.invoiced));
+        claimList$.next(this.claims.filter(c => c.jobStatus !== JobStatus.invoiced && c.claimType !== 'Surge'));
         this.claimsFound = this.claims.length > 0 ? true : false;
       }
     );
