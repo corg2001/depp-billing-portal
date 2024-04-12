@@ -50,8 +50,9 @@ export class LoginComponent implements OnInit {
       if (data.error.message && data.error.message.includes('compromised')) {
         sessionStorage.setItem('compromised-login', 'true');
         this._router.navigate(['/auth/forgot-password']);
+        this.showResponseError = true;
+        this.responseErrorMessage = this.getErrorMessage(data.error.message);
       }
-      this.responseErrorMessage = this.getErrorMessage(data.error.message);
     });
     this.responseSubject.subscribe((response: boolean) =>
       this.loginSubscriptionHandler(response)
@@ -101,12 +102,13 @@ export class LoginComponent implements OnInit {
         )
       },
       error: (error) => {
+        this.showResponseError = true;
         if (error) {
           this.showLoadingSpinner = false;
-          this.errorMessage =
-            'The email address or password you entered is incorrect. Please re-enter your login information.';
+          this.responseErrorMessage =
+            'The email address or password you entered is incorrect. Please re-enter your login information or email service@nrgprotects.com for any further assistance.';
         } else {
-          error = error.error.message;
+          this.responseErrorMessage = error.error.message;
         }
       },
     });
