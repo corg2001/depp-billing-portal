@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { LoggerService } from './logger.service';
 import { ICognitoLoginResponse } from '../shared/models/interface/cognito.interface';
-
 // TODO: move it into it's own file
 enum SessionKeys {
   token = 'token',

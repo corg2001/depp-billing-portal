@@ -11,7 +11,6 @@ import { LoggerService } from '../core/logger.service';
 import { environment } from 'src/environments/environment';
 import { IAuthorizedUser } from '../shared/models/interface/authorized-user.interface';
 import { ICognitoLoginResponse } from '../shared/models/interface/cognito.interface';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -21,6 +20,8 @@ export class AuthService {
     private _httpClient: HttpClient,
     private _loggerService: LoggerService
   ) { }
+
+
 
   public requestPassword(
     response$: Subject<string>,
@@ -201,5 +202,5 @@ export class AuthService {
 
   public setUser(user: IAuthorizedUser): void {
     this._authUser$.next(user);
-  } F
+  }
 }
