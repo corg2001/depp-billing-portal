@@ -13,7 +13,6 @@ import { environment } from 'src/environments/environment';
 import { CognitoService } from '../cognito.service';
 import { ICognitoLoginResponse } from 'src/app/shared/models/interface/cognito.interface';
 import { SessionKeys } from 'src/app/shared/enums/session-keys.emums';
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -71,7 +70,6 @@ export class LoginComponent implements OnInit {
       userPassword,
     });
   }
-
 
   public loginSubscriptionHandler(response: boolean): void {
     if (!response) {
