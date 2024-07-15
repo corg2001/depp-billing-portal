@@ -100,7 +100,7 @@ export class AuthService {
     isUserFound$?: Subject<boolean>
   ): void {
     isUserFound$.next(false);
-    response$.next(environment.auth.forgotPassword.userNotFound);
+    response$.next(environment.auth.forgotPassword.success);
   }
 
   private genericFailureHandler(
