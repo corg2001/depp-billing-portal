@@ -1,0 +1,29 @@
+parameters:
+- name: region
+- name: credentials
+- name: bucket
+- name: artifact
+- name: distribution
+
+steps:
+- task: DownloadPipelineArtifact@2
+  displayName: Download
+  inputs:
+    artifact: ${{ parameters.artifact }}
+    targetPath: $(Build.ArtifactStagingDirectory)/${{ parameters.artifact }}
+- task: S3Upload@1
+  displayName: Publish
+  inputs:
+    awsCredentials: ${{ parameters.credentials }}
+    regionName: ${{ parameters.region }}
+    bucketName: ${{ parameters.bucket }}
+    targetFolder: ${{ parameters.artifact }}
+    sourceFolder: $(Build.ArtifactStagingDirectory)/${{ parameters.artifact }}
+- task: AWSCLI@1
+  displayName: Invalidate
+  inputs:
+    awsCredentials: ${{ parameters.credentials }}
+    regionName: ${{ parameters.region }}
+    awsCommand: cloudfront
+    awsSubCommand: create-invalidation
+    awsArguments: "--distribution-id ${{ parameters.distribution }} --paths \"/*\""

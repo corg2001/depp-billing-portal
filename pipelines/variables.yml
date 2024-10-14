@@ -1,0 +1,40 @@
+variables:
+  isQa365Branch: $[eq(variables['Build.SourceBranch'], 'refs/heads/qa365')]
+  isDev365Branch: $[eq(variables['Build.SourceBranch'], 'refs/heads/dev365')]
+  isHf1Branch: $[eq(variables['Build.SourceBranch'], 'refs/heads/hf1')]
+  isQa1Branch: $[eq(variables['Build.SourceBranch'], 'refs/heads/qa1')]
+  isMasterBranch: $[eq(variables['Build.SourceBranch'], 'refs/heads/master')]
+  sonarCloudProjectKey: CentricaEngineeringServicesNA_depp-billing-portal
+  nodeVersion: '8.17.0'
+  awsRegion: us-east-1
+  awsCredentialsDev: services-hp-prd-aws-dev
+  awsCredentialsStage: services-hp-prd-aws-stage
+  awsCredentialsProd: services-hp-prd-aws-prod
+  qa365Bucket: nrg-nrgp-oam-dev-static-assets20221215183903377400000001
+  qa365Distribution: E3D7UBXY4OCWF1
+  qa365Config: depp-billing-portal-qa365.ts
+  qa365Artifact: depp-billing-portal-qa365
+  dev365Bucket: nrg-nrgp-oam-dev-static-assets20221215183903377400000001
+  dev365Distribution: E1ZKBL6R71BEPV
+  dev365Config: depp-billing-portal-dev365.ts
+  dev365Artifact: depp-billing-portal-dev365
+  qa1Bucket: nrg-nrgp-oam-dev-static-assets20221215183903377400000001
+  qa1Distribution: E1A3M7TZDZQ2TL
+  qa1Config: depp-billing-portal-qa1.ts
+  qa1Artifact: depp-billing-portal-qa1
+  hf1Bucket: nrg-nrgp-oam-dev-static-assets20221215183903377400000001
+  hf1Distribution: E2T7LTQIRL7895
+  hf1Config: depp-billing-portal-hf1.ts
+  hf1Artifact: depp-billing-portal-hf1
+  devBucket: nrg-nrgp-oam-dev-static-assets20221215183903377400000001
+  devDistribution: E2JLHNWE2WMS09
+  devConfig: depp-billing-portal-dev.ts
+  devArtifact: depp-billing-portal-dev
+  stageBucket: nrg-nrgp-oam-stage-static-assets20230110204625718700000001
+  stageDistribution: E2EON3QIOYR7KG
+  stageConfig: depp-billing-portal-stage.ts
+  stageArtifact: depp-billing-portal-stage
+  prodBucket: nrg-nrgp-oam-prod-static-assets20230127154237725400000001
+  prodDistribution: E19IN3TKYES2EB
+  prodConfig: depp-billing-portal-prod.ts
+  prodArtifact: depp-billing-portal-prod
