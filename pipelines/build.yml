@@ -1,0 +1,28 @@
+parameters:
+- name: node
+- name: artifact
+- name: config
+
+steps:
+- checkout: self
+- checkout: configuration
+- task: NodeTool@0
+  displayName: 'Install NodeJS version $(nodeVersion)'
+  inputs:
+    versionSpec: ${{ parameters.node }}
+- script: |
+    cp $(Agent.BuildDirectory)/s/unify-configs/${{ parameters.config }} src/environments/environment.prod.ts
+    npm install
+    ./node_modules/.bin/ng build --prod --aot --build-optimizer
+  workingDirectory: $(Agent.BuildDirectory)/s/depp-billing-portal
+  displayName: Build
+- task: CopyFiles@2
+  inputs:
+    sourceFolder: $(Agent.BuildDirectory)/s/depp-billing-portal/dist/hwa-contractor
+    targetFolder: $(Build.ArtifactStagingDirectory)/${{ parameters.artifact }}
+  displayName: Dist
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: $(Build.ArtifactStagingDirectory)/${{ parameters.artifact }}
+    artifactName: ${{ parameters.artifact }}
+  displayName: Publish
