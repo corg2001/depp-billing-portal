@@ -2,6 +2,7 @@ trigger:
   batch: true
 
 variables:
+  isDev365Branch: $[eq(variables['Build.SourceBranch'], 'refs/heads/dev365')]
   isHf1Branch: $[eq(variables['Build.SourceBranch'], 'refs/heads/hf1')]
   isQa1Branch: $[eq(variables['Build.SourceBranch'], 'refs/heads/qa1')]
   isMasterBranch: $[eq(variables['Build.SourceBranch'], 'refs/heads/master')]
@@ -11,6 +12,10 @@ variables:
   awsCredentialsDev: services-hp-prd-aws-dev
   awsCredentialsStage: services-hp-prd-aws-stage
   awsCredentialsProd: services-hp-prd-aws-prod
+  dev365Bucket: nrg-nrgp-oam-dev-static-assets20221215183903377400000001
+  dev365Distribution: E1ZKBL6R71BEPV
+  dev365Config: depp-billing-portal-dev365.ts
+  dev365Artifact: depp-billing-portal-dev365
   qa1Bucket: nrg-nrgp-oam-dev-static-assets20221215183903377400000001
   qa1Distribution: E1A3M7TZDZQ2TL
   qa1Config: depp-billing-portal-qa1.ts
@@ -66,6 +71,73 @@ stages:
 #       displayName: Publish SonarCloud analysis results
 #       inputs:
 #         pollingTimeoutSec: 300
+- stage: BuildDev365
+  condition: eq(variables.isDev365Branch, true)
+  # condition: and(succeeded('SonarCloudScan'), eq(variables.isDev365Branch, true))
+  # dependsOn:
+  # - SonarCloudScan
+  jobs:
+  - job: BuildDev365
+    pool:
+      vmImage: ubuntu-20.04
+    steps:
+    - checkout: self
+    - checkout: configuration
+    - task: NodeTool@0
+      displayName: 'Install NodeJS version $(nodeVersion)'
+      inputs:
+        versionSpec: $(nodeVersion)
+    - script: |
+        cp $(Agent.BuildDirectory)/s/unify-configs/$(dev365Config) src/environments/environment.prod.ts
+        npm install
+        ./node_modules/.bin/ng build --prod --aot --build-optimizer
+      workingDirectory: $(Agent.BuildDirectory)/s/depp-billing-portal
+      displayName: Building dev365 portal
+    - task: CopyFiles@2
+      inputs:
+        sourceFolder: $(Agent.BuildDirectory)/s/depp-billing-portal/dist/hwa-contractor
+        targetFolder: $(Build.ArtifactStagingDirectory)/$(dev365Artifact)
+      displayName: Copy Dev365 package
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: $(Build.ArtifactStagingDirectory)/$(dev365Artifact)
+        artifactName: $(dev365Artifact)
+      displayName: Publish Dev365 artifact
+- stage: DeployDev365
+  condition: and(succeeded('BuildDev365'), eq(variables.isDev365Branch, true))
+  dependsOn:
+  # - SonarCloudScan
+  - BuildDev365
+  jobs:
+  - deployment: DeployDev365
+    pool:
+      vmImage: ubuntu-20.04
+    environment: homeprotection-dev
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              artifact: $(dev365Artifact)
+              targetPath: $(Build.ArtifactStagingDirectory)/$(dev365Artifact)
+            displayName: Download Dev365 artifact
+          - task: S3Upload@1
+            inputs:
+              awsCredentials: $(awsCredentialsDev)
+              regionName: $(awsRegion)
+              bucketName: $(devBucket)
+              targetFolder: $(dev365Artifact)
+              sourceFolder: $(Build.ArtifactStagingDirectory)/$(dev365Artifact)
+            displayName: Upload to Dev365 S3 bucket
+          - task: AWSCLI@1
+            displayName: Trigger cache invalidation for the Dev365 instance
+            inputs:
+              awsCredentials: $(awsCredentialsDev)
+              regionName: $(awsRegion)
+              awsCommand: cloudfront
+              awsSubCommand: create-invalidation
+              awsArguments: "--distribution-id $(dev365Distribution) --paths \"/*\""
 - stage: BuildQa1
   condition: eq(variables.isQa1Branch, true)
   # condition: and(succeeded('SonarCloudScan'), eq(variables.isQa1Branch, true))
