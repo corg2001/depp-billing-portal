@@ -2,6 +2,8 @@ import * as moment from 'moment';
 const baseUrl: string = `https://hwa-contractor-api-stg.digitaltest.directenergy.net/`;
 const custumerPortalUrl: string = `https://hwa-customer-portal-stg.digitaltest.directenergy.net/`;
 const realtorPortalUrl: string = `https://hwa-realtor-portal-stg.digitaltest.directenergy.net/`;
+const lambdaBaseUrl = `https://wxl7jbcqnh-vpce-00c897a3ca7b0e934.execute-api.us-east-1.amazonaws.com/api/`;
+
 export const environment = {
   aspirePhase4releaseDate: '10-21-2021',
   production: false,
@@ -47,7 +49,7 @@ export const environment = {
   // auth service
   loginUrl: `${baseUrl}authentication/passport/login`,
   requestPasswordUrl: `${baseUrl}authentication/passport/forgot-password`,
-  resetPasswordUrl: `${baseUrl}authentication/passport/reset-password`,
+  resetPasswordUrl: `${lambdaBaseUrl}authentication/reset-password`,
   termsAndConditionsUrl: `${baseUrl}services/legal-terms/terms-of-use`,
   privacyPolicyUrl: `${baseUrl}services/legal-terms/privacy-policy`,
 
