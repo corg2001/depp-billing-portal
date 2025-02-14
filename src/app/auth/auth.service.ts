@@ -155,7 +155,7 @@ export class AuthService {
     response$?: Subject<any>
   ): void {
     this._httpClient
-      .post(environment.resetPasswordUrl, { token, username, password })
+      .post(environment.resetPasswordUrl, { token, username, password, brand: "NRGP" })
       .subscribe(
         (response: Observable<HttpResponse<any>>) =>
           this._resetPasswordSuccessHandler(success$, response, response$),
