@@ -7,6 +7,7 @@ const baseUrl: string = `https://depp-billing-api-qa1.homeprotection-dev.nrgdigi
 const custumerPortalUrl: string = `https://account.hwahomewarranty.com`;
 const customerApisBaseUri = `https://svcsapimt03.nrgenergy.com/CustomerApis/v1/`;
 const vendorApisBaseUri = `https://svcsapimt03.nrgenergy.com/VendorApis/v1/`;
+const lambdaBaseUrl = `https://sdsayj04qk-vpce-0bf9f866df2bd87f3.execute-api.us-east-1.amazonaws.com/api/`;
 
 export const environment = {
   aspirePhase4releaseDate: '10-21-2021',
@@ -71,7 +72,7 @@ export const environment = {
   // auth service
   loginUrl: `${baseUrl}authentication/passport/login`,
   requestPasswordUrl: `${baseUrl}authentication/passport/forgot-password`,
-  resetPasswordUrl: `${baseUrl}authentication/passport/reset-password`,
+  resetPasswordUrl: `${lambdaBaseUrl}authentication/reset-password`,
   termsAndConditionsUrl: `${baseUrl}services/legal-terms/terms-of-use`,
   privacyPolicyUrl: `${baseUrl}services/legal-terms/privacy-policy`,
 
