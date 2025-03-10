@@ -35,6 +35,7 @@ export class LoginComponent implements OnInit {
   public siblingPortals: any = {
     customer: environment.siblingPortals.customer,
   };
+  public passwordResetRequiredExceptionLable: string = 'Forgot password?';
 
   constructor(
     private _authService: AuthService,
@@ -103,9 +104,15 @@ export class LoginComponent implements OnInit {
         this.showResponseError = true;
         if (error) {
           this.showLoadingSpinner = false;
+          this.passwordResetRequiredExceptionLable = 'Forgot password?';
           this.responseErrorMessage =
             'The email address or password you entered is incorrect. Please re-enter your login information or email service@nrgprotects.com for any further assistance.';
+          if (error.error.__type === 'PasswordResetRequiredException') {
+            this.passwordResetRequiredExceptionLable = 'Reset password?';
+            this.responseErrorMessage = environment.auth.passwordResetRequiredExceptionError;
+          }
         } else {
+          this.passwordResetRequiredExceptionLable = 'Forgot password?';
           this.responseErrorMessage = error.error.message;
         }
       },
