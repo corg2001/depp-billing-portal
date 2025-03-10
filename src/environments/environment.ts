@@ -53,7 +53,8 @@ export const environment = {
     loginError:
       `We apologize you are having difficulty logging into our portal. Please try again or select the 'Forgot your Password?' link below to reset. For further assistance, please call (855) 334-3577.`,
     lockedError:
-      `Your account is locked after multiple attempts. Please select the 'Forgot your Password?' link below to reset your password and unlock your account. For further assistance, please call (855) 334-3577.`
+      `Your account is locked after multiple attempts. Please select the 'Forgot your Password?' link below to reset your password and unlock your account. For further assistance, please call (855) 334-3577.`,
+    passwordResetRequiredExceptionError: "You haven't logged in sometime now, please reset your password using reset password link.For further assistance, call us at (855) 334-3577."
   },
   forms: {
     ach_form_path: '../assets/forms/centrica_vendor_Information_form.pdf'
