@@ -49,7 +49,7 @@ export const environment = {
   },
   // auth service
   loginUrl: `${baseUrl}authentication/passport/login`,
-  requestPasswordUrl: `${baseUrl}authentication/passport/forgot-password`,
+  requestPasswordUrl: `${lambdaBaseUrl}authentication/forgot-password`,
   resetPasswordUrl: `${lambdaBaseUrl}authentication/reset-password`,
   termsAndConditionsUrl: `${baseUrl}services/legal-terms/terms-of-use`,
   privacyPolicyUrl: `${baseUrl}services/legal-terms/privacy-policy`,
