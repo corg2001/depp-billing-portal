@@ -1,9 +1,12 @@
 @import "../../../../assets/styles/contractor-layout-styles.scss";
 
-::ng-deep .modal-content {
-  max-width: 300px !important;
-  margin: 0 auto;
+::ng-deep {
+  div.modal-content:has(.idle-time-submit-modal) {
+    max-width: 300px !important;
+    margin: 0 auto;
+  }
 }
+
 .btn-outline {
   background-color: $white !important;
   color: $color-poppy !important;
