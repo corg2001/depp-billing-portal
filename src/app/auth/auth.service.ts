@@ -30,7 +30,8 @@ export class AuthService {
   ): void {
     this._httpClient
       .post(environment.requestPasswordUrl, {
-        username: userEmail
+        username: userEmail,
+        brand: "NRGP"
       })
       .subscribe(
         (response: { message: string }) =>
