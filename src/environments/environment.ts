@@ -110,8 +110,8 @@ export const environment = {
   helpUrl: `${baseUrl}contact-us`,
   cognito: {
     loginURL: 'https://cognito-idp.us-east-1.amazonaws.com/',
-    clientId: '1dqk3e9jtk8euo3574q3oi9k0d',
-    authFlow: 'USER_PASSWORD_AUTH',
+    clientId: '57g48jmb8rm3jm7cdmi9cbl6c8',
+    authFlow: 'USER_PASSWORD_AUTH'
   },
   subscriptionkeys: {
     customerapis: '1cb165d2ce334b20ac4a2af1508c7010',

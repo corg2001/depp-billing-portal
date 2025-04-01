@@ -2,8 +2,18 @@
 
 ::ng-deep {
   div.modal-content:has(.idle-time-submit-modal) {
-    max-width: 300px !important;
+    max-width: 400px !important;
     margin: 0 auto;
+  }
+}
+
+.idle-time-submit-modal {
+  .modal-footer {
+    justify-content: center !important;
+  }
+
+  .btn {
+    width: 75px;
   }
 }
 
