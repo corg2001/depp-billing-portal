@@ -16,9 +16,9 @@ stages:
   jobs:
   - job: SonarCloudScan
     pool:
-      vmImage: ubuntu-20.04
+      vmImage: ubuntu-latest
     steps:
-    - task: SonarCloudPrepare@2
+    - task: SonarCloudPrepare@3
       displayName: Prepare for the SonarCloud analysis
       inputs:
         SonarCloud: 'services-sonar-cloud'
@@ -31,9 +31,9 @@ stages:
           sonar.pullrequest.vsts.repository=$(Build.Repository.Name)
           sonar.projectName=$(Build.Repository.Name)
           sonar.projectKey=$(sonarCloudProjectKey)
-    - task: SonarCloudAnalyze@2
+    - task: SonarCloudAnalyze@3
       displayName: Analyze source code with the SonarCloud
-    - task: SonarCloudPublish@2
+    - task: SonarCloudPublish@3
       displayName: Publish SonarCloud analysis results
       inputs:
         pollingTimeoutSec: 300
@@ -45,7 +45,7 @@ stages:
   jobs:
   - job: BuildQa365
     pool:
-      vmImage: ubuntu-20.04
+      vmImage: ubuntu-latest
     steps:
     - template: pipelines/build.yml
       parameters:
@@ -61,7 +61,7 @@ stages:
   jobs:
   - deployment: DeployQa365
     pool:
-      vmImage: ubuntu-20.04
+      vmImage: ubuntu-latest
     environment: homeprotection-dev
     strategy:
       runOnce:
@@ -82,7 +82,7 @@ stages:
   jobs:
   - job: BuildDev365
     pool:
-      vmImage: ubuntu-20.04
+      vmImage: ubuntu-latest
     steps:
     - template: pipelines/build.yml
       parameters:
@@ -98,7 +98,7 @@ stages:
   jobs:
   - deployment: DeployDev365
     pool:
-      vmImage: ubuntu-20.04
+      vmImage: ubuntu-latest
     environment: homeprotection-dev
     strategy:
       runOnce:
@@ -119,7 +119,7 @@ stages:
   jobs:
   - job: BuildQa1
     pool:
-      vmImage: ubuntu-20.04
+      vmImage: ubuntu-latest
     steps:
     - template: pipelines/build.yml
       parameters:
@@ -135,7 +135,7 @@ stages:
   jobs:
   - deployment: DeployQa1
     pool:
-      vmImage: ubuntu-20.04
+      vmImage: ubuntu-latest
     environment: homeprotection-dev
     strategy:
       runOnce:
@@ -156,7 +156,7 @@ stages:
   jobs:
   - job: BuildHf1
     pool:
-      vmImage: ubuntu-20.04
+      vmImage: ubuntu-latest
     steps:
     - template: pipelines/build.yml
       parameters:
@@ -172,7 +172,7 @@ stages:
   jobs:
   - deployment: DeployHf1
     pool:
-      vmImage: ubuntu-20.04
+      vmImage: ubuntu-latest
     environment: homeprotection-dev
     strategy:
       runOnce:
@@ -193,7 +193,7 @@ stages:
   jobs:
   - job: BuildDev
     pool:
-      vmImage: ubuntu-20.04
+      vmImage: ubuntu-latest
     steps:
     - template: pipelines/build.yml
       parameters:
@@ -209,7 +209,7 @@ stages:
   jobs:
   - deployment: DeployDev
     pool:
-      vmImage: ubuntu-20.04
+      vmImage: ubuntu-latest
     environment: homeprotection-dev
     strategy:
       runOnce:
@@ -230,7 +230,7 @@ stages:
   jobs:
   - job: BuildStage
     pool:
-      vmImage: ubuntu-20.04
+      vmImage: ubuntu-latest
     steps:
     - template: pipelines/build.yml
       parameters:
@@ -247,7 +247,7 @@ stages:
   jobs:
   - deployment: DeployStage
     pool:
-      vmImage: ubuntu-20.04
+      vmImage: ubuntu-latest
     environment: homeprotection-stage
     strategy:
       runOnce:
@@ -268,7 +268,7 @@ stages:
   jobs:
   - job: BuildProd
     pool:
-      vmImage: ubuntu-20.04
+      vmImage: ubuntu-latest
     steps:
     - template: pipelines/build.yml
       parameters:
@@ -285,7 +285,7 @@ stages:
   jobs:
   - deployment: DeployProd
     pool:
-      vmImage: ubuntu-20.04
+      vmImage: ubuntu-latest
     environment: homeprotection-prod
     strategy:
       runOnce:
