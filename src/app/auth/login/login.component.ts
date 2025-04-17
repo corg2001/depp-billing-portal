@@ -36,6 +36,7 @@ export class LoginComponent implements OnInit {
     customer: environment.siblingPortals.customer,
   };
   public passwordResetRequiredExceptionLable: string = 'Forgot password?';
+  public showPassword: boolean = true;
 
   constructor(
     private _authService: AuthService,
@@ -140,5 +141,9 @@ export class LoginComponent implements OnInit {
     return value.includes('your account is locked')
       ? environment.auth.lockedError
       : environment.auth.loginError;
+  }
+
+  public togglePassword(): void {
+    this.showPassword = !this.showPassword;
   }
 }
