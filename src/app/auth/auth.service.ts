@@ -31,7 +31,7 @@ export class AuthService {
     this._httpClient
       .post(environment.requestPasswordUrl, {
         username: userEmail,
-        brand: "NRGP"
+        brand: "DEPPB"
       })
       .subscribe(
         (response: { message: string }) =>
@@ -156,7 +156,7 @@ export class AuthService {
     response$?: Subject<any>
   ): void {
     this._httpClient
-      .post(environment.resetPasswordUrl, { token, username, password, brand: "NRGP" })
+      .post(environment.resetPasswordUrl, { token, username, password, brand: "DEPPB" })
       .subscribe(
         (response: Observable<HttpResponse<any>>) =>
           this._resetPasswordSuccessHandler(success$, response, response$),
