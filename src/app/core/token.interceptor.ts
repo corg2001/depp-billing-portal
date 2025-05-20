@@ -42,6 +42,11 @@ export class TokenHttpInterceptor implements HttpInterceptor {
       return next.handle(newAuthReq2);
     }
 
+    if (req.url.includes('reset-password') || req.url.includes('forgot-password')) {
+      let newHeaders = req.headers.delete('Authorization');
+      const apiReq = req.clone({ headers: newHeaders });
+      return next.handle(apiReq);
+    }
 
     return next.handle(newRequest);
   }

@@ -30,7 +30,8 @@ export class AuthService {
   ): void {
     this._httpClient
       .post(environment.requestPasswordUrl, {
-        username: userEmail
+        username: userEmail,
+        brand: "DEPPB"
       })
       .subscribe(
         (response: { message: string }) =>
@@ -100,7 +101,7 @@ export class AuthService {
     isUserFound$?: Subject<boolean>
   ): void {
     isUserFound$.next(false);
-    response$.next(environment.auth.forgotPassword.userNotFound);
+    response$.next(environment.auth.forgotPassword.success);
   }
 
   private genericFailureHandler(
@@ -155,7 +156,7 @@ export class AuthService {
     response$?: Subject<any>
   ): void {
     this._httpClient
-      .post(environment.resetPasswordUrl, { token, username, password })
+      .post(environment.resetPasswordUrl, { token, username, password, brand: "DEPPB" })
       .subscribe(
         (response: Observable<HttpResponse<any>>) =>
           this._resetPasswordSuccessHandler(success$, response, response$),

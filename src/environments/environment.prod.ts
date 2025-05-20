@@ -2,6 +2,8 @@ import * as moment from 'moment';
 const env: string = 'qa3';
 const baseUrl: string = `https://billing-api.directenergyprotects.com/`;
 const custumerPortalUrl: string = `https://depp-portal-${env}.digitaltest.directenergy.net/`;
+const lambdaBaseUrl = `https://wxl7jbcqnh-vpce-00c897a3ca7b0e934.execute-api.us-east-1.amazonaws.com/api/`;
+
 export const environment = {
   aspirePhase4releaseDate: '10-21-2021',
   production: true,
@@ -44,8 +46,8 @@ export const environment = {
   },
   // auth service
   loginUrl: `${baseUrl}authentication/passport/login`,
-  requestPasswordUrl: `${baseUrl}authentication/passport/forgot-password`,
-  resetPasswordUrl: `${baseUrl}authentication/passport/reset-password`,
+  requestPasswordUrl: `${lambdaBaseUrl}authentication/forgot-password`,
+  resetPasswordUrl: `${lambdaBaseUrl}authentication/reset-password`,
   termsAndConditionsUrl: `${baseUrl}services/legal-terms/terms-of-use`,
   privacyPolicyUrl: `${baseUrl}services/legal-terms/privacy-policy`,
 

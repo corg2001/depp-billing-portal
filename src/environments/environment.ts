@@ -7,6 +7,7 @@ const baseUrl: string = `https://depp-billing-api-qa1.homeprotection-dev.nrgdigi
 const custumerPortalUrl: string = `https://account.hwahomewarranty.com`;
 const customerApisBaseUri = `https://svcsapimt03.nrgenergy.com/CustomerApis/v1/`;
 const vendorApisBaseUri = `https://svcsapimt03.nrgenergy.com/VendorApis/v1/`;
+const lambdaBaseUrl = `https://sdsayj04qk-vpce-0bf9f866df2bd87f3.execute-api.us-east-1.amazonaws.com/api/`;
 
 export const environment = {
   aspirePhase4releaseDate: '10-21-2021',
@@ -52,7 +53,8 @@ export const environment = {
     loginError:
       `We apologize you are having difficulty logging into our portal. Please try again or select the 'Forgot your Password?' link below to reset. For further assistance, please call (855) 334-3577.`,
     lockedError:
-      `Your account is locked after multiple attempts. Please select the 'Forgot your Password?' link below to reset your password and unlock your account. For further assistance, please call (855) 334-3577.`
+      `Your account is locked after multiple attempts. Please select the 'Forgot your Password?' link below to reset your password and unlock your account. For further assistance, please call (855) 334-3577.`,
+    passwordResetRequiredExceptionError: "You haven't logged in sometime now, please reset your password using reset password link.For further assistance, call us at (855) 334-3577."
   },
   forms: {
     ach_form_path: '../assets/forms/centrica_vendor_Information_form.pdf'
@@ -70,8 +72,8 @@ export const environment = {
   },
   // auth service
   loginUrl: `${baseUrl}authentication/passport/login`,
-  requestPasswordUrl: `${baseUrl}authentication/passport/forgot-password`,
-  resetPasswordUrl: `${baseUrl}authentication/passport/reset-password`,
+  requestPasswordUrl: `${lambdaBaseUrl}authentication/forgot-password`,
+  resetPasswordUrl: `${lambdaBaseUrl}authentication/reset-password`,
   termsAndConditionsUrl: `${baseUrl}services/legal-terms/terms-of-use`,
   privacyPolicyUrl: `${baseUrl}services/legal-terms/privacy-policy`,
 
@@ -108,8 +110,8 @@ export const environment = {
   helpUrl: `${baseUrl}contact-us`,
   cognito: {
     loginURL: 'https://cognito-idp.us-east-1.amazonaws.com/',
-    clientId: '1dqk3e9jtk8euo3574q3oi9k0d',
-    authFlow: 'USER_PASSWORD_AUTH',
+    clientId: '57g48jmb8rm3jm7cdmi9cbl6c8',
+    authFlow: 'USER_PASSWORD_AUTH'
   },
   subscriptionkeys: {
     customerapis: '1cb165d2ce334b20ac4a2af1508c7010',

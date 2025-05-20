@@ -57,7 +57,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
         newPassword: ['', [
           this.passwordHelper.bind(this),
           Validators.required,
-          Validators.pattern('(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,32}')]],
+          Validators.pattern('(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[$@$!%.^~`()+={}|:;<>,\\[\\]\\-/\\"\'_*#?&\\\\])[A-Za-z\\d$@$!%.^~`()+={}|:;<>,\\[\\]\\-/\\"\'_*#?&\\\\]{8,32}')]],
         confirmPassword: ['', Validators.required]
       },
       { validators: this._matchPassowrds }

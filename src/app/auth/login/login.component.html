@@ -19,8 +19,10 @@
           </div>
         </div>
         <div class="form-group" (click)="resetResponseError()">
-          <input type="password" id="password" class="form-control" alt="password" placeholder="Password"
-            formControlName="userPassword" required />
+          <input [type]="showPassword ? 'password' : 'text'" id="password" class="form-control password" alt="password"
+            placeholder="Password" formControlName="userPassword" required />
+          <i (click)="togglePassword()" [class]="showPassword ? 'fa fa-eye-slash eye-icon' : 'fa fa-eye eye-icon'">
+          </i>
           <div class="errors pt-1">
             <div class="text-danger small" *ngIf="
                 !loginForm.get('userPassword').valid &&
@@ -51,7 +53,7 @@
       </form>
     </div>
     <div class="footer small">
-      <div><a routerLink="/auth/forgot-password">Forgot your password?</a></div>
+      <div><a routerLink="/auth/forgot-password">{{passwordResetRequiredExceptionLable}}</a></div>
     </div>
   </div>
 </div>
