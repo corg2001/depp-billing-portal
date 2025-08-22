@@ -8,5 +8,10 @@ if (environment.production) {
   enableProdMode();
 }
 
+const dynatraceScript = document.getElementById('dynatrace-script') as HTMLScriptElement;
+if (dynatraceScript) {
+  dynatraceScript.src = environment.dynatrace;
+}
+
 platformBrowserDynamic().bootstrapModule(AppModule)
   .catch(err => console.error(err));
