@@ -91,7 +91,8 @@ export const environment = {
   configcat: {
     key: 'o3_aCPwOlUOJ0ST5qznskQ/ulyGF3MlI0u81lFK8oAJxg',
     maintenance: 'ENABLE_MAINTENANCE_MODE__DEPP_BILL'
-  }
+  },
+  dynatrace: 'https://js-cdn.dynatrace.com/jstag/16362cc0dec/bf94493cun/709fefe3d88ece17_complete.js'
 };
 
 /*

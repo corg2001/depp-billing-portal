@@ -117,7 +117,8 @@ export const environment = {
     customerapis: '1cb165d2ce334b20ac4a2af1508c7010',
     vendorapis: 'b55fef4464ce474bbfa3dd0e1bc395f0',
     unauthenrollmentapis: '8ef58170a1a64e96802462f5ac82c782'
-  }
+  },
+  dynatrace: 'https://js-cdn.dynatrace.com/jstag/16362cc0dec/bf94493cun/bf6dc7c44e529182_complete.js'
 };
 
 /*

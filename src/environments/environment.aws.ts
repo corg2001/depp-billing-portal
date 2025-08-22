@@ -3,7 +3,7 @@ const env: string = 'qa3';
 const baseUrl: string = `https://hwa-contractor-api-${env}.digitaltest.directenergy.net/`;
 const custumerPortalUrl: string = `https://hwa-customer-${env}.digitaltest.directenergy.net/`;
 const realtorPortalUrl: string = `https://hwa-realtor-${env}.digitaltest.directenergy.net/`;
-const lambdaBaseUrl= `https://wxl7jbcqnh-vpce-00c897a3ca7b0e934.execute-api.us-east-1.amazonaws.com/api/`;
+const lambdaBaseUrl = `https://wxl7jbcqnh-vpce-00c897a3ca7b0e934.execute-api.us-east-1.amazonaws.com/api/`;
 
 export const environment = {
   aspirePhase4releaseDate: '10-21-2021',
@@ -90,7 +90,8 @@ export const environment = {
   configcat: {
     key: 'o3_aCPwOlUOJ0ST5qznskQ/ulyGF3MlI0u81lFK8oAJxg',
     maintenance: 'ENABLE_MAINTENANCE_MODE__DEPP_BILL'
-  }
+  },
+  dynatrace: 'https://js-cdn.dynatrace.com/jstag/16362cc0dec/bf94493cun/bf6dc7c44e529182_complete.js'
 };
 
 /*
