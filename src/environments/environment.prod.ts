@@ -1,5 +1,5 @@
 import * as moment from 'moment';
-const env: string = 'qa3';
+const env: string = 'dev';
 const baseUrl: string = `https://billing-api.directenergyprotects.com/`;
 const custumerPortalUrl: string = `https://depp-portal-${env}.digitaltest.directenergy.net/`;
 const lambdaBaseUrl = `https://wxl7jbcqnh-vpce-00c897a3ca7b0e934.execute-api.us-east-1.amazonaws.com/api/`;
