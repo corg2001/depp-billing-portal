@@ -1,5 +1,5 @@
 import * as moment from 'moment';
-const env: string = 'qa3';
+const env: string = 'qa1';
 const baseUrl: string = `https://hwa-contractor-api-${env}.digitaltest.directenergy.net/`;
 const custumerPortalUrl: string = `https://hwa-customer-${env}.digitaltest.directenergy.net/`;
 const realtorPortalUrl: string = `https://hwa-realtor-${env}.digitaltest.directenergy.net/`;
