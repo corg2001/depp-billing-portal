@@ -1,5 +1,5 @@
 import * as moment from 'moment';
-const env: string = 'qa3';
+const env: string = 'qa1';
 const baseUrl: string = `https://hwa-contractor-api-${env}.digitaltest.directenergy.net/`;
 const custumerPortalUrl: string = `https://hwa-customer-${env}.digitaltest.directenergy.net/`;
 const realtorPortalUrl: string = `https://hwa-realtor-${env}.digitaltest.directenergy.net/`;
@@ -90,7 +90,8 @@ export const environment = {
   configcat: {
     key: 'o3_aCPwOlUOJ0ST5qznskQ/ulyGF3MlI0u81lFK8oAJxg',
     maintenance: 'ENABLE_MAINTENANCE_MODE__DEPP_BILL'
-  }
+  },
+  dynatrace: 'https://js-cdn.dynatrace.com/jstag/16362cc0dec/bf94493cun/bf6dc7c44e529182_complete.js'
 };
 
 /*
