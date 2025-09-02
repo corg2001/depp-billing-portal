@@ -2,7 +2,7 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-const env: string = 'prod';
+const env: string = 'dev';
 const baseUrl: string = `https://depp-billing-api-qa1.homeprotection-dev.nrgdigitalawscloud.com/`;
 const custumerPortalUrl: string = `https://account.hwahomewarranty.com`;
 const customerApisBaseUri = `https://svcsapimt03.nrgenergy.com/CustomerApis/v1/`;
