@@ -4,6 +4,7 @@ import { ConfigService } from "src/app/core/config.service";
 import { LogoutService } from "src/app/core/logout.service";
 
 @Component({
+  standalone:false,
   selector: 'app-idle-time',
   templateUrl: './idle-time.component.html',
   styleUrls: ['./idle-time.component.scss']
