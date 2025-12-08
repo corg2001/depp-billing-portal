@@ -52,8 +52,7 @@ import { IdleTimeComponent } from './components/idle-time/idle-time.component';
     NgxCurrencyModule,
     IdleTimeComponent
   ],
-  entryComponents: [ModalComponent, ProgressBarComponent],
-
+  
   providers: [UploadService,ExportExcelService]
 })
 export class SharedModule {}

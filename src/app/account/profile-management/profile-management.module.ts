@@ -99,6 +99,6 @@ import { OtherDocumentsModalComponent } from './ach-documents/other-documents-mo
       useClass: CalendarService
      }
   ],
-  entryComponents: [AchModalComponent, OtherDocumentsModalComponent ]
+  
 })
 export class ProfileManagementModule {}

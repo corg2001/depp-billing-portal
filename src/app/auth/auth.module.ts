@@ -40,9 +40,6 @@ import { TermsOfUseComponent } from './terms-of-use/terms-of-use.component';
   ],
   exports: [],
   providers: [AuthService],
-  entryComponents: [
-    PrivacyPolicyComponent,
-    TermsOfUseComponent
-  ]
+  
 })
 export class AuthModule { }

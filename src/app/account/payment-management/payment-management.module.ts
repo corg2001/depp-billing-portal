@@ -21,6 +21,6 @@ import { InvoiceModalComponent } from './payment/invoice-modal/invoice-modal.com
     NgbModule
   ],
   providers: [{ provide: PaymentAbstractService, useClass: PaymentService }],
-  entryComponents: [InvoiceModalComponent]
+  
 })
 export class PaymentManagementModule {}

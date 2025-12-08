@@ -32,7 +32,7 @@ import { IdleTimeComponent } from './shared/components/idle-time/idle-time.compo
     },
     MaintenanceService
   ],  
-  entryComponents: [ModalComponent, IdleTimeComponent],
+  
   bootstrap: [AppComponent],
 })
 export class AppModule { }

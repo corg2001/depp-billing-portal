@@ -41,8 +41,6 @@ import { ClaimInfoComponent } from './claim-summary/claim-info/claim-info.compon
       useClass: ClaimFactoryService
     }
   ],
-  entryComponents: [
-    DiagnosisSelectModalComponent
-  ]
+  
 })
 export class ClaimManagementModule {}
