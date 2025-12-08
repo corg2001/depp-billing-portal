@@ -45,7 +45,9 @@ export class ClaimSummaryComponent implements OnInit {
   public ngOnInit() {
     this.initSearchedValues();
     this.getClaims(this.claimList$, this.error$, this.completion$)
-    this.completion$.subscribe((completed: boolean) => this.isCompleted = completed);
+    this.completion$.subscribe((completed: boolean) => {
+      this.isCompleted = completed;
+    });
     localStorage.getItem(SessionKeys.last_login) !== undefined
       && localStorage.getItem(SessionKeys.last_login) !== '' ?
       this.lastLoginDate = `Last Login: ${moment(localStorage.getItem(SessionKeys.last_login))
@@ -63,11 +65,13 @@ export class ClaimSummaryComponent implements OnInit {
 
   public getClaims(claimList$: BehaviorSubject<Claim[]>, error$: Subject<boolean>,
     completion$: Subject<boolean>, startDate?: string, endDate?: string): void {
+    // getClaims called
     this.loading = true;
     const claimPayload$: BehaviorSubject<
       ClaimPayloadInterface[]
     > = new BehaviorSubject([]);
     this.partyName = this._configService.getPartyName();
+    // party name retrieved
     this.claimService.getClaims(
       completion$,
       error$,
@@ -77,12 +81,17 @@ export class ClaimSummaryComponent implements OnInit {
     );
     claimPayload$.subscribe(
       (claimPlayod: ClaimPayloadInterface[]) => {
+        // claims payload received
         this.loading = false;
         this.claims = this._claimFactoryService.getClaimFromPayload(
           claimPlayod
         );
-        claimList$.next(this.claims.filter(c => c.jobStatus !== JobStatus.invoiced && c.claimType !== 'Surge'));
+        // processed claims
+        const filteredClaims = this.claims.filter(c => c.jobStatus !== JobStatus.invoiced && c.claimType !== 'Surge');
+        // filtered claims
+        claimList$.next(filteredClaims);
         this.claimsFound = this.claims.length > 0 ? true : false;
+        // claims found
       }
     );
   }

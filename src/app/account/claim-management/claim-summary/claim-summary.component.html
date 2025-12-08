@@ -2,7 +2,7 @@
   <header class="header-txt">Welcome<label *ngIf="partyName !== null">, {{partyName}}</label>
   </header>
   <app-loading-spinner *ngIf="loading"></app-loading-spinner>
-  <div *ngIf="!loading">
+  <div *ngIf="!loading"> 
     <app-claim-notification [claimSubject$]="claimList$" [searchedClaims$]="searchedClaim$"></app-claim-notification>
     <div class="claim-summary">
       <div class="activity">

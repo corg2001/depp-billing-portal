@@ -3,7 +3,7 @@ import { forkJoin, BehaviorSubject } from 'rxjs';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AchDocumetsService } from '../service/ach-documents.service';
 import { ConfigService } from 'src/app/core/config.service';
-import { async } from 'q';
+
 
 @Component({
   selector: 'app-ach-modal',
@@ -12,7 +12,7 @@ import { async } from 'q';
 })
 export class AchModalComponent implements OnInit {
   @Input() public type: string;
-  @ViewChild('file') public file: ElementRef;
+  @ViewChild('file', { static: true }) public file: ElementRef;
   public loading: boolean;
   public modalSize: 'xl';
   public modalTitle: string = 'upload documents';

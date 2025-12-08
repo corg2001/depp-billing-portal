@@ -150,18 +150,18 @@ th[appSortable].desc:before {
 // High-Level Styles
 $primary-dark: $hwa-color-teal-dark;
 $bg-color-accent: $hwa-color-light-gray;
-$brand-accent-color: theme-color("secondary");
+$brand-accent-color: #6c757d;
 $brand-mute-accent-color: #e0eaec;
 $brand-mute-accent-text-color: $body-color;
 $brand-border-color: $gray-300;
 $brand-border-radius: 0.25rem;
 $brand-border: 1px solid $brand-border-color;
-$brand-box-shadow-color: darken(theme-color("secondary"), 20);
+$brand-box-shadow-color: darken(#6c757d, 20%);
 $brand-light-gray: $gray-100;
 $brand-font-family: "Roboto", sans-serif;
 
 // Button Styles
-$brand-button-color: theme-color("secondary");
+$brand-button-color: #6c757d;
 $brand-button-text-color: $white;
 
 $brand-secondary-button-color: #056072;

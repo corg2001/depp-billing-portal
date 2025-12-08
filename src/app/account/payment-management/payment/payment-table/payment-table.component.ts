@@ -23,7 +23,7 @@ export class PaymentTableComponent implements OnInit, OnChanges {
   @Input() public updatedPaymentHistory$: BehaviorSubject<PaymentHistoryInterface[]> = new BehaviorSubject([]);
   @Input() public isCompleted: boolean = false;
   @Input() public searchFormValue?: SearchFormValues;
-  @ViewChild('invoiceModal') public modalHtml: ElementRef;
+  @ViewChild('invoiceModal', { static: false }) public modalHtml: ElementRef;
   @ViewChildren(SortableHeaderDirective) headers: QueryList<SortableHeaderDirective>;
   public exportJSON: any[] = [];
 

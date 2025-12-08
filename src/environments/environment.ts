@@ -2,12 +2,12 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-const env: string = 'dev';
-const baseUrl: string = `https://depp-billing-api-qa1.homeprotection-dev.nrgdigitalawscloud.com/`;
+const env: string = 'prod';
+const baseUrl: string = `https://billing-api-stage.directenergyprotects.com/`;
 const custumerPortalUrl: string = `https://account.hwahomewarranty.com`;
-const customerApisBaseUri = `https://svcsapimt03.nrgenergy.com/CustomerApis/v1/`;
-const vendorApisBaseUri = `https://svcsapimt03.nrgenergy.com/VendorApis/v1/`;
-const lambdaBaseUrl = `https://sdsayj04qk-vpce-0bf9f866df2bd87f3.execute-api.us-east-1.amazonaws.com/api/`;
+const customerApisBaseUri = `https://svcsapimt11.nrgenergy.com/CustomerApis/v1/`;
+const vendorApisBaseUri = `https://svcsapimt11.nrgenergy.com/VendorApis/v1/`;
+const lambdaBaseUrl = 'https://portal-api-stage.nrgprotects.com/';
 
 export const environment = {
   aspirePhase4releaseDate: '10-21-2021',
@@ -67,8 +67,10 @@ export const environment = {
     privacyPolicy: 'https://nrgp-customer-elearning-prod.s3.amazonaws.com/NRG+Protects+Policy_June+2022_clean.pdf'
   },
   configcat: {
-    key: 'o3_aCPwOlUOJ0ST5qznskQ/ulyGF3MlI0u81lFK8oAJxg',
-    maintenance: 'ENABLE_MAINTENANCE_MODE__DEPP_BILL'
+    key: 'o3_aCPwOlUOJ0ST5qznskQ/XEBEi0LKzUu15ZS4jhrSkw',
+    maintenance: 'ENABLE_MAINTENANCE_MODE__DEPP_BILL',
+    maintenanceContent: 'UNIFY_MAINTENANCE_CONTENT',
+    dynatrace: 'DEPP_BILLING_DYNATRACE_SRC'
   },
   // auth service
   loginUrl: `${baseUrl}authentication/passport/login`,
@@ -114,11 +116,11 @@ export const environment = {
     authFlow: 'USER_PASSWORD_AUTH'
   },
   subscriptionkeys: {
-    customerapis: '1cb165d2ce334b20ac4a2af1508c7010',
-    vendorapis: 'b55fef4464ce474bbfa3dd0e1bc395f0',
-    unauthenrollmentapis: '8ef58170a1a64e96802462f5ac82c782'
+    customerapis: 'c9e462cbd29c4c2685e3f33507c9b240',
+    vendorapis: 'a5268d8496e44401ae2f3aa279f61349',
+    unauthenrollmentapis: '1d4de43fbabf439a9b3a12f0c96fbb45'
   },
-  dynatrace: 'https://js-cdn.dynatrace.com/jstag/16362cc0dec/bf94493cun/bf6dc7c44e529182_complete.js'
+    dynatrace: 'https://js-cdn.dynatrace.com/jstag/16362cc0dec/bf94493cun/bf6dc7c44e529182_complete.js'
 };
 
 /*

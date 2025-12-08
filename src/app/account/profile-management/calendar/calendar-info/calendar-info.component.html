@@ -2,12 +2,7 @@
   <div class="app-calendar">
     <full-calendar
       #calendar
-      defaultView="dayGridMonth"
-      [header]="header"
-      [validRange]="validRange"
-      [plugins]="calendarPlugins"
-      [events]="calendarEvents"
-      (dateClick)="handleDateClick($event)"
+      [options]="calendarOptions"
     ></full-calendar>
   </div>
 </div>

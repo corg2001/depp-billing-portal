@@ -26,7 +26,6 @@ export class DashboardComponent implements OnInit {
 
   private partyDetailsSubscriptionHandler(response: boolean): void {
     if ( !response ) {
-      console.log('ERROR: unable to process party details');
       this._logoutService.logout();
       return;
     }

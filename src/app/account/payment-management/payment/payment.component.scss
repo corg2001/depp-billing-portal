@@ -11,3 +11,10 @@ p {
     color: $hwa-color-teal;
 }
 
+/* No payments message spacing */
+.no-payments-msg {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+

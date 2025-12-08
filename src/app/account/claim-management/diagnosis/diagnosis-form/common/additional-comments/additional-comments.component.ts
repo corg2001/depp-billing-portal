@@ -8,7 +8,7 @@ import { FormGroup } from '@angular/forms';
 })
 export class AdditionalCommentsComponent implements OnInit {
   @Input() public diagnosisForm: FormGroup;
-  @ViewChild('commentsTextArea', { read: ElementRef }) textArea: ElementRef;
+  @ViewChild('commentsTextArea', { read: ElementRef, static: true }) textArea: ElementRef;
 
   public maxLength: number = 3000;
 

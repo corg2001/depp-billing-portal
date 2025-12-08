@@ -29,7 +29,7 @@ import { PdfService } from 'src/app/core/pdf.service';
   styleUrls: ['./diagnosis-form.component.scss']
 })
 export class DiagnosisFormComponent extends FormCanDeactivate implements OnInit {
-  @ViewChild('content') content: ElementRef;
+  @ViewChild('content', { static: false }) content: ElementRef;
 
   public _params$: Subscription;
   public formType: string;
@@ -38,15 +38,15 @@ export class DiagnosisFormComponent extends FormCanDeactivate implements OnInit 
   public isSubmitting: boolean = false;
   public submissionComplete$: Subject<boolean> = new Subject<boolean>();
 
-  @ViewChild(FormApplianceComponent) applianceForm: BaseDiagnosisFormComponent;
-  @ViewChild(FormHvacComponent) hvacForm: BaseDiagnosisFormComponent;
-  @ViewChild(FormPoolComponent) poolSpaSaltwaterForm: BaseDiagnosisFormComponent;
-  @ViewChild(FormPlumbingComponent) plumbingForm: BaseDiagnosisFormComponent;
-  @ViewChild(FormWaterHeaterComponent) waterHeaterForm: BaseDiagnosisFormComponent;
-  @ViewChild(FormWellPumpSepticComponent) wellPumpSeptic: BaseDiagnosisFormComponent;
-  @ViewChild(FormElectricalComponent) electrical: BaseDiagnosisFormComponent;
-  @ViewChild(FormExternalComponent) externalSewerWater: BaseDiagnosisFormComponent;
-  @ViewChild(FormOtherComponent) other: BaseDiagnosisFormComponent;
+  @ViewChild(FormApplianceComponent, { static: false }) applianceForm: BaseDiagnosisFormComponent;
+  @ViewChild(FormHvacComponent, { static: false }) hvacForm: BaseDiagnosisFormComponent;
+  @ViewChild(FormPoolComponent, { static: false }) poolSpaSaltwaterForm: BaseDiagnosisFormComponent;
+  @ViewChild(FormPlumbingComponent, { static: false }) plumbingForm: BaseDiagnosisFormComponent;
+  @ViewChild(FormWaterHeaterComponent, { static: false }) waterHeaterForm: BaseDiagnosisFormComponent;
+  @ViewChild(FormWellPumpSepticComponent, { static: false }) wellPumpSeptic: BaseDiagnosisFormComponent;
+  @ViewChild(FormElectricalComponent, { static: false }) electrical: BaseDiagnosisFormComponent;
+  @ViewChild(FormExternalComponent, { static: false }) externalSewerWater: BaseDiagnosisFormComponent;
+  @ViewChild(FormOtherComponent, { static: false }) other: BaseDiagnosisFormComponent;
 
   constructor(
     private _activeRoute: ActivatedRoute,

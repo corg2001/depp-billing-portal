@@ -11,7 +11,7 @@ import {
 import { AuthService } from '../auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, Subscription } from 'rxjs';
-import { NgPasswordRulesService } from 'ng-password-helper';
+
 
 function ValidateEmail(c: FormControl): any {
   // TODO: Implement a real validation for password match
@@ -43,8 +43,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
     private _authService: AuthService,
     private _formBuilder: FormBuilder,
     private _activeRoute: ActivatedRoute,
-    private _route: Router,
-    public ngPasswordRulesService: NgPasswordRulesService
+    private _route: Router
   ) { }
 
   ngOnInit() {
@@ -55,7 +54,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
     this.resetForm = this._formBuilder.group(
       {
         newPassword: ['', [
-          this.passwordHelper.bind(this),
+
           Validators.required,
           Validators.pattern('(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[$@$!%.^~`()+={}|:;<>,\\[\\]\\-/\\"\'_*#?&\\\\])[A-Za-z\\d$@$!%.^~`()+={}|:;<>,\\[\\]\\-/\\"\'_*#?&\\\\]{8,32}')]],
         confirmPassword: ['', Validators.required]
@@ -68,9 +67,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
     return this.resetForm.controls;
   }
 
-  public passwordHelper(control: FormControl): any {
-    return this.ngPasswordRulesService.validPassword(control);
-  }
+
 
   public resetPassword(): void {
     const isSuccesFul$: Subject<boolean> = new Subject();

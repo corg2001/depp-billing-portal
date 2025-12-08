@@ -10,7 +10,7 @@ import { FailureCauseEnum } from '../../../../model/diagnosis.enums';
 })
 export class PartFailureComponent implements OnInit {
   @Input() public diagnosisForm: FormGroup;
-  @ViewChild('commentsTextArea', { read: ElementRef }) textArea: ElementRef;
+  @ViewChild('commentsTextArea', { read: ElementRef, static: false }) textArea: ElementRef;
   public maxLength: number = 3000;
   public keys = Object.keys;
   public failureCauses = FailureCauseEnum;

@@ -59,23 +59,28 @@ export class ClaimTableComponent implements OnInit, OnChanges {
   }
 
   public ngOnInit(): void {
+    // ClaimTableComponent initialized
     this.noInfoText = this.noClaimsMsg;
     this.claimSubject$.subscribe((claimData: Claim[]) => {
-      this.claims = claimData;
+      // claim data received - normalize keys (strip leading underscores)
+      this.claims = claimData.map((c: any) => this._normalizeClaim(c));
       this.collectionSize = this.claims.length;
       this.pageSize = this._getPageSize(this.collectionSize);
       this.claims.length > 0
         ? (this.claimsFound = true)
         : (this.claimsFound = false);
+      // claimsFound/isCompleted updated
       this._sortList('dateRequested', SortDirectionEnums.Descending, this.claims);
     });
 
     this.completedSubject$.subscribe((completed: boolean) => {
+      // completion status changed
       this.isCompleted = completed;
+      // template conditions logged
     });
     this.error$.subscribe((error: boolean) => this.isError = error);
     this.searchedClaimSubject$.subscribe((claimData: Claim[]) => {
-      this.claims = claimData;
+      this.claims = claimData.map((c: any) => this._normalizeClaim(c));
       this.collectionSize = this.claims.length;
       this.claims.length > 0
         ? (this.claimsFound = true)
@@ -116,10 +121,12 @@ export class ClaimTableComponent implements OnInit, OnChanges {
   }
 
   public modifiedClaims(): Claim[] {
-    return this.claims.slice(
+    const sliced = this.claims.slice(
       (this.page - 1) * this.pageSize,
       (this.page - 1) * this.pageSize + this.pageSize
     );
+    // modifiedClaims called
+    return sliced;
   }
 
   public showRevenueAndMaintenaceIndicators(claim: Claim): string {
@@ -182,14 +189,7 @@ export class ClaimTableComponent implements OnInit, OnChanges {
   }
 
   public authorizeLinkText(jobStatus: JobStatus): string {
-    return jobStatus === JobStatus.authorized
-      ? LinkText.complete
-      : jobStatus === JobStatus.wip
-        ? LinkText.authorize
-        : jobStatus === JobStatus.completed
-          ? LinkText.invoiced
-          : jobStatus === JobStatus.pendingAuthorization ?
-            LinkText.authorize : '';
+    return LinkText.authorize;
   }
 
   public onSort(sort: SortEventInterface, claimList: Claim[]) {
@@ -229,5 +229,14 @@ export class ClaimTableComponent implements OnInit, OnChanges {
 
   private _compareString(v1?: string, v2?: string) {
     return (v1 < v2) ? -1 : (v1 > v2) ? 1 : 0;
+  }
+
+  private _normalizeClaim(claim: any): Claim {
+    const normalized: any = {};
+    Object.keys(claim || {}).forEach(key => {
+      const normalizedKey = key.startsWith('_') ? key.substring(1) : key;
+      normalized[normalizedKey] = claim[key];
+    });
+    return normalized as Claim;
   }
 }

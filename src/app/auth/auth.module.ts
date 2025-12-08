@@ -14,7 +14,7 @@ import { LoginComponent } from './login/login.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { AuthService } from './auth.service';
-import { NgPasswordHelperModule } from 'ng-password-helper';
+
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { TermsOfUseComponent } from './terms-of-use/terms-of-use.component';
 
@@ -36,7 +36,7 @@ import { TermsOfUseComponent } from './terms-of-use/terms-of-use.component';
     NgbModalModule,
     SharedModule,
     RouterModule,
-    NgPasswordHelperModule
+
   ],
   exports: [],
   providers: [AuthService],

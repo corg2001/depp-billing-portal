@@ -2,6 +2,20 @@
 
 .button-sign-out {
   cursor: pointer;
+  color: $hwa-color-teal !important;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none !important;
+  &:hover {
+    color: black !important;
+  }
+}
+
+.button-sign-out i {
+  font-size: 1rem;
+  margin-left: 0.2rem;
 }
 
 .centered-container-lg {
