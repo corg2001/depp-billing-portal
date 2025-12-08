@@ -12,7 +12,6 @@ import { FormatPhone } from './pipe/phone-number-format';
 import { FormatPassword } from './pipe/password-format';
 import { FromatLastFour } from './pipe/show-last-four-format';
 import { SortableHeaderDirective } from './../core/directive/sortable-header.directive';
-import { NgxCurrencyModule } from 'ngx-currency';
 import { SearchComponent } from './components/search/search.component';
 import { ExportExcelService } from './service/export-excel.service';
 import { IdleTimeComponent } from './components/idle-time/idle-time.component';
@@ -34,7 +33,6 @@ import { IdleTimeComponent } from './components/idle-time/idle-time.component';
   imports: [
     CommonModule,
     NgbModule,
-    NgxCurrencyModule,
     ReactiveFormsModule,
     FormsModule
   ],
@@ -49,7 +47,6 @@ import { IdleTimeComponent } from './components/idle-time/idle-time.component';
     ResultJumbotronComponent,
     SearchComponent,
     SortableHeaderDirective,
-    NgxCurrencyModule,
     IdleTimeComponent
   ],
   

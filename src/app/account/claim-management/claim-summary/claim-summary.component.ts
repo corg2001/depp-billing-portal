@@ -7,7 +7,7 @@ import { ClaimFactoryServiceAbstract } from '../service/factory/claim.factory.ab
 import * as moment from 'moment-timezone';
 import { ConfigService } from 'src/app/core/config.service';
 import { SessionKeys } from 'src/app/shared/enums/session-keys.emums';
-import { Router, RouterEvent, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
+import { Router, Event, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
 import { JobStatus } from '../model/claims.enums';
 import { FormGroup } from '@angular/forms';
 import { SearchFormValues } from 'src/app/shared/models/search-form-values.interface';
@@ -37,7 +37,7 @@ export class ClaimSummaryComponent implements OnInit {
     private _configService: ConfigService,
     private _router: Router
   ) {
-    this._router.events.subscribe((e: RouterEvent) => {
+    this._router.events.subscribe((e: Event) => {
       this._navigationInterceptor(e);
     });
   }
