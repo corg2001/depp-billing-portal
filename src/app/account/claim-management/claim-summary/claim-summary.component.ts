@@ -140,7 +140,7 @@ export class ClaimSummaryComponent implements OnInit {
     this.completion$.next(true);
   }
 
-  private _navigationInterceptor(event: RouterEvent): void {
+  private _navigationInterceptor(event: Event): void {
     if (event instanceof NavigationStart) {
       this.loading = true;
     }
