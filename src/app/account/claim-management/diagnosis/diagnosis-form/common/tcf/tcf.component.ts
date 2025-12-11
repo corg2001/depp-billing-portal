@@ -4,6 +4,7 @@ import { DiagnosisFormFactoryAbstract } from '../../../../service/abstract/diagn
 
 
 @Component({
+  standalone: false,
   selector: 'app-tcf',
   templateUrl: './tcf.component.html',
   styleUrls: ['./tcf.component.scss']

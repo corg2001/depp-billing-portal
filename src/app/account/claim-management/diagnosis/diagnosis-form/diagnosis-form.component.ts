@@ -24,6 +24,7 @@ import { DiagnosisSubmitModalComponent } from './../diagnosis-submit-modal/diagn
 import { PdfService } from 'src/app/core/pdf.service';
 
 @Component({
+  standalone: false,
   selector: 'app-diagnosis-form',
   templateUrl: './diagnosis-form.component.html',
   styleUrls: ['./diagnosis-form.component.scss']

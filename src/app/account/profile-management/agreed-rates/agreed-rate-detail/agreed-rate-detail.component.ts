@@ -3,6 +3,7 @@ import { RateDetailsInterface } from '../interface/rate-details.interface';
 import { ConfigService } from 'src/app/core/config.service';
 
 @Component({
+  standalone: false,
   selector: 'app-agreed-rate-detail',
   templateUrl: './agreed-rate-detail.component.html',
   styleUrls: ['./agreed-rate-detail.component.scss']

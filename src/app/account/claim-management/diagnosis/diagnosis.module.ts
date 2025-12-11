@@ -127,8 +127,6 @@ import { AdditionalCommentsComponent } from './diagnosis-form/common/additional-
     DataLossGuard,
     PdfService
   ],
-  entryComponents: [
-    DiagnosisSubmitModalComponent,
-  ]
+  // entryComponents removed (Ivy no longer requires them)
 })
 export class DiagnosisModule { }

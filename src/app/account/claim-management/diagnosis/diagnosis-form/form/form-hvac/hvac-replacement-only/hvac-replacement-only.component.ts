@@ -4,6 +4,7 @@ import { HvacReplacementEnum } from '../../../../../model/diagnosis.enums';
 import { HvacFormFactoryAbstract } from '../../../../../service/abstract/hvac.form.factory.abstract';
 
 @Component({
+  standalone: false,
   selector: 'app-hvac-replacement-only',
   templateUrl: './hvac-replacement-only.component.html',
   styleUrls: ['./hvac-replacement-only.component.scss']

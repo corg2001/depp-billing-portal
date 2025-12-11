@@ -4,6 +4,7 @@ import { CalendarAbstractService } from '../../service/abstract/calendar.abstrac
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
+  standalone: false,
   selector: 'app-service-info-search-box',
   templateUrl: './service-info-search-box.component.html',
   styleUrls: ['./service-info-search-box.component.scss']

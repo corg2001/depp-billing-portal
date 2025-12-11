@@ -3,6 +3,7 @@ import { FormGroup, FormArray } from '@angular/forms';
 import { DiagnosisFormFactoryAbstract } from '../../../../service/abstract/diagnosis.form.factory.abstract';
 
 @Component({
+  standalone: false,
   selector: 'app-purchasing',
   templateUrl: './purchasing.component.html',
   styleUrls: ['./purchasing.component.scss']

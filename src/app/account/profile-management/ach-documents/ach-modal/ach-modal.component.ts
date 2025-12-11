@@ -6,6 +6,7 @@ import { ConfigService } from 'src/app/core/config.service';
 
 
 @Component({
+  standalone: false,
   selector: 'app-ach-modal',
   templateUrl: './ach-modal.component.html',
   styleUrls: ['./ach-modal.component.scss']

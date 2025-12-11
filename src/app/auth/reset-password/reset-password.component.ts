@@ -26,6 +26,7 @@ function ValidateEmail(c: FormControl): any {
 }
 
 @Component({
+  standalone: false,
   selector: 'app-reset-password',
   templateUrl: './reset-password.component.html',
   styleUrls: ['./reset-password.component.scss']

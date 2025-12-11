@@ -5,6 +5,7 @@ import { RateDetailsInterface } from './interface/rate-details.interface';
 import { environment } from 'src/environments/environment';
 
 @Component({
+  standalone: false,
   selector: 'app-agreed-rates',
   templateUrl: './agreed-rates.component.html',
   styleUrls: ['./agreed-rates.component.scss']

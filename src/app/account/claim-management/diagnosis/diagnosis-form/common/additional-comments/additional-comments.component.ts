@@ -2,6 +2,7 @@ import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 @Component({
+  standalone: false,
   selector: 'app-additional-comments',
   templateUrl: './additional-comments.component.html',
   styleUrls: ['./additional-comments.component.scss']

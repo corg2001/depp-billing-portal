@@ -12,6 +12,7 @@ import * as _ from 'lodash';
 import { ConfigService } from 'src/app/core/config.service';
 
 @Component({
+  standalone: false,
   selector: 'app-service-areas',
   templateUrl: './service-areas.component.html',
   styleUrls: ['./service-areas.component.scss']

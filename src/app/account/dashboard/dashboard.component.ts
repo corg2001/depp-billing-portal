@@ -5,6 +5,7 @@ import { LogoutService } from '../../core/logout.service';
 import { ConfigService } from '../../core/config.service';
 
 @Component({
+  standalone: false,
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']

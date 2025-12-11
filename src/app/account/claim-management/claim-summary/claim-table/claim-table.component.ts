@@ -13,6 +13,7 @@ import { ClaimServiceAbstract } from '../../service/abstract/claim.abstract.serv
 import { JobDetailInterface } from './../../interface/job-detail.interface';
 import { SearchFormValues } from 'src/app/shared/models/search-form-values.interface';
 @Component({
+  standalone: false,
   selector: 'app-claim-table',
   templateUrl: './claim-table.component.html',
   styleUrls: ['./claim-table.component.scss']

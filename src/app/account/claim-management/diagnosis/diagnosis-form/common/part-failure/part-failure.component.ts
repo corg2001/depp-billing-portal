@@ -4,6 +4,7 @@ import { DiagnosisFormFactoryAbstract } from '../../../../service/abstract/diagn
 import { FailureCauseEnum } from '../../../../model/diagnosis.enums';
 
 @Component({
+  standalone: false,
   selector: 'app-part-failure',
   templateUrl: './part-failure.component.html',
   styleUrls: ['./part-failure.component.scss']

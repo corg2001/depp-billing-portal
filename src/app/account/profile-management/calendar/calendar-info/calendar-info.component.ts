@@ -16,6 +16,7 @@ import { ValidDateRange } from '../model/valid-date-range.model';
 import { Header } from '../model/header.model';
 
 @Component({
+  standalone: false,
   selector: 'app-calendar-info',
   templateUrl: './calendar-info.component.html',
   styleUrls: ['./calendar-info.component.scss']

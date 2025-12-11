@@ -3,6 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { HvacTypeEnum } from '../../../../../model/diagnosis.enums';
 
 @Component({
+  standalone: false,
   selector: 'app-hvac-additional-specs',
   templateUrl: './hvac-additional-specs.component.html',
   styleUrls: ['./hvac-additional-specs.component.scss']

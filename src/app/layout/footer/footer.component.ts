@@ -4,6 +4,7 @@ import { SocialMediaEnum } from '../../core/enums/social-media.enums';
 import { environment } from 'src/environments/environment';
 
 @Component({
+  standalone: false,
   selector: 'app-footer',
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss'],

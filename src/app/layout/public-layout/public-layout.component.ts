@@ -2,9 +2,10 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 
 @Component({
-  selector: "app-public-layout",
-  templateUrl: "./public-layout.component.html",
-  styleUrls: ["./public-layout.component.scss"],
+  standalone: false,
+  selector: 'app-public-layout',
+  templateUrl: './public-layout.component.html',
+  styleUrls: ['./public-layout.component.scss']
 })
 export class PublicLayoutComponent implements OnInit {
   public appLogo = "../../../assets/images/header-logo.svg";

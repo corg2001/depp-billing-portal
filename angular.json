@@ -91,24 +91,27 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "testlab-application:build:development"
+            "buildTarget": "testlab-application:build:development"
           },
           "configurations": {
+            "development": {
+              "buildTarget": "testlab-application:build:development"
+            },
             "production": {
-              "browserTarget": "testlab-application:build:production"
+              "buildTarget": "testlab-application:build:production"
             },
             "aws": {
-              "browserTarget": "testlab-application:build:aws"
+              "buildTarget": "testlab-application:build:aws"
             },
             "stg": {
-              "browserTarget": "testlab-application:build:stg"
+              "buildTarget": "testlab-application:build:stg"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "testlab-application:build"
+            "buildTarget": "testlab-application:build"
           }
         },
         "test": {
@@ -170,6 +173,5 @@
         }
       }
     }
-  },
-  "defaultProject": "testlab-application"
+  }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 @Component({
+  standalone: false,
   selector: 'app-hvac-current-unit',
   templateUrl: './hvac-current-unit.component.html',
   styleUrls: ['./hvac-current-unit.component.scss']

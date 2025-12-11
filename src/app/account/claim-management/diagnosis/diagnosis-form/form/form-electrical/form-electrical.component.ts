@@ -4,6 +4,7 @@ import { BaseDiagnosisFormComponent } from '../../base-diagnosis-form/base-diagn
 import { DiagnosisFormFactoryAbstract } from '../../../../service/abstract/diagnosis.form.factory.abstract';
 
 @Component({
+  standalone: false,
   selector: 'app-form-electrical',
   templateUrl: './form-electrical.component.html',
   styleUrls: ['./form-electrical.component.scss']

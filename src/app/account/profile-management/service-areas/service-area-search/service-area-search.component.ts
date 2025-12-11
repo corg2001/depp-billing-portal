@@ -15,6 +15,7 @@ import * as _ from 'lodash';
 import { ServiceAreasAbstractService } from '../service/abstract/service-areas-abstract.service';
 
 @Component({
+  standalone: false,
   selector: 'app-service-area-search',
   templateUrl: './service-area-search.component.html',
   styleUrls: ['./service-area-search.component.scss']

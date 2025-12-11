@@ -3,6 +3,7 @@ import { AuthService } from '../auth.service';
 import { Subject } from 'rxjs';
 
 @Component({
+  standalone: false,
   selector: 'app-privacy-policy',
   templateUrl: './privacy-policy.component.html',
   styleUrls: ['./privacy-policy.component.scss']

@@ -6,6 +6,7 @@ import { DiagnosisDisableModalComponent } from '../../diagnosis/diagnosis-disabl
 import { environment } from 'src/environments/environment';
 import * as moment from 'moment';
 @Component({
+  standalone: false,
   selector: 'app-diagnosis-select-modal',
   templateUrl: './diagnosis-select-modal.component.html',
   styleUrls: ['./diagnosis-select-modal.component.scss']

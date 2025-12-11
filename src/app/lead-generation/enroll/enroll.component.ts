@@ -8,6 +8,7 @@ import { EnrollAbstractService } from './services/enroll.abstract.service';
 import { LeadGenerationPayloadInterface } from './interface/enroll.payload.inteface';
 
 @Component({
+  standalone: false,
   selector: 'app-enroll',
   templateUrl: './enroll.component.html',
   styleUrls: ['./enroll.component.scss']

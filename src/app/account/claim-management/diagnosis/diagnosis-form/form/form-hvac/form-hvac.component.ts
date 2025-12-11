@@ -6,6 +6,7 @@ import { HvacFormFactoryAbstract } from '../../../../service/abstract/hvac.form.
 
 
 @Component({
+  standalone: false,
   selector: 'app-form-hvac',
   templateUrl: './form-hvac.component.html',
   styleUrls: ['./form-hvac.component.scss']

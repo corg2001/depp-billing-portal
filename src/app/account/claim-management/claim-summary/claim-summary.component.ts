@@ -13,6 +13,7 @@ import { FormGroup } from '@angular/forms';
 import { SearchFormValues } from 'src/app/shared/models/search-form-values.interface';
 
 @Component({
+  standalone: false,
   selector: 'app-claim-summary',
   templateUrl: './claim-summary.component.html',
   styleUrls: ['./claim-summary.component.scss']

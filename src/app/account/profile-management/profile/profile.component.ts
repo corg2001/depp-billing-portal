@@ -14,6 +14,7 @@ import { ServiceAreas } from '../service-areas/model/service-areas.model';
 import { ServiceAreasInterface } from '../service-areas/interface/service-areas.interface';
 
 @Component({
+  standalone: false,
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']

@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({ name: 'formatphone' })
+@Pipe({ name: 'formatphone', standalone: false })
 export class FormatPhone implements PipeTransform {
   public transform(phoneNumber: string): string {
     const cleaned = ('' + phoneNumber).replace(/\D/g, '');

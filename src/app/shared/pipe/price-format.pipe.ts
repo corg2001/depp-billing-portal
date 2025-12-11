@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({ name: 'formatmoney' })
+@Pipe({ name: 'formatmoney', standalone: false })
 export class FormatMoney implements PipeTransform {
   public transform(value: string): string {
     let num: number = 0;

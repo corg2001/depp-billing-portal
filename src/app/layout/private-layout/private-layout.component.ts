@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LogoutService } from '../../core/logout.service';
 
 @Component({
+  standalone: false,
   selector: 'app-private-layout',
   templateUrl: './private-layout.component.html',
   styleUrls: ['./private-layout.component.scss']

@@ -7,6 +7,7 @@ import { CalendarEnums } from 'src/app/shared/enums/calendar.enums';
 import * as _ from 'lodash';
 
 @Component({
+  standalone: false,
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss']

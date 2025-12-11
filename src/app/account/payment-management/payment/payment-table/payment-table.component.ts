@@ -14,6 +14,7 @@ import * as moment from 'moment';
 import { formatCurrency } from '@angular/common';
 
 @Component({
+  standalone: false,
   selector: 'app-payment-table',
   templateUrl: './payment-table.component.html',
   styleUrls: ['./payment-table.component.scss']

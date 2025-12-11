@@ -9,6 +9,7 @@ import * as moment from 'moment';
 import { formatCurrency } from '@angular/common';
 
 @Component({
+  standalone: false,
   selector: 'app-invoice-table',
   templateUrl: './invoice-table.component.html',
   styleUrls: ['./invoice-table.component.scss']

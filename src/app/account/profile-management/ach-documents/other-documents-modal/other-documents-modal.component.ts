@@ -5,6 +5,7 @@ import { ConfigService } from 'src/app/core/config.service';
 import { forkJoin } from 'rxjs';
 
 @Component({
+  standalone: false,
   selector: 'app-other-documents-modal',
   templateUrl: './other-documents-modal.component.html',
   styleUrls: ['./other-documents-modal.component.scss']

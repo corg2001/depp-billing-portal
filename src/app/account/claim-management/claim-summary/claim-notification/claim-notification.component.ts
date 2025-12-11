@@ -6,6 +6,7 @@ import { JobStatus } from '../../model/claims.enums';
 import { ClaimServiceAbstract } from '../../service/abstract/claim.abstract.service';
 
 @Component({
+  standalone: false,
   selector: 'app-claim-notification',
   templateUrl: './claim-notification.component.html',
   styleUrls: ['./claim-notification.component.scss']

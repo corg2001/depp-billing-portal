@@ -12,6 +12,7 @@ import { AchModalComponent } from './ach-modal/ach-modal.component';
 import { OtherDocumentsModalComponent } from './other-documents-modal/other-documents-modal.component';
 
 @Component({
+  standalone: false,
   selector: 'app-ach-documents',
   templateUrl: './ach-documents.component.html',
   styleUrls: ['./ach-documents.component.scss']

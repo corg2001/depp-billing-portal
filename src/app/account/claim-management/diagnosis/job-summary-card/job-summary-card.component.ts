@@ -3,6 +3,7 @@ import { JobDetailInterface } from './../../interface/job-detail.interface';
 import { ConfigService } from 'src/app/core/config.service';
 
 @Component({
+  standalone: false,
   selector: 'app-job-summary-card',
   templateUrl: './job-summary-card.component.html',
   styleUrls: ['./job-summary-card.component.scss']

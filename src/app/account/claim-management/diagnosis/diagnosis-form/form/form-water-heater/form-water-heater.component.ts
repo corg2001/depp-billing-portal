@@ -5,6 +5,7 @@ import { WaterHeaterUnitTypeEnum, WaterHeaterSizeEnum, WaterHeaterHighRecoveryEn
 import { DiagnosisFormFactoryAbstract } from '../../../../service/abstract/diagnosis.form.factory.abstract';
 
 @Component({
+  standalone: false,
   selector: 'app-form-water-heater',
   templateUrl: './form-water-heater.component.html',
   styleUrls: ['./form-water-heater.component.scss']
