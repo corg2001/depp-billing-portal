@@ -24,8 +24,6 @@ $body-color: $hwa-color-gray;
   color: $white !important;
 }
 
-@import "../../../node_modules/bootstrap/scss/bootstrap";
-
 //Custom Styles
 .btn-submit-large {
   padding: 0.4rem 6rem 0.4rem 6rem;
@@ -153,11 +151,11 @@ $bg-color-accent: $hwa-color-light-gray;
 $brand-accent-color: #6c757d;
 $brand-mute-accent-color: #e0eaec;
 $brand-mute-accent-text-color: $body-color;
-$brand-border-color: $gray-300;
+$brand-border-color: #dee2e6;
 $brand-border-radius: 0.25rem;
 $brand-border: 1px solid $brand-border-color;
 $brand-box-shadow-color: darken(#6c757d, 20%);
-$brand-light-gray: $gray-100;
+$brand-light-gray: #f8f9fa;
 $brand-font-family: "Roboto", sans-serif;
 
 // Button Styles
@@ -178,10 +176,10 @@ $brand-accent-button-cancel-icon: $white;
 $theme-colors: (
   primary: $primary,
   secondary: $secondary,
-  success: $green,
-  info: $cyan,
-  warning: $yellow,
-  danger: $red,
+  success: #28a745,
+  info: #17a2b8,
+  warning: #ffc107,
+  danger: #dc3545,
   light: $hwa-color-light-gray,
   dark: $hwa-color-gray
 );

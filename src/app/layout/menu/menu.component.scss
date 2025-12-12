@@ -9,7 +9,7 @@
       flex-direction: column !important;
     }
     .nav-link {
-      color: $hwa-color-teal;
+      color: $hwa-color-teal !important;
       font-family: Roboto;
       font-size: 1rem;
       margin-right: 0.625rem;
@@ -17,14 +17,14 @@
       &:hover {
         background-color: $color-poppy;
         border-radius: 0;
-        color: $white;
+        color: $white !important;
         font-weight: 600;
       }
       &.active {
         background-color: $color-poppy;
         border-radius: 0;
         font-weight: 600;
-        color: #fff;
+        color: $white !important;
       }
     }
   }

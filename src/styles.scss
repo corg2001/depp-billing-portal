@@ -1,15 +1,46 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body {
+html,
+body {
   height: 100% !important;
 }
 
 @import url('https://fonts.googleapis.com/css?family=Roboto:900,800,700,600,500,400,300,200,100');
 @import "../node_modules/font-awesome/css/font-awesome.min.css";
-@import './assets/styles/contractor-layout-styles';
+
+// Import Bootstrap functions and variables, then custom variables, then Bootstrap
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/variables";
+@import './assets/styles/contractor-layout-styles.scss';
+@import "../node_modules/bootstrap/scss/bootstrap";
 
 
 
-p, span {
+p,
+span {
   color: $hwa-color-teal;
+}
+
+.text-primary {
+  color: #00849b !important;
+}
+
+a {
+  color: #00849b !important;
+
+  &:hover {
+    color: #00434f !important;
+  }
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.ml-4 {
+  margin-left: 1.5rem !important;
+}
+
+label {
+  margin-bottom: 0.5rem;
 }
