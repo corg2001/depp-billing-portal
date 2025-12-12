@@ -6,13 +6,14 @@ import { HvacFormFactoryAbstract } from '../../../../service/abstract/hvac.form.
 
 
 @Component({
+  standalone: false,
   selector: 'app-form-hvac',
   templateUrl: './form-hvac.component.html',
   styleUrls: ['./form-hvac.component.scss']
 })
 export class FormHvacComponent extends BaseDiagnosisFormComponent implements OnInit {
-  @Input() public formLabel: string;
-  @ViewChild('commentsTextArea', { read: ElementRef }) textArea: ElementRef;
+  @Input() declare public formLabel: string;
+  @ViewChild('commentsTextArea', { read: ElementRef, static: true }) textArea: ElementRef;
   public maxLength: number = 3000;
   constructor(
     protected _formBuilder: FormBuilder,

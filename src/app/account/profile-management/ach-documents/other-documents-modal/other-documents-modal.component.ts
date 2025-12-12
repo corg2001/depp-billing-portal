@@ -5,12 +5,13 @@ import { ConfigService } from 'src/app/core/config.service';
 import { forkJoin } from 'rxjs';
 
 @Component({
+  standalone: false,
   selector: 'app-other-documents-modal',
   templateUrl: './other-documents-modal.component.html',
   styleUrls: ['./other-documents-modal.component.scss']
 })
 export class OtherDocumentsModalComponent implements OnInit {
-  @ViewChild('file') public file: ElementRef;
+  @ViewChild('file', { static: true }) public file: ElementRef;
   public loading: boolean;
   public modalSize: 'xl';
   public modalTitle: string = 'upload documents';

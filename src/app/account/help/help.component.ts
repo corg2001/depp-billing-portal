@@ -10,6 +10,7 @@ import { Subject, Subscription } from 'rxjs';
 import { CompanyInfoPayloadInterface } from 'src/app/core/interface/payload/company-info.payload.interface';
 
 @Component({
+  standalone: false,
   selector: 'app-help',
   templateUrl: './help.component.html',
   styleUrls: ['./help.component.scss']

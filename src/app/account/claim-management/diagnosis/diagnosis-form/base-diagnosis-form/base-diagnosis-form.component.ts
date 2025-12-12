@@ -3,6 +3,7 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
+  standalone: false,
   selector: 'app-base-diagnosis-form',
   templateUrl: './base-diagnosis-form.component.html',
   styleUrls: ['./base-diagnosis-form.component.scss']

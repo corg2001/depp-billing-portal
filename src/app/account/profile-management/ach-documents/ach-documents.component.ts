@@ -12,6 +12,7 @@ import { AchModalComponent } from './ach-modal/ach-modal.component';
 import { OtherDocumentsModalComponent } from './other-documents-modal/other-documents-modal.component';
 
 @Component({
+  standalone: false,
   selector: 'app-ach-documents',
   templateUrl: './ach-documents.component.html',
   styleUrls: ['./ach-documents.component.scss']
@@ -20,7 +21,7 @@ export class AchDocumentsComponent implements OnChanges {
   @Input() public achDocs?: AchDocuments[];
   @Input() public error?: boolean;
   @Input() public completion?: boolean;
-  @ViewChild('file') public file: ElementRef;
+  @ViewChild('file', { static: false }) public file: ElementRef;
   public isData: boolean = false;
   public loading: boolean = true;
   public modalSize: 'xl';

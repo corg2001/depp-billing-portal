@@ -16,12 +16,13 @@ import { ValidDateRange } from '../model/valid-date-range.model';
 import { Header } from '../model/header.model';
 
 @Component({
+  standalone: false,
   selector: 'app-calendar-info',
   templateUrl: './calendar-info.component.html',
   styleUrls: ['./calendar-info.component.scss']
 })
 export class CalendarInfoComponent implements OnInit {
-  @ViewChild('calendar') calendarComponent: FullCalendarComponent; 
+  @ViewChild('calendar', { static: true }) calendarComponent: FullCalendarComponent; 
   @Output() public dateChange: EventEmitter<string> = new EventEmitter<
     string
   >();
@@ -33,6 +34,7 @@ export class CalendarInfoComponent implements OnInit {
   ];
   public validRange: ValidDateRange;
   public header: Header;
+  public calendarOptions: any = {};
 
   handleDateClick(arg: any) {
     this.calendarEvents = [
@@ -60,6 +62,23 @@ export class CalendarInfoComponent implements OnInit {
     // designs the placements of the buttons and title
     this.header = this._buildHeader('prev', 'title', 'next');
     this.validRange = this._getValidDateRage(startDate, endDate);
+    
+    // Configure FullCalendar v6 options
+    this.calendarOptions = {
+      initialView: 'dayGridMonth',
+      headerToolbar: {
+        left: this.header.left,
+        center: this.header.center,
+        right: this.header.right
+      },
+      validRange: {
+        start: this.validRange.start,
+        end: this.validRange.end
+      },
+      plugins: this.calendarPlugins,
+      events: this.calendarEvents,
+      dateClick: this.handleDateClick.bind(this)
+    };
   }
 
   private _getValidDateRage(startDate: string, endDate: string): ValidDateRange {

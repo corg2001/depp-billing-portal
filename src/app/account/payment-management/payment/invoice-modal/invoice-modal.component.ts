@@ -4,6 +4,7 @@ import { PaymentHistoryInterface } from '../../interface/payment-history.interfa
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
+  standalone: false,
   selector: 'app-invoice-modal',
   templateUrl: './invoice-modal.component.html',
   styleUrls: ['./invoice-modal.component.scss']

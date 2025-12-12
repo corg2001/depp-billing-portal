@@ -4,13 +4,14 @@ import { DiagnosisFormFactoryAbstract } from '../../../../service/abstract/diagn
 import { FailureCauseEnum } from '../../../../model/diagnosis.enums';
 
 @Component({
+  standalone: false,
   selector: 'app-part-failure',
   templateUrl: './part-failure.component.html',
   styleUrls: ['./part-failure.component.scss']
 })
 export class PartFailureComponent implements OnInit {
   @Input() public diagnosisForm: FormGroup;
-  @ViewChild('commentsTextArea', { read: ElementRef }) textArea: ElementRef;
+  @ViewChild('commentsTextArea', { read: ElementRef, static: false }) textArea: ElementRef;
   public maxLength: number = 3000;
   public keys = Object.keys;
   public failureCauses = FailureCauseEnum;

@@ -5,6 +5,7 @@ import { PoolClaimTypeEnum } from '../../../../model/diagnosis.enums';
 import { DiagnosisFormFactoryAbstract } from '../../../../service/abstract/diagnosis.form.factory.abstract';
 
 @Component({
+  standalone: false,
   selector: 'app-form-pool',
   templateUrl: './form-pool.component.html',
   styleUrls: ['./form-pool.component.scss']

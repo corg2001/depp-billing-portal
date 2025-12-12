@@ -12,6 +12,7 @@ select {
 }
 .diagnosis {
   color: $color-poppy !important;
+   text-decoration: none !important;
 
   &:hover {
     cursor: pointer;
@@ -25,6 +26,45 @@ td {
 th {
   color: $hwa-color-teal;
   text-align: left;
+}
+
+/* Increase specificity so header colors survive global resets */
+.table thead th {
+  color: $hwa-color-teal !important;
+}
+
+/* Ensure pagination arrows are visible */
+.pagination .page-link {
+  color: $hwa-color-teal;
+}
+.pagination .page-item .page-link[aria-label] {
+  font-weight: bold;
+}
+
+/* Force-render arrows for previous/next even if i18n tokens remain */
+.pagination {
+  display: inline-block;
+}
+.pagination .page-item:first-child .page-link,
+.pagination .page-item:last-child .page-link {
+  color: transparent; /* hide token text */
+  position: relative;
+}
+.pagination .page-item:first-child .page-link::before {
+  content: '«';
+  color: $hwa-color-teal;
+  position: absolute;
+  left: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.pagination .page-item:last-child .page-link::before {
+  content: '»';
+  color: $hwa-color-teal;
+  position: absolute;
+  left: 6px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 .show-spinner {
   transition: all 0.5s ease;

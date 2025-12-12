@@ -14,9 +14,10 @@ import { CognitoService } from '../cognito.service';
 import { ICognitoLoginResponse } from 'src/app/shared/models/interface/cognito.interface';
 import { SessionKeys } from 'src/app/shared/enums/session-keys.emums';
 @Component({
+  standalone: false,
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
   public responseSubject: Subject<boolean> = new Subject<boolean>();

@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 @Component({
+  standalone: false,
   selector: 'app-appliance-dishwasher',
   templateUrl: './appliance-dishwasher.component.html',
   styleUrls: ['./appliance-dishwasher.component.scss']

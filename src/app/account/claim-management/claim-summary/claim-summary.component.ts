@@ -7,12 +7,13 @@ import { ClaimFactoryServiceAbstract } from '../service/factory/claim.factory.ab
 import * as moment from 'moment-timezone';
 import { ConfigService } from 'src/app/core/config.service';
 import { SessionKeys } from 'src/app/shared/enums/session-keys.emums';
-import { Router, RouterEvent, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
+import { Router, Event, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
 import { JobStatus } from '../model/claims.enums';
 import { FormGroup } from '@angular/forms';
 import { SearchFormValues } from 'src/app/shared/models/search-form-values.interface';
 
 @Component({
+  standalone: false,
   selector: 'app-claim-summary',
   templateUrl: './claim-summary.component.html',
   styleUrls: ['./claim-summary.component.scss']
@@ -37,7 +38,7 @@ export class ClaimSummaryComponent implements OnInit {
     private _configService: ConfigService,
     private _router: Router
   ) {
-    this._router.events.subscribe((e: RouterEvent) => {
+    this._router.events.subscribe((e: Event) => {
       this._navigationInterceptor(e);
     });
   }
@@ -45,7 +46,9 @@ export class ClaimSummaryComponent implements OnInit {
   public ngOnInit() {
     this.initSearchedValues();
     this.getClaims(this.claimList$, this.error$, this.completion$)
-    this.completion$.subscribe((completed: boolean) => this.isCompleted = completed);
+    this.completion$.subscribe((completed: boolean) => {
+      this.isCompleted = completed;
+    });
     localStorage.getItem(SessionKeys.last_login) !== undefined
       && localStorage.getItem(SessionKeys.last_login) !== '' ?
       this.lastLoginDate = `Last Login: ${moment(localStorage.getItem(SessionKeys.last_login))
@@ -63,11 +66,13 @@ export class ClaimSummaryComponent implements OnInit {
 
   public getClaims(claimList$: BehaviorSubject<Claim[]>, error$: Subject<boolean>,
     completion$: Subject<boolean>, startDate?: string, endDate?: string): void {
+    // getClaims called
     this.loading = true;
     const claimPayload$: BehaviorSubject<
       ClaimPayloadInterface[]
     > = new BehaviorSubject([]);
     this.partyName = this._configService.getPartyName();
+    // party name retrieved
     this.claimService.getClaims(
       completion$,
       error$,
@@ -77,12 +82,17 @@ export class ClaimSummaryComponent implements OnInit {
     );
     claimPayload$.subscribe(
       (claimPlayod: ClaimPayloadInterface[]) => {
+        // claims payload received
         this.loading = false;
         this.claims = this._claimFactoryService.getClaimFromPayload(
           claimPlayod
         );
-        claimList$.next(this.claims.filter(c => c.jobStatus !== JobStatus.invoiced && c.claimType !== 'Surge'));
+        // processed claims
+        const filteredClaims = this.claims.filter(c => c.jobStatus !== JobStatus.invoiced && c.claimType !== 'Surge');
+        // filtered claims
+        claimList$.next(filteredClaims);
         this.claimsFound = this.claims.length > 0 ? true : false;
+        // claims found
       }
     );
   }
@@ -131,7 +141,7 @@ export class ClaimSummaryComponent implements OnInit {
     this.completion$.next(true);
   }
 
-  private _navigationInterceptor(event: RouterEvent): void {
+  private _navigationInterceptor(event: Event): void {
     if (event instanceof NavigationStart) {
       this.loading = true;
     }

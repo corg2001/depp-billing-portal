@@ -1,0 +1,12 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Start ng serve on 4201",
+      "type": "shell",
+      "command": "ng serve --port 4201 --open=false",
+      "isBackground": true,
+      "problemMatcher": []
+    }
+  ]
+}

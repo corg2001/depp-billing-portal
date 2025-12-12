@@ -1,3 +1,4 @@
+ 
 <app-loading-spinner *ngIf="!isCompleted" [message]="loadingMsg"></app-loading-spinner>
 <ng-container *ngIf="isCompleted && claimsFound">
   <table class="table table-striped">
@@ -41,7 +42,7 @@
     </tbody>
   </table>
   <div>
-    <ngb-pagination [pageSize]="pageSize" [(page)]="page" [collectionSize]="collectionSize" [maxSize]="10">
+    <ngb-pagination [previousLabel]="'«'" [nextLabel]="'»'" [pageSize]="pageSize" [(page)]="page" [collectionSize]="collectionSize" [maxSize]="10">
     </ngb-pagination>
   </div>
 </ng-container>

@@ -6,6 +6,7 @@ import { ApplianceFormFactoryAbstract } from '../../../../service/abstract/appli
 import { DiagnosisFormFactoryAbstract } from '../../../../service/abstract/diagnosis.form.factory.abstract';
 
 @Component({
+  standalone: false,
   selector: 'app-form-appliance',
   templateUrl: './form-appliance.component.html',
   styleUrls: ['./form-appliance.component.scss']

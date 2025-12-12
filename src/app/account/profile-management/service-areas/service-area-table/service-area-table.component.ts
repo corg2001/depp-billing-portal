@@ -12,9 +12,10 @@ import { Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Component({
+  standalone: false,
   selector: 'app-service-area-table',
   templateUrl: './service-area-table.component.html',
-  styleUrls: ['./service-area-table.component.scss'],
+  styleUrls: ['./service-area-table.component.scss']
 })
 export class ServiceAreaTableComponent implements OnInit, OnChanges {
   @Input() public serviceAreasDeatils$?: Subject<

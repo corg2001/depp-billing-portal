@@ -61,6 +61,15 @@
     margin-right: 1rem;
   }
 
+    /* Align calendar icon vertically with date inputs */
+    .input-group-append .datepicker {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem 0.6rem;
+      margin-left: 0.5rem;
+    }
+
   .calendar-input-from {
     &:hover {
       cursor: pointer;

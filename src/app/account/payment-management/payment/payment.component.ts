@@ -8,6 +8,7 @@ import { SearchFormValues } from 'src/app/shared/models/search-form-values.inter
 import { FormGroup } from '@angular/forms';
 
 @Component({
+  standalone: false,
   selector: 'app-payment',
   templateUrl: './payment.component.html',
   styleUrls: ['./payment.component.scss']

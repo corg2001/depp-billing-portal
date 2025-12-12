@@ -2,7 +2,7 @@
 
 .title {
   font-size: 1.5rem;
-  color: green;
+  color: #00849b !important;
 }
 
 .tab-menu {
@@ -20,6 +20,7 @@
 
   .current {
     background-color: theme-color('primary');
+
     a {
       color: $white !important;
     }
@@ -30,7 +31,8 @@
   color: theme-color('primary');
 }
 
-input[type="email"]::placeholder, input[type="password"]::placeholder {
+input[type="email"]::placeholder,
+input[type="password"]::placeholder {
   font-size: small;
 }
 

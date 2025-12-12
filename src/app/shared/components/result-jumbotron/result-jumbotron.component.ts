@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { SafeHtml } from '@angular/platform-browser';
 
 @Component({
+  standalone: false,
   selector: 'app-result-jumbotron',
   templateUrl: './result-jumbotron.component.html',
   styleUrls: ['./result-jumbotron.component.scss']

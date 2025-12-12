@@ -3,7 +3,8 @@ import { SortDirectionEnums } from 'src/app/core/enums/sort-direction.enums';
 import { SortEventInterface } from 'src/app/core/interface/sort-event.interface';
 
 @Directive({
-    selector: 'th[appSortable]'
+    standalone: false,
+    selector: 'th[appSortable]',
 })
 export class SortableHeaderDirective {
     @Input() appSortable: string = '';

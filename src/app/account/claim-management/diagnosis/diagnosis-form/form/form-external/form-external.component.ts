@@ -5,6 +5,7 @@ import { ExternalClaimTypeEnum } from '../../../../model/diagnosis.enums';
 import { DiagnosisFormFactoryAbstract } from '../../../../service/abstract/diagnosis.form.factory.abstract';
 
 @Component({
+  standalone: false,
   selector: 'app-form-external',
   templateUrl: './form-external.component.html',
   styleUrls: ['./form-external.component.scss']

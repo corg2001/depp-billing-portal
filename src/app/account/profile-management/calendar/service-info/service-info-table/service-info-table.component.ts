@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { CalendarAbstractService } from '../../service/abstract/calendar.abstract.service';
 
 @Component({
+  standalone: false,
   selector: 'app-service-info-table',
   templateUrl: './service-info-table.component.html',
   styleUrls: ['./service-info-table.component.scss']

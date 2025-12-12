@@ -5,6 +5,7 @@ import { OtherClaimTypeEnum } from '../../../../model/diagnosis.enums';
 import { DiagnosisFormFactoryAbstract } from '../../../../service/abstract/diagnosis.form.factory.abstract';
 
 @Component({
+  standalone: false,
   selector: 'app-form-other',
   templateUrl: './form-other.component.html',
   styleUrls: ['./form-other.component.scss']

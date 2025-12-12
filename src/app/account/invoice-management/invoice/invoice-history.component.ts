@@ -12,6 +12,7 @@ import * as dateFormat from 'dateformat';
 import { NgbDate, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
+  standalone: false,
   selector: 'app-invoice-history',
   templateUrl: './invoice-history.component.html',
   styleUrls: ['./invoice-history.component.scss']

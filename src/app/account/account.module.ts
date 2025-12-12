@@ -38,6 +38,6 @@ import { DiagnosisDisableModalComponent } from './claim-management/diagnosis/dia
     PartyResolverService,
     { provide: HelpAbstractService, useClass: HelpService}
   ],
-  entryComponents: [DiagnosisDisableModalComponent]
+  
 })
 export class AccountModule { }

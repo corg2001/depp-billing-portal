@@ -5,6 +5,7 @@ import { PlumbingClaimTypeEnum } from '../../../../model/diagnosis.enums';
 import { DiagnosisFormFactoryAbstract } from '../../../../service/abstract/diagnosis.form.factory.abstract';
 
 @Component({
+  standalone: false,
   selector: 'app-form-plumbing',
   templateUrl: './form-plumbing.component.html',
   styleUrls: ['./form-plumbing.component.scss']

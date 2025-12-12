@@ -3,6 +3,7 @@ import { AuthService } from '../auth.service';
 import { Subject } from 'rxjs';
 
 @Component({
+  standalone: false,
   selector: 'app-terms-of-use',
   templateUrl: './terms-of-use.component.html',
   styleUrls: ['./terms-of-use.component.scss']

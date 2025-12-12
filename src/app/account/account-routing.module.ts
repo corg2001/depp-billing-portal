@@ -16,15 +16,15 @@ const routes: Routes = [
     children: [
       {
         path: 'claim',
-        loadChildren: './claim-management/claim-management.module#ClaimManagementModule'
+        loadChildren: () => import('./claim-management/claim-management.module').then(m => m.ClaimManagementModule)
       },
       {
         path: 'invoice',
-        loadChildren: './invoice-management/invoice-management.module#InvoiceManagementModule'
+        loadChildren: () => import('./invoice-management/invoice-management.module').then(m => m.InvoiceManagementModule)
       },
       {
         path: 'profile',
-        loadChildren: './profile-management/profile-management.module#ProfileManagementModule'
+        loadChildren: () => import('./profile-management/profile-management.module').then(m => m.ProfileManagementModule)
       },
       {
         path: 'help',
@@ -32,7 +32,7 @@ const routes: Routes = [
       },
       {
         path: 'payments',
-        loadChildren: './payment-management/payment-management.module#PaymentManagementModule'
+        loadChildren: () => import('./payment-management/payment-management.module').then(m => m.PaymentManagementModule)
       },
       {
         path: '',

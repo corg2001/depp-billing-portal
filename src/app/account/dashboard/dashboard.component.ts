@@ -5,6 +5,7 @@ import { LogoutService } from '../../core/logout.service';
 import { ConfigService } from '../../core/config.service';
 
 @Component({
+  standalone: false,
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
@@ -26,7 +27,6 @@ export class DashboardComponent implements OnInit {
 
   private partyDetailsSubscriptionHandler(response: boolean): void {
     if ( !response ) {
-      console.log('ERROR: unable to process party details');
       this._logoutService.logout();
       return;
     }

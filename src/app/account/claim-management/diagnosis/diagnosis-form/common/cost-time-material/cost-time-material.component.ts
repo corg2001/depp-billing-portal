@@ -3,6 +3,7 @@ import { FormGroup, FormArray } from '@angular/forms';
 import { DiagnosisFormFactoryAbstract } from '../../../../service/abstract/diagnosis.form.factory.abstract';
 
 @Component({
+  standalone: false,
   selector: 'app-cost-time-material',
   templateUrl: './cost-time-material.component.html',
   styleUrls: ['./cost-time-material.component.scss']

@@ -12,7 +12,7 @@ const routes: Routes = [
 
   {
     path: 'diagnosis',
-    loadChildren: './diagnosis/diagnosis.module#DiagnosisModule'
+    loadChildren: () => import('./diagnosis/diagnosis.module').then(m => m.DiagnosisModule)
   },
   { path: 'info', component: ClaimInfoComponent }
 ];

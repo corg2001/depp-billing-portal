@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
+  standalone: false,
   selector: 'app-diagnosis-disable-modal',
   templateUrl: './diagnosis-disable-modal.component.html',
   styleUrls: ['./diagnosis-disable-modal.component.scss']

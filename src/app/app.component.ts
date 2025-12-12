@@ -11,6 +11,7 @@ import { IdleTimeComponent } from './shared/components/idle-time/idle-time.compo
 declare var gtag: Function;
 
 @Component({
+  standalone: false,
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']

@@ -5,6 +5,7 @@ import { Subject, BehaviorSubject } from 'rxjs';
 import * as _ from 'lodash';
 import { environment } from 'src/environments/environment';
 @Component({
+  standalone: false,
   selector: 'app-service-info',
   templateUrl: './service-info.component.html',
   styleUrls: ['./service-info.component.scss']

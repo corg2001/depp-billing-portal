@@ -5,6 +5,7 @@ import { AddressBaseInterface } from 'src/app/core/interface/address.base.interf
 import { AddressInterface } from 'src/app/core/interface/address.interface';
 
 @Component({
+  standalone: false,
   selector: 'app-business-info',
   templateUrl: './business-info.component.html',
   styleUrls: ['./business-info.component.scss']

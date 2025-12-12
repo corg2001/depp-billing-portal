@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, FormControl, AbstractControl } from '@angular/f
 import * as _ from 'lodash';
 import { NgbDatepicker, NgbDate, NgbCalendar, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 @Component({
+  standalone: false,
   selector: 'app-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss']

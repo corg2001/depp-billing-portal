@@ -3,6 +3,7 @@ import { FormGroup, FormArray } from '@angular/forms';
 import { DiagnosisFormFactoryAbstract } from '../../../../service/abstract/diagnosis.form.factory.abstract';
 
 @Component({
+  standalone: false,
   selector: 'app-non-covered-charge',
   templateUrl: './non-covered-charge.component.html',
   styleUrls: ['./non-covered-charge.component.scss']

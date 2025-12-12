@@ -5,6 +5,7 @@ import { TradeAgreementDetailsInterface } from '../interface/trade-agreement-dea
 import { environment } from 'src/environments/environment';
 
 @Component({
+  standalone: false,
   selector: 'app-agreed-rates-table',
   templateUrl: './agreed-rates-table.component.html',
   styleUrls: ['./agreed-rates-table.component.scss']

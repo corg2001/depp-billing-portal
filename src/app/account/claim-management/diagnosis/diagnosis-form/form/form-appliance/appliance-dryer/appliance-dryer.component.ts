@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 @Component({
+  standalone: false,
   selector: 'app-appliance-dryer',
   templateUrl: './appliance-dryer.component.html',
   styleUrls: ['./appliance-dryer.component.scss']
