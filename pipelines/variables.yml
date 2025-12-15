@@ -5,7 +5,7 @@ variables:
   isQa1Branch: $[eq(variables['Build.SourceBranch'], 'refs/heads/qa1')]
   isMasterBranch: $[eq(variables['Build.SourceBranch'], 'refs/heads/master')]
   sonarCloudProjectKey: CentricaEngineeringServicesNA_depp-billing-portal
-  nodeVersion: '8.17.0'
+  nodeVersion: '20.19.0'
   awsRegion: us-east-1
   awsCredentialsDev: services-hp-prd-aws-dev
   awsCredentialsStage: services-hp-prd-aws-stage
