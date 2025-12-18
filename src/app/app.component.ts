@@ -6,8 +6,8 @@ import { ConfigService } from './core/config.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { environment } from '../environments/environment';
-import {MaintenanceService} from './core/maintenance.service';
 import { IdleTimeComponent } from './shared/components/idle-time/idle-time.component';
+import { ConfigCatService } from './shared/service/config-cat.service';
 declare var gtag: Function;
 
 @Component({
@@ -22,11 +22,10 @@ export class AppComponent implements OnInit {
 
   public constructor(
     private modalService: NgbModal,
-    private configService: ConfigService,
-    private _maintenance: MaintenanceService,
     private _configService: ConfigService,
     private _authenticationService: AuthenticationService,
     private _router: Router,
+    private _configCatService: ConfigCatService
   ) {
     this._router.events.pipe(
       filter(event => event instanceof NavigationEnd)
@@ -55,9 +54,11 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     const brand = environment.core.brandId.toLowerCase();
-    this._maintenance.checkMaintenance().then((value: boolean) => {
-      if (value) {
-        window.location.href = `/assets/maintenance-page/${brand}/maintenance-page.html`;
+    this._configCatService.checkMaintenance().subscribe({
+      next: (value: boolean) => {
+        if (value) {
+          window.location.href = `/assets/maintenance-page/${brand}/maintenance-page.html`;
+        }
       }
     }); 
   }
