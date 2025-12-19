@@ -66,11 +66,16 @@ export const environment = {
     termsOfUse: 'https://nrgp-customer-elearning-prod.s3.amazonaws.com/NRGP_TEMP_CSTC_CvgSmryTnCs_2022.05.01.pdf',
     privacyPolicy: 'https://nrgp-customer-elearning-prod.s3.amazonaws.com/NRG+Protects+Policy_June+2022_clean.pdf'
   },
+
   configcat: {
-    key: 'o3_aCPwOlUOJ0ST5qznskQ/XEBEi0LKzUu15ZS4jhrSkw',
-    maintenance: 'ENABLE_MAINTENANCE_MODE__DEPP_BILL',
-    maintenanceContent: 'UNIFY_MAINTENANCE_CONTENT',
-    dynatrace: 'DEPP_BILLING_DYNATRACE_SRC'
+    maintenance: {
+      key: 'configcat-sdk-1/8_XdCGVF50WAhW4fNjfqMg/VCEOvSMCTkeuqmMpL6FNiQ',
+      maintenance: 'ENABLE_MAINTENANCE_MODE__DEPP_BILL'
+    },
+    monitoring: {
+      key: 'configcat-sdk-1/8_XdCGVF50WAhW4fNjfqMg/EfTK4XmLF0-daqN2cYQLGA',
+      dynatrace: 'DEPP_BILLING_DYNATRACE_SRC'
+    }
   },
   // auth service
   loginUrl: `${baseUrl}authentication/passport/login`,
@@ -120,7 +125,7 @@ export const environment = {
     vendorapis: 'a5268d8496e44401ae2f3aa279f61349',
     unauthenrollmentapis: '1d4de43fbabf439a9b3a12f0c96fbb45'
   },
-    dynatrace: 'https://js-cdn.dynatrace.com/jstag/16362cc0dec/bf94493cun/bf6dc7c44e529182_complete.js'
+  dynatrace: 'https://js-cdn.dynatrace.com/jstag/16362cc0dec/bf94493cun/bf6dc7c44e529182_complete.js'
 };
 
 /*

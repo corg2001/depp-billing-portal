@@ -27,6 +27,7 @@
     "@ng-bootstrap/ng-bootstrap": "^19.0.0",
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.2.3",
+    "configcat-js": "^9.6.1",
     "core-js": "^3.27.1",
     "dateformat": "3.0.3",
     "file-saver": "^2.0.5",
