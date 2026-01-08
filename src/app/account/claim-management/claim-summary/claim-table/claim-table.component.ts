@@ -190,7 +190,14 @@ export class ClaimTableComponent implements OnInit, OnChanges {
   }
 
   public authorizeLinkText(jobStatus: JobStatus): string {
-    return LinkText.authorize;
+    return jobStatus === JobStatus.authorized
+           ? LinkText.complete
+           : jobStatus === JobStatus.wip
+             ? LinkText.authorize
+             : jobStatus === JobStatus.completed
+               ? LinkText.invoiced
+               : jobStatus === JobStatus.pendingAuthorization ?
+                 LinkText.authorize : '';
   }
 
   public onSort(sort: SortEventInterface, claimList: Claim[]) {
